@@ -16,6 +16,11 @@ upload_files() {
   git push deploy master
 }
 
+if [ "$TRAVIS" != "true" ]; then
+  echo "Not running on Travis"
+  exit 1
+fi
+
 setup_git
 commit_files $*
 upload_files
