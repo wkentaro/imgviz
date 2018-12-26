@@ -1,7 +1,6 @@
 import math
 
 import numpy as np
-import PIL.Image
 
 from .centerize import centerize
 from .color import gray2rgb
