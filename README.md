@@ -16,27 +16,27 @@ pip install imgviz
 
 <table>
 	<tr>
-		<td><pre>examples/centerize.py</pre></td>
+		<td><pre><a href="examples/centerize.py">examples/centerize.py</a></pre></td>
 		<td><img src="examples/.readme/centerize.jpg" height="200px" /></td>
 	</tr>
 	<tr>
-		<td><pre>examples/color.py</pre></td>
+		<td><pre><a href="examples/color.py">examples/color.py</a></pre></td>
 		<td><img src="examples/.readme/color.jpg" height="200px" /></td>
 	</tr>
 	<tr>
-		<td><pre>examples/depth2rgb.py</pre></td>
+		<td><pre><a href="examples/depth2rgb.py">examples/depth2rgb.py</a></pre></td>
 		<td><img src="examples/.readme/depth2rgb.jpg" height="200px" /></td>
 	</tr>
 	<tr>
-		<td><pre>examples/rectangle.py</pre></td>
+		<td><pre><a href="examples/rectangle.py">examples/rectangle.py</a></pre></td>
 		<td><img src="examples/.readme/rectangle.jpg" height="200px" /></td>
 	</tr>
 	<tr>
-		<td><pre>examples/resize.py</pre></td>
+		<td><pre><a href="examples/resize.py">examples/resize.py</a></pre></td>
 		<td><img src="examples/.readme/resize.jpg" height="200px" /></td>
 	</tr>
 	<tr>
-		<td><pre>examples/tile.py</pre></td>
+		<td><pre><a href="examples/tile.py">examples/tile.py</a></pre></td>
 		<td><img src="examples/.readme/tile.jpg" height="200px" /></td>
 	</tr>
 </table>
