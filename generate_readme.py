@@ -1,0 +1,35 @@
+#!/usr/bin/env python
+
+from __future__ import print_function
+
+import glob
+import os.path as osp
+
+import tabulate
+
+
+examples = []
+for py_file in glob.glob('examples/*.py'):
+    img_file = osp.splitext(osp.basename(py_file))[0] + '.jpg'
+    img_file = osp.join('examples/.readme', img_file)
+    examples.append((
+        '<pre>{}</pre>'.format(py_file),
+        '<img src="{}" height="200px" />'.format(img_file),
+    ))
+examples = tabulate.tabulate(examples, tablefmt='html')
+
+README = '''\
+# imgviz: Image Visualization Tools
+
+## Installation
+
+```bash
+pip install imgviz
+```
+
+## [Examples](examples)
+
+{examples}
+'''.format(examples=examples)
+
+print(README, end='')
