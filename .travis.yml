@@ -1,0 +1,38 @@
+sudo: false
+
+cache:
+  - pip
+
+dist: trusty
+
+language: python
+
+python:
+  - '2.7'
+  - '3.6'
+
+env:
+  - MPLBACKEND='agg'
+
+install:
+  - pip install -r requirements.txt
+
+script:
+  - pip install hacking
+  - flake8 .
+
+  - |
+    for f in $(command ls examples/*.py); do
+      python $f
+    done
+
+after_success:
+  - |
+    if [ "$TRAVIS_BRANCH" = "master" ]; then
+      ./generate_readme.py > README.md
+      ./.travis_push.sh
+    fi
+
+branches:
+  only:
+    - master
