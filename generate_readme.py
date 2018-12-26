@@ -33,6 +33,8 @@ def main():
     README = '''\
 # imgviz: Image Visualization Tools
 
+[![PyPI Version](https://img.shields.io/pypi/v/imgviz.svg)](https://pypi.python.org/pypi/imgviz)
+[![Python Versions](https://img.shields.io/pypi/pyversions/imgviz.svg)](https://pypi.org/project/imgviz)
 [![Build Status](https://travis-ci.com/wkentaro/imgviz.svg?branch=master)](https://travis-ci.com/wkentaro/imgviz)
 
 ## Installation
