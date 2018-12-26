@@ -33,6 +33,8 @@ def main():
     README = '''\
 # imgviz: Image Visualization Tools
 
+[![Build Status](https://travis-ci.com/wkentaro/imgviz.svg?branch=master)](https://travis-ci.com/wkentaro/imgviz)
+
 ## Installation
 
 ```bash
@@ -42,7 +44,7 @@ pip install imgviz
 ## [Examples](examples)
 
 {examples}
-'''.format(examples=examples)
+'''.format(examples=examples)  # NOQA
 
     print(README, end='')
 

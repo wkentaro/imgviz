@@ -1,5 +1,7 @@
 # imgviz: Image Visualization Tools
 
+[![Build Status](https://travis-ci.com/wkentaro/imgviz.svg?branch=master)](https://travis-ci.com/wkentaro/imgviz)
+
 ## Installation
 
 ```bash
