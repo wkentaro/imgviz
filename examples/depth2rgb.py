@@ -10,7 +10,7 @@ here = osp.dirname(osp.abspath(__file__))
 
 
 if __name__ == '__main__':
-    data_file = 'data/arc2017/1532900700692405455/data.npz'
+    data_file = osp.join(here, 'data/arc2017/1532900700692405455/data.npz')
     data = np.load(data_file)
 
     depth = data['depth']
