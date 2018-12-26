@@ -22,6 +22,8 @@ def main():
     for py_file in glob.glob('examples/*.py'):
         img_file = osp.splitext(osp.basename(py_file))[0] + '.jpg'
         img_file = osp.join('examples/.readme', img_file)
+        if not osp.exists(img_file):
+            continue
         examples.append((
             '<pre>{}</pre>'.format(py_file),
             '<img src="{}" height="200px" />'.format(img_file),
