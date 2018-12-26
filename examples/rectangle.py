@@ -23,9 +23,11 @@ if __name__ == '__main__':
     plt.subplot(121)
     plt.title('original')
     plt.imshow(rgb)
+    plt.axis('off')
     plt.subplot(122)
     plt.title('{}, {}'.format(aabb1, aabb2))
     plt.imshow(viz)
+    plt.axis('off')
 
     out_file = osp.join(here, '.readme/rectangle.jpg')
     plt.savefig(

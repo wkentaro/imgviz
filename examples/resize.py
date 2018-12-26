@@ -23,9 +23,11 @@ if __name__ == '__main__':
     plt.subplot(121)
     plt.title('{}'.format(rgb.shape))
     plt.imshow(rgb)
+    plt.axis('off')
     plt.subplot(122)
     plt.title('{}'.format(rgb_resized.shape))
     plt.imshow(rgb_resized)
+    plt.axis('off')
 
     out_file = osp.join(here, '.readme/resize.jpg')
     plt.savefig(

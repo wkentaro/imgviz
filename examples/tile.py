@@ -25,6 +25,7 @@ if __name__ == '__main__':
 
     plt.figure(dpi=150)
     plt.imshow(tiled)
+    plt.axis('off')
 
     out_file = osp.join(here, '.readme/tile.jpg')
     plt.savefig(

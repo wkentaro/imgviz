@@ -25,9 +25,11 @@ if __name__ == '__main__':
     plt.subplot(121)
     plt.title('{}'.format(centerized1.shape))
     plt.imshow(centerized1)
+    plt.axis('off')
     plt.subplot(122)
     plt.title('{}'.format(centerized2.shape))
     plt.imshow(centerized2)
+    plt.axis('off')
 
     out_file = osp.join(here, '.readme/centerize.jpg')
     plt.savefig(

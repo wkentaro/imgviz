@@ -21,12 +21,15 @@ if __name__ == '__main__':
     plt.subplot(131)
     plt.title('{}, {}'.format(rgb.shape, rgb.dtype))
     plt.imshow(rgb)
+    plt.axis('off')
     plt.subplot(132)
     plt.title('{}, {}'.format(gray.shape, gray.dtype))
     plt.imshow(gray)
+    plt.axis('off')
     plt.subplot(133)
     plt.title('{}, {}'.format(rgb2.shape, rgb2.dtype))
     plt.imshow(rgb2)
+    plt.axis('off')
 
     out_file = osp.join(here, '.readme/color.jpg')
     plt.savefig(
