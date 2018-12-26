@@ -55,8 +55,11 @@ def tile(
     if shape is None:
         shape = _get_tile_shape(len(imgs))
 
-    if border and isinstance(border, (list, tuple)):
-        assert len(border) == len(imgs), 'border and imgs must be same size'
+    if border:
+        border = np.asarray(border, dtype=np.uint8)
+        if border.ndim == 1:
+            border = border[None].repeat(len(imgs), axis=0)
+        assert border.ndim == 2
     else:
         border = (border,) * len(imgs)
 
@@ -80,11 +83,11 @@ def tile(
             img = rgb2rgba(img)
 
         img = centerize(src=img, shape=(max_h, max_w, channel), cval=cval)
-        if border[i]:
+        if border[i] is not None:
             img = rectangle(
                 src=img,
-                aabb1=(2, 1),
-                aabb2=(img.shape[0] - 1, img.shape[1] - 1),
+                aabb1=(3, 3),
+                aabb2=(img.shape[0] - 3, img.shape[1] - 3),
                 color=border[i],
                 width=6,
             )

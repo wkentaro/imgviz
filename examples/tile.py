@@ -20,7 +20,7 @@ if __name__ == '__main__':
     tiled = imgviz.tile(
         imgs=[rgb, gray, rgbT],
         shape=(1, 4),
-        border=[None, (0, 255, 0), None],
+        border=(255, 255, 255),
     )
 
     plt.figure(dpi=150)
