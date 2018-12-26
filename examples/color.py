@@ -1,7 +1,12 @@
+import os.path as osp
+
 import matplotlib.pyplot as plt
 import numpy as np
 
 import imgviz
+
+
+here = osp.dirname(osp.abspath(__file__))
 
 
 if __name__ == '__main__':
@@ -12,6 +17,7 @@ if __name__ == '__main__':
     gray = imgviz.rgb2gray(rgb)
     rgb2 = imgviz.gray2rgb(gray)
 
+    fig = plt.figure(dpi=150)
     plt.subplot(131)
     plt.title('{}, {}'.format(rgb.shape, rgb.dtype))
     plt.imshow(rgb)
@@ -21,4 +27,13 @@ if __name__ == '__main__':
     plt.subplot(133)
     plt.title('{}, {}'.format(rgb2.shape, rgb2.dtype))
     plt.imshow(rgb2)
+
+    out_file = osp.join(here, '.readme/color.jpg')
+    plt.savefig(
+        out_file, bbox_inches='tight', transparent='True', pad_inches=0
+    )
+    plt.close()
+
+    plt.imshow(plt.imread(out_file))
+    plt.axis('off')
     plt.show()

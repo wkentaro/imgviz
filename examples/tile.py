@@ -1,23 +1,37 @@
+import os.path as osp
+
 import matplotlib.pyplot as plt
 import numpy as np
 
 import imgviz
 
 
+here = osp.dirname(osp.abspath(__file__))
+
+
 if __name__ == '__main__':
-    data_file = 'data/arc2017/1532900700692405455/data.npz'
+    data_file = osp.join(here, 'data/arc2017/1532900700692405455/data.npz')
     data = np.load(data_file)
 
     rgb = data['img']
     gray = imgviz.rgb2gray(rgb)
-    depth = imgviz.depth2rgb(data['depth'], min_value=0.3, max_value=1)
+    rgbT = rgb.transpose(1, 0, 2)
 
     tiled = imgviz.tile(
-        imgs=[rgb, gray, depth],
+        imgs=[rgb, gray, rgbT],
         shape=(2, 2),
-        cval=(255, 255, 255),
         border=[None, (0, 255, 0), None],
     )
 
+    plt.figure(dpi=150)
     plt.imshow(tiled)
+
+    out_file = osp.join(here, '.readme/tile.jpg')
+    plt.savefig(
+        out_file, bbox_inches='tight', transparent='True', pad_inches=0
+    )
+    plt.close()
+
+    plt.imshow(plt.imread(out_file))
+    plt.axis('off')
     plt.show()
