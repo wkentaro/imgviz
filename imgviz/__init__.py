@@ -10,3 +10,5 @@ from .colorize import depth2rgb
 from .draw import rectangle
 
 from .resize import resize
+
+from .tile import tile
