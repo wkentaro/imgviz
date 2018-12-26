@@ -4,6 +4,8 @@ import PIL.ImageDraw
 
 
 def rectangle(src, aabb1, aabb2, color, fill=None, width=0):
+    color = tuple(color)
+
     src_pil = PIL.Image.fromarray(src)
     draw = PIL.ImageDraw.ImageDraw(src_pil)
 
