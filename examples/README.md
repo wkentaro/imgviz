@@ -13,3 +13,8 @@
 ## `centerize.py`
 
 <img src=".readme/centerize.jpg" width="30%" />
+
+
+## `rectangle.py`
+
+<img src=".readme/rectangle.jpg" width="30%" />
