@@ -25,7 +25,7 @@ def main():
         if not osp.exists(img_file):
             continue
         examples.append((
-            '<pre>{}</pre>'.format(py_file),
+            '<pre><a href="{}">{}</a></pre>'.format(py_file, py_file),
             '<img src="{}" height="200px" />'.format(img_file),
         ))
     examples = tabulate(examples)
