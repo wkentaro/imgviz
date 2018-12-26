@@ -19,7 +19,7 @@ if __name__ == '__main__':
 
     tiled = imgviz.tile(
         imgs=[rgb, gray, rgbT],
-        shape=(2, 2),
+        shape=(1, 4),
         border=[None, (0, 255, 0), None],
     )
 
