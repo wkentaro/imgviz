@@ -14,13 +14,14 @@ python:
 env:
   - MPLBACKEND='agg'
 
-install:
-  - pip install -r requirements.txt
-
-script:
+before_install:
   - pip install hacking
   - flake8 .
 
+install:
+  - pip install .
+
+script:
   - |
     for f in $(command ls examples/*.py); do
       python $f
