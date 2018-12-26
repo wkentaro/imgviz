@@ -7,7 +7,7 @@ setup_git() {
 
 commit_files() {
   git checkout master
-  git add .
+  git add $*
   git commit --message "Travis build $TRAVIS_BUILD_NUMBER"
 }
 
@@ -17,5 +17,5 @@ upload_files() {
 }
 
 setup_git
-commit_files
+commit_files $*
 upload_files
