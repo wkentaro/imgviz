@@ -10,6 +10,7 @@ from .draw import rectangle
 
 def _tile(imgs, shape, dst):
     """Tile images which have same size.
+
     Parameters
     ----------
     imgs: numpy.ndarray
