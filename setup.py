@@ -25,7 +25,7 @@ if sys.argv[1] == 'release':
         'git tag v{:s}'.format(version),
         'git push origin master --tag',
         'python setup.py sdist',
-        'twine upload dist/gdown-{:s}.tar.gz'.format(version),
+        'twine upload dist/imgviz-{:s}.tar.gz'.format(version),
     ]
     for cmd in commands:
         subprocess.check_call(shlex.split(cmd))
@@ -37,7 +37,7 @@ setup(
     version=version,
     packages=find_packages(),
     install_requires=[],
-    description='Image visualization idioms.',
+    description='Image Visualization Tools',
     author='Kentaro Wada',
     author_email='www.kentaro.wada@gmail.com',
     url='http://github.com/wkentaro/imgviz',
