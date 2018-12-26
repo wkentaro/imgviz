@@ -1,9 +1,10 @@
 #!/bin/bash
 
 set -e
-set -x
 
 export MPLBACKEND='agg'
+
+set -x
 
 for f in examples/*.py; do
   python $f
