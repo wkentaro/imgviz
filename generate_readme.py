@@ -19,7 +19,7 @@ def tabulate(rows):
 
 def main():
     examples = []
-    for py_file in glob.glob('examples/*.py'):
+    for py_file in sorted(glob.glob('examples/*.py')):
         img_file = osp.splitext(osp.basename(py_file))[0] + '.jpg'
         img_file = osp.join('examples/.readme', img_file)
         if not osp.exists(img_file):
