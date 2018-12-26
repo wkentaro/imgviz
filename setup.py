@@ -32,11 +32,17 @@ if sys.argv[1] == 'release':
     sys.exit(0)
 
 
+install_requires = []
+with open('requirements.txt') as f:
+    for req in f:
+        install_requires.append(req.strip())
+
+
 setup(
     name='imgviz',
     version=version,
     packages=find_packages(),
-    install_requires=[],
+    install_requires=install_requires,
     description='Image Visualization Tools',
     author='Kentaro Wada',
     author_email='www.kentaro.wada@gmail.com',
