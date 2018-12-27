@@ -16,6 +16,7 @@ pip install imgviz
 
 ```python
 # getting_started.py
+
 import matplotlib.pyplot as plt
 
 import imgviz

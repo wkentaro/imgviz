@@ -56,6 +56,7 @@ pip install imgviz
 
 ```python
 # getting_started.py
+
 {getting_started}
 ```
 
