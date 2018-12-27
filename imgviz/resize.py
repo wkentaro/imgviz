@@ -9,8 +9,8 @@ import PIL.Image
 
 def resize(
     src,
-    height,
-    width,
+    height=None,
+    width=None,
     interpolation='linear',
     backend='auto',
 ):
@@ -19,6 +19,22 @@ def resize(
 
     if backend == 'auto':
         backend = 'pillow' if cv2 is None else 'opencv'
+
+    src_height, src_width = src.shape[:2]
+    if isinstance(width, float):
+        scale_width = width
+        width = int(round(scale_width * src_width))
+    if isinstance(height, float):
+        scale_height = height
+        height = int(round(scale_height * src_height))
+    if height is None:
+        assert width is not None
+        scale_height = 1. * width / src_width
+        height = int(round(scale_height * src_height))
+    if width is None:
+        assert height is not None
+        scale_width = 1. * height / src_height
+        width = int(round(scale_width * src_width))
 
     if backend == 'pillow':
         if interpolation == 'linear':

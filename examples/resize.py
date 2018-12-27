@@ -14,8 +14,7 @@ if __name__ == '__main__':
     rgb = data['rgb']
 
     H, W = rgb.shape[:2]
-    H2, W2 = int(round(H * 0.1)), int(round(W * 0.1))
-    rgb_resized = imgviz.resize(rgb, height=H2, width=W2)
+    rgb_resized = imgviz.resize(rgb, height=0.1)
 
     plt.figure(dpi=150)
     plt.subplot(121)
