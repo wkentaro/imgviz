@@ -44,6 +44,8 @@ setup(
     packages=find_packages(),
     install_requires=install_requires,
     description='Image Visualization Tools',
+    package_data={'imgviz': ['data/*']},
+    include_package_data=True,
     author='Kentaro Wada',
     author_email='www.kentaro.wada@gmail.com',
     url='http://github.com/wkentaro/imgviz',
