@@ -1,5 +1,9 @@
 # flake8: noqa
 
+from . import data
+
+# -----------------------------------------------------------------------------
+
 from .centerize import centerize
 
 from .color import rgb2gray

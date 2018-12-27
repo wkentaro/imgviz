@@ -1,7 +1,6 @@
 import os.path as osp
 
 import matplotlib.pyplot as plt
-import numpy as np
 
 import imgviz
 
@@ -10,10 +9,9 @@ here = osp.dirname(osp.abspath(__file__))
 
 
 if __name__ == '__main__':
-    data_file = osp.join(here, 'data/arc2017/1532900700692405455/data.npz')
-    data = np.load(data_file)
+    data = imgviz.data.arc2017()
 
-    rgb = data['img']
+    rgb = data['rgb']
     gray = imgviz.rgb2gray(rgb)
     rgb2 = imgviz.gray2rgb(gray)
 
