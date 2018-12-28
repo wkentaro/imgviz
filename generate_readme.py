@@ -11,7 +11,7 @@ def tabulate(rows):
     for row in rows:
         html += '\n\t<tr>'
         for col in row:
-            html += '\n\t\t<td align="center">{}</td>'.format(col)
+            html += '\n\t\t<td>{}</td>'.format(col)
         html += '\n\t</tr>'
     html += '\n</table>'
     return html

@@ -43,27 +43,27 @@ tiled = imgviz.tile([data['rgb'], depthviz, labelviz], border=(255, 255, 255))
 
 <table>
 	<tr>
-		<td align="center"><pre><a href="examples/centerize.py">examples/centerize.py</a></pre></td>
-		<td align="center"><img src="examples/.readme/centerize.jpg" width="70%" /></td>
+		<td><pre><a href="examples/centerize.py">examples/centerize.py</a></pre></td>
+		<td><img src="examples/.readme/centerize.jpg" width="70%" /></td>
 	</tr>
 	<tr>
-		<td align="center"><pre><a href="examples/depth2rgb.py">examples/depth2rgb.py</a></pre></td>
-		<td align="center"><img src="examples/.readme/depth2rgb.jpg" width="70%" /></td>
+		<td><pre><a href="examples/depth2rgb.py">examples/depth2rgb.py</a></pre></td>
+		<td><img src="examples/.readme/depth2rgb.jpg" width="70%" /></td>
 	</tr>
 	<tr>
-		<td align="center"><pre><a href="examples/draw.py">examples/draw.py</a></pre></td>
-		<td align="center"><img src="examples/.readme/draw.jpg" width="70%" /></td>
+		<td><pre><a href="examples/draw.py">examples/draw.py</a></pre></td>
+		<td><img src="examples/.readme/draw.jpg" width="70%" /></td>
 	</tr>
 	<tr>
-		<td align="center"><pre><a href="examples/label2rgb.py">examples/label2rgb.py</a></pre></td>
-		<td align="center"><img src="examples/.readme/label2rgb.jpg" width="70%" /></td>
+		<td><pre><a href="examples/label2rgb.py">examples/label2rgb.py</a></pre></td>
+		<td><img src="examples/.readme/label2rgb.jpg" width="70%" /></td>
 	</tr>
 	<tr>
-		<td align="center"><pre><a href="examples/resize.py">examples/resize.py</a></pre></td>
-		<td align="center"><img src="examples/.readme/resize.jpg" width="70%" /></td>
+		<td><pre><a href="examples/resize.py">examples/resize.py</a></pre></td>
+		<td><img src="examples/.readme/resize.jpg" width="70%" /></td>
 	</tr>
 	<tr>
-		<td align="center"><pre><a href="examples/tile.py">examples/tile.py</a></pre></td>
-		<td align="center"><img src="examples/.readme/tile.jpg" width="70%" /></td>
+		<td><pre><a href="examples/tile.py">examples/tile.py</a></pre></td>
+		<td><img src="examples/.readme/tile.jpg" width="70%" /></td>
 	</tr>
 </table>
