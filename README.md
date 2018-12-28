@@ -35,33 +35,33 @@ depth_viz = imgviz.depth2rgb(data['depth'], min_value=0.3, max_value=1)
 tiled = imgviz.tile([data['rgb'], depth_viz], border=(255, 255, 255))
 ```
 
-<img src=".readme/getting_started.jpg" height="200px" />
+<img src=".readme/getting_started.jpg" width="50%" />
 
 ## [Examples](examples)
 
 <table>
 	<tr>
-		<td><pre><a href="examples/centerize.py">examples/centerize.py</a></pre></td>
-		<td><img src="examples/.readme/centerize.jpg" height="200px" /></td>
+		<td align="center"><pre><a href="examples/centerize.py">examples/centerize.py</a></pre></td>
+		<td align="center"><img src="examples/.readme/centerize.jpg" width="70%" /></td>
 	</tr>
 	<tr>
-		<td><pre><a href="examples/color.py">examples/color.py</a></pre></td>
-		<td><img src="examples/.readme/color.jpg" height="200px" /></td>
+		<td align="center"><pre><a href="examples/color.py">examples/color.py</a></pre></td>
+		<td align="center"><img src="examples/.readme/color.jpg" width="70%" /></td>
 	</tr>
 	<tr>
-		<td><pre><a href="examples/depth2rgb.py">examples/depth2rgb.py</a></pre></td>
-		<td><img src="examples/.readme/depth2rgb.jpg" height="200px" /></td>
+		<td align="center"><pre><a href="examples/depth2rgb.py">examples/depth2rgb.py</a></pre></td>
+		<td align="center"><img src="examples/.readme/depth2rgb.jpg" width="70%" /></td>
 	</tr>
 	<tr>
-		<td><pre><a href="examples/rectangle.py">examples/rectangle.py</a></pre></td>
-		<td><img src="examples/.readme/rectangle.jpg" height="200px" /></td>
+		<td align="center"><pre><a href="examples/rectangle.py">examples/rectangle.py</a></pre></td>
+		<td align="center"><img src="examples/.readme/rectangle.jpg" width="70%" /></td>
 	</tr>
 	<tr>
-		<td><pre><a href="examples/resize.py">examples/resize.py</a></pre></td>
-		<td><img src="examples/.readme/resize.jpg" height="200px" /></td>
+		<td align="center"><pre><a href="examples/resize.py">examples/resize.py</a></pre></td>
+		<td align="center"><img src="examples/.readme/resize.jpg" width="70%" /></td>
 	</tr>
 	<tr>
-		<td><pre><a href="examples/tile.py">examples/tile.py</a></pre></td>
-		<td><img src="examples/.readme/tile.jpg" height="200px" /></td>
+		<td align="center"><pre><a href="examples/tile.py">examples/tile.py</a></pre></td>
+		<td align="center"><img src="examples/.readme/tile.jpg" width="70%" /></td>
 	</tr>
 </table>
