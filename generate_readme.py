@@ -11,7 +11,7 @@ def tabulate(rows):
     for row in rows:
         html += '\n\t<tr>'
         for col in row:
-            html += '\n\t\t<td>{}</td>'.format(col)
+            html += '\n\t\t<td align="center">{}</td>'.format(col)
         html += '\n\t</tr>'
     html += '\n</table>'
     return html
@@ -26,7 +26,7 @@ def main():
             continue
         examples.append((
             '<pre><a href="{}">{}</a></pre>'.format(py_file, py_file),
-            '<img src="{}" height="200px" />'.format(img_file),
+            '<img src="{}" width="70%" />'.format(img_file),
         ))
     examples = tabulate(examples)
 
@@ -81,7 +81,7 @@ pip install imgviz
 
 {getting_started}```
 
-<img src=".readme/getting_started.jpg" height="200px" />
+<img src=".readme/getting_started.jpg" width="50%" />
 
 ## [Examples](examples)
 
