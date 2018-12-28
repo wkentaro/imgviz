@@ -1,18 +1,24 @@
 # flake8: noqa
 
+# basic data
 from . import data
 
+# basic drawing
 from . import draw
 
 # -----------------------------------------------------------------------------
 
-from .centerize import centerize
-
-from .color import depth2rgb
+# colorization
 from .color import gray2rgb
-from .color import label2rgb
 from .color import rgb2gray
 
-from .resize import resize
+from .color import depth2rgb
+from .color import label2rgb
 
+# from .color import masks2rgb
+# from .color import bboxes2rgb
+
+# manipulation
+from .centerize import centerize
+from .resize import resize
 from .tile import tile
