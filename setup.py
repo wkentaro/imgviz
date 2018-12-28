@@ -48,6 +48,7 @@ setup(
     install_requires=install_requires,
     description='Image Visualization Tools',
     long_description=long_description,
+    long_description_content_type='text/markdown',
     package_data={'imgviz': ['data/*']},
     include_package_data=True,
     author='Kentaro Wada',
