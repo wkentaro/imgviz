@@ -86,10 +86,10 @@ def tile(
         if border[i] is not None:
             img = rectangle(
                 src=img,
-                aabb1=(3, 3),
-                aabb2=(img.shape[0] - 3, img.shape[1] - 3),
+                aabb1=(0, 0),
+                aabb2=(img.shape[0] - 1, img.shape[1] - 1),
                 color=border[i],
-                width=6,
+                width=3,
             )
         imgs[i] = img
 
