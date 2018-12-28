@@ -3,6 +3,7 @@
 from __future__ import print_function
 
 import distutils.spawn
+import re
 from setuptools import find_packages
 from setuptools import setup
 import shlex
@@ -32,22 +33,44 @@ if sys.argv[1] == 'release':
     sys.exit(0)
 
 
-install_requires = []
-with open('requirements.txt') as f:
-    for req in f:
-        install_requires.append(req.strip())
+def get_install_requires():
+    install_requires = []
+    with open('requirements.txt') as f:
+        for req in f:
+            install_requires.append(req.strip())
+    return install_requires
 
-with open('README.md') as f:
-    long_description = f.read()
+
+def get_long_description():
+    with open('README.md') as f:
+        lines = []
+        for line in f:
+            pattern = r'<img.*src="(.*?)".*?/>'
+            match = re.search(pattern, line)
+            if not match:
+                lines.append(line)
+                continue
+
+            src = match.groups()[0]
+            if src.startswith('http'):
+                lines.append(line)
+                continue
+            src2 = 'https://github.com/wkentaro/imgviz/blob/master/{}?raw=true'\
+                .format(src)
+            line = line.replace(src, src2)
+
+            lines.append(line)
+
+    return ''.join(lines)
 
 
 setup(
     name='imgviz',
     version=version,
     packages=find_packages(),
-    install_requires=install_requires,
+    install_requires=get_install_requires(),
     description='Image Visualization Tools',
-    long_description=long_description,
+    long_description=get_long_description(),
     long_description_content_type='text/markdown',
     package_data={'imgviz': ['data/*']},
     include_package_data=True,
