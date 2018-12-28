@@ -86,11 +86,13 @@ pip install imgviz
 ## [Examples](examples)
 
 {examples}
-'''.format(
-    getting_started=getting_started,
-    dependencies=dependencies,
-    examples=examples,
-)  # NOQA
+'''  # NOQA
+
+    README = README.format(
+        getting_started=getting_started,
+        dependencies=dependencies,
+        examples=examples,
+    )
 
     print(README, end='')
 

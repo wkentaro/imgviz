@@ -2,7 +2,7 @@ import os.path as osp
 
 import matplotlib.pyplot as plt
 
-here = osp.dirname(osp.abspath(__file__))
+here = osp.dirname(osp.abspath(__file__))  # NOQA
 
 # -----------------------------------------------------------------------------
 # GETTING_STARTED {{
