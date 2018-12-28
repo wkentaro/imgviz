@@ -68,7 +68,11 @@ def get_long_description():
             res = res[:start] + url_new + res[end:]
             return res
 
-        patterns = [r'<img.*src="(.*?)".*?/>', r'<a.*href="(.*?)".*?>']
+        patterns = [
+            r'\[.*?\]\((.*?)\)',
+            r'<img.*src="(.*?)".*?/>',
+            r'<a.*href="(.*?)".*?>',
+        ]
         for pattern in patterns:
             line = re.sub(pattern, repl, line)
 
