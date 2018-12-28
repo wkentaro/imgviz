@@ -19,6 +19,8 @@ if __name__ == '__main__':
     rgb_T = rgb.transpose(1, 0, 2)
     centerized2 = imgviz.centerize(rgb_T, shape=(H, H))
 
+    # -------------------------------------------------------------------------
+
     fig = plt.figure(dpi=150)
 
     plt.subplot(131)
