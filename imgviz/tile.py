@@ -64,10 +64,7 @@ def tile(
         border = (border,) * len(imgs)
 
     # get max tile size to which each image should be resized
-    max_h, max_w = np.inf, np.inf
-    for img in imgs:
-        max_h = min(max_h, img.shape[0])
-        max_w = min(max_w, img.shape[1])
+    max_h, max_w = np.array([img.shape[:2] for img in imgs]).max(axis=0)
 
     ndim = max(img.ndim for img in imgs)
     assert ndim in [2, 3]
