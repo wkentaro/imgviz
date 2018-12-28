@@ -13,6 +13,12 @@ def arc2017():
     data = np.load(data_file)
     data = dict(data)
 
+    # compose masks to class label image
+    class_label = np.full(data['rgb'].shape[:2], 0, dtype=np.int32)
+    for l, mask in zip(data['labels'], data['masks']):
+        class_label[mask == 1] = l
+    data['class_label'] = class_label
+
     names_file = osp.join(here, 'class_names.txt')
     with open(names_file) as f:
         class_names = [name.strip() for name in f]

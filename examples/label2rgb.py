@@ -12,17 +12,14 @@ here = osp.dirname(osp.abspath(__file__))
 if __name__ == '__main__':
     data = imgviz.data.arc2017()
 
-    # compose masks to class label image
-    label = np.full(data['rgb'].shape[:2], 0, dtype=np.int32)
-    for l, mask in zip(data['labels'], data['masks']):
-        label[mask == 1] = l
-
-    labelviz = imgviz.label2rgb(label)
+    labelviz = imgviz.label2rgb(data['class_label'])
 
     label_names = [
         '{}:{}'.format(i, n) for i, n in enumerate(data['class_names'])
     ]
-    labelviz_withname = imgviz.label2rgb(label, label_names=label_names)
+    labelviz_withname = imgviz.label2rgb(
+        data['class_label'], label_names=label_names
+    )
 
     # -------------------------------------------------------------------------
 
