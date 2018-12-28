@@ -15,7 +15,7 @@ if __name__ == '__main__':
 
     # -------------------------------------------------------------------------
 
-    fig = plt.figure(dpi=150)
+    fig = plt.figure(dpi=200)
 
     plt.subplot(121)
     plt.title('rgb')

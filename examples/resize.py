@@ -18,7 +18,7 @@ if __name__ == '__main__':
 
     # -------------------------------------------------------------------------
 
-    plt.figure(dpi=150)
+    plt.figure(dpi=200)
 
     plt.subplot(121)
     plt.title('rgb:\n{}'.format(rgb.shape))
