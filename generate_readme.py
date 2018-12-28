@@ -81,7 +81,7 @@ pip install imgviz
 
 {getting_started}```
 
-<img src=".readme/getting_started.jpg" width="50%" />
+<img src=".readme/getting_started.jpg" width="80%" />
 
 ## [Examples](examples)
 

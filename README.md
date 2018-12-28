@@ -37,7 +37,7 @@ labelviz = imgviz.label2rgb(data['class_label'], label_names=data['class_names']
 tiled = imgviz.tile([data['rgb'], depthviz, labelviz], border=(255, 255, 255))
 ```
 
-<img src=".readme/getting_started.jpg" width="50%" />
+<img src=".readme/getting_started.jpg" width="80%" />
 
 ## [Examples](examples)
 
