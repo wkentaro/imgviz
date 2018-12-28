@@ -1,6 +1,7 @@
 import os.path as osp
 
 import matplotlib.pyplot as plt
+import numpy as np
 
 import imgviz
 
@@ -13,9 +14,23 @@ if __name__ == '__main__':
 
     rgb = data['rgb']
 
-    aabb1 = (100, 0)
-    aabb2 = (480, 640)
-    viz = imgviz.rectangle(rgb, aabb1, aabb2, color=(0, 255, 0), width=10)
+    aabb1 = np.array([100, 0], dtype=int)
+    aabb2 = np.array([480, 640], dtype=int)
+    viz = imgviz.draw.rectangle(rgb, aabb1, aabb2, color=(0, 255, 0), width=10)
+
+    text = 'bin'
+    size = 50
+    height, width = imgviz.draw.text_size(text=text, size=size)
+    viz = imgviz.draw.rectangle(
+        viz,
+        aabb1,
+        aabb1 + [height, width],
+        color=(0, 255, 0),
+        fill=(0, 255, 0),
+    )
+    viz = imgviz.draw.text(
+        viz, text=text, position=aabb1, color=(0, 0, 0), size=size
+    )
 
     # -------------------------------------------------------------------------
 
@@ -31,7 +46,7 @@ if __name__ == '__main__':
     plt.imshow(viz)
     plt.axis('off')
 
-    out_file = osp.join(here, '.readme/rectangle.jpg')
+    out_file = osp.join(here, '.readme/draw.jpg')
     plt.savefig(
         out_file, bbox_inches='tight', transparent='True', pad_inches=0
     )
