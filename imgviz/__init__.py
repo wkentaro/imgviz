@@ -8,10 +8,9 @@ from . import draw
 
 from .centerize import centerize
 
-from .color import rgb2gray
+from .color import depth2rgb
 from .color import gray2rgb
-
-from .colorize import depth2rgb
+from .color import rgb2gray
 
 from .resize import resize
 
