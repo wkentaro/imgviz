@@ -11,4 +11,11 @@ here = osp.dirname(osp.abspath(__file__))
 def arc2017():
     data_file = osp.join(here, '1532900700692405455.npz')
     data = np.load(data_file)
-    return dict(data)
+    data = dict(data)
+
+    names_file = osp.join(here, 'class_names.txt')
+    with open(names_file) as f:
+        class_names = [name.strip() for name in f]
+    data['class_names'] = class_names
+
+    return data
