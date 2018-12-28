@@ -30,9 +30,11 @@ import imgviz
 # sample data of rgb, depth, class label and instance masks
 data = imgviz.data.arc2017()
 # colorize depth image with JET colormap
-depth_viz = imgviz.depth2rgb(data['depth'], min_value=0.3, max_value=1)
+depthviz = imgviz.depth2rgb(data['depth'], min_value=0.3, max_value=1)
+# colorize label image
+labelviz = imgviz.label2rgb(data['class_label'], label_names=data['class_names'])
 # tile visualization
-tiled = imgviz.tile([data['rgb'], depth_viz], border=(255, 255, 255))
+tiled = imgviz.tile([data['rgb'], depthviz, labelviz], border=(255, 255, 255))
 ```
 
 <img src=".readme/getting_started.jpg" width="50%" />
@@ -43,10 +45,6 @@ tiled = imgviz.tile([data['rgb'], depth_viz], border=(255, 255, 255))
 	<tr>
 		<td align="center"><pre><a href="examples/centerize.py">examples/centerize.py</a></pre></td>
 		<td align="center"><img src="examples/.readme/centerize.jpg" width="70%" /></td>
-	</tr>
-	<tr>
-		<td align="center"><pre><a href="examples/color.py">examples/color.py</a></pre></td>
-		<td align="center"><img src="examples/.readme/color.jpg" width="70%" /></td>
 	</tr>
 	<tr>
 		<td align="center"><pre><a href="examples/depth2rgb.py">examples/depth2rgb.py</a></pre></td>
