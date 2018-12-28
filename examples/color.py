@@ -15,6 +15,8 @@ if __name__ == '__main__':
     gray = imgviz.rgb2gray(rgb)
     rgb2 = imgviz.gray2rgb(gray)
 
+    # -------------------------------------------------------------------------
+
     fig = plt.figure(dpi=150)
 
     plt.subplot(131)
