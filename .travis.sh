@@ -1,11 +1,10 @@
 #!/bin/bash
 
 set -e
-
-export MPLBACKEND='agg'
-
 set -x
 
+MPLBACKEND=agg python getting_started.py
+
 for f in examples/*.py; do
-  python $f
+  MPLBACKEND=agg python $f
 done
