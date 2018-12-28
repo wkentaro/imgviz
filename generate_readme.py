@@ -30,6 +30,15 @@ def main():
         ))
     examples = tabulate(examples)
 
+    dependencies = []
+    with open('requirements.txt') as f:
+        for req in f:
+            req = req.strip()
+            dependencies.append(
+                '- [{0}](https://pypi.org/project/{0})'.format(req)
+            )
+    dependencies = '\n'.join(dependencies)
+
     py_file = 'getting_started.py'
     with open(py_file) as f:
         active = False
@@ -60,6 +69,11 @@ def main():
 pip install imgviz
 ```
 
+
+## Dependencies
+
+{dependencies}
+
 ## Getting Started
 
 ```python
@@ -72,7 +86,11 @@ pip install imgviz
 ## [Examples](examples)
 
 {examples}
-'''.format(getting_started=getting_started, examples=examples)  # NOQA
+'''.format(
+    getting_started=getting_started,
+    dependencies=dependencies,
+    examples=examples,
+)  # NOQA
 
     print(README, end='')
 
