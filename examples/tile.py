@@ -13,18 +13,9 @@ if __name__ == '__main__':
 
     rgb = data['rgb']
 
-    crops = []
-    for bbox, mask in zip(data['bboxes'], data['masks']):
-        y1, x1, y2, x2 = bbox.astype(int)
-        rgb_crop = rgb[y1:y2, x1:x2].copy()
-        mask_crop = mask[y1:y2, x1:x2]
-        rgb_crop[mask_crop != 1] = 0
-        crops.append(rgb_crop)
-
-    tiled = imgviz.tile(
-        imgs=crops,
-        border=(255, 255, 255),
-    )
+    bboxes = data['bboxes'].astype(int)
+    crops = [data['rgb'][b[0]:b[2], b[1]:b[3]] for b in bboxes]
+    tiled = imgviz.tile(imgs=crops, border=(255, 255, 255))
 
     # -------------------------------------------------------------------------
 
