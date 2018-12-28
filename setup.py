@@ -42,24 +42,27 @@ def get_install_requires():
 
 
 def get_long_description():
-    with open('README.md') as f:
-        lines = []
-        for line in f:
-            pattern = r'<img.*src="(.*?)".*?/>'
-            match = re.search(pattern, line)
-            if not match:
-                lines.append(line)
-                continue
+    f = open('README.md')
 
-            src = match.groups()[0]
-            if src.startswith('http'):
-                lines.append(line)
-                continue
-            src2 = 'https://github.com/wkentaro/imgviz/blob/master/{}?raw=true'\
-                .format(src)
-            line = line.replace(src, src2)
-
+    lines = []
+    for line in f:
+        pattern = r'<img.*src="(.*?)".*?/>'
+        match = re.search(pattern, line)
+        if not match:
             lines.append(line)
+            continue
+
+        src = match.groups()[0]
+        if src.startswith('http'):
+            lines.append(line)
+            continue
+        src2 = 'https://github.com/wkentaro/imgviz/blob/master/{}?raw=true'\
+            .format(src)
+        line = line.replace(src, src2)
+
+        lines.append(line)
+
+    f.close()
 
     return ''.join(lines)
 
