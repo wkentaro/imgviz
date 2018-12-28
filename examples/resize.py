@@ -16,13 +16,17 @@ if __name__ == '__main__':
     H, W = rgb.shape[:2]
     rgb_resized = imgviz.resize(rgb, height=0.1)
 
+    # -------------------------------------------------------------------------
+
     plt.figure(dpi=150)
+
     plt.subplot(121)
-    plt.title('{}'.format(rgb.shape))
+    plt.title('rgb:\n{}'.format(rgb.shape))
     plt.imshow(rgb)
     plt.axis('off')
+
     plt.subplot(122)
-    plt.title('{}'.format(rgb_resized.shape))
+    plt.title('rgb_resized:\n{}'.format(rgb_resized.shape))
     plt.imshow(rgb_resized)
     plt.axis('off')
 
