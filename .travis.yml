@@ -25,7 +25,7 @@ after_success:
   - |
     if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PYTHON_VERSION" = "3.6" ]; then
       ./generate_readme.py > README.md
-      ./.travis_push.sh README.md
+      ./.travis_push.sh README.md examples/.readme
     fi
 
 branches:
