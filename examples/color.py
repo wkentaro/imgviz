@@ -16,16 +16,19 @@ if __name__ == '__main__':
     rgb2 = imgviz.gray2rgb(gray)
 
     fig = plt.figure(dpi=150)
+
     plt.subplot(131)
-    plt.title('{}, {}'.format(rgb.shape, rgb.dtype))
+    plt.title('original')
     plt.imshow(rgb)
     plt.axis('off')
+
     plt.subplot(132)
-    plt.title('{}, {}'.format(gray.shape, gray.dtype))
+    plt.title('rgb2gray:\n{}'.format(gray.shape))
     plt.imshow(gray)
     plt.axis('off')
+
     plt.subplot(133)
-    plt.title('{}, {}'.format(rgb2.shape, rgb2.dtype))
+    plt.title('rgb2gray, gray2rgb:\n{}'.format(rgb2.shape))
     plt.imshow(rgb2)
     plt.axis('off')
 
