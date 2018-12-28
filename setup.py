@@ -63,6 +63,8 @@ def get_long_description():
                 'https://github.com/wkentaro/imgviz/blob/master/{}'
                 .format(match.group(1))
             )
+            if re.match(r'.*[\.jpg|\.png]$', url_new):
+                url_new += '?raw=true'
             res = res[:start] + url_new + res[end:]
             return res
 
