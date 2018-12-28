@@ -57,6 +57,10 @@ tiled = imgviz.tile([data['rgb'], depth_viz], border=(255, 255, 255))
 		<td align="center"><img src="examples/.readme/draw.jpg" width="70%" /></td>
 	</tr>
 	<tr>
+		<td align="center"><pre><a href="examples/label2rgb.py">examples/label2rgb.py</a></pre></td>
+		<td align="center"><img src="examples/.readme/label2rgb.jpg" width="70%" /></td>
+	</tr>
+	<tr>
 		<td align="center"><pre><a href="examples/resize.py">examples/resize.py</a></pre></td>
 		<td align="center"><img src="examples/.readme/resize.jpg" width="70%" /></td>
 	</tr>
