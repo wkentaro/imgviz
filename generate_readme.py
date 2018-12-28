@@ -32,9 +32,17 @@ def main():
 
     py_file = 'getting_started.py'
     with open(py_file) as f:
+        active = False
         lines = []
         for line in f:
-            lines.append(line)
+            if line == '# GETTING_STARTED {{\n':
+                active = True
+                continue
+            elif line == '# }} GETTING_STARTED\n':
+                active = False
+                continue
+            if active:
+                lines.append(line)
     getting_started = ''.join(lines)
 
     README = '''\
@@ -57,8 +65,9 @@ pip install imgviz
 ```python
 # getting_started.py
 
-{getting_started}
-```
+{getting_started}```
+
+<img src=".readme/getting_started.jpg" height="200px" />
 
 ## [Examples](examples)
 
