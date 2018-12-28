@@ -46,9 +46,21 @@ def get_long_description():
 
     lines = []
     for line in f:
-        pattern = r'<img.*src="(.*?)".*?/>'
-        match = re.search(pattern, line)
-        if not match:
+        patterns = [
+            (
+                r'<img.*src="(.*?)".*?/>',
+                'https://github.com/wkentaro/imgviz/blob/master/{}?raw=true',
+            ),
+            (
+                r'<a.*href="(.*?)".*?>',
+                'https://github.com/wkentaro/imgviz/blob/master/{}',
+            ),
+        ]
+        for pattern, src2 in patterns:
+            match = re.search(pattern, line)
+            if match:
+                break
+        else:
             lines.append(line)
             continue
 
@@ -56,8 +68,8 @@ def get_long_description():
         if src.startswith('http'):
             lines.append(line)
             continue
-        src2 = 'https://github.com/wkentaro/imgviz/blob/master/{}?raw=true'\
-            .format(src)
+
+        src2 = src2.format(src)
         line = line.replace(src, src2)
 
         lines.append(line)
