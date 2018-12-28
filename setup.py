@@ -23,6 +23,7 @@ if sys.argv[1] == 'release':
         sys.exit(1)
 
     commands = [
+        'git pull origin master',
         'git tag v{:s}'.format(version),
         'git push origin master --tag',
         'python setup.py sdist',
