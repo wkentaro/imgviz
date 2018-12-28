@@ -37,6 +37,9 @@ with open('requirements.txt') as f:
     for req in f:
         install_requires.append(req.strip())
 
+with open('README.md') as f:
+    long_description = f.read()
+
 
 setup(
     name='imgviz',
@@ -44,6 +47,7 @@ setup(
     packages=find_packages(),
     install_requires=install_requires,
     description='Image Visualization Tools',
+    long_description=long_description,
     package_data={'imgviz': ['data/*']},
     include_package_data=True,
     author='Kentaro Wada',
