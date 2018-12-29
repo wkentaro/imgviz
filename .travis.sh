@@ -5,7 +5,7 @@ set -x
 
 pytest -v tests
 
-python getting_started.py
+MPLBACKEND=agg python getting_started.py
 for f in examples/*.py; do
-  python $f
+  MPLBACKEND=agg python $f
 done
