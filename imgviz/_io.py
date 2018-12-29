@@ -78,7 +78,7 @@ def pyglet_run():
 
 def pyplot_fig2arr(fig):
     fig.canvas.draw()
-    arr = np.fromstring(fig.canvas.tostring_rgb(), dtype=np.uint8, sep='')
+    arr = np.frombuffer(fig.canvas.tostring_rgb(), dtype=np.uint8)
     width, height = fig.canvas.get_width_height()
     arr = arr.reshape((height, width, 3))
     return arr
