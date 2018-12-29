@@ -6,6 +6,9 @@ from . import data
 # basic drawing
 from . import draw
 
+# basic io
+from . import _io as io
+
 # -----------------------------------------------------------------------------
 
 # colorization
