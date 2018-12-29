@@ -46,5 +46,6 @@ if __name__ == '__main__':
     plt.close()
 
     img = imgviz.io.imread(out_file)
-    imgviz.io.pyglet_imshow(img)
-    imgviz.io.pyglet_run()
+    plt.imshow(img)
+    plt.axis('off')
+    plt.show()
