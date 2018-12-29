@@ -1,17 +1,14 @@
 # flake8: noqa
 
-# basic data
 from . import data
 
-# basic drawing
 from . import draw
 
-# basic io
 from . import _io as io
 
 # -----------------------------------------------------------------------------
 
-# based on visualization objective
+# visualization targets
 from .color import gray2rgb
 from .color import rgb2gray
 from .depth import depth2rgb
