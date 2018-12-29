@@ -52,19 +52,23 @@ def get_long_description():
             if not match:
                 return
 
+            url = match.group(1)
+            if url.startswith('http'):
+                return
+
+            url_new = (
+                'https://github.com/wkentaro/imgviz/blob/master/{}'
+                .format(url)
+            )
+            if re.match(r'.*[\.jpg|\.png]$', url_new):
+                url_new += '?raw=true'
+
             start0, end0 = match.regs[0]
             start, end = match.regs[1]
             start -= start0
             end -= end0
 
             res = match.group(0)
-            url = match.group(1)
-            url_new = (
-                'https://github.com/wkentaro/imgviz/blob/master/{}'
-                .format(match.group(1))
-            )
-            if re.match(r'.*[\.jpg|\.png]$', url_new):
-                url_new += '?raw=true'
             res = res[:start] + url_new + res[end:]
             return res
 
