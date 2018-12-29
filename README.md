@@ -40,15 +40,32 @@ labelviz = imgviz.label2rgb(data['class_label'], label_names=data['class_names']
 # instance bboxes
 bboxes = data['bboxes'].astype(int)
 captions = [data['class_names'][l] for l in data['labels']]
-bboxviz = imgviz.instances2rgb(data['rgb'], bboxes=bboxes, labels=data['labels'], captions=captions)
+bboxviz = imgviz.instances2rgb(
+    src=data['rgb'],
+    bboxes=bboxes,
+    labels=data['labels'],
+    captions=captions,
+)
+
+# instance masks
+masks = data['masks'] == 1
+maskviz = imgviz.instances2rgb(
+    src=data['rgb'],
+    masks=masks,
+    labels=data['labels'],
+    captions=captions,
+)
 
 # tile instance masks
-insviz = [data['rgb'][b[0]:b[2], b[1]:b[3]] for b in bboxes]
+insviz = [
+    (data['rgb'] * mask[:, :, None])[y1:y2, x1:x2]
+    for (y1, x1, y2, x2), mask in zip(bboxes, masks)
+]
 insviz = imgviz.tile(imgs=insviz, border=(255, 255, 255))
 
 # tile visualization
 tiled = imgviz.tile(
-    [data['rgb'], depthviz, labelviz, bboxviz, insviz],
+    [data['rgb'], depthviz, labelviz, bboxviz, maskviz, insviz],
     shape=(2, 3),
     border=(255, 255, 255),
 )
