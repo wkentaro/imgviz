@@ -2,33 +2,35 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def pose_to_transform(pose):
-    theta = pose[:3]
-    t = pose[3:6]
-    R = eulerAnglesToRotationMatrix(theta)
-    T = np.zeros((4, 4))
-    T[:3, :3] = R
-    T[:3, 3] = t
-    T[3, 3] = 1
+# def pose_to_transform(poses):
+#     transforms = np.zeros((len(poses), 4, 4), dtype=float)
+#     for i, pose in enumerate(poses):
+#         theta = pose[:3]
+#         t = pose[3:6]
+#         R = eulerAnglesToRotationMatrix(theta)
+#         T = np.zeros((4, 4))
+#         T[:3, :3] = R
+#         T[:3, 3] = t
+#         T[3, 3] = 1
+#         transforms[i] = T
+#     return transforms
 
-    return T
 
-
-def eulerAnglesToRotationMatrix(theta):
-    R_x = np.array([[1, 0, 0],
-                    [0, np.cos(theta[0]), -np.sin(theta[0])],
-                    [0, np.sin(theta[0]), np.cos(theta[0])]
-                    ])
-    R_y = np.array([[np.cos(theta[1]), 0, np.sin(theta[1])],
-                    [0, 1, 0],
-                    [-np.sin(theta[1]), 0, np.cos(theta[1])]
-                    ])
-    R_z = np.array([[np.cos(theta[2]), -np.sin(theta[2]), 0],
-                    [np.sin(theta[2]), np.cos(theta[2]), 0],
-                    [0, 0, 1]
-                    ])
-    R = np.dot(R_z, np.dot(R_y, R_x))
-    return R
+# def eulerAnglesToRotationMatrix(theta):
+#     R_x = np.array([[1, 0, 0],
+#                     [0, np.cos(theta[0]), -np.sin(theta[0])],
+#                     [0, np.sin(theta[0]), np.cos(theta[0])]
+#                     ])
+#     R_y = np.array([[np.cos(theta[1]), 0, np.sin(theta[1])],
+#                     [0, 1, 0],
+#                     [-np.sin(theta[1]), 0, np.cos(theta[1])]
+#                     ])
+#     R_z = np.array([[np.cos(theta[2]), -np.sin(theta[2]), 0],
+#                     [np.sin(theta[2]), np.cos(theta[2]), 0],
+#                     [0, 0, 1]
+#                     ])
+#     R = np.dot(R_z, np.dot(R_y, R_x))
+#     return R
 
 
 def isRotationMatrix(R):
@@ -84,61 +86,29 @@ def fig2array(fig):
     return data
 
 
-def plot_trajectory_with_pose(poses, is_relative=True, style='b.'):
-    """Plot the trajectory using 6DOF poses
-
-    Parameters
-    ----------
-    poses: numpy.ndarray
-        6DOF poses with the shape of [N, 6] where N is the # of poses.
-    is_relative: bool
-        True for relative poses.
-    style: str
-        style of ploting, default: 'b.'
-    dst: numpy.ndarray
-        trajectory
-    """
-    if is_relative:
-        T = [pose_to_transform(poses[i]) for i in range(poses.shape[0])]
-
-        for i in range(1, len(T)):
-            T[i] = T[i - 1].dot(T[i])
-
-        poses = np.array([R_to_angle(t[:3]) for t in T])
-
-    x = poses[:, 3]
-    z = poses[:, 5]
-
-    fig = plt.figure()
-    plt.axis('off')
-    plt.plot(x, z, style)
-
-    img = fig2array(fig)
-    plt.close()
-
-    return img
-
-
-def plot_trajectory_with_transform(T, is_relative=True, style='b.'):
+def plot_trajectory(transforms, is_relative=False, style='b.'):
     """Plot the trajectory using transform matrices
 
     Parameters
     ----------
-    T: numpy.ndarray
+    transforms: numpy.ndarray
         transform matrices with the shape of [N, 4, 4]
         where N is the # of poses.
     is_relative: bool
-        True for relative poses.
+        True for relative poses. default: False.
     style: str
         style of ploting, default: 'b.'
+
+    Returns
+    -------
     dst: numpy.ndarray
         trajectory
     """
     if is_relative:
-        for i in range(1, len(T)):
-            T[i] = T[i - 1].dot(T[i])
+        for i in range(1, len(transforms)):
+            transforms[i] = transforms[i - 1].dot(transforms[i])
 
-    poses = np.array([R_to_angle(t[:3]) for t in T])
+    poses = np.array([R_to_angle(T[:3]) for T in transforms])
 
     x = poses[:, 3]
     z = poses[:, 5]
@@ -147,7 +117,7 @@ def plot_trajectory_with_transform(T, is_relative=True, style='b.'):
     plt.axis('off')
     plt.plot(x, z, style)
 
-    img = fig2array(fig)
+    dst = fig2array(fig)
     plt.close()
 
-    return img
+    return dst

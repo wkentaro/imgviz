@@ -81,7 +81,6 @@ tiled = imgviz.tile(
 	</tr>
 	<tr>
 		<td><pre><a href="examples/trajectory.py">examples/trajectory.py</a></pre></td>
-		<td><img src="examples/.readme/trajectory0.png" width="70%" /></td>
+		<td><img src="examples/.readme/trajectory.jpg" width="70%" /></td>
 	</tr>
 </table>
-
