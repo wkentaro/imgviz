@@ -15,8 +15,11 @@ before_install:
   - pip install hacking
   - flake8 .
 
-  - pip install mypy
-  - mypy -p imgviz --ignore-missing-imports
+  - |
+    if [ "$TRAVIS_PYTHON_VERSION" = "3.6" ]; then
+      pip install mypy
+      mypy -p imgviz --ignore-missing-imports
+    fi
 
 install:
   - pip install .
