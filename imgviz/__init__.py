@@ -11,20 +11,17 @@ from . import _io as io
 
 # -----------------------------------------------------------------------------
 
-# colorization
+# based on visualization objective
 from .color import gray2rgb
 from .color import rgb2gray
+from .depth import depth2rgb
+# from .instances import draw_instances
+from .label import label_colormap
+from .label import label2rgb
+from .trajectory import plot_trajectory
 
-from .color import depth2rgb
-from .color import label2rgb
-
-# from .color import masks2rgb
-# from .color import bboxes2rgb
-
-# manipulation
+# visualization operations
 from .centerize import centerize
 from .resize import resize
 from .tile import tile
-
-# trajectory
-from .trajectory import plot_trajectory
+# from .overlay import overlay
