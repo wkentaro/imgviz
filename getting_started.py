@@ -20,15 +20,19 @@ depthviz = imgviz.depth2rgb(data['depth'], min_value=0.3, max_value=1)
 # colorize label image
 labelviz = imgviz.label2rgb(data['class_label'], label_names=data['class_names'])
 
-# tile instance masks
+# instance bboxes
 bboxes = data['bboxes'].astype(int)
+captions = [data['class_names'][l] for l in data['labels']]
+bboxviz = imgviz.instances2rgb(data['rgb'], bboxes=bboxes, labels=data['labels'], captions=captions)
+
+# tile instance masks
 insviz = [data['rgb'][b[0]:b[2], b[1]:b[3]] for b in bboxes]
 insviz = imgviz.tile(imgs=insviz, border=(255, 255, 255))
 
 # tile visualization
 tiled = imgviz.tile(
-    [data['rgb'], depthviz, labelviz, insviz],
-    shape=(1, 4),
+    [data['rgb'], depthviz, labelviz, bboxviz, insviz],
+    shape=(2, 3),
     border=(255, 255, 255),
 )
 # }} GETTING_STARTED
