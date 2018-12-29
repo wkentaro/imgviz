@@ -42,9 +42,10 @@ def read_poses(root):
 
 
 if __name__ == '__main__':
-    T, rel_T, poses, rel_poses = read_poses('examples/data/KITTI_VO_pose/00.txt')
+    file = 'examples/data/KITTI_VO_pose/00.txt'
+    T, rel_T, poses, rel_poses = read_poses(file)
 
-    img = imgviz.plot_trajectory_with_pose(poses, is_relative=False, style='b.')
+    img = imgviz.plot_trajectory_with_pose(poses, False, style='b.')
     plt.axis('off')
     plt.imshow(img)
     plt.show()
