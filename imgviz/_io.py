@@ -67,5 +67,5 @@ def pyglet_imshow(image):
 def pyglet_run():
     try:
         return pyglet.app.run()
-    except pyglet.canvas.xlib.NoSuchDisplayException:
+    except (pyglet.canvas.xlib.NoSuchDisplayException, TypeError):
         return
