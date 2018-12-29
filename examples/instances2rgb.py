@@ -12,9 +12,15 @@ if __name__ == '__main__':
     data = imgviz.data.arc2017()
 
     captions = [data['class_names'][l] for l in data['labels']]
-    insviz = imgviz.instances2rgb(
+    insviz1 = imgviz.instances2rgb(
         src=data['rgb'],
         bboxes=data['bboxes'],
+        labels=data['labels'],
+        captions=captions,
+    )
+    insviz2 = imgviz.instances2rgb(
+        src=data['rgb'],
+        masks=data['masks'] == 1,
         labels=data['labels'],
         captions=captions,
     )
@@ -23,14 +29,19 @@ if __name__ == '__main__':
 
     fig = plt.figure(dpi=200)
 
-    plt.subplot(121)
+    plt.subplot(131)
     plt.title('rgb')
     plt.imshow(data['rgb'])
     plt.axis('off')
 
-    plt.subplot(122)
-    plt.title('instances\n(colorized)')
-    plt.imshow(insviz)
+    plt.subplot(132)
+    plt.title('instances\n(bboxes)')
+    plt.imshow(insviz1)
+    plt.axis('off')
+
+    plt.subplot(133)
+    plt.title('instances\n(masks)')
+    plt.imshow(insviz2)
     plt.axis('off')
 
     out_file = osp.join(here, '.readme/instances2rgb.jpg')
