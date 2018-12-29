@@ -11,21 +11,7 @@ python:
   - '3.6'
   - '2.7'
 
-before_install:
-  - pip install hacking
-  - flake8 .
-
-  - |
-    if [ "$TRAVIS_PYTHON_VERSION" = "3.6" ]; then
-      pip install mypy
-      mypy -p imgviz --ignore-missing-imports
-    fi
-
-install:
-  - pip install .
-
 script:
-  - pip install pytest
   - ./.travis.sh
 
 after_success:
