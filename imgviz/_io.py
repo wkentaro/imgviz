@@ -14,6 +14,7 @@ def imsave(filename, arr):
 
 
 # -----------------------------------------------------------------------------
+# pyglet
 
 
 def pyglet_imshow(image):
@@ -69,3 +70,15 @@ def pyglet_run():
         return pyglet.app.run()
     except (pyglet.canvas.xlib.NoSuchDisplayException, TypeError):
         return
+
+
+# -----------------------------------------------------------------------------
+# matplotlib
+
+
+def pyplot_fig2arr(fig):
+    fig.canvas.draw()
+    arr = np.fromstring(fig.canvas.tostring_rgb(), dtype=np.uint8, sep='')
+    width, height = fig.canvas.get_width_height()
+    arr = arr.reshape((height, width, 3))
+    return arr
