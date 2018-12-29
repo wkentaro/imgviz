@@ -12,9 +12,14 @@ if __name__ == '__main__':
     data = imgviz.data.arc2017()
 
     rgb = data['rgb']
-
     bboxes = data['bboxes'].astype(int)
-    crops = [data['rgb'][b[0]:b[2], b[1]:b[3]] for b in bboxes]
+    masks = data['masks'] == 1
+    crops = []
+    for bbox, mask in zip(bboxes, masks):
+        slice_ = slice(bbox[0], bbox[2]), slice(bbox[1], bbox[3])
+        rgb_crop = rgb[slice_]
+        mask_crop = mask[slice_]
+        crops.append(rgb_crop * mask_crop[:, :, None])
     tiled = imgviz.tile(imgs=crops, border=(255, 255, 255))
 
     # -------------------------------------------------------------------------
