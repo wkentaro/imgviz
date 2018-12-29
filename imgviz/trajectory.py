@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
+from ._io import pyplot_fig2arr
+
 
 # def pose_to_transform(poses):
 #     transforms = np.zeros((len(poses), 4, 4), dtype=float)
@@ -77,15 +79,6 @@ def R_to_angle(Rt):
     return pose_6
 
 
-def fig2array(fig):
-    fig.canvas.draw()
-    data = np.fromstring(fig.canvas.tostring_rgb(), dtype=np.uint8, sep='')
-    w, h = fig.canvas.get_width_height()
-    data = data.reshape((h, w, 3))
-
-    return data
-
-
 def plot_trajectory(transforms, is_relative=False, style='b.'):
     """Plot the trajectory using transform matrices
 
@@ -117,7 +110,7 @@ def plot_trajectory(transforms, is_relative=False, style='b.'):
     plt.axis('off')
     plt.plot(x, z, style)
 
-    dst = fig2array(fig)
+    dst = pyplot_fig2arr(fig)
     plt.close()
 
     return dst
