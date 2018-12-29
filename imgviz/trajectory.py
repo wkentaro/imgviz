@@ -1,6 +1,5 @@
 import numpy as np
 
-import matplotlib
 # matplotlib.use('agg')
 import matplotlib.pyplot as plt
 
@@ -128,7 +127,8 @@ def plot_trajectory_with_transform(T, is_relative=True, style='b.'):
     Parameters
     ----------
     T: numpy.ndarray
-        transform matrices with the shape of [N, 4, 4] where N is the # of poses.
+        transform matrices with the shape of [N, 4, 4] 
+        where N is the # of poses.
     is_relative: bool
         True for relative poses.
     style: str
