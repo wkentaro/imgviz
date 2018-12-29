@@ -12,6 +12,9 @@ if __name__ == '__main__':
     data = imgviz.data.kitti()
 
     img = imgviz.plot_trajectory(data['transforms'])
+
+    # -------------------------------------------------------------------------
+
     out_file = osp.join(here, '.readme/trajectory.jpg')
     imgviz.io.imsave(out_file, img)
 
