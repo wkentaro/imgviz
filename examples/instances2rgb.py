@@ -13,13 +13,13 @@ if __name__ == '__main__':
 
     captions = [data['class_names'][l] for l in data['labels']]
     insviz1 = imgviz.instances2rgb(
-        src=data['rgb'],
+        image=data['rgb'],
         bboxes=data['bboxes'],
         labels=data['labels'],
         captions=captions,
     )
     insviz2 = imgviz.instances2rgb(
-        src=data['rgb'],
+        image=data['rgb'],
         masks=data['masks'] == 1,
         labels=data['labels'],
         captions=captions,

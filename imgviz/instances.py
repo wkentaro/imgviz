@@ -17,7 +17,7 @@ def mask_to_bbox(masks):
 
 
 def instances2rgb(
-    src,
+    image,
     labels,
     bboxes=None,
     masks=None,
@@ -26,9 +26,9 @@ def instances2rgb(
     line_width=5,
     alpha=0.7,
 ):
-    assert isinstance(src, np.ndarray)
-    assert src.dtype == np.uint8
-    assert src.ndim == 3
+    assert isinstance(image, np.ndarray)
+    assert image.dtype == np.uint8
+    assert image.ndim == 3
 
     assert all(l >= 0 for l in labels)
 
@@ -48,8 +48,8 @@ def instances2rgb(
     colormap = label_module.label_colormap()
     colormap = (colormap * 255).round().astype(np.uint8)
 
-    dst = src
-    src_gray = color_module.gray2rgb(color_module.rgb2gray(src))
+    dst = image
+    image_gray = color_module.gray2rgb(color_module.rgb2gray(image))
 
     for instance_id in range(n_instance):
         mask = masks[instance_id]
@@ -62,7 +62,7 @@ def instances2rgb(
         maskviz = mask[:, :, None] * color_ins.astype(float)
         dst = dst.copy()
         dst[mask] = (
-            (1 - alpha) * src_gray[mask].astype(float) +
+            (1 - alpha) * image_gray[mask].astype(float) +
             alpha * maskviz[mask]
         )
         boundary = skimage.segmentation.find_boundaries(

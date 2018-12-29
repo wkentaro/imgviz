@@ -24,19 +24,13 @@ labelviz = imgviz.label2rgb(data['class_label'], label_names=data['class_names']
 bboxes = data['bboxes'].astype(int)
 captions = [data['class_names'][l] for l in data['labels']]
 bboxviz = imgviz.instances2rgb(
-    src=data['rgb'],
-    bboxes=bboxes,
-    labels=data['labels'],
-    captions=captions,
+    image=data['rgb'], bboxes=bboxes, labels=data['labels'], captions=captions
 )
 
 # instance masks
 masks = data['masks'] == 1
 maskviz = imgviz.instances2rgb(
-    src=data['rgb'],
-    masks=masks,
-    labels=data['labels'],
-    captions=captions,
+    image=data['rgb'], masks=masks, labels=data['labels'], captions=captions
 )
 
 # tile instance masks
