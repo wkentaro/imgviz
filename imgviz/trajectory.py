@@ -1,7 +1,5 @@
-import numpy as np
-
-# matplotlib.use('agg')
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 def pose_to_transform(pose):
@@ -87,7 +85,7 @@ def fig2array(fig):
 
 
 def plot_trajectory_with_pose(poses, is_relative=True, style='b.'):
-    """Plot the trajectory using 6DOF poses 
+    """Plot the trajectory using 6DOF poses
 
     Parameters
     ----------
@@ -127,7 +125,7 @@ def plot_trajectory_with_transform(T, is_relative=True, style='b.'):
     Parameters
     ----------
     T: numpy.ndarray
-        transform matrices with the shape of [N, 4, 4] 
+        transform matrices with the shape of [N, 4, 4]
         where N is the # of poses.
     is_relative: bool
         True for relative poses.

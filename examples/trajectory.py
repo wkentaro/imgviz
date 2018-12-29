@@ -1,5 +1,5 @@
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 
 import imgviz
 from imgviz.trajectory import R_to_angle
