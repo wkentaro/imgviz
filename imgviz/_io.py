@@ -1,6 +1,10 @@
 import numpy as np
 import PIL.Image
-import pyglet
+
+try:
+    import pyglet
+except ImportError:
+    pyglet = None
 
 
 def imread(filename):
@@ -20,16 +24,13 @@ def imsave(filename, arr):
 def pyglet_imshow(image):
     # type: (np.ndarray) -> None
     image = PIL.Image.fromarray(image)
-    try:
-        image = pyglet.image.ImageData(
-            width=image.width,
-            height=image.height,
-            format=image.mode,
-            data=image.tobytes(),
-            pitch=- image.width * len(image.mode),
-        )
-    except pyglet.canvas.xlib.NoSuchDisplayException:
-        return
+    image = pyglet.image.ImageData(
+        width=image.width,
+        height=image.height,
+        format=image.mode,
+        data=image.tobytes(),
+        pitch=- image.width * len(image.mode),
+    )
 
     window = pyglet.window.Window(
         width=image.width,
@@ -66,10 +67,7 @@ def pyglet_imshow(image):
 
 
 def pyglet_run():
-    try:
-        return pyglet.app.run()
-    except (pyglet.canvas.xlib.NoSuchDisplayException, TypeError):
-        return
+    return pyglet.app.run()
 
 
 # -----------------------------------------------------------------------------
