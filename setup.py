@@ -54,7 +54,7 @@ def get_long_description():
 
             url = match.group(1)
             if url.startswith('http'):
-                return
+                return match.group(0)
 
             url_new = (
                 'https://github.com/wkentaro/imgviz/blob/master/{}'
@@ -66,7 +66,7 @@ def get_long_description():
             start0, end0 = match.regs[0]
             start, end = match.regs[1]
             start -= start0
-            end -= end0
+            end -= start0
 
             res = match.group(0)
             res = res[:start] + url_new + res[end:]
