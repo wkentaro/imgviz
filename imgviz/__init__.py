@@ -25,3 +25,8 @@ from .color import label2rgb
 from .centerize import centerize
 from .resize import resize
 from .tile import tile
+
+# trajectory
+from .trajectory import plot_trajectory_with_pose
+from .trajectory import plot_trajectory_with_transform
+from .trajectory import R_to_angle
