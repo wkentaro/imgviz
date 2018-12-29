@@ -4,7 +4,14 @@ import transformations as tf
 from ._io import pyplot_fig2arr
 
 
-def plot_trajectory(transforms, is_relative=False, style='b.', mode='xz'):
+def plot_trajectory(
+    transforms,
+    is_relative=False,
+    mode='xz',
+    fig=None,
+    style='b.',
+    axis=True,
+):
     """Plot the trajectory using transform matrices
 
     Parameters
@@ -14,10 +21,14 @@ def plot_trajectory(transforms, is_relative=False, style='b.', mode='xz'):
         where N is the # of poses.
     is_relative: bool
         True for relative poses. default: False.
-    style: str
-        style of ploting, default: 'b.'
     mode: str
         x and y axis of trajectory. default: 'xz' following kitti format.
+    fig: matplotlib.pyplot.Figure
+        figure used for plotting. default: None
+    style: str
+        style of ploting, default: 'b.'
+    axis: bool
+        False to disable axis.
 
     Returns
     -------
@@ -40,11 +51,22 @@ def plot_trajectory(transforms, is_relative=False, style='b.', mode='xz'):
         x.append(translate[index_x])
         y.append(translate[index_y])
 
-    fig = plt.figure()
-    plt.axis('off')
+    # swith backend to agg for supporting no display mode
+    backend = plt.get_backend()
+    plt.switch_backend('agg')
+
+    if fig is None:
+        fig = plt.figure()
+
     plt.plot(x, y, style)
+
+    if not axis:
+        plt.axis('off')
 
     dst = pyplot_fig2arr(fig)
     plt.close()
+
+    # switch back backend
+    plt.switch_backend(backend)
 
     return dst
