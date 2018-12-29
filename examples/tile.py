@@ -27,10 +27,12 @@ if __name__ == '__main__':
     plt.figure(dpi=200)
 
     plt.subplot(121)
+    plt.title('original')
     plt.imshow(rgb)
     plt.axis('off')
 
     plt.subplot(122)
+    plt.title('instances')
     plt.imshow(tiled)
     plt.axis('off')
 
@@ -40,6 +42,6 @@ if __name__ == '__main__':
     )
     plt.close()
 
-    plt.imshow(plt.imread(out_file))
-    plt.axis('off')
-    plt.show()
+    img = imgviz.io.imread(out_file)
+    imgviz.io.pyglet_imshow(img)
+    imgviz.io.pyglet_run()

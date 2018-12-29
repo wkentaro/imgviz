@@ -35,7 +35,7 @@ tiled = imgviz.tile(
 # -----------------------------------------------------------------------------
 
 out_file = osp.join(here, '.readme/getting_started.jpg')
-plt.imsave(out_file, tiled)
-plt.imshow(plt.imread(out_file))
-plt.axis('off')
-plt.show()
+img = imgviz.io.imread(out_file)
+img = imgviz.resize(img, width=1280)
+imgviz.io.pyglet_imshow(img)
+imgviz.io.pyglet_run()
