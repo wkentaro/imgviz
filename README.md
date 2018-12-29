@@ -18,6 +18,7 @@ pip install imgviz
 - [matplotlib](https://pypi.org/project/matplotlib)
 - [numpy](https://pypi.org/project/numpy)
 - [Pillow](https://pypi.org/project/Pillow)
+- [pyglet](https://pypi.org/project/pyglet)
 
 ## Getting Started
 
