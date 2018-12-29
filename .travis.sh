@@ -8,8 +8,10 @@ pip install hacking
 flake8 .
 
 # mypy
-pip install mypy
-mypy -p imgviz --ignore-missing-imports
+if [ "$(python -c 'import sys; print(sys.version[0])')" = "3" ]; then
+  pip install mypy
+  mypy -p imgviz --ignore-missing-imports
+fi
 
 # install
 pip install -e .
