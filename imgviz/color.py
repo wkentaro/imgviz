@@ -8,6 +8,7 @@ from . import draw
 
 
 def rgb2gray(rgb):
+    # type: (np.ndarray) -> np.ndarray
     assert rgb.ndim == 3
     gray = PIL.Image.fromarray(rgb)
     gray = gray.convert('L')
@@ -16,12 +17,14 @@ def rgb2gray(rgb):
 
 
 def gray2rgb(gray):
+    # type: (np.ndarray) -> np.ndarray
     assert gray.ndim == 2
     rgb = gray[:, :, None].repeat(3, axis=2)
     return rgb
 
 
 def rgb2rgba(rgb):
+    # type: (np.ndarray) -> np.ndarray
     assert rgb.ndim == 3
     a = np.full(rgb.shape[:2], 255, dtype=np.uint8)
     rgba = np.dstack((rgb, a))
@@ -60,6 +63,7 @@ def depth2rgb(
 
 
 def label_colormap(n_label=256):
+    # type: (int) -> np.ndarray
     def bitget(byteval, idx):
         return ((byteval & (1 << idx)) != 0)
 
