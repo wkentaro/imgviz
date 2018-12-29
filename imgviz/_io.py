@@ -16,13 +16,16 @@ def imsave(filename, arr):
 
 def pyglet_imshow(image: np.ndarray) -> None:
     image = PIL.Image.fromarray(image)
-    image = pyglet.image.ImageData(
-        width=image.width,
-        height=image.height,
-        format=image.mode,
-        data=image.tobytes(),
-        pitch=- image.width * len(image.mode),
-    )
+    try:
+        image = pyglet.image.ImageData(
+            width=image.width,
+            height=image.height,
+            format=image.mode,
+            data=image.tobytes(),
+            pitch=- image.width * len(image.mode),
+        )
+    except pyglet.canvas.xlib.NoSuchDisplayException:
+        return
 
     window = pyglet.window.Window(
         width=image.width,
@@ -59,4 +62,7 @@ def pyglet_imshow(image: np.ndarray) -> None:
 
 
 def pyglet_run():
-    return pyglet.app.run()
+    try:
+        return pyglet.app.run()
+    except pyglet.canvas.xlib.NoSuchDisplayException:
+        return
