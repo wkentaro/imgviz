@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
-import transformations as tf
 
 from ._io import pyplot_fig2arr
+from .external import transformations as tf
 
 
 def plot_trajectory(
