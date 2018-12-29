@@ -15,6 +15,9 @@ before_install:
   - pip install hacking
   - flake8 .
 
+  - pip install mypy
+  - mypy -p imgviz --ignore-missing-imports
+
 install:
   - pip install .
 

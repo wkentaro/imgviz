@@ -4,17 +4,20 @@ import pyglet
 
 
 def imread(filename):
+    # type: (str) -> np.ndarray
     return np.asarray(PIL.Image.open(filename))
 
 
 def imsave(filename, arr):
+    # type: (str, np.ndarray) -> None
     return PIL.Image.fromarray(arr).save(filename)
 
 
 # -----------------------------------------------------------------------------
 
 
-def pyglet_imshow(image: np.ndarray) -> None:
+def pyglet_imshow(image):
+    # type: (np.ndarray) -> None
     image = PIL.Image.fromarray(image)
     try:
         image = pyglet.image.ImageData(
