@@ -1,4 +1,3 @@
-import numpy as np
 import PIL.Image
 
 try:
@@ -7,22 +6,17 @@ except ImportError:
     pyglet = None
 
 
-def imread(filename):
-    # type: (str) -> np.ndarray
-    return np.asarray(PIL.Image.open(filename))
-
-
-def imsave(filename, arr):
-    # type: (str, np.ndarray) -> None
-    return PIL.Image.fromarray(arr).save(filename)
-
-
-# -----------------------------------------------------------------------------
-# pyglet
+def check_pyglet_available():
+    if pyglet is None:
+        raise ImportError(
+            'pyglet is not installed, run following: pip install pyglet'
+        )
 
 
 def pyglet_imshow(image):
     # type: (np.ndarray) -> None
+    check_pyglet_available()
+
     image = PIL.Image.fromarray(image)
     image = pyglet.image.ImageData(
         width=image.width,
@@ -67,16 +61,6 @@ def pyglet_imshow(image):
 
 
 def pyglet_run():
+    check_pyglet_available()
+
     return pyglet.app.run()
-
-
-# -----------------------------------------------------------------------------
-# matplotlib
-
-
-def pyplot_fig2arr(fig):
-    fig.canvas.draw()
-    arr = np.frombuffer(fig.canvas.tostring_rgb(), dtype=np.uint8)
-    width, height = fig.canvas.get_width_height()
-    arr = arr.reshape((height, width, 3))
-    return arr
