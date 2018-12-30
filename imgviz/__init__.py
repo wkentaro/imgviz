@@ -12,6 +12,7 @@ from . import _io as io
 from .color import gray2rgb
 from .color import rgb2gray
 from .depth import depth2rgb
+from .flow import flow2rgb
 from .instances import instances2rgb
 from .label import label_colormap
 from .label import label2rgb
