@@ -20,7 +20,7 @@ def read_pose_file(filename):
 
 
 def read_flow(filename):
-    """ Read .flo file in Middlebury format"""
+    """Read .flo file in Middlebury format"""
     # Code adapted from:
     # http://stackoverflow.com/questions/28013200/reading-middlebury-
     # flow-files-with-python-bytes-array-numpy
