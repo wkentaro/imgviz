@@ -93,7 +93,7 @@ def flow2rgb(flow_uv, clip_flow=None):
     flow_uv: numpy.ndarray
         optical flow with the shape of [H, W, 2]
     clip_flow: float
-        The maximumn value of optical flow
+        The maximum value of the optical flow
 
     Returns
     -------
