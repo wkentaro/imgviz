@@ -16,6 +16,7 @@ from .instances import instances2rgb
 from .label import label_colormap
 from .label import label2rgb
 from .trajectory import plot_trajectory
+from .flow import flow2rgb
 
 # visualization operations
 from .centerize import centerize
