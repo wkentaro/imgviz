@@ -11,7 +11,7 @@ here = osp.dirname(osp.abspath(__file__))
 if __name__ == '__main__':
     data = imgviz.data.kitti()
     img, flow = data['flow']
-    flow = imgviz.flow2rgb(flow)
+    flow_rgb = imgviz.flow2rgb(flow)
 
     # -------------------------------------------------------------------------
 
@@ -23,7 +23,7 @@ if __name__ == '__main__':
 
     plt.subplot(1, 2, 2)
     plt.title('flow')
-    plt.imshow(flow)
+    plt.imshow(flow_rgb)
     plt.axis('off')
 
     out_file = osp.join(here, '.readme/flow.jpg')
