@@ -19,8 +19,9 @@ def read_pose_file(filename):
     return transforms
 
 
-def kitti():
-    pose_file = osp.join(here, 'v0/00.txt')
+def kitti_odometry():
+    # http://www.cvlibs.net/datasets/kitti/eval_odometry.php
+    pose_file = osp.join(here, 'odometry/00.txt')
     transforms = read_pose_file(pose_file)
     data = {'transforms': transforms}
     return data

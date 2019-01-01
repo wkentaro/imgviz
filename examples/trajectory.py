@@ -9,7 +9,7 @@ here = osp.dirname(osp.abspath(__file__))
 
 
 if __name__ == '__main__':
-    data = imgviz.data.kitti()
+    data = imgviz.data.kitti_odometry()
 
     img = imgviz.plot_trajectory(data['transforms'])
 
