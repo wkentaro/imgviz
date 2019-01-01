@@ -89,7 +89,7 @@ def label2rgb(
         color = get_fg_color(res[y, x])
         res = draw_module.text(
             res,
-            position=(y - height // 2, x - width // 2),
+            yx=(y - height // 2, x - width // 2),
             text=text,
             color=color,
             size=font_size,

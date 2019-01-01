@@ -29,7 +29,7 @@ if __name__ == '__main__':
         fill=(0, 255, 0),
     )
     viz = imgviz.draw.text(
-        viz, text=text, position=aabb1, color=(0, 0, 0), size=size
+        viz, yx=aabb1, text=text, color=(0, 0, 0), size=size
     )
 
     # -------------------------------------------------------------------------

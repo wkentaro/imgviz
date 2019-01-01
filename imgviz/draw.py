@@ -56,11 +56,31 @@ def text_size(text, size):
     return height, width
 
 
-def text(src, position, text, color, size):
+def text(src, yx, text, color, size):
+    '''Draw text on numpy array with Pillow.
+
+    Parameters
+    ----------
+    src: numpy.ndarray
+        Input image.
+    yx: (2,) array-like
+        Left top point of the text.
+    text: str
+        Text to draw.
+    color: (3,) array-like
+        Text RGB color in uint8
+    size: int
+        Text size in pixel.
+
+    Returns
+    -------
+    dst: numpy.ndarray
+        Output image.
+    '''
     src_pil = PIL.Image.fromarray(src)
     draw = PIL.ImageDraw.ImageDraw(src_pil)
 
-    y1, x1 = position
+    y1, x1 = yx
     color = tuple(color)
     font = _get_font(size=size)
     draw.text(xy=(x1, y1), text=text, fill=color, font=font)
