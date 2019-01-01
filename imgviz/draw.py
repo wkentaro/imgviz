@@ -8,6 +8,26 @@ import PIL.ImageFont
 
 
 def rectangle(src, aabb1, aabb2, color, fill=None, width=0):
+    '''Draw rectangle on numpy array with Pillow.
+
+    Parameters
+    ----------
+    src: numpy.ndarray
+        Input image.
+    aabb1, aabb2: (2,) array-like
+        aabb1 is (y_min, x_min) and aabb2 is (y_max, x_max).
+    color: (3,) array-like
+        RGB color in uint8.
+    fill: (3,) array-like, optional
+        RGB color to fill the rectangle. None for no fill. (default: None)
+    width: int, optional
+        Rectangle line width. (default: 0)
+
+    Returns
+    -------
+    dst: numpy.ndarray
+        Output image.
+    '''
     color = tuple(color)
 
     src_pil = PIL.Image.fromarray(src)
