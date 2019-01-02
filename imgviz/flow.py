@@ -78,21 +78,22 @@ def flow_compute_color(flow_u, flow_v):
 
 
 def flow2rgb(flow_uv):
-    """visualize optical flow
+    """Visualize optical flow.
 
     Parameters
     ----------
-    flow_uv: numpy.ndarray
-        optical flow with the shape of [H, W, 2]
+    flow_uv: numpy.ndarray, (H, W, 2), float
+        Optical flow.
 
     Returns
     -------
     dst: numpy.ndarray
-        RGB image
+        RGB image.
     """
-
-    assert flow_uv.ndim == 3, 'input flow must have three dimensions'
-    assert flow_uv.shape[2] == 2, 'input flow must have shape (H, W, 2)'
+    assert flow_uv.ndim == 3, 'flow must be 3 dimensional'
+    assert flow_uv.shape[2] == 2, 'flow must have shape (H, W, 2)'
+    assert np.issubdtype(flow_uv.dtype, np.floating), \
+        'float must be float type'
 
     flow_u = flow_uv[:, :, 0]
     flow_v = flow_uv[:, :, 1]
