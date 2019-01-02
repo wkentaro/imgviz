@@ -10,6 +10,8 @@ import shlex
 import subprocess
 import sys
 
+import github2pypi
+
 
 version = '0.1.10'
 
@@ -43,50 +45,10 @@ def get_install_requires():
     return install_requires
 
 
-def get_long_description():
-    f = open('README.md')
-
-    lines = []
-    for line in f:
-
-        def repl(match):
-            if not match:
-                return
-
-            url = match.group(1)
-            if url.startswith('http'):
-                return match.group(0)
-
-            url_new = (
-                'https://github.com/wkentaro/imgviz/blob/master/{}'
-                .format(url)
-            )
-            if re.match(r'.*[\.jpg|\.png]$', url_new):
-                url_new += '?raw=true'
-
-            start0, end0 = match.regs[0]
-            start, end = match.regs[1]
-            start -= start0
-            end -= start0
-
-            res = match.group(0)
-            res = res[:start] + url_new + res[end:]
-            return res
-
-        patterns = [
-            r'\[.*?\]\((.*?)\)',
-            r'<img.*src="(.*?)".*?/>',
-            r'<a.*href="(.*?)".*?>',
-        ]
-        for pattern in patterns:
-            line = re.sub(pattern, repl, line)
-
-        lines.append(line)
-
-    f.close()
-
-    return ''.join(lines)
-
+with open('README.md') as f:
+    long_description = github2pypi.replace_url(
+        slug='wkentaro/imgviz', content=f.read()
+    )
 
 setup(
     name='imgviz',
@@ -94,7 +56,7 @@ setup(
     packages=find_packages(),
     install_requires=get_install_requires(),
     description='Image Visualization Tools',
-    long_description=get_long_description(),
+    long_description=long_description,
     long_description_content_type='text/markdown',
     package_data={'imgviz': ['data/*']},
     include_package_data=True,
