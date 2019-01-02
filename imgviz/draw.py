@@ -51,6 +51,22 @@ def _get_font(size):
 
 
 def text_size(text, size):
+    '''Get text size (height and width).
+
+    Parameters
+    ----------
+    text: str
+        Text.
+    size: int
+        Pixel font size.
+
+    Returns
+    -------
+    height: int
+        Text height.
+    width: int
+        Text width.
+    '''
     font = _get_font(size)
     width, height = font.getsize(text)
     return height, width
