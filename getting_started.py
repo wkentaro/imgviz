@@ -15,34 +15,31 @@ import imgviz
 data = imgviz.data.arc2017()
 
 # colorize depth image with JET colormap
-depthviz = imgviz.depth2rgb(data['depth'], min_value=0.3, max_value=1)
+depth = data['depth']
+depthviz = imgviz.depth2rgb(depth, min_value=0.3, max_value=1)
 
 # colorize label image
-labelviz = imgviz.label2rgb(data['class_label'], label_names=data['class_names'])
+class_label = data['class_label']
+labelviz = imgviz.label2rgb(class_label, label_names=data['class_names'])
 
 # instance bboxes
+rgb = data['rgb']
 bboxes = data['bboxes'].astype(int)
-captions = [data['class_names'][l] for l in data['labels']]
-bboxviz = imgviz.instances2rgb(
-    image=data['rgb'], bboxes=bboxes, labels=data['labels'], captions=captions
-)
+labels = data['labels']
+captions = [data['class_names'][l] for l in labels]
+bboxviz = imgviz.instances2rgb(image=rgb, bboxes=bboxes, labels=labels, captions=captions)
 
 # instance masks
 masks = data['masks'] == 1
-maskviz = imgviz.instances2rgb(
-    image=data['rgb'], masks=masks, labels=data['labels'], captions=captions
-)
+maskviz = imgviz.instances2rgb(image=rgb, masks=masks, labels=labels, captions=captions)
 
 # tile instance masks
-insviz = [
-    (data['rgb'] * mask[:, :, None])[y1:y2, x1:x2]
-    for (y1, x1, y2, x2), mask in zip(bboxes, masks)
-]
+insviz = [(rgb * m[:, :, None])[b[0]:b[2], b[1]:b[3]] for b, m in zip(bboxes, masks)]
 insviz = imgviz.tile(imgs=insviz, border=(255, 255, 255))
 
 # tile visualization
 tiled = imgviz.tile(
-    [data['rgb'], depthviz, labelviz, bboxviz, maskviz, insviz],
+    [rgb, depthviz, labelviz, bboxviz, maskviz, insviz],
     shape=(2, 3),
     border=(255, 255, 255),
 )

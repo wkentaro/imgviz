@@ -80,12 +80,12 @@ pip install imgviz
 
 ## Getting Started
 
+<img src=".readme/getting_started.jpg" width="75%" />
+
 ```python
 # getting_started.py
 
 {getting_started}```
-
-<img src=".readme/getting_started.jpg" width="100%" />
 
 ## [Examples](examples)
 
