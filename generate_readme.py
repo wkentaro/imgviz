@@ -5,6 +5,8 @@ from __future__ import print_function
 import glob
 import os.path as osp
 
+import PIL.Image
+
 
 def tabulate(rows):
     html = '<table>'
@@ -24,9 +26,11 @@ def main():
         img_file = osp.join('examples/.readme', img_file)
         if not osp.exists(img_file):
             continue
+        img = PIL.Image.open(img_file)
+        width = 25. / img.height * img.width
         examples.append((
             '<pre><a href="{}">{}</a></pre>'.format(py_file, py_file),
-            '<img src="{}" width="70%" />'.format(img_file),
+            '<img src="{}" width="{}%" />'.format(img_file, width),
         ))
     examples = tabulate(examples)
 
