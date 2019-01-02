@@ -3,7 +3,6 @@
 from __future__ import print_function
 
 import distutils.spawn
-import re
 from setuptools import find_packages
 from setuptools import setup
 import shlex
