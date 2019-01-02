@@ -72,38 +72,38 @@ tiled = imgviz.tile(
 <table>
 	<tr>
 		<td><pre><a href="examples/centerize.py">examples/centerize.py</a></pre></td>
-		<td><img src="examples/.readme/centerize.jpg" width="70%" /></td>
+		<td><img src="examples/.readme/centerize.jpg" width="63.33333333333333%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/depth2rgb.py">examples/depth2rgb.py</a></pre></td>
-		<td><img src="examples/.readme/depth2rgb.jpg" width="70%" /></td>
+		<td><img src="examples/.readme/depth2rgb.jpg" width="62.149532710280376%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/draw.py">examples/draw.py</a></pre></td>
-		<td><img src="examples/.readme/draw.jpg" width="70%" /></td>
+		<td><img src="examples/.readme/draw.jpg" width="57.081545064377686%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/flow.py">examples/flow.py</a></pre></td>
-		<td><img src="examples/.readme/flow.jpg" width="70%" /></td>
+		<td><img src="examples/.readme/flow.jpg" width="62.149532710280376%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/instances2rgb.py">examples/instances2rgb.py</a></pre></td>
-		<td><img src="examples/.readme/instances2rgb.jpg" width="70%" /></td>
+		<td><img src="examples/.readme/instances2rgb.jpg" width="76.657060518732%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/label2rgb.py">examples/label2rgb.py</a></pre></td>
-		<td><img src="examples/.readme/label2rgb.jpg" width="70%" /></td>
+		<td><img src="examples/.readme/label2rgb.jpg" width="78.31412103746398%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/resize.py">examples/resize.py</a></pre></td>
-		<td><img src="examples/.readme/resize.jpg" width="70%" /></td>
+		<td><img src="examples/.readme/resize.jpg" width="56.9593147751606%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/tile.py">examples/tile.py</a></pre></td>
-		<td><img src="examples/.readme/tile.jpg" width="70%" /></td>
+		<td><img src="examples/.readme/tile.jpg" width="63.55140186915888%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/trajectory.py">examples/trajectory.py</a></pre></td>
-		<td><img src="examples/.readme/trajectory.jpg" width="70%" /></td>
+		<td><img src="examples/.readme/trajectory.jpg" width="33.333333333333336%" /></td>
 	</tr>
 </table>
