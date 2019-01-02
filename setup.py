@@ -30,6 +30,7 @@ if sys.argv[1] == 'release':
         'twine upload dist/imgviz-{:s}.tar.gz'.format(version),
     ]
     for cmd in commands:
+        print('+ {}'.format(cmd))
         subprocess.check_call(shlex.split(cmd))
     sys.exit(0)
 
