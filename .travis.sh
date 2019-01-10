@@ -23,7 +23,7 @@ source .anaconda$PYTHON_VERSION32/bin/activate
 set -x
 
 # flake8
-pip install hacking
+pip install flake8
 flake8 .
 
 # mypy
