@@ -48,6 +48,7 @@ def tile(
     shape=None,
     cval=None,
     border=None,
+    border_width=None,
 ):
     assert isinstance(imgs, (list, tuple))
     imgs = imgs[:]
@@ -62,6 +63,9 @@ def tile(
         assert border.ndim == 2
     else:
         border = (border,) * len(imgs)
+
+    if border_width is None:
+        border_width = 3
 
     # get max tile size to which each image should be resized
     max_h, max_w = np.array([img.shape[:2] for img in imgs]).max(axis=0)
@@ -86,7 +90,7 @@ def tile(
                 aabb1=(0, 0),
                 aabb2=(img.shape[0] - 1, img.shape[1] - 1),
                 color=border[i],
-                width=3,
+                width=border_width,
             )
         imgs[i] = img
 
