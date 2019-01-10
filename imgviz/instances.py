@@ -57,7 +57,7 @@ def instances2rgb(
         if mask is None:
             continue
 
-        color_ins = colormap[instance_id % len(colormap)]
+        color_ins = colormap[1:][instance_id % len(colormap[1:])]
 
         maskviz = mask[:, :, None] * color_ins.astype(float)
         dst = dst.copy()
