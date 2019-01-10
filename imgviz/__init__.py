@@ -20,6 +20,7 @@ from .trajectory import plot_trajectory
 
 # visualization operations
 from .centerize import centerize
+from .normalize import normalize
 from .resize import resize
 from .tile import tile
 # from .overlay import overlay
