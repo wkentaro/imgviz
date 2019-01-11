@@ -33,7 +33,7 @@ if [ "$PYTHON_VERSION32" = "3" ]; then
 fi
 
 # install
-pip install -e .
+pip install -e .[all]
 
 # pytest
 pip install pytest
