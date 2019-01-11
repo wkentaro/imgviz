@@ -1,5 +1,4 @@
 import numpy as np
-import skimage.segmentation
 
 from . import color as color_module
 from . import draw as draw_module
@@ -65,10 +64,15 @@ def instances2rgb(
             (1 - alpha) * image_gray[mask].astype(float) +
             alpha * maskviz[mask]
         )
-        boundary = skimage.segmentation.find_boundaries(
-            mask, connectivity=2
-        )
-        dst[boundary] = (200, 200, 200)
+
+        try:
+            import skimage.segmentation
+            boundary = skimage.segmentation.find_boundaries(
+                mask, connectivity=2
+            )
+            dst[boundary] = (200, 200, 200)
+        except ImportError:
+            pass
 
     for instance_id in range(n_instance):
         bbox = bboxes[instance_id]
