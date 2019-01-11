@@ -54,6 +54,9 @@ setup(
     version=version,
     packages=find_packages(),
     install_requires=get_install_requires(),
+    extras_require={
+        'all': ['scikit-image'],
+    },
     description='Image Visualization Tools',
     long_description=long_description,
     long_description_content_type='text/markdown',
