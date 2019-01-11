@@ -12,7 +12,7 @@ import sys
 import github2pypi
 
 
-version = '0.1.15'
+version = '0.1.16'
 
 
 if sys.argv[1] == 'release':
@@ -24,6 +24,7 @@ if sys.argv[1] == 'release':
         sys.exit(1)
 
     commands = [
+        'git submodule update github2pypi',
         'git pull origin master',
         'git tag v{:s}'.format(version),
         'git push origin master --tag',
