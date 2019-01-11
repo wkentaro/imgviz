@@ -10,6 +10,9 @@
 
 ```bash
 pip install imgviz
+
+# there are optional dependencies like skimage, below installs all.
+pip install imgviz[all]
 ```
 
 
@@ -18,7 +21,6 @@ pip install imgviz
 - [matplotlib](https://pypi.org/project/matplotlib)
 - [numpy](https://pypi.org/project/numpy)
 - [Pillow](https://pypi.org/project/Pillow)
-- [scikit-image](https://pypi.org/project/scikit-image)
 
 ## Getting Started
 
