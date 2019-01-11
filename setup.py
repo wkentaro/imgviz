@@ -52,7 +52,7 @@ with open('README.md') as f:
 setup(
     name='imgviz',
     version=version,
-    packages=find_packages(),
+    packages=find_packages(exclude=['github2pypi']),
     install_requires=get_install_requires(),
     extras_require={
         'all': ['scikit-image'],
