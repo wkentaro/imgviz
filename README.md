@@ -82,12 +82,20 @@ tiled = imgviz.tile(
 		<td><img src="examples/.readme/draw.jpg" width="57.081545064377686%" /></td>
 	</tr>
 	<tr>
+		<td><pre><a href="examples/flow2rgb.py">examples/flow2rgb.py</a></pre></td>
+		<td><img src="examples/.readme/flow2rgb.jpg" width="62.149532710280376%" /></td>
+	</tr>
+	<tr>
 		<td><pre><a href="examples/instances2rgb.py">examples/instances2rgb.py</a></pre></td>
 		<td><img src="examples/.readme/instances2rgb.jpg" width="76.657060518732%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/label2rgb.py">examples/label2rgb.py</a></pre></td>
 		<td><img src="examples/.readme/label2rgb.jpg" width="78.31412103746398%" /></td>
+	</tr>
+	<tr>
+		<td><pre><a href="examples/plot_trajectory.py">examples/plot_trajectory.py</a></pre></td>
+		<td><img src="examples/.readme/plot_trajectory.jpg" width="33.333333333333336%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/resize.py">examples/resize.py</a></pre></td>
