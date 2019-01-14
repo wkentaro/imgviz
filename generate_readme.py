@@ -40,6 +40,8 @@ def main():
             if req.startswith('#'):
                 continue
             req = req.strip()
+            for sep in '<=>':
+                req = req.split(sep)[0]
             dependencies.append(
                 '- [{0}](https://pypi.org/project/{0})'.format(req)
             )
