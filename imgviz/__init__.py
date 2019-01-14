@@ -16,8 +16,8 @@ from .flow import flow2rgb
 from .instances import instances2rgb
 from .label import label_colormap
 from .label import label2rgb
-from .ndim import Ndim2RGB
-from .ndim import ndim2rgb
+from .nchannel import Nchannel2RGB
+from .nchannel import nchannel2rgb
 from .trajectory import plot_trajectory
 
 # visualization operations
