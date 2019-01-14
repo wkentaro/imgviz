@@ -15,7 +15,7 @@ if __name__ == '__main__':
 
     # -------------------------------------------------------------------------
 
-    out_file = osp.join(here, '.readme/trajectory.jpg')
+    out_file = osp.join(here, '.readme/plot_trajectory.jpg')
     imgviz.io.imsave(out_file, img)
 
     img = imgviz.io.imread(out_file)

@@ -27,7 +27,7 @@ if __name__ == '__main__':
     plt.imshow(flowviz)
     plt.axis('off')
 
-    out_file = osp.join(here, '.readme/flow.jpg')
+    out_file = osp.join(here, '.readme/flow2rgb.jpg')
     plt.savefig(
         out_file, bbox_inches='tight', transparent='True', pad_inches=0
     )
