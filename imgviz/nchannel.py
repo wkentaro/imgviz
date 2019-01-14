@@ -1,4 +1,5 @@
 from . import normalize
+from . import resize
 
 import numpy as np
 
@@ -12,7 +13,7 @@ class Nchannel2RGB:
         self._min_value = None
         self._max_value = None
 
-    def __call__(self, nchannel, dtype=np.uint8):
+    def __call__(self, nchannel, shape=None):
         import sklearn.decomposition
 
         assert nchannel.ndim == 3, 'nchannel.ndim must be 2 or 3'
@@ -34,14 +35,14 @@ class Nchannel2RGB:
             dst = self._pca.transform(dst)
         dst = dst.reshape(H, W, 3)
 
-        if dtype == np.uint8:
-            dst = (dst * 255).round().astype(np.uint8)
-        else:
-            assert np.issubdtype(dtype, np.floating), \
-                'dtype must be uint8 or floating'
-            dst = dst.astype(dtype)
+        if shape:
+            dst = resize.resize(dst, height=shape[0], width=shape[1])
+
+        dst = (dst * 255).round().astype(np.uint8)
         return dst
 
 
-def nchannel2rgb(nchannel, pca=None, min_value=None, max_value=None):
-    return Nchannel2RGB()(nchannel)
+def nchannel2rgb(
+    nchannel, shape=None, pca=None, min_value=None, max_value=None,
+):
+    return Nchannel2RGB()(nchannel, shape)
