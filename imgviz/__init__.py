@@ -11,6 +11,7 @@ from . import _io as io
 # visualization targets
 from .color import gray2rgb
 from .color import rgb2gray
+from .depth import Depth2RGB
 from .depth import depth2rgb
 from .flow import flow2rgb
 from .instances import instances2rgb
