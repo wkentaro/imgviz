@@ -34,7 +34,7 @@ def depth2rgb(
     assert hasattr(matplotlib.cm, colormap), \
         'unsupported colormap: {}'.format(colormap)
 
-    normalized = normalize(depth, min_value, max_value)
+    normalized = normalize(depth, min_value=min_value, max_value=max_value)
 
     isnan = np.isnan(normalized)
     normalized[isnan] = 0
