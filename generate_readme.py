@@ -40,10 +40,11 @@ def main():
             if req.startswith('#'):
                 continue
             req = req.strip()
+            pkg = req
             for sep in '<=>':
-                req = req.split(sep)[0]
+                pkg = pkg.split(sep)[0]
             dependencies.append(
-                '- [{0}](https://pypi.org/project/{0})'.format(req)
+                '- [{0}](https://pypi.org/project/{1})'.format(req, pkg)
             )
     dependencies = '\n'.join(dependencies)
 
