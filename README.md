@@ -19,7 +19,7 @@ pip install imgviz[all]
 ## Dependencies
 
 - [matplotlib](https://pypi.org/project/matplotlib)
-- [numpy<1.16](https://pypi.org/project/numpy<1.16)
+- [numpy<1.16](https://pypi.org/project/numpy)
 - [Pillow](https://pypi.org/project/Pillow)
 
 ## Getting Started
@@ -82,10 +82,6 @@ tiled = imgviz.tile(
 		<td><img src="examples/.readme/draw.jpg" width="57.081545064377686%" /></td>
 	</tr>
 	<tr>
-		<td><pre><a href="examples/flow.py">examples/flow.py</a></pre></td>
-		<td><img src="examples/.readme/flow.jpg" width="62.149532710280376%" /></td>
-	</tr>
-	<tr>
 		<td><pre><a href="examples/instances2rgb.py">examples/instances2rgb.py</a></pre></td>
 		<td><img src="examples/.readme/instances2rgb.jpg" width="76.657060518732%" /></td>
 	</tr>
@@ -100,9 +96,5 @@ tiled = imgviz.tile(
 	<tr>
 		<td><pre><a href="examples/tile.py">examples/tile.py</a></pre></td>
 		<td><img src="examples/.readme/tile.jpg" width="63.55140186915888%" /></td>
-	</tr>
-	<tr>
-		<td><pre><a href="examples/trajectory.py">examples/trajectory.py</a></pre></td>
-		<td><img src="examples/.readme/trajectory.jpg" width="33.333333333333336%" /></td>
 	</tr>
 </table>
