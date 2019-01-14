@@ -1,6 +1,7 @@
 import os.path as osp
 
 import matplotlib.pyplot as plt
+import numpy as np
 
 import imgviz
 
@@ -11,7 +12,11 @@ here = osp.dirname(osp.abspath(__file__))
 if __name__ == '__main__':
     data = imgviz.data.arc2017()
 
-    nchannel_viz = imgviz.nchannel2rgb(data['res4'], shape=data['rgb'].shape)
+    nchannel_viz = imgviz.nchannel2rgb(data['res4'], dtype=np.float32)
+
+    H, W = data['rgb'].shape[:2]
+    nchannel_viz = imgviz.resize(nchannel_viz, height=H, width=W)
+    nchannel_viz = (nchannel_viz * 255).round().astype(np.uint8)
 
     # -------------------------------------------------------------------------
 

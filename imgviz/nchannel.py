@@ -1,22 +1,33 @@
 from . import normalize
-from . import resize
 
 import numpy as np
 
 
-class Nchannel2RGB:
+class Nchannel2RGB(object):
 
     """Convert nchannel array to rgb by PCA."""
 
-    def __init__(self):
-        self._pca = None
-        self._min_value = None
-        self._max_value = None
+    def __init__(self, min_value=None, max_value=None, pca=None):
+        self._min_value = min_value
+        self._max_value = max_value
+        self._pca = pca
 
-    def __call__(self, nchannel, shape=None):
+    @property
+    def pca(self):
+        return self._pca
+
+    @property
+    def min_value(self):
+        return self._min_value
+
+    @property
+    def max_value(self):
+        return self._max_value
+
+    def __call__(self, nchannel, dtype=np.uint8):
         import sklearn.decomposition
 
-        assert nchannel.ndim == 3, 'nchannel.ndim must be 2 or 3'
+        assert nchannel.ndim == 3, 'nchannel.ndim must be 3'
         assert np.issubdtype(nchannel.dtype, np.floating), \
             'nchannel.dtype must be floating'
         H, W, D = nchannel.shape
@@ -35,14 +46,16 @@ class Nchannel2RGB:
             dst = self._pca.transform(dst)
         dst = dst.reshape(H, W, 3)
 
-        if shape:
-            dst = resize.resize(dst, height=shape[0], width=shape[1])
+        if dtype == np.uint8:
+            dst = (dst * 255).round().astype(np.uint8)
+        else:
+            assert np.issubdtype(dtype, np.floating)
+            dst = dst.astype(dtype)
 
-        dst = (dst * 255).round().astype(np.uint8)
         return dst
 
 
 def nchannel2rgb(
-    nchannel, shape=None, pca=None, min_value=None, max_value=None,
+    nchannel, dtype=None, pca=None, min_value=None, max_value=None,
 ):
-    return Nchannel2RGB()(nchannel, shape)
+    return Nchannel2RGB(min_value, max_value, pca)(nchannel, dtype)
