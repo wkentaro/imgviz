@@ -37,6 +37,8 @@ def main():
     dependencies = []
     with open('requirements.txt') as f:
         for req in f:
+            if req.startswith('#'):
+                continue
             req = req.strip()
             dependencies.append(
                 '- [{0}](https://pypi.org/project/{0})'.format(req)

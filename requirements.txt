@@ -1,3 +1,4 @@
 matplotlib
-numpy
+# numpy 1.16 raises error on python2 with import dask.array
+numpy<1.16
 Pillow
