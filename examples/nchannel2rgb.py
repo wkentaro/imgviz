@@ -12,6 +12,7 @@ here = osp.dirname(osp.abspath(__file__))
 if __name__ == '__main__':
     data = imgviz.data.arc2017()
 
+    np.random.seed(1234)  # for PCA
     nchannel_viz = imgviz.nchannel2rgb(data['res4'], dtype=np.float32)
 
     H, W = data['rgb'].shape[:2]
