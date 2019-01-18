@@ -45,10 +45,15 @@ def get_install_requires():
     return install_requires
 
 
-with open('README.md') as f:
-    long_description = github2pypi.replace_url(
-        slug='wkentaro/imgviz', content=f.read()
-    )
+def get_long_description():
+    if not hasattr(github2pypi, '__file__'):
+        print('Please update submodule:\n\n\tgit submodule update --init')
+        sys.exit(1)
+
+    with open('README.md') as f:
+        return github2pypi.replace_url(
+            slug='wkentaro/imgviz', content=f.read()
+        )
 
 setup(
     name='imgviz',
@@ -59,7 +64,7 @@ setup(
         'all': ['scikit-image', 'scikit-learn'],
     },
     description='Image Visualization Tools',
-    long_description=long_description,
+    long_description=get_long_description(),
     long_description_content_type='text/markdown',
     package_data={'imgviz': ['data/*']},
     include_package_data=True,
