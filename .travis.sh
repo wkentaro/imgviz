@@ -33,6 +33,10 @@ if [ "$PYTHON_VERSION32" = "3" ]; then
 fi
 
 # install
+if [ "$PYTHON_VERSION32" = "2" ]; then
+  # numpy 1.16 raises error on python2 with import dask.array
+  pip install numpy<1.16
+fi
 pip install -e .[all]
 
 # pytest
