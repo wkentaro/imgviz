@@ -51,7 +51,7 @@ def tile(
     border_width=None,
 ):
     assert isinstance(imgs, (list, tuple))
-    imgs = imgs[:]
+    imgs = list(imgs)  # copy
 
     if shape is None:
         shape = _get_tile_shape(len(imgs))
