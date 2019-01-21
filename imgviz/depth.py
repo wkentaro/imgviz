@@ -24,7 +24,7 @@ class Depth2RGB(object):
     def max_value(self):
         return self._max_value
 
-    def __call__(self, depth, dtype=None):
+    def __call__(self, depth, dtype=np.uint8):
         assert depth.ndim == 2, 'depth image must be 2 dimensional'
         assert np.issubdtype(depth.dtype, np.floating), \
             'depth dtype must be float'
