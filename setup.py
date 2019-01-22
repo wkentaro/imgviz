@@ -55,6 +55,7 @@ def get_long_description():
             slug='wkentaro/imgviz', content=f.read()
         )
 
+
 setup(
     name='imgviz',
     version=version,
