@@ -23,12 +23,12 @@ source .anaconda$PYTHON_VERSION32/bin/activate
 set -x
 
 # flake8
-pip install flake8
+pip install -U flake8
 flake8 .
 
 # mypy
 if [ "$PYTHON_VERSION32" = "3" ]; then
-  pip install mypy
+  pip install -U mypy
   mypy -p imgviz --ignore-missing-imports
 fi
 
@@ -40,7 +40,7 @@ fi
 pip install -e .[all]
 
 # pytest
-pip install pytest
+pip install -U pytest
 pytest -v tests
 
 # examples
