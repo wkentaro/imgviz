@@ -80,7 +80,7 @@ def tile(
 
         if ndim == 3 and img.ndim == 2:
             img = gray2rgb(img)
-        if channel == 4:
+        if channel == 4 and img.shape[2] == 3:
             img = rgb2rgba(img)
 
         img = centerize(src=img, shape=(max_h, max_w, channel), cval=cval)
