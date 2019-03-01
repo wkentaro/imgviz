@@ -11,6 +11,13 @@ python:
   - '3.6'
   - '2.7'
 
+branches:
+  only:
+    - master
+
+notifications:
+  email: false
+
 install:
   - true  # drop pip install -r requirements.txt
 
@@ -18,16 +25,13 @@ script:
   - ./.travis.sh
 
 after_success:
+  - rm -f dist/*.tar.gz
+  - python setup.py sdist
+  - pip install dist/*.tar.gz
+
   - |
     if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PYTHON_VERSION" = "3.6" ]; then
       source .anaconda3/bin/activate
       ./generate_readme.py > README.md
       ./.travis_push.sh README.md .readme examples/.readme
     fi
-
-branches:
-  only:
-    - master
-
-notifications:
-  email: false
