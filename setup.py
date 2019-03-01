@@ -9,8 +9,6 @@ import shlex
 import subprocess
 import sys
 
-import github2pypi
-
 
 version = '0.2.6'
 
@@ -46,14 +44,17 @@ def get_install_requires():
 
 
 def get_long_description():
-    if not hasattr(github2pypi, '__file__'):
-        print('Please update submodule:\n\n\tgit submodule update --init')
-        sys.exit(1)
-
     with open('README.md') as f:
-        return github2pypi.replace_url(
-            slug='wkentaro/imgviz', content=f.read()
-        )
+        long_description = f.read()
+
+    try:
+        import github2pypi
+    except ImportError:
+        return long_description
+
+    return github2pypi.replace_url(
+        slug='wkentaro/imgviz', content=long_description
+    )
 
 
 setup(
