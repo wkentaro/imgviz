@@ -50,7 +50,6 @@ def tile(
     border=None,
     border_width=None,
 ):
-    assert isinstance(imgs, (list, tuple))
     imgs = list(imgs)  # copy
 
     if shape is None:
@@ -71,8 +70,12 @@ def tile(
     max_h, max_w = np.array([img.shape[:2] for img in imgs]).max(axis=0)
 
     ndim = max(img.ndim for img in imgs)
-    assert ndim in [2, 3]
-    channel = max(img.shape[2] for img in imgs if img.ndim == 3)
+    if ndim == 3:
+        channel = max(img.shape[2] for img in imgs if img.ndim == 3)
+    else:
+        ndim = 3     # gray images will be converted to rgb
+        channel = 3  # all gray
+    assert channel in [3, 4]
 
     # tile images
     for i, img in enumerate(imgs):
@@ -84,6 +87,7 @@ def tile(
             img = rgb2rgba(img)
 
         img = centerize(src=img, shape=(max_h, max_w, channel), cval=cval)
+
         if border[i] is not None:
             img = rectangle(
                 src=img,
@@ -92,6 +96,7 @@ def tile(
                 color=border[i],
                 width=border_width,
             )
+
         imgs[i] = img
 
     height = max_h * shape[0]
