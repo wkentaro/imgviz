@@ -35,12 +35,12 @@ def _tile(imgs, shape, dst):
     return dst
 
 
-def _get_tile_shape(num):
-    x_num = int(math.sqrt(num))  # floor
-    y_num = 0
-    while x_num * y_num < num:
-        y_num += 1
-    return x_num, y_num
+def _get_tile_shape(num, hw_ratio=1):
+    r_num = int(round(math.sqrt(num / hw_ratio)))  # weighted by wh_ratio
+    c_num = 0
+    while r_num * c_num < num:
+        c_num += 1
+    return r_num, c_num
 
 
 def tile(
@@ -52,8 +52,11 @@ def tile(
 ):
     imgs = list(imgs)  # copy
 
+    # get max tile size to which each image should be resized
+    max_h, max_w = np.array([img.shape[:2] for img in imgs]).max(axis=0)
+
     if shape is None:
-        shape = _get_tile_shape(len(imgs))
+        shape = _get_tile_shape(len(imgs), hw_ratio=1. * max_h / max_w)
 
     if border:
         border = np.asarray(border, dtype=np.uint8)
@@ -65,9 +68,6 @@ def tile(
 
     if border_width is None:
         border_width = 3
-
-    # get max tile size to which each image should be resized
-    max_h, max_w = np.array([img.shape[:2] for img in imgs]).max(axis=0)
 
     ndim = max(img.ndim for img in imgs)
     if ndim == 3:
