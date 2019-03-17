@@ -14,7 +14,7 @@ def check_pyglet_available():
         )
 
 
-def pyglet_imshow(image):
+def pyglet_imshow(image, caption=None):
     # type: (np.ndarray) -> None
     check_pyglet_available()
 
@@ -30,6 +30,7 @@ def pyglet_imshow(image):
     window = pyglet.window.Window(
         width=image.width,
         height=image.height,
+        caption=caption,
         # resizable=True,
     )
     sprite = pyglet.sprite.Sprite(image)
