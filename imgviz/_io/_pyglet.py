@@ -15,7 +15,6 @@ def check_pyglet_available():
 
 
 def pyglet_imshow(image, caption=None):
-    # type: (np.ndarray) -> None
     check_pyglet_available()
 
     image = PIL.Image.fromarray(image)
