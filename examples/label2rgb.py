@@ -19,24 +19,31 @@ if __name__ == '__main__':
     labelviz_withname = imgviz.label2rgb(
         data['class_label'], label_names=label_names
     )
+    img = imgviz.color.rgb2gray(data['rgb'])
+    labelviz_withimg = imgviz.label2rgb(data['class_label'], img=img)
 
     # -------------------------------------------------------------------------
 
     fig = plt.figure(dpi=200)
 
-    plt.subplot(131)
+    plt.subplot(141)
     plt.title('rgb')
     plt.imshow(data['rgb'])
     plt.axis('off')
 
-    plt.subplot(132)
-    plt.title('label\n(colorized)')
+    plt.subplot(142)
+    plt.title('label')
     plt.imshow(labelviz)
     plt.axis('off')
 
-    plt.subplot(133)
-    plt.title('label\n(colorized + names)')
+    plt.subplot(143)
+    plt.title('label\n(+names)')
     plt.imshow(labelviz_withname)
+    plt.axis('off')
+
+    plt.subplot(144)
+    plt.title('label\n(+img)')
+    plt.imshow(labelviz_withimg)
     plt.axis('off')
 
     out_file = osp.join(here, '.readme/label2rgb.jpg')

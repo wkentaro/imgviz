@@ -27,6 +27,8 @@ def label_colormap(n_label=256):
 
 def label2rgb(
     label,
+    img=None,
+    alpha=0.5,
     label_names=None,
     n_labels=None,
     font_size=30,
@@ -51,6 +53,12 @@ def label2rgb(
     mask_unlabeled = label < 0
     res[mask_unlabeled] = \
         np.random.random(size=(mask_unlabeled.sum(), 3)) * 255
+
+    if img is not None:
+        if img.ndim == 2:
+            img = color_module.gray2rgb(img)
+        res = (1 - alpha) * img.astype(float) + alpha * res.astype(float)
+        res = np.clip(res.round(), 0, 255).astype(np.uint8)
 
     if label_names is None:
         return res
