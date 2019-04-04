@@ -29,6 +29,8 @@ def rectangle(src, aabb1, aabb2, color, fill=None, width=0):
         Output image.
     '''
     color = tuple(color)
+    if fill is not None:
+        fill = tuple(fill)
 
     src_pil = PIL.Image.fromarray(src)
     draw = PIL.ImageDraw.ImageDraw(src_pil)
