@@ -74,7 +74,7 @@ def text_size(text, size):
     return height, width
 
 
-def text(src, yx, text, color, size):
+def text(src, yx, text, size, color=(0, 0, 0)):
     '''Draw text on numpy array with Pillow.
 
     Parameters
@@ -85,10 +85,11 @@ def text(src, yx, text, color, size):
         Left top point of the text.
     text: str
         Text to draw.
-    color: (3,) array-like
-        Text RGB color in uint8
     size: int
         Text size in pixel.
+    color: (3,) array-like
+        Text RGB color in uint8.
+        Default is (0, 0, 0), which is black.
 
     Returns
     -------
@@ -104,4 +105,60 @@ def text(src, yx, text, color, size):
     draw.text(xy=(x1, y1), text=text, fill=color, font=font)
 
     dst = np.asarray(src_pil)
+    return dst
+
+
+def text_in_rectangle(src, loc, text, size, background, color=(0, 0, 0)):
+    '''Draw text in a rectangle.
+
+    Parameters
+    ----------
+    src: numpy.ndarray
+        Input image.
+    loc: str
+        Location of text. It must be one of following: lt, rt, lb, or rb.
+    text: str
+        Text to draw.
+    size: int
+        Text size in pixel.
+    background: (3,) array-like
+        Background color in uint8.
+    color: (3,) array-like
+        Text RGB color in uint8.
+        Default is (0, 0, 0), which is black.
+
+    Returns
+    -------
+    dst: numpy.ndarray
+        Output image.
+    '''
+
+    tsize = text_size(text, size)
+
+    height, width = src.shape[:2]
+    if loc == 'lt':
+        yx = (0, 0)
+    elif loc == 'rt':
+        yx = (0, (width - 1) - tsize[1] - 1)
+    elif loc == 'lb':
+        yx = ((height - 1) - tsize[0] - 1, 0)
+    elif loc == 'rb':
+        yx = ((height - 1) - tsize[0] - 1, (width - 1) - tsize[1] - 1)
+    else:
+        raise ValueError('unsupported loc: {}'.format(loc))
+
+    dst = rectangle(
+        src=src,
+        aabb1=(yx[0], yx[1]),
+        aabb2=(yx[0] + tsize[0] + 1, yx[1] + tsize[1] + 1),
+        color=background,
+        fill=background,
+    )
+    dst = globals()['text'](
+        src=dst,
+        yx=(yx[0] + 1, yx[1] + 1),
+        text=text,
+        color=color,
+        size=size,
+    )
     return dst

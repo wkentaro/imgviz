@@ -17,19 +17,16 @@ if __name__ == '__main__':
     aabb1 = np.array([100, 0], dtype=int)
     aabb2 = np.array([480, 640], dtype=int)
     viz = imgviz.draw.rectangle(rgb, aabb1, aabb2, color=(0, 255, 0), width=10)
+    viz = viz.copy()  # to make it writable
 
-    text = 'bin'
-    size = 50
-    height, width = imgviz.draw.text_size(text=text, size=size)
-    viz = imgviz.draw.rectangle(
-        viz,
-        aabb1,
-        aabb1 + [height, width],
-        color=(0, 255, 0),
-        fill=(0, 255, 0),
-    )
-    viz = imgviz.draw.text(
-        viz, yx=aabb1, text=text, color=(0, 0, 0), size=size
+    y1, x1 = aabb1
+    y2, x2 = aabb2
+    viz[y1:y2, x1:x2] = imgviz.draw.text_in_rectangle(
+        viz[y1:y2, x1:x2],
+        loc='lt',
+        text='bin',
+        size=50,
+        background=(0, 255, 0),
     )
 
     # -------------------------------------------------------------------------
