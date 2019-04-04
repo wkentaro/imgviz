@@ -40,6 +40,8 @@ def _get_tile_shape(num, hw_ratio=1):
     c_num = 0
     while r_num * c_num < num:
         c_num += 1
+    while (r_num - 1) * c_num > num:
+        r_num -= 1
     return r_num, c_num
 
 
