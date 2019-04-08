@@ -3,7 +3,7 @@ import warnings
 import numpy as np
 
 
-def normalize(src, min_value=None, max_value=None):
+def normalize(src, min_value=None, max_value=None, return_minmax=False):
     if src.ndim == 2:
         D = 1
     else:
@@ -39,4 +39,7 @@ def normalize(src, min_value=None, max_value=None):
     )
     dst[isnan] = np.nan
 
-    return dst
+    if return_minmax:
+        return dst, min_value, max_value
+    else:
+        return dst

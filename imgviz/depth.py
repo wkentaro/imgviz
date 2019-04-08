@@ -29,8 +29,11 @@ class Depth2RGB(object):
         assert np.issubdtype(depth.dtype, np.floating), \
             'depth dtype must be float'
 
-        normalized = normalize(
-            depth, min_value=self._min_value, max_value=self._max_value
+        normalized, self._min_value, self._max_value = normalize(
+            depth,
+            min_value=self._min_value,
+            max_value=self._max_value,
+            return_minmax=True,
         )
 
         isnan = np.isnan(normalized)
