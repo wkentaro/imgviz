@@ -49,12 +49,11 @@ def get_long_description():
 
     try:
         import github2pypi
-    except ImportError:
+        return github2pypi.replace_url(
+            slug='wkentaro/imgviz', content=long_description
+        )
+    except Exception:
         return long_description
-
-    return github2pypi.replace_url(
-        slug='wkentaro/imgviz', content=long_description
-    )
 
 
 setup(
