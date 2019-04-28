@@ -4,12 +4,12 @@ from . import color as color_module
 from . import draw as draw_module
 
 
-def label_colormap(n_label=256):
+def label_colormap(n_label=256, value=None):
     # type: (int) -> np.ndarray
     def bitget(byteval, idx):
         return ((byteval & (1 << idx)) != 0)
 
-    cmap = np.zeros((n_label, 3))
+    cmap = np.zeros((n_label, 3), dtype=np.uint8)
     for i in range(0, n_label):
         id = i
         r, g, b = 0, 0, 0
@@ -21,7 +21,15 @@ def label_colormap(n_label=256):
         cmap[i, 0] = r
         cmap[i, 1] = g
         cmap[i, 2] = b
-    cmap = cmap.astype(np.float32) / 255
+
+    if value is not None:
+        hsv = color_module.rgb2hsv(cmap.reshape(1, -1, 3))
+        if isinstance(value, float):
+            hsv[:, 1:, 2] = hsv[:, 1:, 2].astype(float) * value
+        else:
+            assert isinstance(value, int)
+            hsv[:, 1:, 2] = value
+        cmap = color_module.hsv2rgb(hsv).reshape(-1, 3)
     return cmap
 
 
@@ -33,6 +41,7 @@ def label2rgb(
     n_labels=None,
     font_size=30,
     thresh_suppress=0,
+    colormap=None,
 ):
     if n_labels is None:
         if label_names:
@@ -43,8 +52,8 @@ def label2rgb(
         assert n_labels == len(label_names)
         assert np.max(label) < n_labels
 
-    colormap = label_colormap(n_labels)
-    colormap = (colormap * 255).astype(np.uint8)
+    if colormap is None:
+        colormap = label_colormap(n_labels)
 
     res = colormap[label]
 

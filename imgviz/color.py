@@ -68,3 +68,17 @@ def rgb2rgba(rgb):
     a = np.full(rgb.shape[:2], 255, dtype=np.uint8)
     rgba = np.dstack((rgb, a))
     return rgba
+
+
+def rgb2hsv(rgb):
+    hsv = PIL.Image.fromarray(rgb, mode='RGB')
+    hsv = hsv.convert('HSV')
+    hsv = np.array(hsv)
+    return hsv
+
+
+def hsv2rgb(hsv):
+    rgb = PIL.Image.fromarray(hsv, mode='HSV')
+    rgb = rgb.convert('RGB')
+    rgb = np.array(rgb)
+    return rgb
