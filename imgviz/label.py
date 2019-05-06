@@ -5,7 +5,7 @@ from . import draw as draw_module
 
 
 def label_colormap(n_label=256, value=None):
-    # type: (int) -> np.ndarray
+
     def bitget(byteval, idx):
         return ((byteval & (1 << idx)) != 0)
 
