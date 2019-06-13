@@ -70,8 +70,11 @@ def text_size(text, size):
         Text width.
     '''
     font = _get_font(size)
-    width, height = font.getsize(text)
-    return height, width
+    lines = text.splitlines()
+    n_lines = len(lines)
+    longest_line = max(lines, key=len)
+    width, height = font.getsize(longest_line)
+    return height * n_lines, width
 
 
 def text(src, yx, text, size, color=(0, 0, 0)):
