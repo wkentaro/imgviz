@@ -12,8 +12,8 @@ class Depth2RGB(object):
         self._min_value = min_value
         self._max_value = max_value
 
-        assert hasattr(matplotlib.cm, colormap), \
-            'unsupported colormap: {}'.format(colormap)
+        if colormap not in matplotlib.cm.cmap_d:
+            raise ValueError('unsupported colormap: {}'.format(colormap))
         self._colormap = colormap
 
     @property
@@ -39,7 +39,7 @@ class Depth2RGB(object):
         isnan = np.isnan(normalized)
         normalized[isnan] = 0
 
-        colormap_func = getattr(matplotlib.cm, self._colormap)
+        colormap_func = matplotlib.cm.get_cmap(self._colormap)
         rgb = colormap_func(normalized)[:, :, :3]
         rgb[isnan] = (0, 0, 0)
 
