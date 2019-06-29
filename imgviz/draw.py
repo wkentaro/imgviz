@@ -7,6 +7,45 @@ import PIL.ImageDraw
 import PIL.ImageFont
 
 
+def circle(src, center, diameter, fill=None, outline=None, width=0):
+    '''Draw circle on numpy array with Pillow.
+
+    Parameters
+    ----------
+    src: numpy.ndarray
+        Input image.
+    center: (2,) array-like
+        center is (cy, cx).
+    fill: (3,) array-like, optional
+        RGB color to fill the circle. None for no fill. (default: None)
+    outline: (3,) array-like, optional
+        RGB color to draw the outline.
+    width: int, optional
+        Rectangle line width. (default: 0)
+
+    Returns
+    -------
+    dst: numpy.ndarray
+        Output image.
+    '''
+    dst = PIL.Image.fromarray(src)
+    draw = PIL.ImageDraw.Draw(dst)
+
+    cy, cx = center
+
+    radius = diameter / 2
+    x1 = cx - radius
+    x2 = x1 + diameter
+    y1 = cy - radius
+    y2 = y1 + diameter
+
+    draw.ellipse([x1, y1, x2, y2], fill=fill, outline=outline, width=width)
+
+    dst = np.asarray(dst)
+    dst.setflags(write=True)
+    return dst
+
+
 def rectangle(src, aabb1, aabb2, fill=None, outline=None, width=0):
     '''Draw rectangle on numpy array with Pillow.
 
@@ -43,6 +82,7 @@ def rectangle(src, aabb1, aabb2, fill=None, outline=None, width=0):
     )
 
     dst = np.asarray(src_pil)
+    dst.setflags(write=True)
     return dst
 
 
@@ -111,6 +151,7 @@ def text(src, yx, text, size, color=(0, 0, 0)):
     draw.text(xy=(x1, y1), text=text, fill=color, font=font)
 
     dst = np.asarray(src_pil)
+    dst.setflags(write=True)
     return dst
 
 
