@@ -14,12 +14,11 @@ if __name__ == '__main__':
 
     rgb = data['rgb']
 
-    aabb1 = np.array([100, 0], dtype=int)
-    aabb2 = np.array([480, 640], dtype=int)
+    aabb1 = np.array([100, 10], dtype=int)
+    aabb2 = np.array([470, 630], dtype=int)
     viz = imgviz.draw.rectangle(
         rgb, aabb1, aabb2, outline=(0, 255, 0), width=10
     )
-    viz = viz.copy()  # to make it writable
 
     y1, x1 = aabb1
     y2, x2 = aabb2
@@ -30,6 +29,12 @@ if __name__ == '__main__':
         size=50,
         background=(0, 255, 0),
     )
+
+    height, width = aabb2 - aabb1
+    for center in [aabb1, aabb1 + (0, width), aabb2, aabb2 - (0, width)]:
+        viz = imgviz.draw.circle(
+            viz, center=center, diameter=20, fill=(0, 0, 255)
+        )
 
     # -------------------------------------------------------------------------
 
