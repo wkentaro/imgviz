@@ -66,7 +66,8 @@ def star(src, center, size, fill=None, outline=None):
     draw.polygon(xy, fill=fill, outline=outline)
 
     dst = np.asarray(dst)
-    dst.setflags(write=True)
+    if not dst.flags.writeable:
+        dst = dst.copy()
     return dst
 
 
@@ -107,7 +108,8 @@ def circle(src, center, diameter, fill=None, outline=None, width=0):
     draw.ellipse([x1, y1, x2, y2], fill=fill, outline=outline, width=width)
 
     dst = np.asarray(dst)
-    dst.setflags(write=True)
+    if not dst.flags.writeable:
+        dst = dst.copy()
     return dst
 
 
@@ -137,8 +139,8 @@ def rectangle(src, aabb1, aabb2, fill=None, outline=None, width=0):
     if fill is not None:
         fill = tuple(fill)
 
-    src_pil = PIL.Image.fromarray(src)
-    draw = PIL.ImageDraw.ImageDraw(src_pil)
+    dst = PIL.Image.fromarray(src)
+    draw = PIL.ImageDraw.ImageDraw(dst)
 
     y1, x1 = aabb1
     y2, x2 = aabb2
@@ -146,8 +148,9 @@ def rectangle(src, aabb1, aabb2, fill=None, outline=None, width=0):
         xy=(x1, y1, x2, y2), fill=fill, outline=outline, width=width
     )
 
-    dst = np.asarray(src_pil)
-    dst.setflags(write=True)
+    dst = np.asarray(dst)
+    if not dst.flags.writeable:
+        dst = dst.copy()
     return dst
 
 
@@ -207,16 +210,17 @@ def text(src, yx, text, size, color=(0, 0, 0)):
     dst: numpy.ndarray
         Output image.
     '''
-    src_pil = PIL.Image.fromarray(src)
-    draw = PIL.ImageDraw.ImageDraw(src_pil)
+    dst = PIL.Image.fromarray(src)
+    draw = PIL.ImageDraw.ImageDraw(dst)
 
     y1, x1 = yx
     color = tuple(color)
     font = _get_font(size=size)
     draw.text(xy=(x1, y1), text=text, fill=color, font=font)
 
-    dst = np.asarray(src_pil)
-    dst.setflags(write=True)
+    dst = np.asarray(dst)
+    if not dst.flags.writeable:
+        dst = dst.copy()
     return dst
 
 
