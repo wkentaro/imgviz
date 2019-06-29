@@ -1,7 +1,8 @@
+#!/usr/bin/env python
+
 import os.path as osp
 
 import matplotlib.pyplot as plt
-import numpy as np
 
 import imgviz
 
@@ -10,31 +11,39 @@ here = osp.dirname(osp.abspath(__file__))
 
 
 if __name__ == '__main__':
-    data = imgviz.data.arc2017()
+    img = imgviz.data.lena()
+    H, W = img.shape[:2]
+    viz = img
 
-    rgb = data['rgb']
-
-    aabb1 = np.array([100, 10], dtype=int)
-    aabb2 = np.array([470, 630], dtype=int)
+    y1, x1 = 200, 180
+    y2, x2 = 400, 380
     viz = imgviz.draw.rectangle(
-        rgb, aabb1, aabb2, outline=(0, 255, 0), width=10
+        viz, (y1, x1), (y2, x2), outline=(255, 255, 255), width=5
     )
-
-    y1, x1 = aabb1
-    y2, x2 = aabb2
     viz[y1:y2, x1:x2] = imgviz.draw.text_in_rectangle(
-        viz[y1:y2, x1:x2],
-        loc='lt',
-        text='bin',
-        size=50,
-        background=(0, 255, 0),
+        viz[y1:y2, x1:x2], 'lt', 'face', 30, background=(255, 255, 255)
     )
 
-    height, width = aabb2 - aabb1
-    for center in [aabb1, aabb1 + (0, width), aabb2, aabb2 - (0, width)]:
-        viz = imgviz.draw.circle(
-            viz, center=center, diameter=20, fill=(0, 0, 255)
-        )
+    # eye, eye, nose, mouse, mouse
+    xys = [(265, 265), (330, 265), (315, 320), (270, 350), (320, 350)]
+    colors = imgviz.label_colormap(value=255)[1:]
+    shapes = ['star', 'star', 'rectangle', 'circle', 'circle']
+    for xy, color, shape in zip(xys, colors, shapes):
+        size = 20
+        color = tuple(color)
+        if shape == 'star':
+            viz = imgviz.draw.star(
+                viz, center=(xy[1], xy[0]), size=1.2 * size, fill=color)
+        elif shape == 'circle':
+            viz = imgviz.draw.circle(
+                viz, center=(xy[1], xy[0]), diameter=size, fill=color)
+        elif shape == 'rectangle':
+            viz = imgviz.draw.rectangle(
+                viz,
+                aabb1=(xy[1] - size / 2, xy[0] - size / 2),
+                aabb2=(xy[1] + size / 2, xy[0] + size / 2),
+                fill=color,
+            )
 
     # -------------------------------------------------------------------------
 
@@ -42,11 +51,11 @@ if __name__ == '__main__':
 
     plt.subplot(121)
     plt.title('original')
-    plt.imshow(rgb)
+    plt.imshow(img)
     plt.axis('off')
 
     plt.subplot(122)
-    plt.title('aabb1: {}\naabb2: {}'.format(aabb1, aabb2))
+    plt.title('markers')
     plt.imshow(viz)
     plt.axis('off')
 
