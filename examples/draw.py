@@ -16,7 +16,9 @@ if __name__ == '__main__':
 
     aabb1 = np.array([100, 0], dtype=int)
     aabb2 = np.array([480, 640], dtype=int)
-    viz = imgviz.draw.rectangle(rgb, aabb1, aabb2, color=(0, 255, 0), width=10)
+    viz = imgviz.draw.rectangle(
+        rgb, aabb1, aabb2, outline=(0, 255, 0), width=10
+    )
     viz = viz.copy()  # to make it writable
 
     y1, x1 = aabb1

@@ -88,7 +88,7 @@ def instances2rgb(
             dst,
             aabb1,
             aabb2,
-            color=color_cls,
+            outline=color_cls,
             width=line_width,
         )
 
@@ -98,7 +98,7 @@ def instances2rgb(
                 dst,
                 aabb1,
                 aabb1 + [height, width],
-                color=color_cls,
+                outline=color_cls,
                 fill=color_cls,
             )
             dst = draw_module.text(

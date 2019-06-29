@@ -7,7 +7,7 @@ import PIL.ImageDraw
 import PIL.ImageFont
 
 
-def rectangle(src, aabb1, aabb2, color, fill=None, width=0):
+def rectangle(src, aabb1, aabb2, fill=None, outline=None, width=0):
     '''Draw rectangle on numpy array with Pillow.
 
     Parameters
@@ -16,10 +16,10 @@ def rectangle(src, aabb1, aabb2, color, fill=None, width=0):
         Input image.
     aabb1, aabb2: (2,) array-like
         aabb1 is (y_min, x_min) and aabb2 is (y_max, x_max).
-    color: (3,) array-like
-        RGB color in uint8.
     fill: (3,) array-like, optional
         RGB color to fill the rectangle. None for no fill. (default: None)
+    outline: (3,) array-like
+        RGB color of the outline in uint8.
     width: int, optional
         Rectangle line width. (default: 0)
 
@@ -28,7 +28,8 @@ def rectangle(src, aabb1, aabb2, color, fill=None, width=0):
     dst: numpy.ndarray
         Output image.
     '''
-    color = tuple(color)
+    if outline is not None:
+        outline = tuple(outline)
     if fill is not None:
         fill = tuple(fill)
 
@@ -37,7 +38,9 @@ def rectangle(src, aabb1, aabb2, color, fill=None, width=0):
 
     y1, x1 = aabb1
     y2, x2 = aabb2
-    draw.rectangle(xy=(x1, y1, x2, y2), fill=fill, outline=color, width=width)
+    draw.rectangle(
+        xy=(x1, y1, x2, y2), fill=fill, outline=outline, width=width
+    )
 
     dst = np.asarray(src_pil)
     return dst
@@ -154,7 +157,6 @@ def text_in_rectangle(src, loc, text, size, background, color=(0, 0, 0)):
         src=src,
         aabb1=(yx[0], yx[1]),
         aabb2=(yx[0] + tsize[0] + 1, yx[1] + tsize[1] + 1),
-        color=background,
         fill=background,
     )
     dst = globals()['text'](

@@ -95,7 +95,7 @@ def tile(
                 src=img,
                 aabb1=(0, 0),
                 aabb2=(img.shape[0] - 1, img.shape[1] - 1),
-                color=border[i],
+                outline=border[i],
                 width=border_width,
             )
 
