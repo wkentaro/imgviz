@@ -17,7 +17,7 @@ def _resize_pillow(src, height, width, interpolation):
             'unsupported interpolation: {}'.format(interpolation)
         )
 
-    if src.dtype == np.uint8:
+    if np.issubdtype(src.dtype, np.integer):
         dst = PIL.Image.fromarray(src)
         dst = dst.resize((width, height), resample=interpolation)
         dst = np.asarray(dst)
