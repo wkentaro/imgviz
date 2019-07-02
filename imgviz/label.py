@@ -42,6 +42,7 @@ def label2rgb(
     font_size=30,
     thresh_suppress=0,
     colormap=None,
+    loc='centroid',
 ):
     if n_labels is None:
         if label_names:
@@ -72,44 +73,94 @@ def label2rgb(
     if label_names is None:
         return res
 
-    def get_fg_color(color):
-        intensity = color_module.rgb2gray(color.reshape(1, 1, 3)).sum()
-        if intensity > 170:
-            return (0, 0, 0)
-        return (255, 255, 255)
+    if loc == 'centroid':
+        for l in np.unique(label):
+            if l == -1:
+                continue  # unlabeled
 
-    def center_of_mass(mask):
-        assert mask.ndim == 2 and mask.dtype == bool
-        mask = 1. * mask / mask.sum()
-        dx = np.sum(mask, 0)
-        dy = np.sum(mask, 1)
-        cx = np.sum(dx * np.arange(mask.shape[1]))
-        cy = np.sum(dy * np.arange(mask.shape[0]))
-        return cy, cx
+            mask = label == l
+            if 1. * mask.sum() / mask.size < thresh_suppress:
+                continue
+            y, x = np.array(_center_of_mass(mask), dtype=int)
 
-    for l in np.unique(label):
-        if l == -1:
-            continue  # unlabeled
+            if label[y, x] != l:
+                Y, X = np.where(mask)
+                point_index = np.random.randint(0, len(Y))
+                y, x = Y[point_index], X[point_index]
 
-        mask = label == l
-        if 1. * mask.sum() / mask.size < thresh_suppress:
-            continue
-        y, x = np.array(center_of_mass(mask), dtype=int)
+            text = label_names[l]
+            height, width = draw_module.text_size(text, size=font_size)
+            color = _get_fg_color(res[y, x])
+            res = draw_module.text(
+                res,
+                yx=(y - height // 2, x - width // 2),
+                text=text,
+                color=color,
+                size=font_size,
+            )
+    elif loc in ['rb', 'lt']:
+        unique_labels = np.unique(label)
+        unique_labels = unique_labels[unique_labels != -1]
+        text_sizes = np.array([
+            draw_module.text_size(label_names[l], font_size)
+            for l in unique_labels
+        ])
+        text_height, text_width = text_sizes.max(axis=0)
+        legend_height = text_height * len(unique_labels) + 5
+        legend_width = text_width + 40
 
-        if label[y, x] != l:
-            Y, X = np.where(mask)
-            point_index = np.random.randint(0, len(Y))
-            y, x = Y[point_index], X[point_index]
+        height, width = label.shape[:2]
+        legend = np.zeros((height, width, 3), dtype=np.uint8)
+        if loc == 'rb':
+            aabb2 = np.array([height - 5, width - 5], dtype=float)
+            aabb1 = aabb2 - (legend_height, legend_width)
+        elif loc == 'lt':
+            aabb1 = np.array([5, 5], dtype=float)
+            aabb2 = aabb1 + (legend_height, legend_width)
+        else:
+            raise ValueError('unexpected loc: {}'.format(loc))
+        legend = draw_module.rectangle(
+            legend, aabb1, aabb2, fill=(255, 255, 255))
 
-        text = label_names[l]
-        height, width = draw_module.text_size(text, size=font_size)
-        color = get_fg_color(res[y, x])
-        res = draw_module.text(
-            res,
-            yx=(y - height // 2, x - width // 2),
-            text=text,
-            color=color,
-            size=font_size,
-        )
+        alpha = 0.5
+        y1, x1 = aabb1.round().astype(int)
+        y2, x2 = aabb2.round().astype(int)
+        res[y1:y2, x1:x2] = \
+            alpha * res[y1:y2, x1:x2] + alpha * legend[y1:y2, x1:x2]
+
+        for i, l in enumerate(unique_labels):
+            box_aabb1 = aabb1 + (i * text_height + 5, 5)
+            box_aabb2 = box_aabb1 + (text_height - 10, 20)
+            res = draw_module.rectangle(
+                res,
+                aabb1=box_aabb1,
+                aabb2=box_aabb2,
+                fill=colormap[l]
+            )
+            res = draw_module.text(
+                res,
+                yx=aabb1 + (i * text_height, 30),
+                text=label_names[l],
+                size=font_size,
+            )
+    else:
+        raise ValueError('unsupported loc: {}'.format(loc))
 
     return res
+
+
+def _get_fg_color(color):
+    intensity = color_module.rgb2gray(color.reshape(1, 1, 3)).sum()
+    if intensity > 170:
+        return (0, 0, 0)
+    return (255, 255, 255)
+
+
+def _center_of_mass(mask):
+    assert mask.ndim == 2 and mask.dtype == bool
+    mask = 1. * mask / mask.sum()
+    dx = np.sum(mask, 0)
+    dy = np.sum(mask, 1)
+    cx = np.sum(dx * np.arange(mask.shape[1]))
+    cy = np.sum(dy * np.arange(mask.shape[0]))
+    return cy, cx

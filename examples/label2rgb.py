@@ -11,39 +11,40 @@ here = osp.dirname(osp.abspath(__file__))
 if __name__ == '__main__':
     data = imgviz.data.arc2017()
 
-    labelviz = imgviz.label2rgb(data['class_label'])
+    rgb = data['rgb']
+    label = data['class_label']
+
+    labelviz = imgviz.label2rgb(label)
 
     label_names = [
         '{}:{}'.format(i, n) for i, n in enumerate(data['class_names'])
     ]
-    labelviz_withname = imgviz.label2rgb(
-        data['class_label'], label_names=label_names
+    labelviz_withname1 = imgviz.label2rgb(
+        label, label_names=label_names, font_size=25
     )
-    img = imgviz.color.rgb2gray(data['rgb'])
-    labelviz_withimg = imgviz.label2rgb(data['class_label'], img=img)
+    labelviz_withname2 = imgviz.label2rgb(
+        label, label_names=label_names, font_size=25, loc='lt'
+    )
+    img = imgviz.color.rgb2gray(rgb)
+    labelviz_withimg = imgviz.label2rgb(label, img=img)
 
     # -------------------------------------------------------------------------
 
     fig = plt.figure(dpi=200)
 
-    plt.subplot(141)
-    plt.title('rgb')
-    plt.imshow(data['rgb'])
-    plt.axis('off')
-
-    plt.subplot(142)
-    plt.title('label')
-    plt.imshow(labelviz)
-    plt.axis('off')
-
-    plt.subplot(143)
-    plt.title('label\n(+names)')
-    plt.imshow(labelviz_withname)
-    plt.axis('off')
-
-    plt.subplot(144)
-    plt.title('label\n(+img)')
+    plt.subplot(131)
+    plt.title('+img')
     plt.imshow(labelviz_withimg)
+    plt.axis('off')
+
+    plt.subplot(132)
+    plt.title('loc=centroid')
+    plt.imshow(labelviz_withname1)
+    plt.axis('off')
+
+    plt.subplot(133)
+    plt.title('loc=lt')
+    plt.imshow(labelviz_withname2)
     plt.axis('off')
 
     out_file = osp.join(here, '.readme/label2rgb.jpg')
