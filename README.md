@@ -103,7 +103,7 @@ tiled = imgviz.tile(
 	</tr>
 	<tr>
 		<td><pre><a href="examples/label2rgb.py">examples/label2rgb.py</a></pre></td>
-		<td><img src="examples/.readme/label2rgb.jpg" width="102.47933884297521%" /></td>
+		<td><img src="examples/.readme/label2rgb.jpg" width="95.01915708812261%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/nchannel2rgb.py">examples/nchannel2rgb.py</a></pre></td>
