@@ -38,23 +38,13 @@ def label2rgb(
     img=None,
     alpha=0.5,
     label_names=None,
-    n_labels=None,
     font_size=30,
     thresh_suppress=0,
     colormap=None,
     loc='centroid',
 ):
-    if n_labels is None:
-        if label_names:
-            n_labels = len(label_names)
-        else:
-            n_labels = np.max(label) + 1  # +1 for background label 0
-    elif label_names:
-        assert n_labels == len(label_names)
-        assert np.max(label) < n_labels
-
     if colormap is None:
-        colormap = label_colormap(n_labels)
+        colormap = label_colormap()
 
     res = colormap[label]
 
