@@ -24,6 +24,7 @@ def instances2rgb(
     font_size=25,
     line_width=5,
     alpha=0.7,
+    colormap=None,
 ):
     assert isinstance(image, np.ndarray)
     assert image.dtype == np.uint8
@@ -44,8 +45,8 @@ def instances2rgb(
 
     assert len(masks) == len(bboxes) == len(captions) == n_instance
 
-    colormap = label_module.label_colormap()
-    colormap = (colormap * 255).round().astype(np.uint8)
+    if colormap is None:
+        colormap = label_module.label_colormap()
 
     dst = image
     image_gray = color_module.gray2rgb(color_module.rgb2gray(image))
@@ -105,7 +106,15 @@ def instances2rgb(
                 dst,
                 (y1, x1),
                 text=caption,
-                color=(255, 255, 255),
+                color=_get_fg_color(color_cls),
                 size=font_size,
             )
     return dst
+
+
+def _get_fg_color(color):
+    color = np.asarray(color, dtype=np.uint8)
+    intensity = color_module.rgb2gray(color.reshape(1, 1, 3)).sum()
+    if intensity > 170:
+        return (0, 0, 0)
+    return (255, 255, 255)
