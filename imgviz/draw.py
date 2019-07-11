@@ -65,10 +65,7 @@ def star(src, center, size, fill=None, outline=None):
     xy = xy.flatten().tolist()
     draw.polygon(xy, fill=fill, outline=outline)
 
-    dst = np.asarray(dst)
-    if not dst.flags.writeable:
-        dst = dst.copy()
-    return dst
+    return np.asarray(dst)
 
 
 def circle(src, center, diameter, fill=None, outline=None, width=0):
@@ -107,10 +104,7 @@ def circle(src, center, diameter, fill=None, outline=None, width=0):
 
     draw.ellipse([x1, y1, x2, y2], fill=fill, outline=outline, width=width)
 
-    dst = np.asarray(dst)
-    if not dst.flags.writeable:
-        dst = dst.copy()
-    return dst
+    return np.asarray(dst)
 
 
 def rectangle(src, aabb1, aabb2, fill=None, outline=None, width=0):
@@ -148,10 +142,7 @@ def rectangle(src, aabb1, aabb2, fill=None, outline=None, width=0):
         xy=(x1, y1, x2, y2), fill=fill, outline=outline, width=width
     )
 
-    dst = np.asarray(dst)
-    if not dst.flags.writeable:
-        dst = dst.copy()
-    return dst
+    return np.asarray(dst)
 
 
 def _get_font(size):
@@ -218,10 +209,7 @@ def text(src, yx, text, size, color=(0, 0, 0)):
     font = _get_font(size=size)
     draw.text(xy=(x1, y1), text=text, fill=color, font=font)
 
-    dst = np.asarray(dst)
-    if not dst.flags.writeable:
-        dst = dst.copy()
-    return dst
+    return np.asarray(dst)
 
 
 def text_in_rectangle(src, loc, text, size, background, color=(0, 0, 0)):
