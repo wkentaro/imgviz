@@ -2,6 +2,8 @@
 
 from __future__ import print_function
 
+import os.path as osp
+
 import distutils.spawn
 from setuptools import find_packages
 from setuptools import setup
@@ -10,7 +12,17 @@ import subprocess
 import sys
 
 
-version = '0.7.0'
+here = osp.abspath(osp.dirname(__file__))
+version_file = osp.join(here, 'imgviz', '_version.py')
+if sys.version_info.major == 3:
+    import importlib
+    version = importlib.machinery.SourceFileLoader(
+        '_version', version_file
+    ).load_module().__version__
+else:
+    import imp
+    version = imp.load_source('_version', version_file).__version__
+del here
 
 
 if sys.argv[1] == 'release':
