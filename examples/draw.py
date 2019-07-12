@@ -30,7 +30,7 @@ if __name__ == '__main__':
     # eye, eye, nose, mouse, mouse
     xys = [(265, 265), (330, 265), (315, 320), (270, 350), (320, 350)]
     colors = imgviz.label_colormap(value=255)[1:]
-    shapes = ['star', 'star', 'rectangle', 'circle', 'circle']
+    shapes = ['star', 'star', 'rectangle', 'circle', 'triangle']
     for xy, color, shape in zip(xys, colors, shapes):
         size = 20
         color = tuple(color)
@@ -40,6 +40,9 @@ if __name__ == '__main__':
         elif shape == 'circle':
             viz = imgviz.draw.circle(
                 viz, center=(xy[1], xy[0]), diameter=size, fill=color)
+        elif shape == 'triangle':
+            viz = imgviz.draw.triangle(
+                viz, center=(xy[1], xy[0]), size=size, fill=color)
         elif shape == 'rectangle':
             viz = imgviz.draw.rectangle(
                 viz,
@@ -47,6 +50,8 @@ if __name__ == '__main__':
                 aabb2=(xy[1] + size / 2, xy[0] + size / 2),
                 fill=color,
             )
+        else:
+            raise ValueError('unsupport shape: {}'.format(shape))
 
     # -------------------------------------------------------------------------
 
