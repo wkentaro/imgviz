@@ -18,13 +18,14 @@ if __name__ == '__main__':
     viz = imgviz.draw.rectangle(
         viz, (y1, x1), (y2, x2), outline=(255, 255, 255), width=5
     )
-    viz = imgviz.instances2rgb(
+    viz = imgviz.draw.text_in_rectangle(
         viz,
-        labels=[1],
-        bboxes=[(y1, x1, y2, x2)],
-        captions=['face'],
-        font_size=30,
-        colormap=[(255, 255, 255)],
+        loc='lt',
+        text='face',
+        size=30,
+        background=(255, 255, 255),
+        aabb1=(y1, x1),
+        aabb2=(y2, x2),
     )
 
     # eye, eye, nose, mouse, mouse
