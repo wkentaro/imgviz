@@ -6,6 +6,8 @@ import PIL.Image
 import PIL.ImageDraw
 import PIL.ImageFont
 
+from . import color as color_module
+
 
 def triangle(src, center, size, fill=None, outline=None):
     '''Draw triangle on numpy array with Pillow.
@@ -249,7 +251,7 @@ def text(src, yx, text, size, color=(0, 0, 0)):
     return np.asarray(dst)
 
 
-def text_in_rectangle(src, loc, text, size, background, color=(0, 0, 0)):
+def text_in_rectangle(src, loc, text, size, background, color=None):
     '''Draw text in a rectangle.
 
     Parameters
@@ -266,7 +268,8 @@ def text_in_rectangle(src, loc, text, size, background, color=(0, 0, 0)):
         Background color in uint8.
     color: (3,) array-like
         Text RGB color in uint8.
-        Default is (0, 0, 0), which is black.
+        If None, the color is determined by background color.
+        (default: None)
 
     Returns
     -------
@@ -287,6 +290,9 @@ def text_in_rectangle(src, loc, text, size, background, color=(0, 0, 0)):
         yx = ((height - 1) - tsize[0] - 1, (width - 1) - tsize[1] - 1)
     else:
         raise ValueError('unsupported loc: {}'.format(loc))
+
+    if color is None:
+        color = color_module.get_fg_color(background)
 
     dst = rectangle(
         src=src,
