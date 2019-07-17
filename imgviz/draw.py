@@ -251,7 +251,16 @@ def text(src, yx, text, size, color=(0, 0, 0)):
     return np.asarray(dst)
 
 
-def text_in_rectangle(src, loc, text, size, background, color=None):
+def text_in_rectangle(
+    src,
+    loc,
+    text,
+    size,
+    background,
+    color=None,
+    aabb1=None,
+    aabb2=None,
+):
     '''Draw text in a rectangle.
 
     Parameters
@@ -270,31 +279,37 @@ def text_in_rectangle(src, loc, text, size, background, color=None):
         Text RGB color in uint8.
         If None, the color is determined by background color.
         (default: None)
+    aabb1, aabb2: (2,) array-like
+        Coordinate of the rectangle (y_min, x_min), (y_max, x_max).
+        Default is (0, 0), (height, width).
 
     Returns
     -------
     dst: numpy.ndarray
         Output image.
     '''
-
-    tsize = text_size(text, size)
-
-    height, width = src.shape[:2]
-    if loc == 'lt':
-        yx = (0, 0)
-    elif loc == 'rt':
-        yx = (0, (width - 1) - tsize[1] - 1)
-    elif loc == 'lb':
-        yx = ((height - 1) - tsize[0] - 1, 0)
-    elif loc == 'rb':
-        yx = ((height - 1) - tsize[0] - 1, (width - 1) - tsize[1] - 1)
-    else:
-        raise ValueError('unsupported loc: {}'.format(loc))
-
     if color is None:
         color = color_module.get_fg_color(background)
 
-    dst = rectangle(
+    height, width = src.shape[:2]
+
+    y1, x1 = (0, 0) if aabb1 is None else aabb1
+    y2, x2 = (height - 1, width - 1) if aabb2 is None else aabb2
+
+    tsize = text_size(text, size)
+
+    if loc == 'lt':
+        yx = (y1, x1)
+    elif loc == 'rt':
+        yx = (y1, x2 - tsize[1] - 1)
+    elif loc == 'lb':
+        yx = (y2 - tsize[0] - 1, 0)
+    elif loc == 'rb':
+        yx = (y2 - tsize[0] - 1, x2 - tsize[1] - 1)
+    else:
+        raise ValueError('unsupported loc: {}'.format(loc))
+
+    dst = globals()['rectangle'](
         src=src,
         aabb1=(yx[0], yx[1]),
         aabb2=(yx[0] + tsize[0] + 1, yx[1] + tsize[1] + 1),

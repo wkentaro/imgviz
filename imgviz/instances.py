@@ -94,19 +94,13 @@ def instances2rgb(
         )
 
         if caption is not None:
-            height, width = draw_module.text_size(text=caption, size=font_size)
-            dst = draw_module.rectangle(
+            dst = draw_module.text_in_rectangle(
                 dst,
-                aabb1,
-                aabb1 + [height, width],
-                outline=color_cls,
-                fill=color_cls,
-            )
-            dst = draw_module.text(
-                dst,
-                (y1, x1),
+                loc='lt',
                 text=caption,
-                color=color_module.get_fg_color(color_cls),
                 size=font_size,
+                background=color_cls,
+                aabb1=aabb1,
+                aabb2=aabb2,
             )
     return dst
