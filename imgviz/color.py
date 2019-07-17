@@ -82,3 +82,11 @@ def hsv2rgb(hsv):
     rgb = rgb.convert('RGB')
     rgb = np.array(rgb)
     return rgb
+
+
+def get_fg_color(color):
+    color = np.asarray(color, dtype=np.uint8)
+    intensity = rgb2gray(color.reshape(1, 1, 3)).sum()
+    if intensity > 170:
+        return (0, 0, 0)
+    return (255, 255, 255)

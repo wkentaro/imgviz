@@ -106,15 +106,7 @@ def instances2rgb(
                 dst,
                 (y1, x1),
                 text=caption,
-                color=_get_fg_color(color_cls),
+                color=color_module.get_fg_color(color_cls),
                 size=font_size,
             )
     return dst
-
-
-def _get_fg_color(color):
-    color = np.asarray(color, dtype=np.uint8)
-    intensity = color_module.rgb2gray(color.reshape(1, 1, 3)).sum()
-    if intensity > 170:
-        return (0, 0, 0)
-    return (255, 255, 255)

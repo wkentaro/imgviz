@@ -80,7 +80,7 @@ def label2rgb(
 
             text = label_names[l]
             height, width = draw_module.text_size(text, size=font_size)
-            color = _get_fg_color(res[y, x])
+            color = color_module.get_fg_color(res[y, x])
             res = draw_module.text(
                 res,
                 yx=(y - height // 2, x - width // 2),
@@ -137,13 +137,6 @@ def label2rgb(
         raise ValueError('unsupported loc: {}'.format(loc))
 
     return res
-
-
-def _get_fg_color(color):
-    intensity = color_module.rgb2gray(color.reshape(1, 1, 3)).sum()
-    if intensity > 170:
-        return (0, 0, 0)
-    return (255, 255, 255)
 
 
 def _center_of_mass(mask):
