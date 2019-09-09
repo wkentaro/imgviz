@@ -3,7 +3,9 @@ import numpy as np
 from .resize import resize
 
 
-def centerize(src, shape, cval=None, return_mask=False):
+def centerize(
+    src, shape, cval=None, return_mask=False, interpolation='linear'
+):
     """Centerize image for specified image size
 
     Parameters
@@ -16,6 +18,8 @@ def centerize(src, shape, cval=None, return_mask=False):
         Color to be filled in the blank.
     return_mask: numpy.ndarray
         Mask for centerized image.
+    interpolation: str
+        Interpolation method (default: 'linear').
 
     Returns
     -------
@@ -39,7 +43,7 @@ def centerize(src, shape, cval=None, return_mask=False):
     scale_h, scale_w = 1. * shape[0] / src_h, 1. * shape[1] / src_w
     scale = min(scale_h, scale_w)
     dst_h, dst_w = int(round(src_h * scale)), int(round(src_w * scale))
-    src = resize(src, height=dst_h, width=dst_w)
+    src = resize(src, height=dst_h, width=dst_w, interpolation=interpolation)
 
     ph, pw = 0, 0
     h, w = src.shape[:2]
