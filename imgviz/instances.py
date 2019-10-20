@@ -8,6 +8,8 @@ from . import label as label_module
 def mask_to_bbox(masks):
     bboxes = np.zeros((len(masks), 4), dtype=float)
     for i, mask in enumerate(masks):
+        if mask.sum() == 0:
+            continue
         where = np.argwhere(mask)
         (y1, x1), (y2, x2) = where.min(0), where.max(0) + 1
         bbox = y1, x1, y2, x2
@@ -54,7 +56,7 @@ def instances2rgb(
     for instance_id in range(n_instance):
         mask = masks[instance_id]
 
-        if mask is None:
+        if mask is None or mask.sum() == 0:
             continue
 
         color_ins = colormap[1:][instance_id % len(colormap[1:])]
@@ -83,6 +85,9 @@ def instances2rgb(
         color_cls = colormap[label % len(colormap)]
 
         y1, x1, y2, x2 = bbox
+        if (y2 - y1) * (x2 - x1) == 0:
+            continue
+
         aabb1 = np.array([y1, x1], dtype=int)
         aabb2 = np.array([y2, x2], dtype=int)
         dst = draw_module.rectangle(
