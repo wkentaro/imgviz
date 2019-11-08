@@ -7,22 +7,14 @@ class Nchannel2RGB(object):
 
     """Convert nchannel array to rgb by PCA."""
 
-    def __init__(self, min_value=None, max_value=None, pca=None):
-        self._min_value = min_value
-        self._max_value = max_value
+    def __init__(self, pca=None):
         self._pca = pca
+        # for uint8
+        self._min_max_value = (None, None)
 
     @property
     def pca(self):
         return self._pca
-
-    @property
-    def min_value(self):
-        return self._min_value
-
-    @property
-    def max_value(self):
-        return self._max_value
 
     def __call__(self, nchannel, dtype=np.uint8):
         import sklearn.decomposition
@@ -32,13 +24,7 @@ class Nchannel2RGB(object):
             'nchannel.dtype must be floating'
         H, W, D = nchannel.shape
 
-        if self._min_value is None:
-            self._min_value = np.nanmin(nchannel, axis=(0, 1))
-        if self._max_value is None:
-            self._max_value = np.nanmax(nchannel, axis=(0, 1))
-        dst = normalize.normalize(nchannel, self._min_value, self._max_value)
-
-        dst = dst.reshape(-1, D)
+        dst = nchannel.reshape(-1, D)
         if self._pca is None:
             self._pca = sklearn.decomposition.PCA(n_components=3)
             dst = self._pca.fit_transform(dst)
@@ -47,6 +33,13 @@ class Nchannel2RGB(object):
         dst = dst.reshape(H, W, 3)
 
         if dtype == np.uint8:
+            if self._min_max_value is None:
+                self._min_max_value = (
+                    np.nanmin(dst, axis=(0, 1)),
+                    np.nanmax(dst, axis=(0, 1)),
+                )
+            min_value, max_value = self._min_max_value
+            dst = normalize.normalize(dst, min_value, max_value)
             dst = (dst * 255).round().astype(np.uint8)
         else:
             assert np.issubdtype(dtype, np.floating)
@@ -56,6 +49,6 @@ class Nchannel2RGB(object):
 
 
 def nchannel2rgb(
-    nchannel, dtype=None, pca=None, min_value=None, max_value=None,
+    nchannel, dtype=np.uint8, pca=None
 ):
-    return Nchannel2RGB(min_value, max_value, pca)(nchannel, dtype)
+    return Nchannel2RGB(pca)(nchannel, dtype)
