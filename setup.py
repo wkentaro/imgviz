@@ -2,6 +2,7 @@
 
 from __future__ import print_function
 
+import os
 import os.path as osp
 
 import distutils.spawn
@@ -68,6 +69,16 @@ def get_long_description():
         return long_description
 
 
+def get_package_data():
+    package_data = []
+    for dirpath, dirnames, filenames in os.walk('data'):
+        for filename in filenames:
+            data_file = osp.join(dirpath, filename)
+            data_file = osp.join(osp.split(data_file)[1:])
+            package_data.append(data_file)
+    return {'imgviz': package_data}
+
+
 setup(
     name='imgviz',
     version=version,
@@ -79,7 +90,7 @@ setup(
     description='Image Visualization Tools',
     long_description=get_long_description(),
     long_description_content_type='text/markdown',
-    package_data={'imgviz': ['data/*']},
+    package_data=get_package_data(),
     include_package_data=True,
     author='Kentaro Wada',
     author_email='www.kentaro.wada@gmail.com',
