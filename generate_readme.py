@@ -78,6 +78,7 @@ def main():
   <a href="https://pypi.python.org/pypi/imgviz"><img src="https://img.shields.io/pypi/v/imgviz.svg"></a>
   <a href="https://pypi.org/project/imgviz"><img src="https://img.shields.io/pypi/pyversions/imgviz.svg"></a>
   <a href="https://travis-ci.com/wkentaro/imgviz"><img src="https://travis-ci.com/wkentaro/imgviz.svg?branch=master"></a>
+  <a href="https://imgviz.readthedocs.io/en/latest/?badge=latest"><img src="https://readthedocs.org/projects/imgviz/badge/?version=latest" alt="Documentation Status" /></a>
 </div>
 
 <br/>
