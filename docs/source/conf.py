@@ -310,5 +310,5 @@ def linkcode_resolve(domain, info):
     filename = os.path.realpath(filename)
     relpath = _get_source_relative_path(filename)
 
-    return 'https://github.com/iory/imgviz/blob/{}/{}#L{}'.format(
+    return 'https://github.com/wkentaro/imgviz/blob/{}/{}#L{}'.format(
         tag, relpath, linenum)
