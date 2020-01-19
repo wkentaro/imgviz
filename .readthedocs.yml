@@ -1,0 +1,8 @@
+name: imgviz
+type: sphinx
+base: docs/source
+conda:
+  file: docs/rtd_conda.yml
+python:
+  version: 3.7
+  setup_py_install: true
