@@ -6,7 +6,18 @@ from .normalize import normalize
 
 class Depth2RGB(object):
 
-    """Convert depth array to rgb."""
+    '''Convert depth array to rgb.
+
+    Parameters
+    ----------
+    min_value: float, optional
+        Minimum value for colorizing.
+    max_value: float, optional
+        Maximum value for colorizing.
+    colormap: str, optional
+        Colormap, default: 'jet'.
+
+    '''
 
     def __init__(self, min_value=None, max_value=None, colormap='jet'):
         self._min_value = min_value
@@ -18,13 +29,29 @@ class Depth2RGB(object):
 
     @property
     def min_value(self):
+        '''Minimum value of depth.'''
         return self._min_value
 
     @property
     def max_value(self):
+        '''Maximum value of depth.'''
         return self._max_value
 
     def __call__(self, depth, dtype=np.uint8):
+        '''Convert depth array to rgb.
+
+        Parameters
+        ----------
+        depth: numpy.ndarray, (H, W), float
+            Depth image.
+        dtype: numpy.dtype
+            Dtype of output image. default: np.uint8
+
+        Returns
+        -------
+        rgb: numpy.ndarray, (H, W, 3), np.uint8
+            Output colorized image.
+        '''
         assert depth.ndim == 2, 'depth image must be 2 dimensional'
         assert np.issubdtype(depth.dtype, np.floating), \
             'depth dtype must be float'

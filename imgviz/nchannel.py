@@ -5,7 +5,13 @@ import numpy as np
 
 class Nchannel2RGB(object):
 
-    """Convert nchannel array to rgb by PCA."""
+    '''Convert nchannel array to rgb by PCA.
+
+    Parameters
+    ----------
+    pca: sklearn.decomposition.PCA
+        PCA.
+    '''
 
     def __init__(self, pca=None):
         self._pca = pca
@@ -14,9 +20,24 @@ class Nchannel2RGB(object):
 
     @property
     def pca(self):
+        '''PCA for N channel to 3.'''
         return self._pca
 
     def __call__(self, nchannel, dtype=np.uint8):
+        '''Convert nchannel array to rgb by PCA.
+
+        Parameters
+        ----------
+        nchannel: numpy.ndarray, (H, W, C), float
+            N channel image.
+        dtype: numpy.dtype
+            Dtype (default: numpy.uint8).
+
+        Returns
+        -------
+        dst: numpy.ndarray, (H, W, 3), numpy.uint8
+            Visualized image.
+        '''
         import sklearn.decomposition
 
         assert nchannel.ndim == 3, 'nchannel.ndim must be 3'

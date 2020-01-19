@@ -7,6 +7,9 @@ Functions
 
    imgviz.gray2rgb
    imgviz.rgb2gray
+   imgviz.rgb2rgba
+   imgviz.rgb2hsv
+   imgviz.hsv2rgb
    imgviz.depth2rgb
    imgviz.flow2rgb
    imgviz.instances2rgb
@@ -14,3 +17,4 @@ Functions
    imgviz.label2rgb
    imgviz.nchannel2rgb
    imgviz.plot_trajectory
+   imgviz.resize

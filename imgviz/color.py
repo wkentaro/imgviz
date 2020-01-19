@@ -71,6 +71,19 @@ def rgb2rgba(rgb):
 
 
 def rgb2hsv(rgb):
+    # type: (np.ndarray) -> np.ndarray
+    '''Convert rgb to hsv.
+
+    Parameters
+    ----------
+    rgb: numpy.ndarray, (H, W, 3), np.uint8
+        Input rgb image.
+
+    Returns
+    -------
+    hsv: numpy.ndarray, (H, W, 3), np.uint8
+        Output hsv image.
+    '''
     hsv = PIL.Image.fromarray(rgb, mode='RGB')
     hsv = hsv.convert('HSV')
     hsv = np.array(hsv)
@@ -78,6 +91,18 @@ def rgb2hsv(rgb):
 
 
 def hsv2rgb(hsv):
+    '''Convert hsv to rgb.
+
+    Parameters
+    ----------
+    hsv: numpy.ndarray, (H, W, 3), np.uint8
+        Input hsv image.
+
+    Returns
+    -------
+    rgb: numpy.ndarray, (H, W, 3), np.uint8
+        Output rgb image.
+    '''
     rgb = PIL.Image.fromarray(hsv, mode='HSV')
     rgb = rgb.convert('RGB')
     rgb = np.array(rgb)

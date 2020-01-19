@@ -4,6 +4,24 @@ import numpy as np
 
 
 def normalize(src, min_value=None, max_value=None, return_minmax=False):
+    '''Normalize image.
+
+    Parameters
+    ----------
+    src: numpy.ndarray, (H, W) or (H, W, C), float
+        Input image.
+    min_value: float
+        Minimum value.
+    max_value: float
+        Maximum value.
+    return_minmax: bool
+        Flag to return min_value and max_value.
+
+    Returns
+    -------
+    dst: numpy.ndarray, float
+        Normalized image in [0, 1].
+    '''
     if src.ndim == 2:
         D = 1
     else:

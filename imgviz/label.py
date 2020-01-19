@@ -43,6 +43,30 @@ def label2rgb(
     colormap=None,
     loc='centroid',
 ):
+    '''Convert label to rgb.
+
+    Parameters
+    ----------
+    label: numpy.ndarray, (H, W), int
+        Label image.
+    img: numpy.ndarray, (H, W, 3), numpy.uint8
+        RGB image.
+    alpha: float
+        Alpha of RGB (default: 0.5).
+    label_names: list of string
+        Label id to label name.
+    font_size: int
+        Font size (default: 30).
+    thresh_suppress: float
+        Threshold of label ratio in the label image.
+    colormap: numpy.ndarray, (M, 3), numpy.uint8
+        Label id to color.
+        By default, :func:`~imgviz.label_colormap` is used.
+    loc: string
+        Location of legend (default: 'centroid').
+        'lt' and 'rb' are supported.
+
+    '''
     if colormap is None:
         colormap = label_colormap()
 

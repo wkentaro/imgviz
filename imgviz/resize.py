@@ -62,6 +62,40 @@ def resize(
     interpolation='linear',
     backend='auto',
 ):
+    '''Resize image.
+
+    Parameters
+    ----------
+    src: numpy.ndarray, (H, W) or (H, W, C)
+        Input image.
+    height: int, optional
+        Height of image. If not given,
+        the image is resized based on width keeping image ratio.
+    width: int, optional
+        Width of image. If not given,
+        the image is resized based on height keeping image ratio.
+    interpolation: str
+        Resizing interpolation (default: 'linear').
+
+        'linear':
+            Linear interpolation.
+        'nearest':
+            Interpolate with the nearest value.
+
+    backend: str
+        Resizing backend (default: 'auto').
+
+        'pillow':
+            Pillow is used.
+        'opencv':
+            OpenCV is used.
+
+    Returns
+    -------
+    dst: numpy.ndarray
+        Resized image.
+
+    '''
     if not isinstance(src, np.ndarray):
         raise TypeError('src type must be numpy.ndarray')
 

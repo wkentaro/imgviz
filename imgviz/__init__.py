@@ -15,6 +15,9 @@ from . import _io as io
 # visualization targets
 from .color import gray2rgb
 from .color import rgb2gray
+from .color import rgb2rgba
+from .color import rgb2hsv
+from .color import hsv2rgb
 from .depth import Depth2RGB
 from .depth import depth2rgb
 from .flow import flow2rgb
@@ -30,4 +33,3 @@ from .centerize import centerize
 from .normalize import normalize
 from .resize import resize
 from .tile import tile
-# from .overlay import overlay

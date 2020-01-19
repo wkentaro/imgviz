@@ -28,6 +28,34 @@ def instances2rgb(
     alpha=0.7,
     colormap=None,
 ):
+    '''Convert instances to rgb.
+
+    Parameters
+    ----------
+    image: numpy.ndarray, (H, W, 3), numpy.uint8
+        RGB image.
+    labels: list of int, (N,)
+        Labels.
+    bboxes: list of numpy.ndarray, (N, 4), float
+        Bounding boxes.
+    masks: numpy.ndarray, (N, H, W), bool
+        Masks.
+    captions: list of str
+        Captions.
+    font_size: int
+        Font size.
+    line_width: int
+        Line width.
+    alpha: float
+        Alpha of RGB.
+    colormap: numpy.ndarray, (M, 3), numpy.uint8
+        Label id to RGB color.
+
+    Returns
+    -------
+    dst: numpy.ndarray, (H, W, 3), numpy.uint8
+        Visualized image.
+    '''
     assert isinstance(image, np.ndarray)
     assert image.dtype == np.uint8
     assert image.ndim == 3
