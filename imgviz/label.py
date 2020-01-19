@@ -5,6 +5,20 @@ from . import draw as draw_module
 
 
 def label_colormap(n_label=256, value=None):
+    '''Label colormap.
+
+    Parameters
+    ----------
+    n_labels: int
+        Number of labels (default: 256).
+    value: float or int
+        Value scale or value of label color in HSV space.
+
+    Returns
+    -------
+    cmap: numpy.ndarray, (N, 3), numpy.uint8
+        Label id to colormap.
+    '''
 
     def bitget(byteval, idx):
         return ((byteval & (1 << idx)) != 0)

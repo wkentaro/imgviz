@@ -72,4 +72,20 @@ class Nchannel2RGB(object):
 def nchannel2rgb(
     nchannel, dtype=np.uint8, pca=None
 ):
+    '''Convert nchannel array to rgb by PCA.
+
+    Parameters
+    ----------
+    nchannel: numpy.ndarray, (H, W, C), float
+        N channel image.
+    dtype: numpy.dtype
+        Dtype (default: numpy.uint8).
+    pca: sklearn.decomposition.PCA
+        PCA.
+
+    Returns
+    -------
+    dst: numpy.ndarray, (H, W, 3), numpy.uint8
+        Visualized image.
+    '''
     return Nchannel2RGB(pca)(nchannel, dtype)
