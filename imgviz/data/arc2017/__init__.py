@@ -9,9 +9,8 @@ here = osp.dirname(osp.abspath(__file__))
 
 
 def arc2017():
-    data_file = osp.join(here, '1532900700692405455.npz')
-    data = np.load(data_file, allow_pickle=True)
-    data = dict(data)
+    data_file = osp.join(here, 'data.npz')
+    data = dict(np.load(data_file))
 
     # compose masks to class label image
     class_label = np.full(data['rgb'].shape[:2], 0, dtype=np.int32)
