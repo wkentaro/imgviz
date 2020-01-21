@@ -82,7 +82,7 @@ insviz = imgviz.tile(imgs=insviz, border=(255, 255, 255))
 # tile visualization
 tiled = imgviz.tile(
     [rgb, depthviz, labelviz, bboxviz, maskviz, insviz],
-    shape=(2, 3),
+    shape=(1, 6),
     border=(255, 255, 255),
 )
 ```
