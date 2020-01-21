@@ -12,12 +12,37 @@ def check_cv2_available():
 
 
 def cv_imshow(image, window_name=''):
+    '''Show image with OpenCV.
+
+    Parameters
+    ----------
+    image: numpy.ndarray
+        Image.
+
+    Returns
+    -------
+    None
+
+    '''
     check_cv2_available()
 
     return cv2.imshow(window_name, image[:, :, ::-1])
 
 
 def cv_waitkey(msec=0):
+    '''Wait key for the OpenCV window.
+
+    Parameters
+    ----------
+    msec: float
+        Miliseconds to wait.
+
+    Return
+    -------
+    keycode: int
+        Key code (e.g., ord('q')).
+
+    '''
     check_cv2_available()
 
     return cv2.waitKey(msec)

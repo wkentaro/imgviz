@@ -17,20 +17,37 @@ def check_pyglet_available():
 
 
 def pyglet_run():
+    '''Start pyglet mainloop.'''
     check_pyglet_available()
 
     return pyglet.app.run()
 
 
-def pyglet_imshow(image, caption=None, **kwargs):
+def pyglet_imshow(image, caption=None, interval=0.5):
+    '''Show image with pyglet.
+
+    Parameters
+    ----------
+    image: numpy.ndarray or list of numpy.ndarray or iterator of numpy.array
+        Image or images to show.
+    caption: str
+        Caption for pyglet window.
+    interval: float, optional
+        Interval for list or iterator of images. Default is 0.5.
+
+    Returns
+    -------
+    None
+
+    '''
     check_pyglet_available()
 
     if isinstance(image, types.GeneratorType):
-        _pyglet_imshow_generator(image, caption=caption, **kwargs)
+        _pyglet_imshow_generator(image, caption=caption, interval=interval)
     elif isinstance(image, np.ndarray):
         _pyglet_imshow_ndarray(image, caption=caption)
     else:
-        _pyglet_imshow_list(image, caption=caption, **kwargs)
+        _pyglet_imshow_list(image, caption=caption, interval=interval)
 
 
 def _pyglet_imshow_list(images, caption, interval=0.5):

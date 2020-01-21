@@ -6,6 +6,17 @@ import PIL.Image
 
 
 def pyplot_to_numpy():
+    '''Convert pyplot state to numpy array.
+
+    Parameters
+    ----------
+
+    Returns
+    -------
+    arr: numpy.ndarray
+        Plotted image.
+
+    '''
     f = io.BytesIO()
     plt.savefig(
         f,
@@ -16,4 +27,5 @@ def pyplot_to_numpy():
     )
     plt.close()
     f.seek(0)
-    return np.asarray(PIL.Image.open(f))
+    arr = np.asarray(PIL.Image.open(f))
+    return arr

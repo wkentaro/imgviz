@@ -3,10 +3,36 @@ import PIL.Image
 
 
 def imread(filename):
+    '''Read image from file.
+
+    Parameters
+    ----------
+    filename: str
+        Filename.
+
+    Returns
+    -------
+    img: numpy.ndarray, (H, W) or (H, W, 3) or (H, W, 4)
+        Image read.
+    '''
     # type: (str) -> np.ndarray
     return np.asarray(PIL.Image.open(filename))
 
 
 def imsave(filename, arr):
+    '''Save image to file.
+
+    Parameters
+    ----------
+    filename: str
+        Filename.
+    arr: numpy.ndarray, (H, W) or (H, W, 3) or (H, W, 4)
+        Image to save.
+
+    Returns
+    -------
+    None
+
+    '''
     # type: (str, np.ndarray) -> None
     return PIL.Image.fromarray(arr).save(filename)
