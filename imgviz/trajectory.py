@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 
-from ._io import pyplot_fig2arr
+from ._io import pyplot_to_numpy
 from .external import transformations as tf
 
 
@@ -8,7 +8,6 @@ def plot_trajectory(
     transforms,
     is_relative=False,
     mode='xz',
-    fig=None,
     style='b.',
     axis=True,
 ):
@@ -23,8 +22,6 @@ def plot_trajectory(
         True for relative poses. default: False.
     mode: str
         x and y axis of trajectory. default: 'xz' following kitti format.
-    fig: matplotlib.pyplot.Figure
-        figure used for plotting. default: None
     style: str
         style of ploting, default: 'b.'
     axis: bool
@@ -55,15 +52,12 @@ def plot_trajectory(
     backend = plt.get_backend()
     plt.switch_backend('agg')
 
-    if fig is None:
-        fig = plt.figure()
-
     plt.plot(x, y, style)
 
     if not axis:
         plt.axis('off')
 
-    dst = pyplot_fig2arr(fig)
+    dst = pyplot_to_numpy()
     plt.close()
 
     # switch back backend

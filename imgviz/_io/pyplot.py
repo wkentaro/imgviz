@@ -1,9 +1,19 @@
+import io
+
+import matplotlib.pyplot as plt
 import numpy as np
+import PIL.Image
 
 
-def pyplot_fig2arr(fig):
-    fig.canvas.draw()
-    arr = np.frombuffer(fig.canvas.tostring_rgb(), dtype=np.uint8)
-    width, height = fig.canvas.get_width_height()
-    arr = arr.reshape((height, width, 3))
-    return arr
+def pyplot_to_numpy():
+    f = io.BytesIO()
+    plt.savefig(
+        f,
+        bbox_inches='tight',
+        transparent='True',
+        pad_inches=0,
+        format='jpeg',
+    )
+    plt.close()
+    f.seek(0)
+    return np.asarray(PIL.Image.open(f))

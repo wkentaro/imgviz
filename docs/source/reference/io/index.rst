@@ -9,6 +9,6 @@ IO Module
    imgviz.io.imsave
    imgviz.io.cv_imshow
    imgviz.io.cv_waitkey
-   imgviz.io.pyplot_fig2arr
+   imgviz.io.pyplot_to_numpy
    imgviz.io.pyglet_imshow
    imgviz.io.pyglet_run
