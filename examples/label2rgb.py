@@ -9,7 +9,7 @@ here = osp.dirname(osp.abspath(__file__))
 
 
 if __name__ == '__main__':
-    data = imgviz.data.arc2017()
+    data = imgviz.data.voc()
 
     rgb = data['rgb']
     label = data['class_label']
