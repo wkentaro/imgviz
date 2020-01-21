@@ -27,7 +27,7 @@ def main():
         if not osp.exists(img_file):
             continue
         img = PIL.Image.open(img_file)
-        width = 25. / img.height * img.width
+        width = 20. / img.height * img.width
         examples.append((
             '<pre><a href="{}">{}</a></pre>'.format(py_file, py_file),
             '<img src="{}" width="{}%" />'.format(img_file, width),
