@@ -1,14 +1,9 @@
-import os.path as osp
-
 import matplotlib.pyplot as plt
 
 import imgviz
 
 
-here = osp.dirname(osp.abspath(__file__))
-
-
-if __name__ == '__main__':
+def resize():
     data = imgviz.data.arc2017()
 
     rgb = data['rgb']
@@ -18,7 +13,7 @@ if __name__ == '__main__':
 
     # -------------------------------------------------------------------------
 
-    plt.figure(dpi=200)
+    fig = plt.figure(dpi=200)
 
     plt.subplot(121)
     plt.title('rgb:\n{}'.format(rgb.shape))
@@ -30,13 +25,13 @@ if __name__ == '__main__':
     plt.imshow(rgb_resized)
     plt.axis('off')
 
-    out_file = osp.join(here, '.readme/resize.jpg')
-    plt.savefig(
-        out_file, bbox_inches='tight', transparent='True', pad_inches=0
-    )
+    img = imgviz.io.pyplot_fig2arr(fig)
     plt.close()
 
-    img = imgviz.io.imread(out_file)
-    plt.imshow(img)
-    plt.axis('off')
-    plt.show()
+    return img
+
+
+if __name__ == '__main__':
+    from base import run_example
+
+    run_example(resize)

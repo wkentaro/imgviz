@@ -1,20 +1,13 @@
-import os.path as osp
-
 import matplotlib.pyplot as plt
 
 import imgviz
 
 
-here = osp.dirname(osp.abspath(__file__))
-
-
-if __name__ == '__main__':
+def label2rgb():
     data = imgviz.data.voc()
 
     rgb = data['rgb']
     label = data['class_label']
-
-    labelviz = imgviz.label2rgb(label)
 
     label_names = [
         '{}:{}'.format(i, n) for i, n in enumerate(data['class_names'])
@@ -47,13 +40,13 @@ if __name__ == '__main__':
     plt.imshow(labelviz_withname2)
     plt.axis('off')
 
-    out_file = osp.join(here, '.readme/label2rgb.jpg')
-    plt.savefig(
-        out_file, bbox_inches='tight', transparent='True', pad_inches=0
-    )
+    img = imgviz.io.pyplot_fig2arr(fig)
     plt.close()
 
-    img = imgviz.io.imread(out_file)
-    plt.imshow(img)
-    plt.axis('off')
-    plt.show()
+    return img
+
+
+if __name__ == '__main__':
+    from base import run_example
+
+    run_example(label2rgb)

@@ -1,24 +1,15 @@
-import os.path as osp
-
-import matplotlib.pyplot as plt
-
 import imgviz
 
 
-here = osp.dirname(osp.abspath(__file__))
-
-
-if __name__ == '__main__':
+def plot_trajectory():
     data = imgviz.data.kitti_odometry()
 
     img = imgviz.plot_trajectory(data['transforms'])
 
-    # -------------------------------------------------------------------------
+    return img
 
-    out_file = osp.join(here, '.readme/plot_trajectory.jpg')
-    imgviz.io.imsave(out_file, img)
 
-    img = imgviz.io.imread(out_file)
-    plt.imshow(img)
-    plt.axis('off')
-    plt.show()
+if __name__ == '__main__':
+    from base import run_example
+
+    run_example(plot_trajectory)
