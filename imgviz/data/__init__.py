@@ -7,3 +7,5 @@ from .lena import lena
 from .middlebury import middlebury
 
 from .kitti import kitti_odometry
+
+from .voc import voc
