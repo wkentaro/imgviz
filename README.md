@@ -92,31 +92,31 @@ tiled = imgviz.tile(
 <table>
 	<tr>
 		<td><pre><a href="examples/centerize.py">examples/centerize.py</a></pre></td>
-		<td><img src="examples/.readme/centerize.jpg" width="66.66666666666666%" /></td>
+		<td><img src="examples/.readme/centerize.jpg" width="33.333333333333336%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/depth2rgb.py">examples/depth2rgb.py</a></pre></td>
-		<td><img src="examples/.readme/depth2rgb.jpg" width="65.26315789473684%" /></td>
+		<td><img src="examples/.readme/depth2rgb.jpg" width="33.333333333333336%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/draw.py">examples/draw.py</a></pre></td>
-		<td><img src="examples/.readme/draw.jpg" width="50.30425963488844%" /></td>
+		<td><img src="examples/.readme/draw.jpg" width="33.333333333333336%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/flow2rgb.py">examples/flow2rgb.py</a></pre></td>
-		<td><img src="examples/.readme/flow2rgb.jpg" width="65.26315789473684%" /></td>
+		<td><img src="examples/.readme/flow2rgb.jpg" width="33.333333333333336%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/instances2rgb.py">examples/instances2rgb.py</a></pre></td>
-		<td><img src="examples/.readme/instances2rgb.jpg" width="82.94314381270902%" /></td>
+		<td><img src="examples/.readme/instances2rgb.jpg" width="33.333333333333336%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/label2rgb.py">examples/label2rgb.py</a></pre></td>
-		<td><img src="examples/.readme/label2rgb.jpg" width="95.01915708812261%" /></td>
+		<td><img src="examples/.readme/label2rgb.jpg" width="33.333333333333336%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/nchannel2rgb.py">examples/nchannel2rgb.py</a></pre></td>
-		<td><img src="examples/.readme/nchannel2rgb.jpg" width="65.26315789473684%" /></td>
+		<td><img src="examples/.readme/nchannel2rgb.jpg" width="33.333333333333336%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/plot_trajectory.py">examples/plot_trajectory.py</a></pre></td>
@@ -124,10 +124,10 @@ tiled = imgviz.tile(
 	</tr>
 	<tr>
 		<td><pre><a href="examples/resize.py">examples/resize.py</a></pre></td>
-		<td><img src="examples/.readme/resize.jpg" width="59.047619047619044%" /></td>
+		<td><img src="examples/.readme/resize.jpg" width="33.333333333333336%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/tile.py">examples/tile.py</a></pre></td>
-		<td><img src="examples/.readme/tile.jpg" width="44.76534296028881%" /></td>
+		<td><img src="examples/.readme/tile.jpg" width="33.333333333333336%" /></td>
 	</tr>
 </table>
