@@ -153,11 +153,13 @@ def rectangle(src, aabb1, aabb2, fill=None, outline=None, width=0):
     ----------
     src: numpy.ndarray
         Input image.
-    aabb1, aabb2: (2,) array-like
-        aabb1 is (y_min, x_min) and aabb2 is (y_max, x_max).
-    fill: (3,) array-like, optional
+    aabb1: array-like, (2,)
+        Minimum vertex (y_min, x_min) of the axis aligned bounding box (AABB).
+    aabb2: array-like, (2,)
+        Maximum vertex (y_max, x_max) of the AABB.
+    fill: array-like, (3,), optional
         RGB color to fill the mark. None for no fill. (default: None)
-    outline: (3,) array-like, optional
+    outline: array-like, (3,), optional
         RGB color to draw the outline.
     width: int, optional
         Rectangle line width. (default: 0)
