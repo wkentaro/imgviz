@@ -10,7 +10,7 @@ def depth2rgb():
 
     # -------------------------------------------------------------------------
 
-    fig = plt.figure(dpi=200)
+    plt.figure(dpi=200)
 
     plt.subplot(121)
     plt.title('rgb')
@@ -22,7 +22,7 @@ def depth2rgb():
     plt.imshow(depthviz)
     plt.axis('off')
 
-    img = imgviz.io.pyplot_fig2arr(fig)
+    img = imgviz.io.pyplot_to_numpy()
     plt.close()
 
     return img

@@ -23,7 +23,7 @@ def label2rgb():
 
     # -------------------------------------------------------------------------
 
-    fig = plt.figure(dpi=200)
+    plt.figure(dpi=200)
 
     plt.subplot(131)
     plt.title('+img')
@@ -40,7 +40,7 @@ def label2rgb():
     plt.imshow(labelviz_withname2)
     plt.axis('off')
 
-    img = imgviz.io.pyplot_fig2arr(fig)
+    img = imgviz.io.pyplot_to_numpy()
     plt.close()
 
     return img

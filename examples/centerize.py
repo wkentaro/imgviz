@@ -16,7 +16,7 @@ def centerize():
 
     # -------------------------------------------------------------------------
 
-    fig = plt.figure(dpi=200)
+    plt.figure(dpi=200)
 
     plt.subplot(131)
     plt.title('original')
@@ -33,10 +33,7 @@ def centerize():
     plt.imshow(centerized2)
     plt.axis('off')
 
-    img = imgviz.io.pyplot_fig2arr(fig)
-    plt.close()
-
-    return img
+    return imgviz.io.pyplot_to_numpy()
 
 
 if __name__ == '__main__':

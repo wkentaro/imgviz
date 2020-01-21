@@ -51,7 +51,7 @@ def draw():
 
     # -------------------------------------------------------------------------
 
-    fig = plt.figure(dpi=200)
+    plt.figure(dpi=200)
 
     plt.subplot(121)
     plt.title('original')
@@ -63,7 +63,7 @@ def draw():
     plt.imshow(viz)
     plt.axis('off')
 
-    img = imgviz.io.pyplot_fig2arr(fig)
+    img = imgviz.io.pyplot_to_numpy()
     plt.close()
 
     return img

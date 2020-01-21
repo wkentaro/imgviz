@@ -11,7 +11,8 @@ def flow2rgb():
 
     # -------------------------------------------------------------------------
 
-    fig = plt.figure(dpi=200)
+    plt.figure(dpi=200)
+
     plt.subplot(121)
     plt.title('image')
     plt.imshow(rgb)
@@ -22,7 +23,7 @@ def flow2rgb():
     plt.imshow(flowviz)
     plt.axis('off')
 
-    img = imgviz.io.pyplot_fig2arr(fig)
+    img = imgviz.io.pyplot_to_numpy()
     plt.close()
 
     return img
