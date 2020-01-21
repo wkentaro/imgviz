@@ -81,6 +81,14 @@ def main():
   <a href="https://imgviz.readthedocs.io/en/latest/?badge=latest"><img src="https://readthedocs.org/projects/imgviz/badge/?version=latest" alt="Documentation Status" /></a>
 </div>
 
+<div align="center">
+  <a href="https://imgviz.readthedocs.io/en/latest/?badge=latest"><b>Documentation</b></a> |
+  <a href="#installation"><b>Installation</b></a> |
+  <a href="#getting-started"><b>Getting Started</b></a> |
+  <a href="#examples"><b>Examples</b></a> |
+  <a href="https://imgviz.readthedocs.io/en/latest/reference/index.html"><b>API Reference</b></a>
+</div>
+
 <br/>
 
 <div align="center">
