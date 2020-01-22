@@ -21,6 +21,7 @@ def normalize(src, min_value=None, max_value=None, return_minmax=False):
     -------
     dst: numpy.ndarray, float
         Normalized image in [0, 1].
+
     '''
     if src.ndim == 2:
         D = 1

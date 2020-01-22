@@ -25,6 +25,7 @@ def centerize(
     -------
     dst: numpy.ndarray
         Centerized image.
+
     """
     if src.shape[:2] == shape[:2]:
         if return_mask:

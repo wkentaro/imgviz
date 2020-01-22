@@ -11,6 +11,7 @@ class Nchannel2RGB(object):
     ----------
     pca: sklearn.decomposition.PCA
         PCA.
+
     '''
 
     def __init__(self, pca=None):
@@ -37,6 +38,7 @@ class Nchannel2RGB(object):
         -------
         dst: numpy.ndarray, (H, W, 3), numpy.uint8
             Visualized image.
+
         '''
         import sklearn.decomposition
 
@@ -87,5 +89,6 @@ def nchannel2rgb(
     -------
     dst: numpy.ndarray, (H, W, 3), numpy.uint8
         Visualized image.
+
     '''
     return Nchannel2RGB(pca)(nchannel, dtype)

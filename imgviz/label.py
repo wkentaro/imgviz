@@ -18,6 +18,7 @@ def label_colormap(n_label=256, value=None):
     -------
     cmap: numpy.ndarray, (N, 3), numpy.uint8
         Label id to colormap.
+
     '''
 
     def bitget(byteval, idx):
@@ -79,6 +80,11 @@ def label2rgb(
     loc: string
         Location of legend (default: 'centroid').
         'lt' and 'rb' are supported.
+
+    Returns
+    -------
+    res: numpy.ndarray, (H, W, 3), numpy.uint8
+        Visualized image.
 
     '''
     if colormap is None:

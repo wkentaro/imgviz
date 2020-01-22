@@ -15,6 +15,7 @@ def rgb2gray(rgb):
     -------
     gray: numpy.ndarray, (H, W)
         Output gray image.
+
     '''
     assert rgb.ndim == 3, 'rgb must be 3 dimensional'
     assert rgb.shape[2] == 3, 'rgb shape must be (H, W, 3)'
@@ -39,6 +40,7 @@ def gray2rgb(gray):
     -------
     rgb: numpy.ndarray, (H, W, 3), np.uint8
         Output rgb image.
+
     '''
     assert gray.ndim == 2, 'gray must be 2 dimensional'
     assert gray.dtype == np.uint8, 'gray dtype must be np.uint8'
@@ -60,6 +62,7 @@ def rgb2rgba(rgb):
     -------
     rgba: numpy.ndarray, (H, W, 4), np.uint8
         Output rgba image.
+
     '''
     assert rgb.ndim == 3, 'rgb must be 3 dimensional'
     assert rgb.shape[2] == 3, 'rgb shape must be (H, W, 3)'
@@ -83,6 +86,7 @@ def rgb2hsv(rgb):
     -------
     hsv: numpy.ndarray, (H, W, 3), np.uint8
         Output hsv image.
+
     '''
     hsv = PIL.Image.fromarray(rgb, mode='RGB')
     hsv = hsv.convert('HSV')
@@ -103,6 +107,7 @@ def hsv2rgb(hsv):
     -------
     rgb: numpy.ndarray, (H, W, 3), np.uint8
         Output rgb image.
+
     '''
     rgb = PIL.Image.fromarray(hsv, mode='HSV')
     rgb = rgb.convert('RGB')

@@ -9,17 +9,6 @@ from .draw import rectangle
 
 
 def _tile(imgs, shape, dst):
-    """Tile images which have same size.
-
-    Parameters
-    ----------
-    imgs: numpy.ndarray
-        Image list which should be tiled.
-    shape: tuple of int
-        Tile shape.
-    dst:
-        Image to put the tile on.
-    """
     y_num, x_num = shape
     tile_w = imgs[0].shape[1]
     tile_h = imgs[0].shape[0]
@@ -52,6 +41,27 @@ def tile(
     border=None,
     border_width=None,
 ):
+    '''Tile images.
+
+    Parameters
+    ----------
+    imgs: numpy.ndarray
+        Image list which should be tiled.
+    shape: tuple of int
+        Tile shape.
+    cval: array-like, optional
+        Color to fill the background. Default is (0, 0, 0).
+    border: array-like, optional
+        Color for the border. If None, the border is not drawn.
+    border_width: int
+        Pixel size of the border.
+
+    Returns
+    -------
+    dst: numpy.ndarray
+        Tiled image.
+
+    '''
     imgs = list(imgs)  # copy
 
     # get max tile size to which each image should be resized

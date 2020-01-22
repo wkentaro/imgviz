@@ -89,6 +89,7 @@ def flow2rgb(flow_uv):
     -------
     dst: numpy.ndarray
         RGB image.
+
     '''
     assert flow_uv.ndim == 3, 'flow must be 3 dimensional'
     assert flow_uv.shape[2] == 2, 'flow must have shape (H, W, 2)'

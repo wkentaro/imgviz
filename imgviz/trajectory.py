@@ -11,7 +11,7 @@ def plot_trajectory(
     style='b.',
     axis=True,
 ):
-    """Plot the trajectory using transform matrices
+    '''Plot the trajectory using transform matrices
 
     Parameters
     ----------
@@ -31,7 +31,8 @@ def plot_trajectory(
     -------
     dst: numpy.ndarray
         trajectory
-    """
+
+    '''
     if is_relative:
         for i in range(1, len(transforms)):
             transforms[i] = transforms[i - 1].dot(transforms[i])

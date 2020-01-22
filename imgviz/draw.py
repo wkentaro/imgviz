@@ -29,6 +29,7 @@ def triangle(src, center, size, fill=None, outline=None):
     -------
     dst: numpy.ndarray
         Output image.
+
     '''
     dst = PIL.Image.fromarray(src)
     draw = PIL.ImageDraw.Draw(dst)
@@ -66,6 +67,7 @@ def star(src, center, size, fill=None, outline=None):
     -------
     dst: numpy.ndarray
         Output image.
+
     '''
     dst = PIL.Image.fromarray(src)
     draw = PIL.ImageDraw.Draw(dst)
@@ -129,6 +131,7 @@ def circle(src, center, diameter, fill=None, outline=None, width=0):
     -------
     dst: numpy.ndarray
         Output image.
+
     '''
     dst = PIL.Image.fromarray(src)
     draw = PIL.ImageDraw.Draw(dst)
@@ -168,6 +171,7 @@ def rectangle(src, aabb1, aabb2, fill=None, outline=None, width=0):
     -------
     dst: numpy.ndarray
         Output image.
+
     '''
     if outline is not None:
         outline = tuple(outline)
@@ -211,6 +215,7 @@ def text_size(text, size):
         Text height.
     width: int
         Text width.
+
     '''
     font = _get_font(size)
     lines = text.splitlines()
@@ -241,6 +246,7 @@ def text(src, yx, text, size, color=(0, 0, 0)):
     -------
     dst: numpy.ndarray
         Output image.
+
     '''
     dst = PIL.Image.fromarray(src)
     draw = PIL.ImageDraw.ImageDraw(dst)
@@ -289,6 +295,7 @@ def text_in_rectangle(
     -------
     dst: numpy.ndarray
         Output image.
+
     '''
     if color is None:
         color = color_module.get_fg_color(background)

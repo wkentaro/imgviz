@@ -55,6 +55,7 @@ def instances2rgb(
     -------
     dst: numpy.ndarray, (H, W, 3), numpy.uint8
         Visualized image.
+
     '''
     assert isinstance(image, np.ndarray)
     assert image.dtype == np.uint8

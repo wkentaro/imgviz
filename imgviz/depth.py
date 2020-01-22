@@ -51,6 +51,7 @@ class Depth2RGB(object):
         -------
         rgb: numpy.ndarray, (H, W, 3), np.uint8
             Output colorized image.
+
         '''
         assert depth.ndim == 2, 'depth image must be 2 dimensional'
         assert np.issubdtype(depth.dtype, np.floating), \
@@ -106,5 +107,6 @@ def depth2rgb(
     -------
     rgb: numpy.ndarray, (H, W, 3), np.uint8
         Output colorized image.
+
     '''
     return Depth2RGB(min_value, max_value, colormap)(depth, dtype)
