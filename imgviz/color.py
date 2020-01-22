@@ -91,6 +91,7 @@ def rgb2hsv(rgb):
 
 
 def hsv2rgb(hsv):
+    # type: (np.ndarray) -> np.ndarray
     '''Convert hsv to rgb.
 
     Parameters

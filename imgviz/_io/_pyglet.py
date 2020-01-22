@@ -17,6 +17,7 @@ def check_pyglet_available():
 
 
 def pyglet_run():
+    # type: () -> None
     '''Start pyglet mainloop.'''
     check_pyglet_available()
 
@@ -24,13 +25,14 @@ def pyglet_run():
 
 
 def pyglet_imshow(image, caption=None, interval=0.5):
+    # type: (np.ndarray, str, float) -> None
     '''Show image with pyglet.
 
     Parameters
     ----------
     image: numpy.ndarray or list of numpy.ndarray or iterator of numpy.array
         Image or images to show.
-    caption: str
+    caption: str, optional
         Caption for pyglet window.
     interval: float, optional
         Interval for list or iterator of images. Default is 0.5.
@@ -50,7 +52,9 @@ def pyglet_imshow(image, caption=None, interval=0.5):
         _pyglet_imshow_list(image, caption=caption, interval=interval)
 
 
-def _pyglet_imshow_list(images, caption, interval=0.5):
+def _pyglet_imshow_list(images, caption=None, interval=0.5):
+    # type: (np.ndarray, str, float) -> None
+
     index = 0
 
     image = _ndarray_to_imagedata(images[index])
@@ -101,7 +105,9 @@ def _pyglet_imshow_list(images, caption, interval=0.5):
                 print("Press 'h' to show help")
 
 
-def _pyglet_imshow_generator(images, caption, interval=0.5):
+def _pyglet_imshow_generator(images, caption=None, interval=0.5):
+    # type: (np.ndarray, str, float) -> None
+
     image = _ndarray_to_imagedata(next(images))
     window, sprite = _window_and_sprite(image, caption=caption)
 
@@ -147,7 +153,9 @@ def _pyglet_imshow_generator(images, caption, interval=0.5):
                 print("Press 'h' to show help")
 
 
-def _pyglet_imshow_ndarray(image, caption):
+def _pyglet_imshow_ndarray(image, caption=None):
+    # type: (np.ndarray, str) -> None
+
     image = _ndarray_to_imagedata(image)
     window, sprite = _window_and_sprite(image, caption=caption)
 

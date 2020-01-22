@@ -2,6 +2,7 @@ try:
     import cv2
 except ImportError:
     cv2 = None
+import numpy as np  # NOQA
 
 
 def check_cv2_available():
@@ -12,6 +13,7 @@ def check_cv2_available():
 
 
 def cv_imshow(image, window_name=''):
+    # type: (np.ndarray, str) -> None
     '''Show image with OpenCV.
 
     Parameters
@@ -30,6 +32,7 @@ def cv_imshow(image, window_name=''):
 
 
 def cv_waitkey(msec=0):
+    # type: (int) -> int
     '''Wait key for the OpenCV window.
 
     Parameters

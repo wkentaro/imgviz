@@ -14,7 +14,7 @@ def centerize(
         Image to centerize
     shape: tuple of int
         Image shape (height, width) or (height, width, channel)
-    cval: numpy.ndarray
+    cval: int or float or numpy.ndarray
         Color to be filled in the blank.
     return_mask: numpy.ndarray
         Mask for centerized image.

@@ -86,6 +86,7 @@ def depth2rgb(
     max_value=None,
     colormap='jet',
 ):
+    # type: (np.ndarray, np.dtype, float, float, str) -> np.ndarray
     '''Convert depth to rgb.
 
     Parameters
