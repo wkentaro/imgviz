@@ -41,7 +41,7 @@ pip install -e .[all]
 
 # pytest
 pip install -U pytest
-pytest -v tests
+MPLBACKEND=agg pytest -v tests
 
 # examples
 MPLBACKEND=agg python getting_started.py
