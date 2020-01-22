@@ -17,4 +17,8 @@ Functions
    imgviz.label2rgb
    imgviz.nchannel2rgb
    imgviz.plot_trajectory
+
+   imgviz.centerize
+   imgviz.normalize
    imgviz.resize
+   imgviz.tile
