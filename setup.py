@@ -1,9 +1,8 @@
-#!/usr/bin/env python
-
 from __future__ import print_function
 
 import os
 import os.path as osp
+import re
 
 import distutils.spawn
 from setuptools import find_packages
@@ -13,39 +12,16 @@ import subprocess
 import sys
 
 
-here = osp.abspath(osp.dirname(__file__))
-version_file = osp.join(here, 'imgviz', '_version.py')
-if sys.version_info.major == 3:
-    import importlib
-    version = importlib.machinery.SourceFileLoader(
-        '_version', version_file
-    ).load_module().__version__
-else:
-    import imp
-    version = imp.load_source('_version', version_file).__version__
-del here
-
-
-if sys.argv[1] == 'release':
-    if not distutils.spawn.find_executable('twine'):
-        print(
-            'Please install twine:\n\n\tpip install twine\n',
-            file=sys.stderr,
+def get_version():
+    filename = 'imgviz/__init__.py'
+    with open(filename) as f:
+        match = re.search(
+            r'''^__version__ = ['"]([^'"]*)['"]''', f.read(), re.M
         )
-        sys.exit(1)
-
-    commands = [
-        'git submodule update github2pypi',
-        'git pull origin master',
-        'git tag v{:s}'.format(version),
-        'git push origin master --tag',
-        'python setup.py sdist',
-        'twine upload dist/imgviz-{:s}.tar.gz'.format(version),
-    ]
-    for cmd in commands:
-        print('+ {}'.format(cmd))
-        subprocess.check_call(shlex.split(cmd))
-    sys.exit(0)
+    if not match:
+        raise RuntimeError("{} doesn't contain __version__".format(filename))
+    version = match.groups()[0]
+    return version
 
 
 def get_install_requires():
@@ -79,31 +55,59 @@ def get_package_data():
     return {'imgviz': package_data}
 
 
-setup(
-    name='imgviz',
-    version=version,
-    packages=find_packages(exclude=['github2pypi']),
-    install_requires=get_install_requires(),
-    extras_require={
-        'all': ['scikit-image', 'scikit-learn'],
-    },
-    description='Image Visualization Tools',
-    long_description=get_long_description(),
-    long_description_content_type='text/markdown',
-    package_data=get_package_data(),
-    include_package_data=True,
-    author='Kentaro Wada',
-    author_email='www.kentaro.wada@gmail.com',
-    url='http://github.com/wkentaro/imgviz',
-    license='MIT',
-    classifiers=[
-        'Development Status :: 5 - Production/Stable',
-        'Intended Audience :: Developers',
-        'Natural Language :: English',
-        'Programming Language :: Python',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: Implementation :: CPython',
-        'Programming Language :: Python :: Implementation :: PyPy',
-    ],
-)
+def main():
+    version = get_version()
+
+    if sys.argv[1] == 'release':
+        if not distutils.spawn.find_executable('twine'):
+            print(
+                'Please install twine:\n\n\tpip install twine\n',
+                file=sys.stderr,
+            )
+            sys.exit(1)
+
+        commands = [
+            'git submodule update github2pypi',
+            'git pull origin master',
+            'git tag v{:s}'.format(version),
+            'git push origin master --tag',
+            'python setup.py sdist',
+            'twine upload dist/imgviz-{:s}.tar.gz'.format(version),
+        ]
+        for cmd in commands:
+            print('+ {}'.format(cmd))
+            subprocess.check_call(shlex.split(cmd))
+        sys.exit(0)
+
+    setup(
+        name='imgviz',
+        version=version,
+        packages=find_packages(exclude=['github2pypi']),
+        install_requires=get_install_requires(),
+        extras_require={
+            'all': ['scikit-image', 'scikit-learn'],
+        },
+        description='Image Visualization Tools',
+        long_description=get_long_description(),
+        long_description_content_type='text/markdown',
+        package_data=get_package_data(),
+        include_package_data=True,
+        author='Kentaro Wada',
+        author_email='www.kentaro.wada@gmail.com',
+        url='http://github.com/wkentaro/imgviz',
+        license='MIT',
+        classifiers=[
+            'Development Status :: 5 - Production/Stable',
+            'Intended Audience :: Developers',
+            'Natural Language :: English',
+            'Programming Language :: Python',
+            'Programming Language :: Python :: 2',
+            'Programming Language :: Python :: 3',
+            'Programming Language :: Python :: Implementation :: CPython',
+            'Programming Language :: Python :: Implementation :: PyPy',
+        ],
+    )
+
+
+if __name__ == '__main__':
+    main()
