@@ -8,7 +8,9 @@ dist: trusty
 language: python
 
 python:
+  - '3.7'
   - '3.6'
+  - '3.5'
   - '2.7'
 
 branches:
@@ -30,7 +32,7 @@ after_success:
   - pip install dist/*.tar.gz
 
   - |
-    if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PYTHON_VERSION" = "3.6" ]; then
+    if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PYTHON_VERSION" = "3.7" ]; then
       source .anaconda3/bin/activate
       ./generate_readme.py > README.md
       ./.travis_push.sh README.md .readme examples/.readme
