@@ -1,6 +1,5 @@
 import os.path as osp
 
-import matplotlib
 import numpy as np
 import PIL.Image
 import PIL.ImageDraw
@@ -191,6 +190,8 @@ def rectangle(src, aabb1, aabb2, fill=None, outline=None, width=0):
 
 
 def _get_font(size):
+    import matplotlib
+
     fonts_path = osp.join(
         osp.dirname(matplotlib.__file__), 'mpl-data/fonts/ttf'
     )

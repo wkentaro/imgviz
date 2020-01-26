@@ -1,4 +1,3 @@
-import matplotlib.cm
 import numpy as np
 
 from .normalize import normalize
@@ -20,6 +19,8 @@ class Depth2RGB(object):
     '''
 
     def __init__(self, min_value=None, max_value=None, colormap='jet'):
+        import matplotlib.cm
+
         self._min_value = min_value
         self._max_value = max_value
 
@@ -53,6 +54,8 @@ class Depth2RGB(object):
             Output colorized image.
 
         '''
+        import matplotlib.cm
+
         assert depth.ndim == 2, 'depth image must be 2 dimensional'
         assert np.issubdtype(depth.dtype, np.floating), \
             'depth dtype must be float'

@@ -1,5 +1,3 @@
-import matplotlib.pyplot as plt
-
 from ._io import pyplot_to_numpy
 from .external import transformations as tf
 
@@ -33,6 +31,8 @@ def plot_trajectory(
         trajectory
 
     '''
+    import matplotlib.pyplot as plt
+
     if is_relative:
         for i in range(1, len(transforms)):
             transforms[i] = transforms[i - 1].dot(transforms[i])

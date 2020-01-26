@@ -1,6 +1,5 @@
 import io
 
-import matplotlib.pyplot as plt
 import numpy as np
 import PIL.Image
 
@@ -17,6 +16,8 @@ def pyplot_to_numpy():
         Plotted image.
 
     '''
+    import matplotlib.pyplot as plt
+
     f = io.BytesIO()
     plt.savefig(
         f,
