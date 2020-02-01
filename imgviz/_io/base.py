@@ -16,7 +16,7 @@ def imread(filename):
     img: numpy.ndarray, (H, W) or (H, W, 3) or (H, W, 4)
         Image read.
     '''
-    return np.asarray(PIL.Image.open(filename))
+    return np.array(PIL.Image.open(filename))
 
 
 def imsave(filename, arr):
