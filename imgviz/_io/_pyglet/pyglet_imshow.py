@@ -3,25 +3,7 @@ import types
 import numpy as np
 import PIL.Image
 
-try:
-    import pyglet
-except ImportError:
-    pyglet = None
-
-
-def check_pyglet_available():
-    if pyglet is None:
-        raise ImportError(
-            'pyglet is not installed, run following: pip install pyglet'
-        )
-
-
-def pyglet_run():
-    # type: () -> None
-    '''Start pyglet mainloop.'''
-    check_pyglet_available()
-
-    return pyglet.app.run()
+from .base import check_pyglet_available
 
 
 def pyglet_imshow(image, caption=None, interval=0.5):
@@ -42,8 +24,6 @@ def pyglet_imshow(image, caption=None, interval=0.5):
     None
 
     '''
-    check_pyglet_available()
-
     if isinstance(image, types.GeneratorType):
         _pyglet_imshow_generator(image, caption=caption, interval=interval)
     elif isinstance(image, np.ndarray):
@@ -54,6 +34,7 @@ def pyglet_imshow(image, caption=None, interval=0.5):
 
 def _pyglet_imshow_list(images, caption=None, interval=0.5):
     # type: (np.ndarray, str, float) -> None
+    pyglet = check_pyglet_available()
 
     index = 0
 
@@ -107,6 +88,7 @@ def _pyglet_imshow_list(images, caption=None, interval=0.5):
 
 def _pyglet_imshow_generator(images, caption=None, interval=0.5):
     # type: (np.ndarray, str, float) -> None
+    pyglet = check_pyglet_available()
 
     image = _ndarray_to_imagedata(next(images))
     window, sprite = _window_and_sprite(image, caption=caption)
@@ -155,6 +137,7 @@ def _pyglet_imshow_generator(images, caption=None, interval=0.5):
 
 def _pyglet_imshow_ndarray(image, caption=None):
     # type: (np.ndarray, str) -> None
+    pyglet = check_pyglet_available()
 
     image = _ndarray_to_imagedata(image)
     window, sprite = _window_and_sprite(image, caption=caption)
@@ -181,6 +164,7 @@ def _pyglet_imshow_ndarray(image, caption=None):
 
 
 def _window_and_sprite(image, caption):
+    pyglet = check_pyglet_available()
     window = pyglet.window.Window(
         width=image.width,
         height=image.height,
@@ -191,6 +175,7 @@ def _window_and_sprite(image, caption):
 
 
 def _ndarray_to_imagedata(image):
+    pyglet = check_pyglet_available()
     image = PIL.Image.fromarray(image)
     image = pyglet.image.ImageData(
         width=image.width,
