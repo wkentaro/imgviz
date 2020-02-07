@@ -5,10 +5,12 @@ Functions
    :toctree: generated/
    :nosignatures:
 
+   imgviz.asgray
    imgviz.gray2rgb
    imgviz.rgb2gray
    imgviz.rgb2rgba
    imgviz.rgb2hsv
+   imgviz.rgba2rgb
    imgviz.hsv2rgb
    imgviz.depth2rgb
    imgviz.flow2rgb

@@ -13,10 +13,12 @@ from . import _io as io
 # -----------------------------------------------------------------------------
 
 # visualization targets
+from .color import asgray
 from .color import gray2rgb
 from .color import rgb2gray
 from .color import rgb2rgba
 from .color import rgb2hsv
+from .color import rgba2rgb
 from .color import hsv2rgb
 from .depth import Depth2RGB
 from .depth import depth2rgb

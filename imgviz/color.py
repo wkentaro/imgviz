@@ -115,6 +115,52 @@ def hsv2rgb(hsv):
     return rgb
 
 
+def rgba2rgb(rgba):
+    # type: (np.ndarray) -> np.ndarray
+    '''Convert rgba to rgb.
+
+    Parameters
+    ----------
+    rgba: numpy.ndarray, (H, W, 4), np.uint8
+        Input rgba image.
+
+    Returns
+    -------
+    rgb: numpy.ndarray, (H, W, 3), np.uint8
+        Output rgb image.
+    '''
+    rgb = rgba[:, :, :3]
+    return rgb
+
+
+def asgray(img):
+    # type: (np.ndarray) -> np.ndarray
+    '''Convert any array to gray image.
+
+    Parameters
+    ----------
+    img: numpy.ndarray, (H, W, 3), np.uint8
+        Input image.
+
+    Returns
+    -------
+    gray: numpy.ndarray, (H, W), np.uint8
+        Output gray image.
+    '''
+    if img.ndim == 2:
+        gray = img
+    elif img.ndim == 3 and img.shape[2] == 4:
+        gray = rgb2gray(rgba2rgb(img))
+    elif img.ndim == 3 and img.shape[2] == 3:
+        gray = rgb2gray(img)
+    else:
+        raise ValueError(
+            'Unsupported image format to convert to gray: shape={}, dtype={}'
+            .format(img.shape, img.dtype)
+        )
+    return gray
+
+
 def get_fg_color(color):
     color = np.asarray(color, dtype=np.uint8)
     intensity = rgb2gray(color.reshape(1, 1, 3)).sum()
