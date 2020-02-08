@@ -1,3 +1,6 @@
+import os
+import os.path as osp
+
 import numpy as np
 import PIL.Image
 
@@ -35,4 +38,8 @@ def imsave(filename, arr):
     None
 
     '''
+    try:
+        os.makedirs(osp.dirname(filename))
+    except OSError:
+        pass
     return PIL.Image.fromarray(arr).save(filename)
