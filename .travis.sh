@@ -1,5 +1,15 @@
 #!/bin/bash
 
+pip_install()
+{
+  pip install --progress-bar off $@
+}
+
+conda_install()
+{
+  conda install -y -q $@
+}
+
 set -e
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -16,31 +26,31 @@ PYTHON_VERSION32="$(echo $PYTHON_VERSION | cut -d '.' -f 1)"
 if [ ! -d .anaconda$PYTHON_VERSION32 ]; then
   curl -L https://github.com/wkentaro/dotfiles/raw/master/local/bin/install_anaconda$PYTHON_VERSION32.sh | bash -s .
   source .anaconda$PYTHON_VERSION32/bin/activate
-  conda install -y python=$PYTHON_VERSION
+  conda_install python=$PYTHON_VERSION
 fi
 source .anaconda$PYTHON_VERSION32/bin/activate
 
 set -x
 
 # flake8
-pip install -U flake8
+pip_install -U flake8
 flake8 .
 
 # mypy
 if [ "$PYTHON_VERSION32" = "3" ]; then
-  pip install -U mypy
+  pip_install -U mypy
   mypy -p imgviz --ignore-missing-imports
 fi
 
 # install
 if [ "$PYTHON_VERSION32" = "2" ]; then
   # numpy 1.16 raises error on python2 with import dask.array
-  pip install 'numpy<1.16'
+  pip_install 'numpy<1.16'
 fi
-pip install -e .[all]
+pip_install -e .[all]
 
 # pytest
-pip install -U pytest
+pip_install -U pytest
 MPLBACKEND=agg pytest -v tests
 
 # examples
