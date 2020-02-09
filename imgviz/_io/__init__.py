@@ -10,3 +10,4 @@ from .pyplot import pyplot_to_numpy
 
 from ._pyglet import pyglet_imshow
 from ._pyglet import pyglet_run
+from ._pyglet import PygletThreadedImageViewer
