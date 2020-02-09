@@ -12,3 +12,4 @@ IO Module
    imgviz.io.pyplot_to_numpy
    imgviz.io.pyglet_imshow
    imgviz.io.pyglet_run
+   imgviz.io.PygletThreadedImageViewer

@@ -7,7 +7,23 @@ from .pyglet_imshow import _ndarray_to_imagedata
 
 class PygletThreadedImageViewer(pyglet.window.Window):
 
-    def __init__(self, play=True, interval=0.5):
+    '''Image viewer with threading.'''
+
+    def __init__(self, play=True, interval=0.5, **kwargs):
+        '''Initialize the image viewer.
+
+        Parameters
+        ----------
+        play: bool
+            If True, it shows automatically for each `imshow()`.
+        interval: float
+            Interval in seconds for each `imshow()` call.
+        **kwargs:
+            Keyword arguments passed to :meth:`pyglet.window.Window.__init__`.
+
+        .. seealso:: :class:`pyglet.window.Window`
+
+        '''
         self._play = play
         self._next = False
 
@@ -17,17 +33,23 @@ class PygletThreadedImageViewer(pyglet.window.Window):
         self.sprite = None
 
         self.lock = threading.Lock()
-        self.thread = threading.Thread(target=self._init_and_start_app)
+        self.thread = threading.Thread(
+            target=self._init_and_start_app, kwargs=kwargs
+        )
         self.thread.daemon = True  # terminate when main thread exit
         self.thread.start()
 
         pyglet.clock.schedule_interval(self.on_update, 1 / 100)
 
-    def _init_and_start_app(self):
-        super(PygletThreadedImageViewer, self).__init__()
-        pyglet.app.run()
-
     def imshow(self, image):
+        '''Update image on the viewer.
+
+        Parameters
+        ----------
+        image: numpy.ndarray
+            The image to show on the viewer.
+
+        '''
         imagedata = _ndarray_to_imagedata(image)
         with self.lock:
             if self.sprite is None:
@@ -44,6 +66,10 @@ class PygletThreadedImageViewer(pyglet.window.Window):
                 elif self._next:
                     self._next = False
                     break
+
+    def _init_and_start_app(self, **kwargs):
+        super(PygletThreadedImageViewer, self).__init__(**kwargs)
+        pyglet.app.run()
 
     def on_draw(self):
         self.clear()
