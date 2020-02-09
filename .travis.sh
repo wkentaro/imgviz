@@ -56,5 +56,7 @@ MPLBACKEND=agg pytest -v tests
 # examples
 MPLBACKEND=agg python getting_started.py
 for f in examples/*.py; do
-  MPLBACKEND=agg python $f --save
+  if [ -x $f ]; then
+    MPLBACKEND=agg $f --save
+  fi
 done

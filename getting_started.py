@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # flake8: noqa
 
 import os.path as osp
