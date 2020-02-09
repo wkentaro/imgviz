@@ -2,7 +2,7 @@
 
 import imgviz
 
-from check_pyglet_imshow import get_images
+from pyglet_imshow import get_images
 
 
 def main():
