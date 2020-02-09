@@ -8,9 +8,9 @@ from .pyglet_run import pyglet_run
 
 try:
     from .pyglet_threaded_image_viewer import PygletThreadedImageViewer
-except ImportError:
+except Exception:
 
     class PygletThreadedImageViewer(object):  # type: ignore
 
-        def __init__(self, *args, **kwargs):
-            check_pyglet_available()
+        def __init__(*args, **kwargs):
+            from .pyglet_threaded_image_viewer import PygletThreadedImageViewer
