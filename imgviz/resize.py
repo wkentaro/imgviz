@@ -1,10 +1,10 @@
+import numpy as np
+import PIL.Image
+
 try:
     import cv2
 except ImportError:
     cv2 = None
-
-import numpy as np
-import PIL.Image
 
 
 def _resize_pillow(src, height, width, interpolation):

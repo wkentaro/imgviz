@@ -36,6 +36,10 @@ set -x
 pip_install -U black
 black --check .
 
+# flake8
+pip install -U flake8 zimports
+flake8 .
+
 # mypy
 if [ "$PYTHON_VERSION32" = "3" ]; then
   pip_install -U mypy

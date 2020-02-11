@@ -1,15 +1,15 @@
 from __future__ import print_function
 
+import distutils.spawn
 import os
 import os.path as osp
 import re
-
-import distutils.spawn
-from setuptools import find_packages
-from setuptools import setup
 import shlex
 import subprocess
 import sys
+
+from setuptools import find_packages
+from setuptools import setup
 
 
 def get_version():

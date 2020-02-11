@@ -1,6 +1,6 @@
-from . import normalize
-
 import numpy as np
+
+from . import normalize
 
 
 class Nchannel2RGB(object):

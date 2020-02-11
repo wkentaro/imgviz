@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
-import imgviz
-
 from pyglet_imshow import get_images
+
+import imgviz
 
 
 def main():
