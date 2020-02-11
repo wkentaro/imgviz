@@ -32,9 +32,9 @@ source .anaconda$PYTHON_VERSION32/bin/activate
 
 set -x
 
-# flake8
-pip_install -U flake8
-flake8 .
+# black
+pip_install -U black
+black --check .
 
 # mypy
 if [ "$PYTHON_VERSION32" = "3" ]; then

@@ -1,0 +1,14 @@
+[tool.black]
+line-length = 79
+skip-string-normalization = true
+exclude = '''
+(
+    ^/\..*
+  | ^/docs/
+  | ^/examples/
+  | ^/tests/
+  | ^/github2pypi/
+  | ^/imgviz/external/
+  | ^/getting_started\.py
+)
+'''
