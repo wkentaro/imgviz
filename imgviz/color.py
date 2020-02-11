@@ -155,8 +155,8 @@ def asgray(img):
         gray = rgb2gray(img)
     else:
         raise ValueError(
-            'Unsupported image format to convert to gray: shape={}, dtype={}'
-            .format(img.shape, img.dtype)
+            'Unsupported image format to convert to gray:'
+            'shape={}, dtype={}'.format(img.shape, img.dtype)
         )
     return gray
 

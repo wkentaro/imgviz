@@ -61,7 +61,7 @@ def instances2rgb(
     assert image.dtype == np.uint8
     assert image.ndim == 3
 
-    assert all(l >= 0 for l in labels)
+    assert all(label_i >= 0 for label_i in labels)
 
     n_instance = len(labels)
 
@@ -92,13 +92,13 @@ def instances2rgb(
 
         maskviz = mask[:, :, None] * color_ins.astype(float)
         dst = dst.copy()
-        dst[mask] = (
-            (1 - alpha) * image_gray[mask].astype(float) +
-            alpha * maskviz[mask]
-        )
+        dst[mask] = (1 - alpha) * image_gray[mask].astype(
+            float
+        ) + alpha * maskviz[mask]
 
         try:
             import skimage.segmentation
+
             boundary = skimage.segmentation.find_boundaries(
                 mask, connectivity=2
             )
@@ -120,11 +120,7 @@ def instances2rgb(
         aabb1 = np.array([y1, x1], dtype=int)
         aabb2 = np.array([y2, x2], dtype=int)
         dst = draw_module.rectangle(
-            dst,
-            aabb1,
-            aabb2,
-            outline=color_cls,
-            width=line_width,
+            dst, aabb1, aabb2, outline=color_cls, width=line_width,
         )
 
         if caption is not None:

@@ -35,11 +35,7 @@ def _get_tile_shape(num, hw_ratio=1):
 
 
 def tile(
-    imgs,
-    shape=None,
-    cval=None,
-    border=None,
-    border_width=None,
+    imgs, shape=None, cval=None, border=None, border_width=None,
 ):
     '''Tile images.
 
@@ -68,7 +64,7 @@ def tile(
     max_h, max_w = np.array([img.shape[:2] for img in imgs]).max(axis=0)
 
     if shape is None:
-        shape = _get_tile_shape(len(imgs), hw_ratio=1. * max_h / max_w)
+        shape = _get_tile_shape(len(imgs), hw_ratio=1.0 * max_h / max_w)
 
     if border:
         border = np.asarray(border, dtype=np.uint8)
@@ -85,7 +81,7 @@ def tile(
     if ndim == 3:
         channel = max(img.shape[2] for img in imgs if img.ndim == 3)
     else:
-        ndim = 3     # gray images will be converted to rgb
+        ndim = 3  # gray images will be converted to rgb
         channel = 3  # all gray
     assert channel in [3, 4]
 

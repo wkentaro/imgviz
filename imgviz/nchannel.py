@@ -43,8 +43,9 @@ class Nchannel2RGB(object):
         import sklearn.decomposition
 
         assert nchannel.ndim == 3, 'nchannel.ndim must be 3'
-        assert np.issubdtype(nchannel.dtype, np.floating), \
-            'nchannel.dtype must be floating'
+        assert np.issubdtype(
+            nchannel.dtype, np.floating
+        ), 'nchannel.dtype must be floating'
         H, W, D = nchannel.shape
 
         dst = nchannel.reshape(-1, D)
@@ -71,9 +72,7 @@ class Nchannel2RGB(object):
         return dst
 
 
-def nchannel2rgb(
-    nchannel, dtype=np.uint8, pca=None
-):
+def nchannel2rgb(nchannel, dtype=np.uint8, pca=None):
     '''Convert nchannel array to rgb by PCA.
 
     Parameters

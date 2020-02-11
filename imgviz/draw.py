@@ -82,26 +82,28 @@ def star(src, center, size, fill=None, outline=None):
 
     # 5 valleys
     angles_v = angles_m + np.pi / 5
-    l = radius * 1 / (
+    length = radius / (
         np.sin(np.pi / 5) / np.tan(np.pi / 10) + np.cos(np.pi / 10)
     )
-    x_v = cx + l * np.cos(angles_v)
-    y_v = cy - l * np.sin(angles_v)
+    x_v = cx + length * np.cos(angles_v)
+    y_v = cy - length * np.sin(angles_v)
     xy_v = np.stack((x_v, y_v), axis=1)
 
-    xy = np.array([
-        xy_m[0],
-        xy_v[0],
-        xy_m[1],
-        xy_v[1],
-        xy_m[2],
-        xy_v[2],
-        xy_m[3],
-        xy_v[3],
-        xy_m[4],
-        xy_v[4],
-        xy_m[0],
-    ])
+    xy = np.array(
+        [
+            xy_m[0],
+            xy_v[0],
+            xy_m[1],
+            xy_v[1],
+            xy_m[2],
+            xy_v[2],
+            xy_m[3],
+            xy_v[3],
+            xy_m[4],
+            xy_v[4],
+            xy_m[0],
+        ]
+    )
     xy = xy.flatten().tolist()
     draw.polygon(xy, fill=fill, outline=outline)
 
@@ -137,7 +139,7 @@ def circle(src, center, diameter, fill=None, outline=None, width=0):
 
     cy, cx = center
 
-    radius = diameter / 2.
+    radius = diameter / 2.0
     x1 = cx - radius
     x2 = x1 + diameter
     y1 = cy - radius
@@ -261,14 +263,7 @@ def text(src, yx, text, size, color=(0, 0, 0)):
 
 
 def text_in_rectangle(
-    src,
-    loc,
-    text,
-    size,
-    background,
-    color=None,
-    aabb1=None,
-    aabb2=None,
+    src, loc, text, size, background, color=None, aabb1=None, aabb2=None,
 ):
     '''Draw text in a rectangle.
 
@@ -326,10 +321,6 @@ def text_in_rectangle(
         fill=background,
     )
     dst = globals()['text'](
-        src=dst,
-        yx=(yx[0] + 1, yx[1] + 1),
-        text=text,
-        color=color,
-        size=size,
+        src=dst, yx=(yx[0] + 1, yx[1] + 1), text=text, color=color, size=size,
     )
     return dst

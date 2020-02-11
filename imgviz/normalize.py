@@ -53,9 +53,7 @@ def normalize(src, min_value=None, max_value=None, return_minmax=False):
         isnan = np.isnan(src)
     else:
         isnan = np.isnan(src).any(axis=2)
-    dst[~isnan] = (
-        1. * (src[~isnan] - min_value) / (max_value - min_value)
-    )
+    dst[~isnan] = 1.0 * (src[~isnan] - min_value) / (max_value - min_value)
     dst[isnan] = np.nan
 
     if return_minmax:

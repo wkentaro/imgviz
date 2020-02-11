@@ -13,9 +13,7 @@ def _resize_pillow(src, height, width, interpolation):
     elif interpolation == 'nearest':
         interpolation = PIL.Image.NEAREST
     else:
-        raise ValueError(
-            'unsupported interpolation: {}'.format(interpolation)
-        )
+        raise ValueError('unsupported interpolation: {}'.format(interpolation))
 
     if np.issubdtype(src.dtype, np.integer):
         dst = PIL.Image.fromarray(src)
@@ -47,20 +45,14 @@ def _resize_opencv(src, height, width, interpolation):
     elif interpolation == 'nearest':
         interpolation = cv2.INTER_NEAREST
     else:
-        raise ValueError(
-            'unsupported interpolation: {}'.format(interpolation)
-        )
+        raise ValueError('unsupported interpolation: {}'.format(interpolation))
 
     dst = cv2.resize(src, (width, height), interpolation=interpolation)
     return dst
 
 
 def resize(
-    src,
-    height=None,
-    width=None,
-    interpolation='linear',
-    backend='auto',
+    src, height=None, width=None, interpolation='linear', backend='auto',
 ):
     '''Resize image.
 
@@ -111,11 +103,11 @@ def resize(
         height = int(round(scale_height * src_height))
     if height is None:
         assert width is not None
-        scale_height = 1. * width / src_width
+        scale_height = 1.0 * width / src_width
         height = int(round(scale_height * src_height))
     if width is None:
         assert height is not None
-        scale_width = 1. * height / src_height
+        scale_width = 1.0 * height / src_height
         width = int(round(scale_width * src_width))
 
     if backend == 'pillow':

@@ -22,7 +22,7 @@ def label_colormap(n_label=256, value=None):
     '''
 
     def bitget(byteval, idx):
-        return ((byteval & (1 << idx)) != 0)
+        return (byteval & (1 << idx)) != 0
 
     cmap = np.zeros((n_label, 3), dtype=np.uint8)
     for i in range(0, n_label):
@@ -32,7 +32,7 @@ def label_colormap(n_label=256, value=None):
             r = np.bitwise_or(r, (bitget(id, 0) << 7 - j))
             g = np.bitwise_or(g, (bitget(id, 1) << 7 - j))
             b = np.bitwise_or(b, (bitget(id, 2) << 7 - j))
-            id = (id >> 3)
+            id = id >> 3
         cmap[i, 0] = r
         cmap[i, 1] = g
         cmap[i, 2] = b
@@ -95,8 +95,9 @@ def label2rgb(
     np.random.seed(1234)
 
     mask_unlabeled = label < 0
-    res[mask_unlabeled] = \
+    res[mask_unlabeled] = (
         np.random.random(size=(mask_unlabeled.sum(), 3)) * 255
+    )
 
     if img is not None:
         if img.ndim == 2:
@@ -108,21 +109,21 @@ def label2rgb(
         return res
 
     if loc == 'centroid':
-        for l in np.unique(label):
-            if l == -1:
+        for label_i in np.unique(label):
+            if label_i == -1:
                 continue  # unlabeled
 
-            mask = label == l
-            if 1. * mask.sum() / mask.size < thresh_suppress:
+            mask = label == label_i
+            if 1.0 * mask.sum() / mask.size < thresh_suppress:
                 continue
             y, x = np.array(_center_of_mass(mask), dtype=int)
 
-            if label[y, x] != l:
+            if label[y, x] != label_i:
                 Y, X = np.where(mask)
                 point_index = np.random.randint(0, len(Y))
                 y, x = Y[point_index], X[point_index]
 
-            text = label_names[l]
+            text = label_names[label_i]
             height, width = draw_module.text_size(text, size=font_size)
             color = color_module.get_fg_color(res[y, x])
             res = draw_module.text(
@@ -135,10 +136,12 @@ def label2rgb(
     elif loc in ['rb', 'lt']:
         unique_labels = np.unique(label)
         unique_labels = unique_labels[unique_labels != -1]
-        text_sizes = np.array([
-            draw_module.text_size(label_names[l], font_size)
-            for l in unique_labels
-        ])
+        text_sizes = np.array(
+            [
+                draw_module.text_size(label_names[l], font_size)
+                for l in unique_labels
+            ]
+        )
         text_height, text_width = text_sizes.max(axis=0)
         legend_height = text_height * len(unique_labels) + 5
         legend_width = text_width + 40
@@ -154,22 +157,21 @@ def label2rgb(
         else:
             raise ValueError('unexpected loc: {}'.format(loc))
         legend = draw_module.rectangle(
-            legend, aabb1, aabb2, fill=(255, 255, 255))
+            legend, aabb1, aabb2, fill=(255, 255, 255)
+        )
 
         alpha = 0.5
         y1, x1 = aabb1.round().astype(int)
         y2, x2 = aabb2.round().astype(int)
-        res[y1:y2, x1:x2] = \
+        res[y1:y2, x1:x2] = (
             alpha * res[y1:y2, x1:x2] + alpha * legend[y1:y2, x1:x2]
+        )
 
         for i, l in enumerate(unique_labels):
             box_aabb1 = aabb1 + (i * text_height + 5, 5)
             box_aabb2 = box_aabb1 + (text_height - 10, 20)
             res = draw_module.rectangle(
-                res,
-                aabb1=box_aabb1,
-                aabb2=box_aabb2,
-                fill=colormap[l]
+                res, aabb1=box_aabb1, aabb2=box_aabb2, fill=colormap[l]
             )
             res = draw_module.text(
                 res,
@@ -185,7 +187,7 @@ def label2rgb(
 
 def _center_of_mass(mask):
     assert mask.ndim == 2 and mask.dtype == bool
-    mask = 1. * mask / mask.sum()
+    mask = 1.0 * mask / mask.sum()
     dx = np.sum(mask, 0)
     dy = np.sum(mask, 1)
     cx = np.sum(dx * np.arange(mask.shape[1]))

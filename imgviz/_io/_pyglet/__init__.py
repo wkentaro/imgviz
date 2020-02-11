@@ -11,6 +11,5 @@ try:
 except Exception:
 
     class PygletThreadedImageViewer(object):  # type: ignore
-
         def __init__(*args, **kwargs):
             from .pyglet_threaded_image_viewer import PygletThreadedImageViewer

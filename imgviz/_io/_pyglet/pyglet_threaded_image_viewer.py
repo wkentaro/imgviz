@@ -60,8 +60,9 @@ class PygletThreadedImageViewer(pyglet.window.Window):
 
         while True:
             with self.lock:
-                if self._play and \
-                        self._updated_at > (inserted_at + self._interval):
+                if self._play and self._updated_at > (
+                    inserted_at + self._interval
+                ):
                     break
                 elif self._next:
                     self._next = False
@@ -88,7 +89,6 @@ class PygletThreadedImageViewer(pyglet.window.Window):
             super(PygletThreadedImageViewer, self).on_close()
 
     def on_key_press(self, symbol, modifiers):
-
         def usage():
             print('Usage: ')
             print('  h: show help')

@@ -41,7 +41,7 @@ def centerize(
         dst[:, :] = cval
 
     src_h, src_w = src.shape[:2]
-    scale_h, scale_w = 1. * shape[0] / src_h, 1. * shape[1] / src_w
+    scale_h, scale_w = 1.0 * shape[0] / src_h, 1.0 * shape[1] / src_w
     scale = min(scale_h, scale_w)
     dst_h, dst_w = int(round(src_h * scale)), int(round(src_w * scale))
     src = resize(src, height=dst_h, width=dst_w, interpolation=interpolation)
@@ -53,11 +53,11 @@ def centerize(
         ph = (dst_h - h) // 2
     if w < dst_w:
         pw = (dst_w - w) // 2
-    dst[ph:ph + h, pw:pw + w] = src
+    dst[ph : ph + h, pw : pw + w] = src
 
     if return_mask:
         mask = np.zeros(shape[:2], dtype=bool)
-        mask[ph:ph + h, pw:pw + w] = True
+        mask[ph : ph + h, pw : pw + w] = True
         return dst, mask
     else:
         return dst

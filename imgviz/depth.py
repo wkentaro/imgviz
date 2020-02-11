@@ -57,8 +57,9 @@ class Depth2RGB(object):
         import matplotlib.cm
 
         assert depth.ndim == 2, 'depth image must be 2 dimensional'
-        assert np.issubdtype(depth.dtype, np.floating), \
-            'depth dtype must be float'
+        assert np.issubdtype(
+            depth.dtype, np.floating
+        ), 'depth dtype must be float'
 
         normalized, self._min_value, self._max_value = normalize(
             depth,
@@ -84,11 +85,7 @@ class Depth2RGB(object):
 
 
 def depth2rgb(
-    depth,
-    dtype=np.uint8,
-    min_value=None,
-    max_value=None,
-    colormap='jet',
+    depth, dtype=np.uint8, min_value=None, max_value=None, colormap='jet',
 ):
     # type: (np.ndarray, np.dtype, float, float, str) -> np.ndarray
     '''Convert depth to rgb.
