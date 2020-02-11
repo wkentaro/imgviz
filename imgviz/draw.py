@@ -9,7 +9,7 @@ from . import color as color_module
 
 
 def triangle(src, center, size, fill=None, outline=None):
-    '''Draw triangle on numpy array with Pillow.
+    """Draw triangle on numpy array with Pillow.
 
     Parameters
     ----------
@@ -29,7 +29,7 @@ def triangle(src, center, size, fill=None, outline=None):
     dst: numpy.ndarray
         Output image.
 
-    '''
+    """
     dst = PIL.Image.fromarray(src)
     draw = PIL.ImageDraw.Draw(dst)
 
@@ -47,7 +47,7 @@ def triangle(src, center, size, fill=None, outline=None):
 
 
 def star(src, center, size, fill=None, outline=None):
-    '''Draw star on numpy array with Pillow.
+    """Draw star on numpy array with Pillow.
 
     Parameters
     ----------
@@ -67,7 +67,7 @@ def star(src, center, size, fill=None, outline=None):
     dst: numpy.ndarray
         Output image.
 
-    '''
+    """
     dst = PIL.Image.fromarray(src)
     draw = PIL.ImageDraw.Draw(dst)
 
@@ -111,7 +111,7 @@ def star(src, center, size, fill=None, outline=None):
 
 
 def circle(src, center, diameter, fill=None, outline=None, width=0):
-    '''Draw circle on numpy array with Pillow.
+    """Draw circle on numpy array with Pillow.
 
     Parameters
     ----------
@@ -133,7 +133,7 @@ def circle(src, center, diameter, fill=None, outline=None, width=0):
     dst: numpy.ndarray
         Output image.
 
-    '''
+    """
     dst = PIL.Image.fromarray(src)
     draw = PIL.ImageDraw.Draw(dst)
 
@@ -151,7 +151,7 @@ def circle(src, center, diameter, fill=None, outline=None, width=0):
 
 
 def rectangle(src, aabb1, aabb2, fill=None, outline=None, width=0):
-    '''Draw rectangle on numpy array with Pillow.
+    """Draw rectangle on numpy array with Pillow.
 
     Parameters
     ----------
@@ -173,7 +173,7 @@ def rectangle(src, aabb1, aabb2, fill=None, outline=None, width=0):
     dst: numpy.ndarray
         Output image.
 
-    '''
+    """
     if outline is not None:
         outline = tuple(outline)
     if fill is not None:
@@ -195,15 +195,15 @@ def _get_font(size):
     import matplotlib
 
     fonts_path = osp.join(
-        osp.dirname(matplotlib.__file__), 'mpl-data/fonts/ttf'
+        osp.dirname(matplotlib.__file__), "mpl-data/fonts/ttf"
     )
-    font_path = osp.join(fonts_path, 'DejaVuSans.ttf')
+    font_path = osp.join(fonts_path, "DejaVuSans.ttf")
     font = PIL.ImageFont.truetype(font=font_path, size=size)
     return font
 
 
 def text_size(text, size):
-    '''Get text size (height and width).
+    """Get text size (height and width).
 
     Parameters
     ----------
@@ -219,7 +219,7 @@ def text_size(text, size):
     width: int
         Text width.
 
-    '''
+    """
     font = _get_font(size)
     lines = text.splitlines()
     n_lines = len(lines)
@@ -229,7 +229,7 @@ def text_size(text, size):
 
 
 def text(src, yx, text, size, color=(0, 0, 0)):
-    '''Draw text on numpy array with Pillow.
+    """Draw text on numpy array with Pillow.
 
     Parameters
     ----------
@@ -250,7 +250,7 @@ def text(src, yx, text, size, color=(0, 0, 0)):
     dst: numpy.ndarray
         Output image.
 
-    '''
+    """
     dst = PIL.Image.fromarray(src)
     draw = PIL.ImageDraw.ImageDraw(dst)
 
@@ -265,7 +265,7 @@ def text(src, yx, text, size, color=(0, 0, 0)):
 def text_in_rectangle(
     src, loc, text, size, background, color=None, aabb1=None, aabb2=None,
 ):
-    '''Draw text in a rectangle.
+    """Draw text in a rectangle.
 
     Parameters
     ----------
@@ -292,7 +292,7 @@ def text_in_rectangle(
     dst: numpy.ndarray
         Output image.
 
-    '''
+    """
     if color is None:
         color = color_module.get_fg_color(background)
 
@@ -303,24 +303,24 @@ def text_in_rectangle(
 
     tsize = text_size(text, size)
 
-    if loc == 'lt':
+    if loc == "lt":
         yx = (y1, x1)
-    elif loc == 'rt':
+    elif loc == "rt":
         yx = (y1, x2 - tsize[1] - 1)
-    elif loc == 'lb':
+    elif loc == "lb":
         yx = (y2 - tsize[0] - 1, 0)
-    elif loc == 'rb':
+    elif loc == "rb":
         yx = (y2 - tsize[0] - 1, x2 - tsize[1] - 1)
     else:
-        raise ValueError('unsupported loc: {}'.format(loc))
+        raise ValueError("unsupported loc: {}".format(loc))
 
-    dst = globals()['rectangle'](
+    dst = globals()["rectangle"](
         src=src,
         aabb1=(yx[0], yx[1]),
         aabb2=(yx[0] + tsize[0] + 1, yx[1] + tsize[1] + 1),
         fill=background,
     )
-    dst = globals()['text'](
+    dst = globals()["text"](
         src=dst, yx=(yx[0] + 1, yx[1] + 1), text=text, color=color, size=size,
     )
     return dst

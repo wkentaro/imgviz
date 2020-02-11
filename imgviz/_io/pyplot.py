@@ -5,7 +5,7 @@ import PIL.Image
 
 
 def pyplot_to_numpy():
-    '''Convert pyplot state to numpy array.
+    """Convert pyplot state to numpy array.
 
     Parameters
     ----------
@@ -15,16 +15,16 @@ def pyplot_to_numpy():
     arr: numpy.ndarray
         Plotted image.
 
-    '''
+    """
     import matplotlib.pyplot as plt
 
     f = io.BytesIO()
     plt.savefig(
         f,
-        bbox_inches='tight',
-        transparent='True',
+        bbox_inches="tight",
+        transparent="True",
         pad_inches=0,
-        format='jpeg',
+        format="jpeg",
     )
     plt.close()
     f.seek(0)

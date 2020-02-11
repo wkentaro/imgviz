@@ -7,10 +7,10 @@ from .pyglet_imshow import _ndarray_to_imagedata
 
 class PygletThreadedImageViewer(pyglet.window.Window):
 
-    '''Image viewer with threading.'''
+    """Image viewer with threading."""
 
     def __init__(self, play=True, interval=0.5, **kwargs):
-        '''Initialize the image viewer.
+        """Initialize the image viewer.
 
         Parameters
         ----------
@@ -23,7 +23,7 @@ class PygletThreadedImageViewer(pyglet.window.Window):
 
         .. seealso:: :class:`pyglet.window.Window`
 
-        '''
+        """
         self._play = play
         self._next = False
 
@@ -42,14 +42,14 @@ class PygletThreadedImageViewer(pyglet.window.Window):
         pyglet.clock.schedule_interval(self.on_update, 1 / 100)
 
     def imshow(self, image):
-        '''Update image on the viewer.
+        """Update image on the viewer.
 
         Parameters
         ----------
         image: numpy.ndarray
             The image to show on the viewer.
 
-        '''
+        """
         imagedata = _ndarray_to_imagedata(image)
         with self.lock:
             if self.sprite is None:
@@ -90,11 +90,11 @@ class PygletThreadedImageViewer(pyglet.window.Window):
 
     def on_key_press(self, symbol, modifiers):
         def usage():
-            print('Usage: ')
-            print('  h: show help')
-            print('  q: close window')
-            print('  n: next image')
-            print('  s: toggle play')
+            print("Usage: ")
+            print("  h: show help")
+            print("  q: close window")
+            print("  n: next image")
+            print("  s: toggle play")
 
         def short_usage():
             print("Press 'h' to show help")

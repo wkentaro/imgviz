@@ -5,14 +5,14 @@ import numpy as np
 
 class Nchannel2RGB(object):
 
-    '''Convert nchannel array to rgb by PCA.
+    """Convert nchannel array to rgb by PCA.
 
     Parameters
     ----------
     pca: sklearn.decomposition.PCA
         PCA.
 
-    '''
+    """
 
     def __init__(self, pca=None):
         self._pca = pca
@@ -21,11 +21,11 @@ class Nchannel2RGB(object):
 
     @property
     def pca(self):
-        '''PCA for N channel to 3.'''
+        """PCA for N channel to 3."""
         return self._pca
 
     def __call__(self, nchannel, dtype=np.uint8):
-        '''Convert nchannel array to rgb by PCA.
+        """Convert nchannel array to rgb by PCA.
 
         Parameters
         ----------
@@ -39,13 +39,13 @@ class Nchannel2RGB(object):
         dst: numpy.ndarray, (H, W, 3), numpy.uint8
             Visualized image.
 
-        '''
+        """
         import sklearn.decomposition
 
-        assert nchannel.ndim == 3, 'nchannel.ndim must be 3'
+        assert nchannel.ndim == 3, "nchannel.ndim must be 3"
         assert np.issubdtype(
             nchannel.dtype, np.floating
-        ), 'nchannel.dtype must be floating'
+        ), "nchannel.dtype must be floating"
         H, W, D = nchannel.shape
 
         dst = nchannel.reshape(-1, D)
@@ -73,7 +73,7 @@ class Nchannel2RGB(object):
 
 
 def nchannel2rgb(nchannel, dtype=np.uint8, pca=None):
-    '''Convert nchannel array to rgb by PCA.
+    """Convert nchannel array to rgb by PCA.
 
     Parameters
     ----------
@@ -89,5 +89,5 @@ def nchannel2rgb(nchannel, dtype=np.uint8, pca=None):
     dst: numpy.ndarray, (H, W, 3), numpy.uint8
         Visualized image.
 
-    '''
+    """
     return Nchannel2RGB(pca)(nchannel, dtype)

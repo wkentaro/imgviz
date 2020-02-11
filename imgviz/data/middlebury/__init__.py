@@ -13,10 +13,10 @@ here = osp.dirname(osp.abspath(__file__))
 def read_flow(filename):
     """Read .flo file in Middlebury format"""
 
-    with open(filename, 'rb') as f:
+    with open(filename, "rb") as f:
         magic = np.fromfile(f, np.float32, count=1)
         if magic != 202021.25:
-            raise IOError('Invalid .flo file: {}'.format(filename))
+            raise IOError("Invalid .flo file: {}".format(filename))
 
         w = np.fromfile(f, np.int32, count=1)[0]
         h = np.fromfile(f, np.int32, count=1)[0]
@@ -29,11 +29,11 @@ def read_flow(filename):
 def middlebury():
     # http://vision.middlebury.edu/flow/data/
 
-    rgb_file = osp.join(here, 'grove3.png')
+    rgb_file = osp.join(here, "grove3.png")
     rgb = imread(rgb_file)
 
-    flow_file = osp.join(here, 'grove3.flo')
+    flow_file = osp.join(here, "grove3.flo")
     flow = read_flow(flow_file)
 
-    data = {'rgb': rgb, 'flow': flow}
+    data = {"rgb": rgb, "flow": flow}
     return data

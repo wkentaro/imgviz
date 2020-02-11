@@ -5,7 +5,7 @@ from . import draw as draw_module
 
 
 def label_colormap(n_label=256, value=None):
-    '''Label colormap.
+    """Label colormap.
 
     Parameters
     ----------
@@ -19,7 +19,7 @@ def label_colormap(n_label=256, value=None):
     cmap: numpy.ndarray, (N, 3), numpy.uint8
         Label id to colormap.
 
-    '''
+    """
 
     def bitget(byteval, idx):
         return (byteval & (1 << idx)) != 0
@@ -56,9 +56,9 @@ def label2rgb(
     font_size=30,
     thresh_suppress=0,
     colormap=None,
-    loc='centroid',
+    loc="centroid",
 ):
-    '''Convert label to rgb.
+    """Convert label to rgb.
 
     Parameters
     ----------
@@ -86,7 +86,7 @@ def label2rgb(
     res: numpy.ndarray, (H, W, 3), numpy.uint8
         Visualized image.
 
-    '''
+    """
     if colormap is None:
         colormap = label_colormap()
 
@@ -108,7 +108,7 @@ def label2rgb(
     if label_names is None:
         return res
 
-    if loc == 'centroid':
+    if loc == "centroid":
         for label_i in np.unique(label):
             if label_i == -1:
                 continue  # unlabeled
@@ -133,7 +133,7 @@ def label2rgb(
                 color=color,
                 size=font_size,
             )
-    elif loc in ['rb', 'lt']:
+    elif loc in ["rb", "lt"]:
         unique_labels = np.unique(label)
         unique_labels = unique_labels[unique_labels != -1]
         text_sizes = np.array(
@@ -148,14 +148,14 @@ def label2rgb(
 
         height, width = label.shape[:2]
         legend = np.zeros((height, width, 3), dtype=np.uint8)
-        if loc == 'rb':
+        if loc == "rb":
             aabb2 = np.array([height - 5, width - 5], dtype=float)
             aabb1 = aabb2 - (legend_height, legend_width)
-        elif loc == 'lt':
+        elif loc == "lt":
             aabb1 = np.array([5, 5], dtype=float)
             aabb2 = aabb1 + (legend_height, legend_width)
         else:
-            raise ValueError('unexpected loc: {}'.format(loc))
+            raise ValueError("unexpected loc: {}".format(loc))
         legend = draw_module.rectangle(
             legend, aabb1, aabb2, fill=(255, 255, 255)
         )
@@ -180,7 +180,7 @@ def label2rgb(
                 size=font_size,
             )
     else:
-        raise ValueError('unsupported loc: {}'.format(loc))
+        raise ValueError("unsupported loc: {}".format(loc))
 
     return res
 

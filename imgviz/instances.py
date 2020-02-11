@@ -28,7 +28,7 @@ def instances2rgb(
     alpha=0.7,
     colormap=None,
 ):
-    '''Convert instances to rgb.
+    """Convert instances to rgb.
 
     Parameters
     ----------
@@ -56,7 +56,7 @@ def instances2rgb(
     dst: numpy.ndarray, (H, W, 3), numpy.uint8
         Visualized image.
 
-    '''
+    """
     assert isinstance(image, np.ndarray)
     assert image.dtype == np.uint8
     assert image.ndim == 3
@@ -126,7 +126,7 @@ def instances2rgb(
         if caption is not None:
             dst = draw_module.text_in_rectangle(
                 dst,
-                loc='lt',
+                loc="lt",
                 text=caption,
                 size=font_size,
                 background=color_cls,

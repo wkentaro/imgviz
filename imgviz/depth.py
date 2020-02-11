@@ -5,7 +5,7 @@ from .normalize import normalize
 
 class Depth2RGB(object):
 
-    '''Convert depth array to rgb.
+    """Convert depth array to rgb.
 
     Parameters
     ----------
@@ -16,30 +16,30 @@ class Depth2RGB(object):
     colormap: str, optional
         Colormap, default: 'jet'.
 
-    '''
+    """
 
-    def __init__(self, min_value=None, max_value=None, colormap='jet'):
+    def __init__(self, min_value=None, max_value=None, colormap="jet"):
         import matplotlib.cm
 
         self._min_value = min_value
         self._max_value = max_value
 
         if colormap not in matplotlib.cm.cmap_d:
-            raise ValueError('unsupported colormap: {}'.format(colormap))
+            raise ValueError("unsupported colormap: {}".format(colormap))
         self._colormap = colormap
 
     @property
     def min_value(self):
-        '''Minimum value of depth.'''
+        """Minimum value of depth."""
         return self._min_value
 
     @property
     def max_value(self):
-        '''Maximum value of depth.'''
+        """Maximum value of depth."""
         return self._max_value
 
     def __call__(self, depth, dtype=np.uint8):
-        '''Convert depth array to rgb.
+        """Convert depth array to rgb.
 
         Parameters
         ----------
@@ -53,13 +53,13 @@ class Depth2RGB(object):
         rgb: numpy.ndarray, (H, W, 3), np.uint8
             Output colorized image.
 
-        '''
+        """
         import matplotlib.cm
 
-        assert depth.ndim == 2, 'depth image must be 2 dimensional'
+        assert depth.ndim == 2, "depth image must be 2 dimensional"
         assert np.issubdtype(
             depth.dtype, np.floating
-        ), 'depth dtype must be float'
+        ), "depth dtype must be float"
 
         normalized, self._min_value, self._max_value = normalize(
             depth,
@@ -85,10 +85,10 @@ class Depth2RGB(object):
 
 
 def depth2rgb(
-    depth, dtype=np.uint8, min_value=None, max_value=None, colormap='jet',
+    depth, dtype=np.uint8, min_value=None, max_value=None, colormap="jet",
 ):
     # type: (np.ndarray, np.dtype, float, float, str) -> np.ndarray
-    '''Convert depth to rgb.
+    """Convert depth to rgb.
 
     Parameters
     ----------
@@ -108,5 +108,5 @@ def depth2rgb(
     rgb: numpy.ndarray, (H, W, 3), np.uint8
         Output colorized image.
 
-    '''
+    """
     return Depth2RGB(min_value, max_value, colormap)(depth, dtype)

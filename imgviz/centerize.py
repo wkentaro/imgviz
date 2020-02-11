@@ -4,7 +4,7 @@ from .resize import resize
 
 
 def centerize(
-    src, shape, cval=None, return_mask=False, interpolation='linear'
+    src, shape, cval=None, return_mask=False, interpolation="linear"
 ):
     """Centerize image for specified image size
 

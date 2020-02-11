@@ -4,7 +4,7 @@ import numpy as np
 
 
 def normalize(src, min_value=None, max_value=None, return_minmax=False):
-    '''Normalize image.
+    """Normalize image.
 
     Parameters
     ----------
@@ -22,11 +22,11 @@ def normalize(src, min_value=None, max_value=None, return_minmax=False):
     dst: numpy.ndarray, float
         Normalized image in [0, 1].
 
-    '''
+    """
     if src.ndim == 2:
         D = 1
     else:
-        assert src.ndim == 3, 'src ndim must be 2 or 3'
+        assert src.ndim == 3, "src ndim must be 2 or 3"
         D = src.shape[2]
 
     if min_value is None:
@@ -40,7 +40,7 @@ def normalize(src, min_value=None, max_value=None, return_minmax=False):
     assert max_value.shape == (D,)
 
     if np.isinf(min_value).any() or np.isinf(max_value).any():
-        warnings.warn('some of min or max values are inf.')
+        warnings.warn("some of min or max values are inf.")
 
     eps = np.finfo(src.dtype).eps
     issame = max_value == min_value

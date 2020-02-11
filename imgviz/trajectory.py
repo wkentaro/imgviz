@@ -3,9 +3,9 @@ from .external import transformations as tf
 
 
 def plot_trajectory(
-    transforms, is_relative=False, mode='xz', style='b.', axis=True,
+    transforms, is_relative=False, mode="xz", style="b.", axis=True,
 ):
-    '''Plot the trajectory using transform matrices
+    """Plot the trajectory using transform matrices
 
     Parameters
     ----------
@@ -26,20 +26,20 @@ def plot_trajectory(
     dst: numpy.ndarray
         trajectory
 
-    '''
+    """
     import matplotlib.pyplot as plt
 
     if is_relative:
         for i in range(1, len(transforms)):
             transforms[i] = transforms[i - 1].dot(transforms[i])
 
-    if len(mode) != 2 and all(x in 'xyz' for x in mode):
-        raise ValueError('Unsupported mode: {}'.format(mode))
+    if len(mode) != 2 and all(x in "xyz" for x in mode):
+        raise ValueError("Unsupported mode: {}".format(mode))
 
     x = []
     y = []
-    index_x = 'xyz'.index(mode[0])
-    index_y = 'xyz'.index(mode[1])
+    index_x = "xyz".index(mode[0])
+    index_y = "xyz".index(mode[1])
     for T in transforms:
         translate = tf.translation_from_matrix(T)
         x.append(translate[index_x])
@@ -47,12 +47,12 @@ def plot_trajectory(
 
     # swith backend to agg for supporting no display mode
     backend = plt.get_backend()
-    plt.switch_backend('agg')
+    plt.switch_backend("agg")
 
     plt.plot(x, y, style)
 
     if not axis:
-        plt.axis('off')
+        plt.axis("off")
 
     dst = pyplot_to_numpy()
     plt.close()

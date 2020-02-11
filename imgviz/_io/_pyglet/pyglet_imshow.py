@@ -8,7 +8,7 @@ from .base import check_pyglet_available
 
 def pyglet_imshow(image, caption=None, interval=0.5):
     # type: (np.ndarray, str, float) -> None
-    '''Show image with pyglet.
+    """Show image with pyglet.
 
     Parameters
     ----------
@@ -23,7 +23,7 @@ def pyglet_imshow(image, caption=None, interval=0.5):
     -------
     None
 
-    '''
+    """
     if isinstance(image, types.GeneratorType):
         _pyglet_imshow_generator(image, caption=caption, interval=interval)
     elif isinstance(image, np.ndarray):
@@ -50,12 +50,12 @@ def _pyglet_imshow_list(images, caption=None, interval=0.5):
         sprite.draw()
 
     def usage():
-        print('Usage: ')
-        print('  h: show help')
-        print('  q: close window')
-        print('  n: next image')
-        print('  p: previous image')
-        print('  s: toggle play')
+        print("Usage: ")
+        print("  h: show help")
+        print("  q: close window")
+        print("  n: next image")
+        print("  p: previous image")
+        print("  s: toggle play")
 
     def play_callback(dt):
         if window.play:
@@ -101,11 +101,11 @@ def _pyglet_imshow_generator(images, caption=None, interval=0.5):
         sprite.draw()
 
     def usage():
-        print('Usage: ')
-        print('  h: show help')
-        print('  q: close window')
-        print('  n: next image')
-        print('  s: toggle play')
+        print("Usage: ")
+        print("  h: show help")
+        print("  q: close window")
+        print("  n: next image")
+        print("  s: toggle play")
 
     def play_callback(dt):
         if window.play:
@@ -148,9 +148,9 @@ def _pyglet_imshow_ndarray(image, caption=None):
         sprite.draw()
 
     def usage():
-        print('Usage: ')
-        print('  h: show help')
-        print('  q: close window')
+        print("Usage: ")
+        print("  h: show help")
+        print("  q: close window")
 
     @window.event()
     def on_key_press(symbol, modifiers):

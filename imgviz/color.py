@@ -4,7 +4,7 @@ import PIL.Image
 
 def rgb2gray(rgb):
     # type: (np.ndarray) -> np.ndarray
-    '''Covnert rgb to gray.
+    """Covnert rgb to gray.
 
     Parameters
     ----------
@@ -16,20 +16,20 @@ def rgb2gray(rgb):
     gray: numpy.ndarray, (H, W)
         Output gray image.
 
-    '''
-    assert rgb.ndim == 3, 'rgb must be 3 dimensional'
-    assert rgb.shape[2] == 3, 'rgb shape must be (H, W, 3)'
-    assert rgb.dtype == np.uint8, 'rgb dtype must be np.uint8'
+    """
+    assert rgb.ndim == 3, "rgb must be 3 dimensional"
+    assert rgb.shape[2] == 3, "rgb shape must be (H, W, 3)"
+    assert rgb.dtype == np.uint8, "rgb dtype must be np.uint8"
 
     gray = PIL.Image.fromarray(rgb)
-    gray = gray.convert('L')
+    gray = gray.convert("L")
     gray = np.asarray(gray)
     return gray
 
 
 def gray2rgb(gray):
     # type: (np.ndarray) -> np.ndarray
-    '''Covnert gray to rgb.
+    """Covnert gray to rgb.
 
     Parameters
     ----------
@@ -41,9 +41,9 @@ def gray2rgb(gray):
     rgb: numpy.ndarray, (H, W, 3), np.uint8
         Output rgb image.
 
-    '''
-    assert gray.ndim == 2, 'gray must be 2 dimensional'
-    assert gray.dtype == np.uint8, 'gray dtype must be np.uint8'
+    """
+    assert gray.ndim == 2, "gray must be 2 dimensional"
+    assert gray.dtype == np.uint8, "gray dtype must be np.uint8"
 
     rgb = gray[:, :, None].repeat(3, axis=2)
     return rgb
@@ -51,7 +51,7 @@ def gray2rgb(gray):
 
 def rgb2rgba(rgb):
     # type: (np.ndarray) -> np.ndarray
-    '''Convert rgb to rgba.
+    """Convert rgb to rgba.
 
     Parameters
     ----------
@@ -63,10 +63,10 @@ def rgb2rgba(rgb):
     rgba: numpy.ndarray, (H, W, 4), np.uint8
         Output rgba image.
 
-    '''
-    assert rgb.ndim == 3, 'rgb must be 3 dimensional'
-    assert rgb.shape[2] == 3, 'rgb shape must be (H, W, 3)'
-    assert rgb.dtype == np.uint8, 'rgb dtype must be np.uint8'
+    """
+    assert rgb.ndim == 3, "rgb must be 3 dimensional"
+    assert rgb.shape[2] == 3, "rgb shape must be (H, W, 3)"
+    assert rgb.dtype == np.uint8, "rgb dtype must be np.uint8"
 
     a = np.full(rgb.shape[:2], 255, dtype=np.uint8)
     rgba = np.dstack((rgb, a))
@@ -75,7 +75,7 @@ def rgb2rgba(rgb):
 
 def rgb2hsv(rgb):
     # type: (np.ndarray) -> np.ndarray
-    '''Convert rgb to hsv.
+    """Convert rgb to hsv.
 
     Parameters
     ----------
@@ -87,16 +87,16 @@ def rgb2hsv(rgb):
     hsv: numpy.ndarray, (H, W, 3), np.uint8
         Output hsv image.
 
-    '''
-    hsv = PIL.Image.fromarray(rgb, mode='RGB')
-    hsv = hsv.convert('HSV')
+    """
+    hsv = PIL.Image.fromarray(rgb, mode="RGB")
+    hsv = hsv.convert("HSV")
     hsv = np.array(hsv)
     return hsv
 
 
 def hsv2rgb(hsv):
     # type: (np.ndarray) -> np.ndarray
-    '''Convert hsv to rgb.
+    """Convert hsv to rgb.
 
     Parameters
     ----------
@@ -108,16 +108,16 @@ def hsv2rgb(hsv):
     rgb: numpy.ndarray, (H, W, 3), np.uint8
         Output rgb image.
 
-    '''
-    rgb = PIL.Image.fromarray(hsv, mode='HSV')
-    rgb = rgb.convert('RGB')
+    """
+    rgb = PIL.Image.fromarray(hsv, mode="HSV")
+    rgb = rgb.convert("RGB")
     rgb = np.array(rgb)
     return rgb
 
 
 def rgba2rgb(rgba):
     # type: (np.ndarray) -> np.ndarray
-    '''Convert rgba to rgb.
+    """Convert rgba to rgb.
 
     Parameters
     ----------
@@ -128,14 +128,14 @@ def rgba2rgb(rgba):
     -------
     rgb: numpy.ndarray, (H, W, 3), np.uint8
         Output rgb image.
-    '''
+    """
     rgb = rgba[:, :, :3]
     return rgb
 
 
 def asgray(img):
     # type: (np.ndarray) -> np.ndarray
-    '''Convert any array to gray image.
+    """Convert any array to gray image.
 
     Parameters
     ----------
@@ -146,7 +146,7 @@ def asgray(img):
     -------
     gray: numpy.ndarray, (H, W), np.uint8
         Output gray image.
-    '''
+    """
     if img.ndim == 2:
         gray = img
     elif img.ndim == 3 and img.shape[2] == 4:
@@ -155,8 +155,8 @@ def asgray(img):
         gray = rgb2gray(img)
     else:
         raise ValueError(
-            'Unsupported image format to convert to gray:'
-            'shape={}, dtype={}'.format(img.shape, img.dtype)
+            "Unsupported image format to convert to gray:"
+            "shape={}, dtype={}".format(img.shape, img.dtype)
         )
     return gray
 

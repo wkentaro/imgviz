@@ -7,6 +7,6 @@ here = osp.dirname(osp.abspath(__file__))
 
 
 def lena():
-    image_file = osp.join(here, 'lena.png')
+    image_file = osp.join(here, "lena.png")
     image = imread(image_file)
     return image
