@@ -39,7 +39,7 @@ if [ "$PYTHON_VERSION32" = "3" ]; then
 fi
 
 # flake8
-pip install -U flake8 zimports
+pip install -U hacking
 flake8 .
 
 # mypy
