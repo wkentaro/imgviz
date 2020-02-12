@@ -6,7 +6,7 @@ import imgviz
 
 def test_pyplot():
     backend = plt.get_backend()
-    plt.switch_backend('agg')
+    plt.switch_backend("agg")
 
     x = y = [0, 1, 2]
     plt.plot(x, y)

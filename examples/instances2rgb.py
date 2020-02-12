@@ -8,17 +8,17 @@ import imgviz
 def instances2rgb():
     data = imgviz.data.voc()
 
-    captions = [data['class_names'][l] for l in data['labels']]
+    captions = [data["class_names"][l] for l in data["labels"]]
     insviz1 = imgviz.instances2rgb(
-        image=data['rgb'],
-        bboxes=data['bboxes'],
-        labels=data['labels'],
+        image=data["rgb"],
+        bboxes=data["bboxes"],
+        labels=data["labels"],
         captions=captions,
     )
     insviz2 = imgviz.instances2rgb(
-        image=data['rgb'],
-        masks=data['masks'] == 1,
-        labels=data['labels'],
+        image=data["rgb"],
+        masks=data["masks"] == 1,
+        labels=data["labels"],
         captions=captions,
     )
 
@@ -27,19 +27,19 @@ def instances2rgb():
     plt.figure(dpi=200)
 
     plt.subplot(131)
-    plt.title('rgb')
-    plt.imshow(data['rgb'])
-    plt.axis('off')
+    plt.title("rgb")
+    plt.imshow(data["rgb"])
+    plt.axis("off")
 
     plt.subplot(132)
-    plt.title('instances\n(bboxes)')
+    plt.title("instances\n(bboxes)")
     plt.imshow(insviz1)
-    plt.axis('off')
+    plt.axis("off")
 
     plt.subplot(133)
-    plt.title('instances\n(masks)')
+    plt.title("instances\n(masks)")
     plt.imshow(insviz2)
-    plt.axis('off')
+    plt.axis("off")
 
     img = imgviz.io.pyplot_to_numpy()
     plt.close()
@@ -47,7 +47,7 @@ def instances2rgb():
     return img
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     from base import run_example
 
     run_example(instances2rgb)

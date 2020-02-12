@@ -6,7 +6,7 @@ import imgviz
 def test_flow2rgb():
     data = imgviz.data.middlebury()
 
-    flow = data['flow']
+    flow = data["flow"]
     flowviz = imgviz.flow2rgb(flow)
 
     assert flowviz.dtype == np.uint8

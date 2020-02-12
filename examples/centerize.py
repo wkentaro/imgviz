@@ -8,7 +8,7 @@ import imgviz
 def centerize():
     data = imgviz.data.arc2017()
 
-    rgb = data['rgb']
+    rgb = data["rgb"]
 
     H, W = rgb.shape[:2]
     centerized1 = imgviz.centerize(rgb, shape=(H, H))
@@ -21,24 +21,24 @@ def centerize():
     plt.figure(dpi=200)
 
     plt.subplot(131)
-    plt.title('original')
-    plt.axis('off')
+    plt.title("original")
+    plt.axis("off")
     plt.imshow(rgb)
 
     plt.subplot(132)
-    plt.title('centerized1:\n{}'.format(centerized1.shape))
+    plt.title("centerized1:\n{}".format(centerized1.shape))
     plt.imshow(centerized1)
-    plt.axis('off')
+    plt.axis("off")
 
     plt.subplot(133)
-    plt.title('centerized2:\n{}'.format(centerized2.shape))
+    plt.title("centerized2:\n{}".format(centerized2.shape))
     plt.imshow(centerized2)
-    plt.axis('off')
+    plt.axis("off")
 
     return imgviz.io.pyplot_to_numpy()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     from base import run_example
 
     run_example(centerize)

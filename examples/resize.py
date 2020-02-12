@@ -8,7 +8,7 @@ import imgviz
 def resize():
     data = imgviz.data.arc2017()
 
-    rgb = data['rgb']
+    rgb = data["rgb"]
 
     H, W = rgb.shape[:2]
     rgb_resized = imgviz.resize(rgb, height=0.1)
@@ -18,14 +18,14 @@ def resize():
     plt.figure(dpi=200)
 
     plt.subplot(121)
-    plt.title('rgb:\n{}'.format(rgb.shape))
+    plt.title("rgb:\n{}".format(rgb.shape))
     plt.imshow(rgb)
-    plt.axis('off')
+    plt.axis("off")
 
     plt.subplot(122)
-    plt.title('rgb_resized:\n{}'.format(rgb_resized.shape))
+    plt.title("rgb_resized:\n{}".format(rgb_resized.shape))
     plt.imshow(rgb_resized)
-    plt.axis('off')
+    plt.axis("off")
 
     img = imgviz.io.pyplot_to_numpy()
     plt.close()
@@ -33,7 +33,7 @@ def resize():
     return img
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     from base import run_example
 
     run_example(resize)

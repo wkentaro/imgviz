@@ -13,15 +13,15 @@ def run_example(function):
     parser = argparse.ArgumentParser(
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
-    parser.add_argument('--save', action='store_true', help='save image')
+    parser.add_argument("--save", action="store_true", help="save image")
     args = parser.parse_args()
 
     img = function()
 
     if args.save:
-        out_file = osp.join(here, '.readme/{}.jpg'.format(function.__name__))
+        out_file = osp.join(here, ".readme/{}.jpg".format(function.__name__))
         imgviz.io.imsave(out_file, img)
 
     plt.imshow(img)
-    plt.axis('off')
+    plt.axis("off")
     plt.show()

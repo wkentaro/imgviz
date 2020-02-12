@@ -8,17 +8,17 @@ import imgviz
 def label2rgb():
     data = imgviz.data.voc()
 
-    rgb = data['rgb']
-    label = data['class_label']
+    rgb = data["rgb"]
+    label = data["class_label"]
 
     label_names = [
-        '{}:{}'.format(i, n) for i, n in enumerate(data['class_names'])
+        "{}:{}".format(i, n) for i, n in enumerate(data["class_names"])
     ]
     labelviz_withname1 = imgviz.label2rgb(
         label, label_names=label_names, font_size=25
     )
     labelviz_withname2 = imgviz.label2rgb(
-        label, label_names=label_names, font_size=25, loc='lt'
+        label, label_names=label_names, font_size=25, loc="lt"
     )
     img = imgviz.color.rgb2gray(rgb)
     labelviz_withimg = imgviz.label2rgb(label, img=img)
@@ -28,19 +28,19 @@ def label2rgb():
     plt.figure(dpi=200)
 
     plt.subplot(131)
-    plt.title('+img')
+    plt.title("+img")
     plt.imshow(labelviz_withimg)
-    plt.axis('off')
+    plt.axis("off")
 
     plt.subplot(132)
-    plt.title('loc=centroid')
+    plt.title("loc=centroid")
     plt.imshow(labelviz_withname1)
-    plt.axis('off')
+    plt.axis("off")
 
     plt.subplot(133)
-    plt.title('loc=lt')
+    plt.title("loc=lt")
     plt.imshow(labelviz_withname2)
-    plt.axis('off')
+    plt.axis("off")
 
     img = imgviz.io.pyplot_to_numpy()
     plt.close()
@@ -48,7 +48,7 @@ def label2rgb():
     return img
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     from base import run_example
 
     run_example(label2rgb)
