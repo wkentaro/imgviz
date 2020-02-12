@@ -33,8 +33,10 @@ source .anaconda$PYTHON_VERSION32/bin/activate
 set -x
 
 # black
-pip_install -U black
-black --check .
+if [ "$PYTHON_VERSION32" = "3" ]; then
+  pip_install -U black
+  black --check .
+fi
 
 # flake8
 pip install -U flake8 zimports
