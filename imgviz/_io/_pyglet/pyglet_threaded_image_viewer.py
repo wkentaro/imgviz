@@ -29,6 +29,7 @@ class PygletThreadedImageViewer(pyglet.window.Window):
 
         self._updated_at = 0
         self._interval = interval
+        self._added_at = -interval
 
         self.sprite = None
 
@@ -56,12 +57,13 @@ class PygletThreadedImageViewer(pyglet.window.Window):
                 self.sprite = pyglet.sprite.Sprite(imagedata)
             else:
                 self.sprite.image = imagedata
-            inserted_at = self._updated_at
+            self._added_at = self._updated_at
 
+    def wait(self):
         while True:
             with self.lock:
-                if self._play and self._updated_at > (
-                    inserted_at + self._interval
+                if self._play and self._updated_at >= (
+                    self._added_at + self._interval
                 ):
                     break
                 elif self._next:
