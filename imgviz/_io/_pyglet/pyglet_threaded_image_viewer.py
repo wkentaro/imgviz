@@ -92,14 +92,12 @@ class PygletThreadedImageViewer(pyglet.window.Window):
 
     def on_key_press(self, symbol, modifiers):
         def usage():
-            print("Usage: ")
-            print("  h: show help")
-            print("  q: close window")
-            print("  n: next image")
-            print("  s: toggle play")
-
-        def short_usage():
-            print("Press 'h' to show help")
+            message = """Usage:
+\th: show help
+\tq: close window
+\tn: next image
+\ts: toggle play"""
+            print(message, file=sys.stderr)
 
         if symbol == pyglet.window.key.H:
             usage()
@@ -111,5 +109,3 @@ class PygletThreadedImageViewer(pyglet.window.Window):
         elif symbol == pyglet.window.key.N:
             with self.lock:
                 self._next = True
-        else:
-            short_usage()
