@@ -53,6 +53,8 @@ class PygletThreadedImageViewer(pyglet.window.Window):
         """
         imagedata = _ndarray_to_imagedata(image)
         with self.lock:
+            self.set_size(height=image.shape[0], width=image.shape[1])
+
             if self.sprite is None:
                 self.sprite = pyglet.sprite.Sprite(imagedata)
             else:
