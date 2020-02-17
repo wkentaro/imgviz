@@ -197,7 +197,7 @@ def _get_font(size):
     fonts_path = osp.join(
         osp.dirname(matplotlib.__file__), "mpl-data/fonts/ttf"
     )
-    font_path = osp.join(fonts_path, "DejaVuSans.ttf")
+    font_path = osp.join(fonts_path, "DejaVuSansMono.ttf")
     font = PIL.ImageFont.truetype(font=font_path, size=size)
     return font
 
