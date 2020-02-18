@@ -10,7 +10,7 @@ class PygletThreadedImageViewer(pyglet.window.Window):
 
     """Image viewer with threading."""
 
-    def __init__(self, play=True, interval=0.5, **kwargs):
+    def __init__(self, play=True, interval=0.5):
         """Initialize the image viewer.
 
         Parameters
@@ -19,8 +19,6 @@ class PygletThreadedImageViewer(pyglet.window.Window):
             If True, it shows automatically for each `imshow()`.
         interval: float
             Interval in seconds for each `imshow()` call.
-        **kwargs:
-            Keyword arguments passed to :meth:`pyglet.window.Window.__init__`.
 
         .. seealso:: :class:`pyglet.window.Window`
 
@@ -35,13 +33,7 @@ class PygletThreadedImageViewer(pyglet.window.Window):
         self.sprite = None
 
         self.lock = threading.Lock()
-        self.thread = threading.Thread(
-            target=self._init_and_start_app, kwargs=kwargs
-        )
-        self.thread.daemon = True  # terminate when main thread exit
-        self.thread.start()
-
-        pyglet.clock.schedule_interval(self.on_update, 1 / 100)
+        self.thread = None
 
     def imshow(self, image):
         """Update image on the viewer.
@@ -52,10 +44,17 @@ class PygletThreadedImageViewer(pyglet.window.Window):
             The image to show on the viewer.
 
         """
+        if self.thread is None:
+            self.thread = threading.Thread(
+                target=self._init_and_start_app,
+                kwargs=dict(height=image.shape[0], width=image.shape[1]),
+            )
+            self.thread.daemon = True  # terminate when main thread exit
+            self.thread.start()
+            pyglet.clock.schedule_interval(self.on_update, 1.0 / 100)
+
         imagedata = _ndarray_to_imagedata(image)
         with self.lock:
-            self.set_size(height=image.shape[0], width=image.shape[1])
-
             if self.sprite is None:
                 self.sprite = pyglet.sprite.Sprite(imagedata)
             else:
