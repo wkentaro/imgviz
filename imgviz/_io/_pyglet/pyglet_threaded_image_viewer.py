@@ -10,7 +10,9 @@ class PygletThreadedImageViewer(pyglet.window.Window):
 
     """Image viewer with threading."""
 
-    def __init__(self, play=True, interval=0.5):
+    def __init__(
+        self, play=True, interval=0.5, height=None, width=None, resizable=True
+    ):
         """Initialize the image viewer.
 
         Parameters
@@ -33,7 +35,13 @@ class PygletThreadedImageViewer(pyglet.window.Window):
         self.sprite = None
 
         self.lock = threading.Lock()
-        self.thread = None
+        self.thread = threading.Thread(
+            target=self._init_and_start_app,
+            kwargs=dict(height=height, width=width, resizable=resizable),
+        )
+        self.thread.daemon = True  # terminate when main thread exit
+        self.thread.start()
+        pyglet.clock.schedule_interval(self.on_update, 1.0 / 100)
 
     def imshow(self, image):
         """Update image on the viewer.
@@ -44,21 +52,21 @@ class PygletThreadedImageViewer(pyglet.window.Window):
             The image to show on the viewer.
 
         """
-        if self.thread is None:
-            self.thread = threading.Thread(
-                target=self._init_and_start_app,
-                kwargs=dict(height=image.shape[0], width=image.shape[1]),
-            )
-            self.thread.daemon = True  # terminate when main thread exit
-            self.thread.start()
-            pyglet.clock.schedule_interval(self.on_update, 1.0 / 100)
-
         imagedata = _ndarray_to_imagedata(image)
+
+        width, height = self.get_size()
+        scale = min(
+            float(width) / imagedata.width, float(height) / imagedata.height,
+        )
+        position_x = (width - imagedata.width * scale) / 2
+        position_y = (height - imagedata.height * scale) / 2
+
         with self.lock:
             if self.sprite is None:
                 self.sprite = pyglet.sprite.Sprite(imagedata)
             else:
                 self.sprite.image = imagedata
+            self.sprite.update(x=position_x, y=position_y, scale=scale)
             self._added_at = self._updated_at
 
     def wait(self):
