@@ -34,6 +34,11 @@ class PygletThreadedImageViewer(pyglet.window.Window):
 
         self.sprite = None
 
+        if isinstance(height, float):
+            height = int(round(height))
+        if isinstance(width, float):
+            width = int(round(width))
+
         self.lock = threading.Lock()
         self.thread = threading.Thread(
             target=self._init_and_start_app,
