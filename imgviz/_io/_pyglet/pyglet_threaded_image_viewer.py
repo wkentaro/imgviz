@@ -105,7 +105,29 @@ class PygletThreadedImageViewer(pyglet.window.Window):
         with self.lock:
             super(PygletThreadedImageViewer, self).on_close()
 
+    def wait_key(self):
+        with self.lock:
+            self._waiting_key = True
+            self._key = None
+
+        key = None
+        while True:
+            with self.lock:
+                if self._key:
+                    key = self._key
+                    break
+
+        with self.lock:
+            self._waiting_key = False
+
+        return key
+
     def on_key_press(self, symbol, modifiers):
+        with self.lock:
+            if self._waiting_key:
+                self._key = symbol, modifiers
+                return
+
         def usage():
             message = """Usage:
 \th: show help
