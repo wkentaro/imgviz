@@ -1,6 +1,5 @@
 import numpy as np
 
-from . import color as color_module
 from . import draw as draw_module
 from . import label as label_module
 
@@ -25,6 +24,7 @@ def instances2rgb(
     captions=None,
     font_size=25,
     line_width=5,
+    boundary_width=1,
     alpha=0.7,
     colormap=None,
 ):
@@ -80,7 +80,6 @@ def instances2rgb(
         colormap = label_module.label_colormap()
 
     dst = image
-    image_gray = color_module.gray2rgb(color_module.rgb2gray(image))
 
     for instance_id in range(n_instance):
         mask = masks[instance_id]
@@ -92,9 +91,9 @@ def instances2rgb(
 
         maskviz = mask[:, :, None] * color_ins.astype(float)
         dst = dst.copy()
-        dst[mask] = (1 - alpha) * image_gray[mask].astype(
-            float
-        ) + alpha * maskviz[mask]
+        dst[mask] = (1 - alpha) * image[mask].astype(float) + alpha * maskviz[
+            mask
+        ]
 
         try:
             import skimage.segmentation
@@ -102,6 +101,8 @@ def instances2rgb(
             boundary = skimage.segmentation.find_boundaries(
                 mask, connectivity=2
             )
+            for _ in range(boundary_width - 1):
+                boundary = skimage.morphology.binary_dilation(boundary)
             dst[boundary] = (200, 200, 200)
         except ImportError:
             pass
@@ -126,7 +127,7 @@ def instances2rgb(
         if caption is not None:
             dst = draw_module.text_in_rectangle(
                 dst,
-                loc="lt",
+                loc="lt+",
                 text=caption,
                 size=font_size,
                 background=color_cls,

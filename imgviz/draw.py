@@ -305,6 +305,8 @@ def text_in_rectangle(
 
     if loc == "lt":
         yx = (y1, x1)
+    elif loc == "lt+":
+        yx = (np.clip(y1 - tsize[0], 0, height), x1)
     elif loc == "rt":
         yx = (y1, x2 - tsize[1] - 1)
     elif loc == "lb":
