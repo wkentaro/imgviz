@@ -92,12 +92,10 @@ def label2rgb(
 
     res = colormap[label]
 
-    np.random.seed(1234)
+    random_state = np.random.RandomState(seed=1234)
 
     mask_unlabeled = label < 0
-    res[mask_unlabeled] = (
-        np.random.random(size=(mask_unlabeled.sum(), 3)) * 255
-    )
+    res[mask_unlabeled] = random_state.rand(*(mask_unlabeled.sum(), 3)) * 255
 
     if img is not None:
         if img.ndim == 2:
