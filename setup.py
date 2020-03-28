@@ -85,7 +85,10 @@ def main():
         version=version,
         packages=find_packages(exclude=["github2pypi"]),
         install_requires=get_install_requires(),
-        extras_require={"all": ["pyglet", "scikit-image", "scikit-learn"]},
+        # pyglet>1.5.0 won't support Python2
+        extras_require={
+            "all": ["pyglet<=1.5.0", "scikit-image", "scikit-learn"]
+        },
         description="Image Visualization Tools",
         long_description=get_long_description(),
         long_description_content_type="text/markdown",
