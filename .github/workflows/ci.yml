@@ -1,0 +1,68 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [2.7, 3.5, 3.6, 3.7, 3.8]
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+        submodules: true
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install
+      run: |
+        pip install .[all]
+    - name: Flake8
+      run: |
+        pip install hacking
+        flake8 .
+    - name: Black and Mypy
+      run: |
+        pip install black mypy
+        black --check .
+        mypy -p imgviz --ignore-missing-imports
+      if: matrix.python-version == '3.8'
+    - name: Test
+      run: |
+        pip install pytest
+        pytest -v tests
+      env:
+        MPLBACKEND: agg
+    - name: Examples
+      run: |
+        python getting_started.py
+        for f in examples/*.py; do
+          if [ -x $f ]; then
+            $f --save
+          fi
+        done
+      env:
+        MPLBACKEND: agg
+    - name: Install from dist
+      run: |
+        python setup.py sdist
+        pip install dist/*.tar.gz
+    - name: Update README.md
+      if: matrix.python-version == '3.8' && github.event_name == 'push' && github.ref == 'refs/heads/master'
+      run: |
+        ./generate_readme.py > README.md
+
+        git config --global user.email "www.kentaro.wada@gmail.com"
+        git config --global user.name "Kentaro Wada"
+        git add README.md
+        git diff-index --cached --quiet HEAD || git commit -m "Update README.md"
+        git push origin master
