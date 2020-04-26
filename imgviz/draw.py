@@ -191,18 +191,19 @@ def rectangle(src, aabb1, aabb2, fill=None, outline=None, width=0):
     return np.array(dst)
 
 
-def _get_font(size):
+def _get_font(size, font_path=None):
     import matplotlib
 
-    fonts_path = osp.join(
-        osp.dirname(matplotlib.__file__), "mpl-data/fonts/ttf"
-    )
-    font_path = osp.join(fonts_path, "DejaVuSansMono.ttf")
+    if font_path is None:
+        fonts_path = osp.join(
+            osp.dirname(matplotlib.__file__), "mpl-data/fonts/ttf"
+        )
+        font_path = osp.join(fonts_path, "DejaVuSansMono.ttf")
     font = PIL.ImageFont.truetype(font=font_path, size=size)
     return font
 
 
-def text_size(text, size):
+def text_size(text, size, font_path=None):
     """Get text size (height and width).
 
     Parameters
@@ -220,7 +221,7 @@ def text_size(text, size):
         Text width.
 
     """
-    font = _get_font(size)
+    font = _get_font(size, font_path=font_path)
     lines = text.splitlines()
     n_lines = len(lines)
     longest_line = max(lines, key=len)
@@ -228,7 +229,7 @@ def text_size(text, size):
     return height * n_lines, width
 
 
-def text(src, yx, text, size, color=(0, 0, 0)):
+def text(src, yx, text, size, color=(0, 0, 0), font_path=None):
     """Draw text on numpy array with Pillow.
 
     Parameters
@@ -244,6 +245,8 @@ def text(src, yx, text, size, color=(0, 0, 0)):
     color: (3,) array-like
         Text RGB color in uint8.
         Default is (0, 0, 0), which is black.
+    font_path: str
+        Default font is DejaVuSansMono in matplotlib.
 
     Returns
     -------
@@ -256,7 +259,7 @@ def text(src, yx, text, size, color=(0, 0, 0)):
 
     y1, x1 = yx
     color = tuple(color)
-    font = _get_font(size=size)
+    font = _get_font(size=size, font_path=font_path)
     draw.text(xy=(x1, y1), text=text, fill=color, font=font)
 
     return np.array(dst)

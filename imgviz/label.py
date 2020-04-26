@@ -57,6 +57,7 @@ def label2rgb(
     thresh_suppress=0,
     colormap=None,
     loc="centroid",
+    font_path=None,
 ):
     """Convert label to rgb.
 
@@ -80,6 +81,8 @@ def label2rgb(
     loc: string
         Location of legend (default: 'centroid').
         'lt' and 'rb' are supported.
+    font_path: str
+        Font path.
 
     Returns
     -------
@@ -122,7 +125,9 @@ def label2rgb(
                 y, x = Y[point_index], X[point_index]
 
             text = label_names[label_i]
-            height, width = draw_module.text_size(text, size=font_size)
+            height, width = draw_module.text_size(
+                text, size=font_size, font_path=font_path
+            )
             color = color_module.get_fg_color(res[y, x])
             res = draw_module.text(
                 res,
@@ -130,13 +135,19 @@ def label2rgb(
                 text=text,
                 color=color,
                 size=font_size,
+                font_path=font_path,
             )
     elif loc in ["rb", "lt"]:
         unique_labels = np.unique(label)
         unique_labels = unique_labels[unique_labels != -1]
+        if not unique_labels.size:
+            return res
+
         text_sizes = np.array(
             [
-                draw_module.text_size(label_names[l], font_size)
+                draw_module.text_size(
+                    label_names[l], font_size, font_path=font_path
+                )
                 for l in unique_labels
             ]
         )
@@ -176,6 +187,7 @@ def label2rgb(
                 yx=aabb1 + (i * text_height, 30),
                 text=label_names[l],
                 size=font_size,
+                font_path=font_path,
             )
     else:
         raise ValueError("unsupported loc: {}".format(loc))
