@@ -23,7 +23,7 @@ def rgb2gray(rgb):
 
     gray = PIL.Image.fromarray(rgb)
     gray = gray.convert("L")
-    gray = np.asarray(gray)
+    gray = np.array(gray)
     return gray
 
 
