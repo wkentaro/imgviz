@@ -1,4 +1,9 @@
-/src/
-
-*.egg-info/
+# Python
 __pycache__/
+*.pyc
+/src/
+/*.egg-info/
+/.mypy_cache/
+
+# Sphinx
+/docs/build/
