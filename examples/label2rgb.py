@@ -18,7 +18,7 @@ def label2rgb():
         label, label_names=label_names, font_size=25
     )
     labelviz_withname2 = imgviz.label2rgb(
-        label, label_names=label_names, font_size=25, loc="lt"
+        label, label_names=label_names, font_size=25, loc="rb"
     )
     img = imgviz.color.rgb2gray(rgb)
     labelviz_withimg = imgviz.label2rgb(label, img=img)
@@ -38,7 +38,7 @@ def label2rgb():
     plt.axis("off")
 
     plt.subplot(133)
-    plt.title("loc=lt")
+    plt.title("loc=rb")
     plt.imshow(labelviz_withname2)
     plt.axis("off")
 
