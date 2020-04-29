@@ -5,21 +5,34 @@ import numpy as np
 from .centerize import centerize
 from .color import gray2rgb
 from .color import rgb2rgba
-from .draw import rectangle
 
 
-def _tile(imgs, shape, dst):
+def _tile(imgs, shape, border=None, border_width=None):
     y_num, x_num = shape
-    tile_w = imgs[0].shape[1]
-    tile_h = imgs[0].shape[0]
+    tile_h, tile_w, channel = imgs[0].shape
+
+    if border is None:
+        border_width = 0
+
+    dst = np.zeros(
+        (
+            tile_h * y_num + border_width * (y_num - 1),
+            tile_w * x_num + border_width * (x_num - 1),
+            channel,
+        ),
+        dtype=np.uint8,
+    )
+    if border is not None:
+        dst[...] = border
+
     for y in range(y_num):
         for x in range(x_num):
             i = x + y * x_num
             if i < len(imgs):
-                y1 = y * tile_h
-                y2 = (y + 1) * tile_h
-                x1 = x * tile_w
-                x2 = (x + 1) * tile_w
+                y1 = y * tile_h + y * border_width
+                y2 = y1 + tile_h
+                x1 = x * tile_w + x * border_width
+                x2 = x1 + tile_w
                 dst[y1:y2, x1:x2] = imgs[i]
     return dst
 
@@ -66,13 +79,8 @@ def tile(
     if shape is None:
         shape = _get_tile_shape(len(imgs), hw_ratio=1.0 * max_h / max_w)
 
-    if border:
+    if border is not None:
         border = np.asarray(border, dtype=np.uint8)
-        if border.ndim == 1:
-            border = border[None].repeat(len(imgs), axis=0)
-        assert border.ndim == 2
-    else:
-        border = (border,) * len(imgs)
 
     if border_width is None:
         border_width = 3
@@ -96,21 +104,8 @@ def tile(
 
         img = centerize(src=img, shape=(max_h, max_w, channel), cval=cval)
 
-        if border[i] is not None:
-            img = rectangle(
-                src=img,
-                aabb1=(0, 0),
-                aabb2=(img.shape[0] - 1, img.shape[1] - 1),
-                outline=border[i],
-                width=border_width,
-            )
-
         imgs[i] = img
 
-    height = max_h * shape[0]
-    width = max_w * shape[1]
-    dst = np.zeros((height, width, channel), dtype=np.uint8)
-    if cval:
-        dst[:, :] = cval
-
-    return _tile(imgs=imgs, shape=shape, dst=dst)
+    return _tile(
+        imgs=imgs, shape=shape, border=border, border_width=border_width
+    )
