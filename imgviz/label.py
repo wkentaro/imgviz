@@ -109,11 +109,14 @@ def label2rgb(
     if label_names is None:
         return res
 
-    if loc == "centroid":
-        for label_i in np.unique(label):
-            if label_i == -1:
-                continue  # unlabeled
+    unique_labels = np.unique(label)
+    unique_labels = unique_labels[unique_labels != -1]
+    unique_labels = [l for l in unique_labels if label_names[l] is not None]
+    if len(unique_labels) == 0:
+        return res
 
+    if loc == "centroid":
+        for label_i in unique_labels:
             mask = label == label_i
             if 1.0 * mask.sum() / mask.size < thresh_suppress:
                 continue
@@ -138,11 +141,6 @@ def label2rgb(
                 font_path=font_path,
             )
     elif loc in ["rb", "lt"]:
-        unique_labels = np.unique(label)
-        unique_labels = unique_labels[unique_labels != -1]
-        if not unique_labels.size:
-            return res
-
         text_sizes = np.array(
             [
                 draw_module.text_size(
