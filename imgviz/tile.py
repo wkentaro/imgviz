@@ -79,6 +79,9 @@ def tile(
     if shape is None:
         shape = _get_tile_shape(len(imgs), hw_ratio=1.0 * max_h / max_w)
 
+    if cval is None:
+        cval = 0
+
     if border is not None:
         border = np.asarray(border, dtype=np.uint8)
 
@@ -94,17 +97,21 @@ def tile(
     assert channel in [3, 4]
 
     # tile images
-    for i, img in enumerate(imgs):
-        assert img.dtype == np.uint8
+    for i in range(shape[0] * shape[1]):
+        if i < len(imgs):
+            img = imgs[i]
+            assert img.dtype == np.uint8
 
-        if ndim == 3 and img.ndim == 2:
-            img = gray2rgb(img)
-        if channel == 4 and img.shape[2] == 3:
-            img = rgb2rgba(img)
+            if ndim == 3 and img.ndim == 2:
+                img = gray2rgb(img)
+            if channel == 4 and img.shape[2] == 3:
+                img = rgb2rgba(img)
 
-        img = centerize(src=img, shape=(max_h, max_w, channel), cval=cval)
-
-        imgs[i] = img
+            img = centerize(src=img, shape=(max_h, max_w, channel), cval=cval)
+            imgs[i] = img
+        else:
+            img = np.full((max_h, max_w, channel), cval, dtype=np.uint8)
+            imgs.append(img)
 
     return _tile(
         imgs=imgs, shape=shape, border=border, border_width=border_width
