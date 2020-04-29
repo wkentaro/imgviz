@@ -84,6 +84,7 @@ tiled = imgviz.tile(
     [rgb, depthviz, labelviz, bboxviz, maskviz, insviz],
     shape=(1, 6),
     border=(255, 255, 255),
+    border_width=5,
 )
 ```
 
