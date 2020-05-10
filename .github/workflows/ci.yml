@@ -60,9 +60,8 @@ jobs:
       if: matrix.python-version == '3.8' && github.event_name == 'push' && github.ref == 'refs/heads/master'
       run: |
         ./generate_readme.py > README.md
-
         git config --global user.email "www.kentaro.wada@gmail.com"
         git config --global user.name "Kentaro Wada"
-        git add README.md
-        git diff-index --cached --quiet HEAD || git commit -m "Update README.md"
+        git add examples/.readme README.md
+        git diff-index --cached --quiet HEAD || git commit -m "Update README.md & examples/.readme"
         git push origin master
