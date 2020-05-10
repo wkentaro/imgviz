@@ -309,23 +309,43 @@ def text_in_rectangle(
     if loc == "lt":
         yx = (y1, x1)
     elif loc == "lt+":
-        yx = (np.clip(y1 - tsize[0], 0, height), x1)
+        yx = (y1 - tsize[0] - 2, x1)
     elif loc == "rt":
-        yx = (y1, x2 - tsize[1] - 1)
+        yx = (y1, x2 - tsize[1] - 2)
+    elif loc == "rt+":
+        yx = (y1 - tsize[0] - 2, x2 - tsize[1] - 2)
     elif loc == "lb":
-        yx = (y2 - tsize[0] - 1, 0)
+        yx = (y2 - tsize[0] - 2, 0)
+    elif loc == "lb-":
+        yx = (y2, 0)
     elif loc == "rb":
-        yx = (y2 - tsize[0] - 1, x2 - tsize[1] - 1)
+        yx = (y2 - tsize[0] - 2, x2 - tsize[1] - 2)
+    elif loc == "rb-":
+        yx = (y2, x2 - tsize[1] - 2)
     else:
         raise ValueError("unsupported loc: {}".format(loc))
 
+    y1, x1 = yx
+    y2, x2 = y1 + tsize[0] + 1, x1 + tsize[1] + 1
+
+    constant_values = ((background[0],), (background[1],), (background[2],))
+    if y1 < 0:
+        pad = -y1
+        src = np.pad(
+            src, ((pad, 0), (0, 0), (0, 0)), constant_values=constant_values,
+        )
+        y1 += pad
+        y2 += pad
+    if y2 > height:
+        pad = y2 - height
+        src = np.pad(
+            src, ((0, pad), (0, 0), (0, 0)), constant_values=constant_values,
+        )
+
     dst = globals()["rectangle"](
-        src=src,
-        aabb1=(yx[0], yx[1]),
-        aabb2=(yx[0] + tsize[0] + 1, yx[1] + tsize[1] + 1),
-        fill=background,
+        src=src, aabb1=(y1, x1), aabb2=(y2, x2), fill=background,
     )
     dst = globals()["text"](
-        src=dst, yx=(yx[0] + 1, yx[1] + 1), text=text, color=color, size=size,
+        src=dst, yx=(y1 + 1, x1 + 1), text=text, color=color, size=size,
     )
     return dst

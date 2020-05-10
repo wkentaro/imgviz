@@ -10,6 +10,13 @@ def draw():
     H, W = img.shape[:2]
     viz = img
 
+    img = imgviz.draw.text_in_rectangle(
+        img, loc="lt+", text="original", size=30, background=(255, 255, 255),
+    )
+    viz = imgviz.draw.text_in_rectangle(
+        viz, loc="lt+", text="markers", size=30, background=(255, 255, 255),
+    )
+
     y1, x1 = 200, 180
     y2, x2 = 400, 380
     viz = imgviz.draw.rectangle(
