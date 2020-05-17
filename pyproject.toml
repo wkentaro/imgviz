@@ -4,6 +4,7 @@ exclude = '''
 (
     ^/\..*
   | ^/docs/
+  | ^/build/
   | ^/github2pypi/
   | ^/imgviz/external/
   | ^/getting_started\.py
