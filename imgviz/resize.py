@@ -18,7 +18,7 @@ def _resize_pillow(src, height, width, interpolation):
     if np.issubdtype(src.dtype, np.integer):
         dst = PIL.Image.fromarray(src)
         dst = dst.resize((width, height), resample=interpolation)
-        dst = np.asarray(dst)
+        dst = np.array(dst)
     else:
         assert np.issubdtype(src.dtype, np.floating)
         ndim = src.ndim
