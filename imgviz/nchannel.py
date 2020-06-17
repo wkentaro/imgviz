@@ -50,7 +50,9 @@ class Nchannel2RGB(object):
 
         dst = nchannel.reshape(-1, D)
         if self._pca is None:
-            self._pca = sklearn.decomposition.PCA(n_components=3)
+            self._pca = sklearn.decomposition.PCA(
+                n_components=3, random_state=1234
+            )
             dst = self._pca.fit_transform(dst)
         else:
             dst = self._pca.transform(dst)
