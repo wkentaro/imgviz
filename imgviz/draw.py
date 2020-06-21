@@ -266,7 +266,15 @@ def text(src, yx, text, size, color=(0, 0, 0), font_path=None):
 
 
 def text_in_rectangle(
-    src, loc, text, size, background, color=None, aabb1=None, aabb2=None,
+    src,
+    loc,
+    text,
+    size,
+    background,
+    color=None,
+    aabb1=None,
+    aabb2=None,
+    font_path=None,
 ):
     """Draw text in a rectangle.
 
@@ -304,7 +312,7 @@ def text_in_rectangle(
     y1, x1 = (0, 0) if aabb1 is None else aabb1
     y2, x2 = (height - 1, width - 1) if aabb2 is None else aabb2
 
-    tsize = text_size(text, size)
+    tsize = text_size(text, size, font_path=font_path)
 
     if loc == "lt":
         yx = (y1, x1)
@@ -346,6 +354,11 @@ def text_in_rectangle(
         src=src, aabb1=(y1, x1), aabb2=(y2, x2), fill=background,
     )
     dst = globals()["text"](
-        src=dst, yx=(y1 + 1, x1 + 1), text=text, color=color, size=size,
+        src=dst,
+        yx=(y1 + 1, x1 + 1),
+        text=text,
+        color=color,
+        size=size,
+        font_path=font_path,
     )
     return dst
