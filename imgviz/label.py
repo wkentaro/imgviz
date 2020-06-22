@@ -151,7 +151,7 @@ def label2rgb(
         )
         text_height, text_width = text_sizes.max(axis=0)
         legend_height = text_height * len(unique_labels) + 5
-        legend_width = text_width + 40
+        legend_width = text_width + 20 + (text_height - 10)
 
         height, width = label.shape[:2]
         legend = np.zeros((height, width, 3), dtype=np.uint8)
@@ -176,13 +176,13 @@ def label2rgb(
 
         for i, l in enumerate(unique_labels):
             box_aabb1 = aabb1 + (i * text_height + 5, 5)
-            box_aabb2 = box_aabb1 + (text_height - 10, 20)
+            box_aabb2 = box_aabb1 + (text_height - 10, text_height - 10)
             res = draw_module.rectangle(
                 res, aabb1=box_aabb1, aabb2=box_aabb2, fill=colormap[l]
             )
             res = draw_module.text(
                 res,
-                yx=aabb1 + (i * text_height, 30),
+                yx=aabb1 + (i * text_height, 10 + (text_height - 10)),
                 text=label_names[l],
                 size=font_size,
                 font_path=font_path,
