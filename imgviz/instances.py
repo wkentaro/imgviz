@@ -27,6 +27,7 @@ def instances2rgb(
     boundary_width=1,
     alpha=0.7,
     colormap=None,
+    font_path=None,
 ):
     """Convert instances to rgb.
 
@@ -125,13 +126,31 @@ def instances2rgb(
         )
 
         if caption is not None:
+            for loc in ["lt+", "lt"]:
+                y1, x1, y2, x2 = draw_module.text_in_rectangle_aabb(
+                    src=dst,
+                    loc=loc,
+                    text=caption,
+                    size=font_size,
+                    aabb1=aabb1,
+                    aabb2=aabb2,
+                    font_path=font_path,
+                )
+                if (
+                    y1 >= 0
+                    and x1 >= 0
+                    and y2 < dst.shape[0]
+                    and x2 < dst.shape[1]
+                ):
+                    break
             dst = draw_module.text_in_rectangle(
-                dst,
-                loc="lt+",
+                src=dst,
+                loc=loc,
                 text=caption,
                 size=font_size,
                 background=color_cls,
                 aabb1=aabb1,
                 aabb2=aabb2,
+                font_path=font_path,
             )
     return dst

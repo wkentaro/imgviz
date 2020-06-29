@@ -265,6 +265,39 @@ def text(src, yx, text, size, color=(0, 0, 0), font_path=None):
     return np.array(dst)
 
 
+def text_in_rectangle_aabb(src, loc, text, size, aabb1, aabb2, font_path=None):
+    height, width = src.shape[:2]
+
+    y1, x1 = (0, 0) if aabb1 is None else aabb1
+    y2, x2 = (height - 1, width - 1) if aabb2 is None else aabb2
+
+    tsize = text_size(text, size, font_path=font_path)
+
+    if loc == "lt":
+        yx = (y1, x1)
+    elif loc == "lt+":
+        yx = (y1 - tsize[0] - 2, x1)
+    elif loc == "rt":
+        yx = (y1, x2 - tsize[1] - 2)
+    elif loc == "rt+":
+        yx = (y1 - tsize[0] - 2, x2 - tsize[1] - 2)
+    elif loc == "lb":
+        yx = (y2 - tsize[0] - 2, 0)
+    elif loc == "lb-":
+        yx = (y2, 0)
+    elif loc == "rb":
+        yx = (y2 - tsize[0] - 2, x2 - tsize[1] - 2)
+    elif loc == "rb-":
+        yx = (y2, x2 - tsize[1] - 2)
+    else:
+        raise ValueError("unsupported loc: {}".format(loc))
+
+    y1, x1 = yx
+    y2, x2 = y1 + tsize[0] + 1, x1 + tsize[1] + 1
+
+    return np.array([y1, x1, y2, x2])
+
+
 def text_in_rectangle(
     src,
     loc,
@@ -308,35 +341,21 @@ def text_in_rectangle(
         color = color_module.get_fg_color(background)
 
     height, width = src.shape[:2]
+    y1, x1, y2, x2 = text_in_rectangle_aabb(
+        src=src,
+        loc=loc,
+        text=text,
+        size=size,
+        aabb1=aabb1,
+        aabb2=aabb2,
+        font_path=font_path,
+    )
 
-    y1, x1 = (0, 0) if aabb1 is None else aabb1
-    y2, x2 = (height - 1, width - 1) if aabb2 is None else aabb2
-
-    tsize = text_size(text, size, font_path=font_path)
-
-    if loc == "lt":
-        yx = (y1, x1)
-    elif loc == "lt+":
-        yx = (y1 - tsize[0] - 2, x1)
-    elif loc == "rt":
-        yx = (y1, x2 - tsize[1] - 2)
-    elif loc == "rt+":
-        yx = (y1 - tsize[0] - 2, x2 - tsize[1] - 2)
-    elif loc == "lb":
-        yx = (y2 - tsize[0] - 2, 0)
-    elif loc == "lb-":
-        yx = (y2, 0)
-    elif loc == "rb":
-        yx = (y2 - tsize[0] - 2, x2 - tsize[1] - 2)
-    elif loc == "rb-":
-        yx = (y2, x2 - tsize[1] - 2)
-    else:
-        raise ValueError("unsupported loc: {}".format(loc))
-
-    y1, x1 = yx
-    y2, x2 = y1 + tsize[0] + 1, x1 + tsize[1] + 1
-
-    constant_values = ((background[0],), (background[1],), (background[2],))
+    constant_values = (
+        (background[0],),
+        (background[1],),
+        (background[2],),
+    )
     if y1 < 0:
         pad = -y1
         src = np.pad(
