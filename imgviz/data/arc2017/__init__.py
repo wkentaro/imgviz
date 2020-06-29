@@ -28,7 +28,7 @@ def arc2017():
         "res4"
     ]
 
-    with open(osp.join(here, "camera_info.yaml") ) as f:
+    with open(osp.join(here, "camera_info.yaml")) as f:
         data["camera_info"] = yaml.safe_load(f)
 
     return data
