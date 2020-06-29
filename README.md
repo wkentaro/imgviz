@@ -44,6 +44,7 @@ pip install imgviz[all]
 - [matplotlib](https://pypi.org/project/matplotlib)
 - [numpy](https://pypi.org/project/numpy)
 - [Pillow>=5.3.0](https://pypi.org/project/Pillow)
+- [PyYAML](https://pypi.org/project/PyYAML)
 
 ## Getting Started
 
@@ -109,7 +110,7 @@ tiled = imgviz.tile(
 	</tr>
 	<tr>
 		<td><pre><a href="examples/instances2rgb.py">examples/instances2rgb.py</a></pre></td>
-		<td><img src="examples/.readme/instances2rgb.jpg" width="66.13333333333333%" /></td>
+		<td><img src="examples/.readme/instances2rgb.jpg" width="66.35451505016722%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/label2rgb.py">examples/label2rgb.py</a></pre></td>
