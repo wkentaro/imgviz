@@ -69,21 +69,20 @@ def _pyglet_imshow_list(images, caption=None, interval=0.5):
 
     @window.event()
     def on_key_press(symbol, modifiers):
-        if modifiers == 0:
-            if symbol == pyglet.window.key.Q:
-                window.close()
-            elif symbol == pyglet.window.key.N:
-                window.index = min(window.index + 1, len(images) - 1)
-                sprite.image = _ndarray_to_imagedata(images[window.index])
-            elif symbol == pyglet.window.key.P:
-                window.index = max(window.index - 1, 0)
-                sprite.image = _ndarray_to_imagedata(images[window.index])
-            elif symbol == pyglet.window.key.S:
-                window.play = not window.play
-            elif symbol == pyglet.window.key.H:
-                usage()
-            else:
-                print("Press 'h' to show help")
+        if symbol == pyglet.window.key.Q:
+            window.close()
+        elif symbol == pyglet.window.key.N:
+            window.index = min(window.index + 1, len(images) - 1)
+            sprite.image = _ndarray_to_imagedata(images[window.index])
+        elif symbol == pyglet.window.key.P:
+            window.index = max(window.index - 1, 0)
+            sprite.image = _ndarray_to_imagedata(images[window.index])
+        elif symbol == pyglet.window.key.S:
+            window.play = not window.play
+        elif symbol == pyglet.window.key.H:
+            usage()
+        else:
+            print("Press 'h' to show help")
 
 
 def _pyglet_imshow_generator(images, caption=None, interval=0.5):
@@ -119,20 +118,19 @@ def _pyglet_imshow_generator(images, caption=None, interval=0.5):
 
     @window.event()
     def on_key_press(symbol, modifiers):
-        if modifiers == 0:
-            if symbol == pyglet.window.key.Q:
-                window.close()
-            elif symbol == pyglet.window.key.N:
-                try:
-                    sprite.image = _ndarray_to_imagedata(next(images))
-                except StopIteration:
-                    print("Press 'q' to quit")
-            elif symbol == pyglet.window.key.S:
-                window.play = not window.play
-            elif symbol == pyglet.window.key.H:
-                usage()
-            else:
-                print("Press 'h' to show help")
+        if symbol == pyglet.window.key.Q:
+            window.close()
+        elif symbol == pyglet.window.key.N:
+            try:
+                sprite.image = _ndarray_to_imagedata(next(images))
+            except StopIteration:
+                print("Press 'q' to quit")
+        elif symbol == pyglet.window.key.S:
+            window.play = not window.play
+        elif symbol == pyglet.window.key.H:
+            usage()
+        else:
+            print("Press 'h' to show help")
 
 
 def _pyglet_imshow_ndarray(image, caption=None):
@@ -154,13 +152,12 @@ def _pyglet_imshow_ndarray(image, caption=None):
 
     @window.event()
     def on_key_press(symbol, modifiers):
-        if modifiers == 0:
-            if symbol == pyglet.window.key.Q:
-                window.close()
-            elif symbol == pyglet.window.key.H:
-                usage()
-            else:
-                print("Press 'h' to show help")
+        if symbol == pyglet.window.key.Q:
+            window.close()
+        elif symbol == pyglet.window.key.H:
+            usage()
+        else:
+            print("Press 'h' to show help")
 
 
 def _window_and_sprite(image, caption):
