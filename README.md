@@ -20,7 +20,7 @@
   <a href="#installation"><b>Installation</b></a> |
   <a href="#getting-started"><b>Getting Started</b></a> |
   <a href="#examples"><b>Examples</b></a> |
-  <a href="https://imgviz.readthedocs.io/en/latest/reference/index.html"><b>API Reference</b></a>
+  <a href="https://github.com/wkentaro/imgviz-cpp"><b>C++ Version</b></a>
 </div>
 
 <br/>
