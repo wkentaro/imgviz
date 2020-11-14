@@ -163,7 +163,9 @@ def _pyglet_imshow_ndarray(image, caption=None):
 def _window_and_sprite(image, caption):
     pyglet = check_pyglet_available()
     window = pyglet.window.Window(
-        width=image.width, height=image.height, caption=caption,
+        width=image.width,
+        height=image.height,
+        caption=caption,
     )
     sprite = pyglet.sprite.Sprite(image)
     return window, sprite

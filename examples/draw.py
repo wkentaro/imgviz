@@ -54,10 +54,18 @@ def draw():
             raise ValueError("unsupport shape: {}".format(shape))
 
     img = imgviz.draw.text_in_rectangle(
-        img, loc="lt+", text="original", size=30, background=(255, 255, 255),
+        img,
+        loc="lt+",
+        text="original",
+        size=30,
+        background=(255, 255, 255),
     )
     viz = imgviz.draw.text_in_rectangle(
-        viz, loc="lt+", text="markers", size=30, background=(255, 255, 255),
+        viz,
+        loc="lt+",
+        text="markers",
+        size=30,
+        background=(255, 255, 255),
     )
 
     # -------------------------------------------------------------------------

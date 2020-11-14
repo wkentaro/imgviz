@@ -48,7 +48,11 @@ def _get_tile_shape(num, hw_ratio=1):
 
 
 def tile(
-    imgs, shape=None, cval=None, border=None, border_width=None,
+    imgs,
+    shape=None,
+    cval=None,
+    border=None,
+    border_width=None,
 ):
     """Tile images.
 
