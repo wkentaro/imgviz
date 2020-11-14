@@ -52,7 +52,11 @@ def _resize_opencv(src, height, width, interpolation):
 
 
 def resize(
-    src, height=None, width=None, interpolation="linear", backend="auto",
+    src,
+    height=None,
+    width=None,
+    interpolation="linear",
+    backend="auto",
 ):
     """Resize image.
 

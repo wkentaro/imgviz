@@ -3,7 +3,11 @@ from .external import transformations as tf
 
 
 def plot_trajectory(
-    transforms, is_relative=False, mode="xz", style="b.", axis=True,
+    transforms,
+    is_relative=False,
+    mode="xz",
+    style="b.",
+    axis=True,
 ):
     """Plot the trajectory using transform matrices
 

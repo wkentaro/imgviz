@@ -63,7 +63,8 @@ class PygletThreadedImageViewer(pyglet.window.Window):
 
         width, height = self.get_size()
         scale = min(
-            float(width) / imagedata.width, float(height) / imagedata.height,
+            float(width) / imagedata.width,
+            float(height) / imagedata.height,
         )
         position_x = (width - imagedata.width * scale) / 2
         position_y = (height - imagedata.height * scale) / 2

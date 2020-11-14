@@ -375,18 +375,25 @@ def text_in_rectangle(
     if y1 < 0:
         pad = -y1
         src = np.pad(
-            src, ((pad, 0), (0, 0), (0, 0)), constant_values=constant_values,
+            src,
+            ((pad, 0), (0, 0), (0, 0)),
+            constant_values=constant_values,
         )
         y1 += pad
         y2 += pad
     if y2 > height:
         pad = y2 - height
         src = np.pad(
-            src, ((0, pad), (0, 0), (0, 0)), constant_values=constant_values,
+            src,
+            ((0, pad), (0, 0), (0, 0)),
+            constant_values=constant_values,
         )
 
     dst = globals()["rectangle"](
-        src=src, aabb1=(y1, x1), aabb2=(y2, x2), fill=background,
+        src=src,
+        aabb1=(y1, x1),
+        aabb2=(y2, x2),
+        fill=background,
     )
     dst = globals()["text"](
         src=dst,
