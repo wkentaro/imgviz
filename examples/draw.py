@@ -31,7 +31,6 @@ def draw():
     shapes = ["star", "star", "rectangle", "circle", "triangle"]
     for xy, color, shape in zip(xys, colors, shapes):
         size = 20
-        color = tuple(color)
         if shape == "star":
             viz = imgviz.draw.star(
                 viz, center=(xy[1], xy[0]), size=1.2 * size, fill=color

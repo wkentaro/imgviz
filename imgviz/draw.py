@@ -1,3 +1,4 @@
+import collections
 import os.path as osp
 
 import numpy as np
@@ -19,9 +20,9 @@ def triangle(src, center, size, fill=None, outline=None):
         center is (cy, cx).
     size: float
         Diameter to create the star.
-    fill: (3,) array-like, optional
+    fill: int or (3,) array-like, optional
         RGB color to fill the mark. None for no fill. (default: None)
-    outline: (3,) array-like, optional
+    outline: int or (3,) array-like, optional
         RGB color to draw the outline.
 
     Returns
@@ -30,6 +31,11 @@ def triangle(src, center, size, fill=None, outline=None):
         Output image.
 
     """
+    if isinstance(fill, collections.Iterable):
+        fill = tuple(fill)
+    if isinstance(outline, collections.Iterable):
+        outline = tuple(outline)
+
     dst = PIL.Image.fromarray(src)
     draw = PIL.ImageDraw.Draw(dst)
 
@@ -57,9 +63,9 @@ def star(src, center, size, fill=None, outline=None):
         center is (cy, cx).
     size: float
         Diameter to create the star.
-    fill: (3,) array-like, optional
+    fill: int or (3,) array-like, optional
         RGB color to fill the mark. None for no fill. (default: None)
-    outline: (3,) array-like, optional
+    outline: int or (3,) array-like, optional
         RGB color to draw the outline.
 
     Returns
@@ -68,6 +74,11 @@ def star(src, center, size, fill=None, outline=None):
         Output image.
 
     """
+    if isinstance(fill, collections.Iterable):
+        fill = tuple(fill)
+    if isinstance(outline, collections.Iterable):
+        outline = tuple(outline)
+
     dst = PIL.Image.fromarray(src)
     draw = PIL.ImageDraw.Draw(dst)
 
@@ -121,9 +132,9 @@ def circle(src, center, diameter, fill=None, outline=None, width=0):
         center is (cy, cx).
     diameter: float
         Diameter of the circle.
-    fill: (3,) array-like, optional
+    fill: int or (3,) array-like, optional
         RGB color to fill the mark. None for no fill. (default: None)
-    outline: (3,) array-like, optional
+    outline: int or (3,) array-like, optional
         RGB color to draw the outline.
     width: int, optional
         Rectangle line width. (default: 0)
@@ -134,6 +145,11 @@ def circle(src, center, diameter, fill=None, outline=None, width=0):
         Output image.
 
     """
+    if isinstance(fill, collections.Iterable):
+        fill = tuple(fill)
+    if isinstance(outline, collections.Iterable):
+        outline = tuple(outline)
+
     dst = PIL.Image.fromarray(src)
     draw = PIL.ImageDraw.Draw(dst)
 
@@ -161,9 +177,9 @@ def rectangle(src, aabb1, aabb2, fill=None, outline=None, width=0):
         Minimum vertex (y_min, x_min) of the axis aligned bounding box (AABB).
     aabb2: array-like, (2,)
         Maximum vertex (y_max, x_max) of the AABB.
-    fill: array-like, (3,), optional
+    fill: int or array-like, (3,), optional
         RGB color to fill the mark. None for no fill. (default: None)
-    outline: array-like, (3,), optional
+    outline: int or array-like, (3,), optional
         RGB color to draw the outline.
     width: int, optional
         Rectangle line width. (default: 0)
@@ -174,10 +190,10 @@ def rectangle(src, aabb1, aabb2, fill=None, outline=None, width=0):
         Output image.
 
     """
-    if outline is not None:
-        outline = tuple(outline)
-    if fill is not None:
+    if isinstance(fill, collections.Iterable):
         fill = tuple(fill)
+    if isinstance(outline, collections.Iterable):
+        outline = tuple(outline)
 
     dst = PIL.Image.fromarray(src)
     draw = PIL.ImageDraw.ImageDraw(dst)
