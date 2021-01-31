@@ -69,7 +69,7 @@ def label2rgb(
         RGB image.
     alpha: float
         Alpha of RGB (default: 0.5).
-    label_names: list of string
+    label_names: list or dict of string
         Label id to label name.
     font_size: int
         Font size (default: 30).
@@ -111,7 +111,10 @@ def label2rgb(
 
     unique_labels = np.unique(label)
     unique_labels = unique_labels[unique_labels != -1]
-    unique_labels = [l for l in unique_labels if label_names[l] is not None]
+    if isinstance(label_names, dict):
+        unique_labels = [l for l in unique_labels if label_names.get(l)]
+    else:
+        unique_labels = [l for l in unique_labels if label_names[l]]
     if len(unique_labels) == 0:
         return res
 
