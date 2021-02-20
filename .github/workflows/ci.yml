@@ -26,6 +26,9 @@ jobs:
     - name: Install
       run: |
         pip install .[all]
+        if [ "${{ matrix.python-version }}" = "3.5" ]; then
+          pip install "pyglet<1.5"
+        fi
     - name: Flake8
       run: |
         pip install hacking
