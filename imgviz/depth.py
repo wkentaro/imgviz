@@ -1,3 +1,5 @@
+import typing
+
 import matplotlib.cm
 import numpy as np
 
@@ -85,7 +87,7 @@ def depth2rgb(
     max_value=None,
     colormap="jet",
 ):
-    # type: (np.ndarray, np.dtype, float, float, str) -> np.ndarray
+    # type: (np.ndarray, typing.Type, float, float, str) -> np.ndarray
     """Convert depth to rgb.
 
     Parameters
