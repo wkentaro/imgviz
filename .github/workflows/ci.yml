@@ -30,10 +30,14 @@ jobs:
       run: |
         pip install hacking
         flake8 .
-    - name: Black and Mypy
+    - name: Black
       run: |
-        pip install black mypy
+        pip install black
         black --check .
+      if: matrix.python-version == '3.8'
+    - name: Mypy
+      run: |
+        pip install mypy
         mypy -p imgviz --ignore-missing-imports
       if: matrix.python-version == '3.8'
     - name: Test
