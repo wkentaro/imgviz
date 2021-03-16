@@ -35,13 +35,13 @@ def instances2rgb(
     ----------
     image: numpy.ndarray, (H, W, 3), numpy.uint8
         RGB image.
-    labels: list of int, (N,)
-        Labels.
-    bboxes: list of numpy.ndarray, (N, 4), float
+    labels: list of size N of int values,
+        Object Labels.
+    bboxes: list of size N of numpy arrays of shape (4, ),
         Bounding boxes.
-    masks: numpy.ndarray, (N, H, W), bool
-        Masks.
-    captions: list of str
+    masks: list of size N of numpy arrays of shape (H, W),
+        Only boolean masks are supported for now.
+    captions: list of size N of str,
         Captions.
     font_size: int
         Font size.
