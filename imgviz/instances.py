@@ -39,8 +39,8 @@ def instances2rgb(
         Object Labels.
     bboxes: list of size N of numpy arrays of shape (4, ),
         Bounding boxes.
-    masks: list of size N of numpy arrays of shape (H, W),
-        Only boolean masks are supported for now.
+    masks: list of size N of numpy arrays of shape (H, W).
+        Boolean and soft masks are supported. Soft masks are thresholded by 0.5 value.
     captions: list of size N of str,
         Captions.
     font_size: int
@@ -75,6 +75,21 @@ def instances2rgb(
     if captions is None:
         captions = [None] * n_instance
 
+    # TODO: Check if masks are soft or not.
+    # TODO: Add mask thresholds to function arguments.
+    if masks is not None:
+        # hard
+        if isinstance(masks[0], (bool, np.bool)):
+            masks = masks
+        elif isinstance(masks[0], (float, np.float)):
+            threshold = 0.5
+            masks = masks >= threshold
+        else:
+            try:
+                raise NotImplementedError("Invalid type {} for masks.".format(masks.dtype))
+            except:
+                raise NotImplementedError("Invalid type {} for masks.".format(type(masks)))
+            
     assert len(masks) == len(bboxes) == len(captions) == n_instance
 
     if colormap is None:
