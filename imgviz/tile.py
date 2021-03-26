@@ -1,3 +1,4 @@
+import collections
 import math
 
 import numpy as np
@@ -82,6 +83,19 @@ def tile(
 
     if shape is None:
         shape = _get_tile_shape(len(imgs), hw_ratio=1.0 * max_h / max_w)
+    else:
+        assert isinstance(shape, collections.Sequence)
+        assert len(shape) == 2
+        assert isinstance(shape[0], int)
+        assert isinstance(shape[1], int)
+        if shape[0] < 0 and shape[1] > 0:
+            shape = (math.ceil(len(imgs) / shape[1]), shape[1])
+        elif shape[1] < 0 and shape[0] > 0:
+            shape = (shape[0], math.ceil(len(imgs) / shape[0]))
+        else:
+            assert shape[0] > 0 and shape[1] > 0
+
+    imgs = imgs[: shape[0] * shape[1]]
 
     if cval is None:
         cval = 0
