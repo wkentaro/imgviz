@@ -2,8 +2,6 @@
 
 __version__ = "1.2.6"
 
-# -----------------------------------------------------------------------------
-
 from . import _io as io
 from . import data
 from . import draw
@@ -27,9 +25,3 @@ from .normalize import normalize
 from .resize import resize
 from .tile import tile
 from .trajectory import plot_trajectory
-
-# -----------------------------------------------------------------------------
-
-# visualization targets
-
-# visualization operations
