@@ -82,12 +82,12 @@ class Depth2RGB(object):
 
 def depth2rgb(
     depth,
-    dtype=np.uint8,
     min_value=None,
     max_value=None,
     colormap="jet",
+    dtype=np.uint8,
 ):
-    # type: (np.ndarray, typing.Type, float, float, str) -> np.ndarray
+    # type: (np.ndarray, float, float, str, typing.Type) -> np.ndarray
     """Convert depth to rgb.
 
     Parameters
