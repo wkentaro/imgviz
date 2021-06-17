@@ -70,5 +70,5 @@ jobs:
         git config --global user.email "www.kentaro.wada@gmail.com"
         git config --global user.name "Kentaro Wada"
         git add examples/.readme README.md
-        git diff-index --cached --quiet HEAD || git commit -m "Update README.md & examples/.readme"
+        git diff-index --cached --quiet HEAD || git commit -m "Update README.md and examples/.readme"
         git push origin master

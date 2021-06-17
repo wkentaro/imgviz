@@ -94,7 +94,7 @@ def main():
 <br/>
 
 <div align="center">
-  <img src=".readme/getting_started.jpg" width="75%">
+  <img src=".readme/getting_started.jpg" width="95%">
 </div>
 
 ## Installation
