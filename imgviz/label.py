@@ -56,7 +56,7 @@ def label2rgb(
     font_size=30,
     thresh_suppress=0,
     colormap=None,
-    loc="centroid",
+    loc="rb",
     font_path=None,
 ):
     """Convert label to rgb.
@@ -79,8 +79,8 @@ def label2rgb(
         Label id to color.
         By default, :func:`~imgviz.label_colormap` is used.
     loc: string
-        Location of legend (default: 'centroid').
-        'lt' and 'rb' are supported.
+        Location of legend (default: 'rb').
+        'centroid', 'lt' and 'rb' are supported.
     font_path: str
         Font path.
 

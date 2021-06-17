@@ -21,7 +21,7 @@ depthviz = imgviz.depth2rgb(depth, min_value=0.3, max_value=1)
 
 # colorize label image
 class_label = data["class_label"]
-labelviz = imgviz.label2rgb(class_label, label_names=data["class_names"])
+labelviz = imgviz.label2rgb(class_label, label_names=data["class_names"], font_size=20)
 
 # instance bboxes
 rgb = data["rgb"]
