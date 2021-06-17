@@ -11,13 +11,13 @@ def test_label2rgb():
     assert labelviz.dtype == np.uint8
     assert labelviz.shape == (H, W, 3)
 
-    labelviz = imgviz.label2rgb(label=data["class_label"], img=data["rgb"])
+    labelviz = imgviz.label2rgb(label=data["class_label"], image=data["rgb"])
     assert labelviz.dtype == np.uint8
     assert labelviz.shape == (H, W, 3)
 
     labelviz = imgviz.label2rgb(
         label=data["class_label"],
-        img=data["rgb"],
+        image=data["rgb"],
         label_names=data["class_names"],
     )
     assert labelviz.dtype == np.uint8

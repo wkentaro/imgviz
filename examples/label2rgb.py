@@ -21,7 +21,7 @@ def label2rgb():
         label, label_names=label_names, font_size=25, loc="rb"
     )
     img = imgviz.color.rgb2gray(rgb)
-    labelviz_withimg = imgviz.label2rgb(label, img=img)
+    labelviz_withimg = imgviz.label2rgb(label=label, image=img)
 
     # -------------------------------------------------------------------------
 

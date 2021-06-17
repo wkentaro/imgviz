@@ -50,7 +50,7 @@ def label_colormap(n_label=256, value=None):
 
 def label2rgb(
     label,
-    img=None,
+    image=None,
     alpha=0.5,
     label_names=None,
     font_size=30,
@@ -65,7 +65,7 @@ def label2rgb(
     ----------
     label: numpy.ndarray, (H, W), int
         Label image.
-    img: numpy.ndarray, (H, W, 3), numpy.uint8
+    image: numpy.ndarray, (H, W, 3), numpy.uint8
         RGB image.
     alpha: float
         Alpha of RGB (default: 0.5).
@@ -100,10 +100,10 @@ def label2rgb(
     mask_unlabeled = label < 0
     res[mask_unlabeled] = random_state.rand(*(mask_unlabeled.sum(), 3)) * 255
 
-    if img is not None:
-        if img.ndim == 2:
-            img = color_module.gray2rgb(img)
-        res = (1 - alpha) * img.astype(float) + alpha * res.astype(float)
+    if image is not None:
+        if image.ndim == 2:
+            image = color_module.gray2rgb(image)
+        res = (1 - alpha) * image.astype(float) + alpha * res.astype(float)
         res = np.clip(res.round(), 0, 255).astype(np.uint8)
 
     if label_names is None:
