@@ -40,7 +40,7 @@ jobs:
       if: matrix.python-version == '3.8'
     - name: Mypy
       run: |
-        pip install mypy
+        pip install mypy types-PyYAML
         mypy -p imgviz --ignore-missing-imports
       if: matrix.python-version == '3.8'
     - name: Test
