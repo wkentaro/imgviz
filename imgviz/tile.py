@@ -84,7 +84,7 @@ def tile(
     if shape is None:
         shape = _get_tile_shape(len(imgs), hw_ratio=1.0 * max_h / max_w)
     else:
-        assert isinstance(shape, collections.Sequence)
+        assert isinstance(shape, collections.abc.Iterable)
         assert len(shape) == 2
         assert isinstance(shape[0], int)
         assert isinstance(shape[1], int)
