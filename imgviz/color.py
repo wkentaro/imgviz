@@ -1,6 +1,8 @@
 import numpy as np
 import PIL.Image
 
+from . import dtype
+
 
 def rgb2gray(rgb):
     # type: (np.ndarray) -> np.ndarray
@@ -139,7 +141,7 @@ def asgray(img):
 
     Parameters
     ----------
-    img: numpy.ndarray, (H, W, 3), np.uint8
+    img: numpy.ndarray
         Input image.
 
     Returns
@@ -148,7 +150,10 @@ def asgray(img):
         Output gray image.
     """
     if img.ndim == 2:
-        gray = img
+        if img.dtype == bool:
+            gray = dtype.bool2ubyte(img)
+        else:
+            gray = img
     elif img.ndim == 3 and img.shape[2] == 4:
         gray = rgb2gray(rgba2rgb(img))
     elif img.ndim == 3 and img.shape[2] == 3:
@@ -159,6 +164,36 @@ def asgray(img):
             "shape={}, dtype={}".format(img.shape, img.dtype)
         )
     return gray
+
+
+def asrgb(img):
+    # type: (np.ndarray) -> np.ndarray
+    """Convert any array to rgb image.
+
+    Parameters
+    ----------
+    img: numpy.ndarray
+        Input image.
+
+    Returns
+    -------
+    gray: numpy.ndarray, (H, W, 3), np.uint8
+        Output gray image.
+    """
+    if img.ndim == 2:
+        if img.dtype == bool:
+            img = dtype.bool2ubyte(img)
+        rgb = gray2rgb(img)
+    elif img.ndim == 3 and img.shape[2] == 4:
+        rgb = rgba2rgb(img)
+    elif img.ndim == 3 and img.shape[2] == 3:
+        rgb = img
+    else:
+        raise ValueError(
+            "Unsupported image format to convert to gray:"
+            "shape={}, dtype={}".format(img.shape, img.dtype)
+        )
+    return rgb
 
 
 def get_fg_color(color):
