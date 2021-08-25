@@ -31,9 +31,9 @@ def triangle(src, center, size, fill=None, outline=None):
         Output image.
 
     """
-    if isinstance(fill, collections.Iterable):
+    if isinstance(fill, collections.abc.Iterable):
         fill = tuple(fill)
-    if isinstance(outline, collections.Iterable):
+    if isinstance(outline, collections.abc.Iterable):
         outline = tuple(outline)
 
     dst = PIL.Image.fromarray(src)
@@ -74,9 +74,9 @@ def star(src, center, size, fill=None, outline=None):
         Output image.
 
     """
-    if isinstance(fill, collections.Iterable):
+    if isinstance(fill, collections.abc.Iterable):
         fill = tuple(fill)
-    if isinstance(outline, collections.Iterable):
+    if isinstance(outline, collections.abc.Iterable):
         outline = tuple(outline)
 
     dst = PIL.Image.fromarray(src)
@@ -145,9 +145,9 @@ def circle(src, center, diameter, fill=None, outline=None, width=0):
         Output image.
 
     """
-    if isinstance(fill, collections.Iterable):
+    if isinstance(fill, collections.abc.Iterable):
         fill = tuple(fill)
-    if isinstance(outline, collections.Iterable):
+    if isinstance(outline, collections.abc.Iterable):
         outline = tuple(outline)
 
     dst = PIL.Image.fromarray(src)
@@ -190,9 +190,9 @@ def rectangle(src, aabb1, aabb2, fill=None, outline=None, width=0):
         Output image.
 
     """
-    if isinstance(fill, collections.Iterable):
+    if isinstance(fill, collections.abc.Iterable):
         fill = tuple(fill)
-    if isinstance(outline, collections.Iterable):
+    if isinstance(outline, collections.abc.Iterable):
         outline = tuple(outline)
 
     dst = PIL.Image.fromarray(src)
