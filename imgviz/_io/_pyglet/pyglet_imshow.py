@@ -8,7 +8,6 @@ from .base import check_pyglet_available
 
 
 def pyglet_imshow(image, caption=None, interval=0.5):
-    # type: (np.ndarray, str, float) -> None
     """Show image with pyglet.
 
     Parameters
