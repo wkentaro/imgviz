@@ -1,6 +1,6 @@
 # flake8: noqa
 
-__version__ = "1.2.6"
+__version__ = "1.3.0"
 
 from . import _io as io
 from . import data
