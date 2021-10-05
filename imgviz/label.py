@@ -22,20 +22,24 @@ def label_colormap(n_label=256, value=None):
     """
 
     def bitget(byteval, idx):
-        return (byteval & (1 << idx)) != 0
+        shape = byteval.shape + (8,)
+        return np.unpackbits(byteval, bitorder="little").reshape(shape)[
+            ..., idx
+        ]
 
-    cmap = np.zeros((n_label, 3), dtype=np.uint8)
-    for i in range(0, n_label):
-        id = i
-        r, g, b = 0, 0, 0
-        for j in range(0, 8):
-            r = np.bitwise_or(r, (bitget(id, 0) << 7 - j))
-            g = np.bitwise_or(g, (bitget(id, 1) << 7 - j))
-            b = np.bitwise_or(b, (bitget(id, 2) << 7 - j))
-            id = id >> 3
-        cmap[i, 0] = r
-        cmap[i, 1] = g
-        cmap[i, 2] = b
+    i = np.arange(n_label, dtype=np.uint8)
+    r = np.full_like(i, 0)
+    g = np.full_like(i, 0)
+    b = np.full_like(i, 0)
+
+    i = np.repeat(i[:, None], 8, axis=1)
+    i = np.right_shift(i, np.arange(0, 24, 3)).astype(np.uint8)
+    j = np.arange(8)[::-1]
+    r = np.bitwise_or.reduce(np.left_shift(bitget(i, 0), j), axis=1)
+    g = np.bitwise_or.reduce(np.left_shift(bitget(i, 1), j), axis=1)
+    b = np.bitwise_or.reduce(np.left_shift(bitget(i, 2), j), axis=1)
+
+    cmap = np.stack((r, g, b), axis=1).astype(np.uint8)
 
     if value is not None:
         hsv = color_module.rgb2hsv(cmap.reshape(1, -1, 3))
