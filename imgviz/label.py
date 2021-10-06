@@ -71,7 +71,7 @@ def label2rgb(
         Label image.
     image: numpy.ndarray, (H, W, 3), numpy.uint8
         RGB image.
-    alpha: float
+    alpha: float or list of float
         Alpha of RGB (default: 0.5).
     label_names: list or dict of string
         Label id to label name.
@@ -103,6 +103,11 @@ def label2rgb(
 
     mask_unlabeled = label < 0
     res[mask_unlabeled] = random_state.rand(*(mask_unlabeled.sum(), 3)) * 255
+
+    if isinstance(alpha, float):
+        alpha = np.array([alpha for _ in range(np.max(label) + 1)])
+    alpha = np.asarray(alpha)
+    alpha = np.expand_dims(alpha[label], axis=2).astype(float)
 
     if image is not None:
         if image.ndim == 2:
