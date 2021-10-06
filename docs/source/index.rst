@@ -14,7 +14,7 @@ Image Visualization Tools.
    :maxdepth: 2
 
    getting_started.rst
-   Examples <https://github.com/wkentaro/imgviz/tree/master/examples>
+   Examples <https://github.com/wkentaro/imgviz/tree/main/examples>
    reference/index.rst
 
 
