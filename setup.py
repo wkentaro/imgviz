@@ -71,7 +71,7 @@ def main():
             "git submodule update github2pypi",
             "git pull origin main",
             "git tag v{:s}".format(version),
-            "git push origin --tags",
+            "git push origin main --tags",
             "python setup.py sdist",
             "twine upload dist/imgviz-{:s}.tar.gz".format(version),
         ]
