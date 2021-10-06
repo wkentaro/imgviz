@@ -1,3 +1,5 @@
+import numbers
+
 import numpy as np
 
 from . import color as color_module
@@ -71,8 +73,10 @@ def label2rgb(
         Label image.
     image: numpy.ndarray, (H, W, 3), numpy.uint8
         RGB image.
-    alpha: float or list of float
+    alpha: float, or list or dict of float
         Alpha of RGB (default: 0.5).
+        If given as a list or dict, it is treated as alpha for each class
+        according to the index or key.
     label_names: list or dict of string
         Label id to label name.
     font_size: int
@@ -104,10 +108,18 @@ def label2rgb(
     mask_unlabeled = label < 0
     res[mask_unlabeled] = random_state.rand(*(mask_unlabeled.sum(), 3)) * 255
 
-    if isinstance(alpha, float):
-        alpha = np.array([alpha for _ in range(np.max(label) + 1)])
-    alpha = np.asarray(alpha)
-    alpha = np.expand_dims(alpha[label], axis=2).astype(float)
+    unique_labels = np.unique(label)
+    max_label_id = unique_labels[-1]
+
+    if isinstance(alpha, numbers.Number):
+        alpha = np.array([alpha for _ in range(max_label_id + 1)])
+    elif isinstance(alpha, dict):
+        alpha = np.array([alpha.get(l, 0.5) for l in range(max_label_id + 1)])
+    else:
+        alpha = np.asarray(alpha)
+        assert alpha.ndim == 1
+    assert ((0 <= alpha) & (alpha <= 1)).all()
+    alpha = alpha[label][:, :, None]
 
     if image is not None:
         if image.ndim == 2:
@@ -118,7 +130,6 @@ def label2rgb(
     if label_names is None:
         return res
 
-    unique_labels = np.unique(label)
     unique_labels = unique_labels[unique_labels != -1]
     if isinstance(label_names, dict):
         unique_labels = [l for l in unique_labels if label_names.get(l)]

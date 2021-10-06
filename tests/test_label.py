@@ -27,15 +27,16 @@ def test_label2rgb():
         label=data["class_label"],
         image=data["rgb"],
         label_names=data["class_names"],
-        alpha=0.5
+        alpha=[0.5 for _ in data["class_names"]],
     )
     assert labelviz.dtype == np.uint8
     assert labelviz.shape == (H, W, 3)
+
     labelviz = imgviz.label2rgb(
         label=data["class_label"],
         image=data["rgb"],
         label_names=data["class_names"],
-        alpha=[0.5 for i in range(np.max(data["class_label"]) + 1)]
+        alpha={i: 0.5 for i in range(len(data["class_names"]))},
     )
     assert labelviz.dtype == np.uint8
     assert labelviz.shape == (H, W, 3)
