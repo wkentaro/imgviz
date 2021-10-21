@@ -25,9 +25,7 @@ def label_colormap(n_label=256, value=None):
 
     def bitget(byteval, idx):
         shape = byteval.shape + (8,)
-        return np.unpackbits(byteval, bitorder="little").reshape(shape)[
-            ..., idx
-        ]
+        return np.unpackbits(byteval).reshape(shape)[..., -1 - idx]
 
     i = np.arange(n_label, dtype=np.uint8)
     r = np.full_like(i, 0)
