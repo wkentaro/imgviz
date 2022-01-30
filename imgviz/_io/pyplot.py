@@ -1,5 +1,6 @@
 import io
 
+import matplotlib.pyplot
 import numpy as np
 import PIL.Image
 
@@ -30,3 +31,10 @@ def pyplot_to_numpy():
     f.seek(0)
     arr = np.asarray(PIL.Image.open(f))
     return arr
+
+
+def pyplot_imshow(image):
+    matplotlib.pyplot.cla()
+    matplotlib.pyplot.imshow(image)
+    matplotlib.pyplot.tight_layout()
+    matplotlib.pyplot.show()
