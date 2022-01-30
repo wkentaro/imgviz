@@ -8,6 +8,7 @@ from . import draw
 from .centerize import centerize
 from .color import asgray
 from .color import asrgb
+from .color import asrgba
 from .color import gray2rgb
 from .color import hsv2rgb
 from .color import rgb2gray

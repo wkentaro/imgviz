@@ -177,7 +177,7 @@ def asrgb(img):
 
     Returns
     -------
-    gray: numpy.ndarray, (H, W, 3), np.uint8
+    rgb: numpy.ndarray, (H, W, 3), np.uint8
         Output gray image.
     """
     if img.ndim == 2:
@@ -190,10 +190,41 @@ def asrgb(img):
         rgb = img
     else:
         raise ValueError(
-            "Unsupported image format to convert to gray:"
+            "Unsupported image format to convert to rgb:"
             "shape={}, dtype={}".format(img.shape, img.dtype)
         )
     return rgb
+
+
+def asrgba(img):
+    # type: (np.ndarray) -> np.ndarray
+    """Convert any array to rgba image.
+
+    Parameters
+    ----------
+    img: numpy.ndarray
+        Input image.
+
+    Returns
+    -------
+    rgba: numpy.ndarray, (H, W, 3), np.uint8
+        Output gray image.
+    """
+    if img.ndim == 2:
+        if img.dtype == bool:
+            img = dtype.bool2ubyte(img)
+        rgb = gray2rgb(img)
+        rgba = rgb2rgba(rgb)
+    if img.ndim == 3 and img.shape[2] == 4:
+        rgba = img
+    elif img.ndim == 3 and img.shape[2] == 3:
+        rgba = rgb2rgba(img)
+    else:
+        raise ValueError(
+            "Unsupported image format to convert to rgba:"
+            "shape={}, dtype={}".format(img.shape, img.dtype)
+        )
+    return rgba
 
 
 def get_fg_color(color):
