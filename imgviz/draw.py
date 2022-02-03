@@ -9,6 +9,20 @@ import PIL.ImageFont
 from . import color as color_module
 
 
+def line(src, yx, fill, width=1):
+    fill = tuple(fill)
+
+    dst = PIL.Image.fromarray(src)
+    draw = PIL.ImageDraw.Draw(dst)
+
+    xy = np.asarray(yx).reshape(-1, 2)[:, ::-1]
+    xy = xy.flatten().tolist()
+
+    draw.line(xy, fill=fill, width=width)
+
+    return np.array(dst)
+
+
 def triangle(src, center, size, fill=None, outline=None):
     """Draw triangle on numpy array with Pillow.
 
