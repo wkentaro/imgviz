@@ -180,6 +180,23 @@ def circle(src, center, diameter, fill=None, outline=None, width=0):
     return np.array(dst)
 
 
+def ellipse(src, yx1, yx2, fill=None, outline=None, width=0):
+    if isinstance(fill, collections.abc.Iterable):
+        fill = tuple(fill)
+    if isinstance(outline, collections.abc.Iterable):
+        outline = tuple(outline)
+
+    dst = PIL.Image.fromarray(src)
+    draw = PIL.ImageDraw.Draw(dst)
+
+    y1, x1 = yx1
+    y2, x2 = yx2
+
+    draw.ellipse([x1, y1, x2, y2], fill=fill, outline=outline, width=width)
+
+    return np.array(dst)
+
+
 def rectangle(src, aabb1, aabb2, fill=None, outline=None, width=0):
     """Draw rectangle on numpy array with Pillow.
 
