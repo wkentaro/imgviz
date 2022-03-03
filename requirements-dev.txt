@@ -1,0 +1,6 @@
+-r requirements.txt
+black==22.1.0
+hacking==4.1.0
+mypy
+pytest
+github2pypi==1.0.0
