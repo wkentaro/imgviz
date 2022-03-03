@@ -6,7 +6,6 @@ import shlex
 import subprocess
 import sys
 
-import github2pypi
 from setuptools import find_packages
 from setuptools import setup
 
@@ -34,9 +33,16 @@ def get_install_requires():
 def get_long_description():
     with open("README.md") as f:
         long_description = f.read()
-    return github2pypi.replace_url(
-        slug="wkentaro/imgviz", content=long_description, branch="main"
-    )
+    try:
+        # when this package is being released
+        import github2pypi
+
+        return github2pypi.replace_url(
+            slug="wkentaro/imgviz", content=long_description, branch="main"
+        )
+    except ImportError:
+        # when this package is being installed
+        return long_description
 
 
 def get_package_data():
@@ -53,6 +59,15 @@ def main():
     version = get_version()
 
     if sys.argv[1] == "release":
+        try:
+            import github2pypi  # NOQA
+        except ImportError:
+            print(
+                "Please install github2pypi\n\n\tpip install github2pypi\n",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+
         if not distutils.spawn.find_executable("twine"):
             print(
                 "Please install twine:\n\n\tpip install twine\n",
