@@ -1,5 +1,3 @@
-from __future__ import print_function
-
 import distutils.spawn
 import os
 import os.path as osp
@@ -8,6 +6,7 @@ import shlex
 import subprocess
 import sys
 
+import github2pypi
 from setuptools import find_packages
 from setuptools import setup
 
@@ -35,15 +34,9 @@ def get_install_requires():
 def get_long_description():
     with open("README.md") as f:
         long_description = f.read()
-
-    try:
-        import github2pypi
-
-        return github2pypi.replace_url(
-            slug="wkentaro/imgviz", content=long_description
-        )
-    except Exception:
-        return long_description
+    return github2pypi.replace_url(
+        slug="wkentaro/imgviz", content=long_description, branch="main"
+    )
 
 
 def get_package_data():
@@ -68,7 +61,6 @@ def main():
             sys.exit(1)
 
         commands = [
-            "git submodule update github2pypi",
             "git pull origin main",
             "git tag v{:s}".format(version),
             "git push origin main --tags",
@@ -83,7 +75,7 @@ def main():
     setup(
         name="imgviz",
         version=version,
-        packages=find_packages(exclude=["github2pypi"]),
+        packages=find_packages(),
         python_requires=">=3.5",
         install_requires=get_install_requires(),
         extras_require={"all": ["pyglet", "scikit-image", "scikit-learn"]},
