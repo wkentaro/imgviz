@@ -15,7 +15,7 @@ def label2rgb():
         "{}:{}".format(i, n) for i, n in enumerate(data["class_names"])
     ]
     labelviz_withname1 = imgviz.label2rgb(
-        label, label_names=label_names, font_size=25
+        label, label_names=label_names, font_size=25, loc="centroid"
     )
     labelviz_withname2 = imgviz.label2rgb(
         label, label_names=label_names, font_size=25, loc="rb"
