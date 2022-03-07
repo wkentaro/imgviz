@@ -28,18 +28,28 @@ def rectangle(src, aabb1, aabb2, fill=None, outline=None, width=0):
         Output image.
 
     """
+    dst = PIL.Image.fromarray(src)
+    rectangle_(
+        img=dst,
+        aabb1=aabb1,
+        aabb2=aabb2,
+        fill=fill,
+        outline=outline,
+        width=width,
+    )
+    return np.array(dst)
+
+
+def rectangle_(img, aabb1, aabb2, fill=None, outline=None, width=0):
     if isinstance(fill, collections.abc.Iterable):
         fill = tuple(fill)
     if isinstance(outline, collections.abc.Iterable):
         outline = tuple(outline)
 
-    dst = PIL.Image.fromarray(src)
-
-    draw = PIL.ImageDraw.ImageDraw(dst)
+    draw = PIL.ImageDraw.ImageDraw(img)
 
     y1, x1 = aabb1
     y2, x2 = aabb2
     draw.rectangle(
         xy=(x1, y1, x2, y2), fill=fill, outline=outline, width=width
     )
-    return np.asarray(dst)
