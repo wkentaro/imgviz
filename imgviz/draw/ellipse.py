@@ -1,17 +1,18 @@
 import collections
 
-import numpy as np
 import PIL.Image
 import PIL.ImageDraw
 import PIL.ImageFont
 
+from .. import utils
+
 
 def ellipse(src, yx1, yx2, fill=None, outline=None, width=0):
-    dst = PIL.Image.fromarray(src)
+    dst = utils.numpy_to_pillow(src)
     ellipse_(
         img=dst, yx1=yx1, yx2=yx2, fill=fill, outline=outline, width=width
     )
-    return np.array(dst)
+    return utils.pillow_to_numpy(dst)
 
 
 def ellipse_(img, yx1, yx2, fill=None, outline=None, width=0):

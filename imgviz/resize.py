@@ -1,6 +1,8 @@
 import numpy as np
 import PIL.Image
 
+from . import utils
+
 try:
     import cv2
 except ImportError:
@@ -16,9 +18,9 @@ def _resize_pillow(src, height, width, interpolation):
         raise ValueError("unsupported interpolation: {}".format(interpolation))
 
     if np.issubdtype(src.dtype, np.integer):
-        dst = PIL.Image.fromarray(src)
+        dst = utils.numpy_to_pillow(src)
         dst = dst.resize((width, height), resample=interpolation)
-        dst = np.array(dst)
+        dst = utils.pillow_to_numpy(dst)
     else:
         assert np.issubdtype(src.dtype, np.floating)
         ndim = src.ndim
@@ -29,7 +31,7 @@ def _resize_pillow(src, height, width, interpolation):
         dst = np.zeros((height, width, C), dtype=src.dtype)
         for c in range(C):
             src_c = src[:, :, c]
-            src_c = PIL.Image.fromarray(src_c)
+            src_c = utils.numpy_to_pillow(src_c)
             dst[:, :, c] = src_c.resize(
                 (width, height), resample=interpolation
             )

@@ -1,5 +1,5 @@
-import PIL.Image
+from .. import utils
 
 
 def pil_imshow(image):
-    PIL.Image.fromarray(image).show()
+    utils.numpy_to_pillow(image).show()

@@ -4,6 +4,8 @@ import os.path as osp
 import numpy as np
 import PIL.Image
 
+from .. import utils
+
 
 def imread(filename):
     # type: (str) -> np.ndarray
@@ -19,7 +21,7 @@ def imread(filename):
     img: numpy.ndarray, (H, W) or (H, W, 3) or (H, W, 4)
         Image read.
     """
-    return np.array(PIL.Image.open(filename))
+    return utils.pillow_to_numpy(PIL.Image.open(filename))
 
 
 def imsave(filename, arr):
@@ -42,4 +44,4 @@ def imsave(filename, arr):
         os.makedirs(osp.dirname(filename))
     except OSError:
         pass
-    return PIL.Image.fromarray(arr).save(filename)
+    return utils.numpy_to_pillow(arr).save(filename)

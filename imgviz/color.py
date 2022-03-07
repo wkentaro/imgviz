@@ -1,7 +1,7 @@
 import numpy as np
-import PIL.Image
 
 from . import dtype
+from . import utils
 
 
 def rgb2gray(rgb):
@@ -23,9 +23,9 @@ def rgb2gray(rgb):
     assert rgb.shape[2] == 3, "rgb shape must be (H, W, 3)"
     assert rgb.dtype == np.uint8, "rgb dtype must be np.uint8"
 
-    gray = PIL.Image.fromarray(rgb)
+    gray = utils.numpy_to_pillow(rgb)
     gray = gray.convert("L")
-    gray = np.array(gray)
+    gray = utils.pillow_to_numpy(gray)
     return gray
 
 
@@ -90,9 +90,9 @@ def rgb2hsv(rgb):
         Output hsv image.
 
     """
-    hsv = PIL.Image.fromarray(rgb, mode="RGB")
+    hsv = utils.numpy_to_pillow(rgb, mode="RGB")
     hsv = hsv.convert("HSV")
-    hsv = np.array(hsv)
+    hsv = utils.pillow_to_numpy(hsv)
     return hsv
 
 
@@ -111,9 +111,9 @@ def hsv2rgb(hsv):
         Output rgb image.
 
     """
-    rgb = PIL.Image.fromarray(hsv, mode="HSV")
+    rgb = utils.numpy_to_pillow(hsv, mode="HSV")
     rgb = rgb.convert("RGB")
-    rgb = np.array(rgb)
+    rgb = utils.pillow_to_numpy(rgb)
     return rgb
 
 

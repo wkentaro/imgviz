@@ -5,6 +5,8 @@ import PIL.Image
 import PIL.ImageDraw
 import PIL.ImageFont
 
+from .. import utils
+
 
 def star(src, center, size, fill=None, outline=None):
     """Draw star on numpy array with Pillow.
@@ -28,7 +30,7 @@ def star(src, center, size, fill=None, outline=None):
         Output image.
 
     """
-    dst = PIL.Image.fromarray(src)
+    dst = utils.numpy_to_pillow(src)
     star_(
         img=dst,
         center=center,
@@ -36,7 +38,7 @@ def star(src, center, size, fill=None, outline=None):
         fill=fill,
         outline=outline,
     )
-    return np.array(dst)
+    return utils.pillow_to_numpy(dst)
 
 
 def star_(img, center, size, fill=None, outline=None):
