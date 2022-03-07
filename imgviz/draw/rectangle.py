@@ -3,6 +3,8 @@ import collections
 import numpy as np
 import PIL.Image
 
+from .. import utils
+
 
 def rectangle(src, aabb1, aabb2, fill=None, outline=None, width=0):
     """Draw rectangle on numpy array with Pillow.
@@ -28,7 +30,7 @@ def rectangle(src, aabb1, aabb2, fill=None, outline=None, width=0):
         Output image.
 
     """
-    dst = PIL.Image.fromarray(src)
+    dst = utils.numpy_to_pillow(src)
     rectangle_(
         img=dst,
         aabb1=aabb1,
@@ -37,7 +39,7 @@ def rectangle(src, aabb1, aabb2, fill=None, outline=None, width=0):
         outline=outline,
         width=width,
     )
-    return np.array(dst)
+    return utils.pillow_to_numpy(dst)
 
 
 def rectangle_(img, aabb1, aabb2, fill=None, outline=None, width=0):

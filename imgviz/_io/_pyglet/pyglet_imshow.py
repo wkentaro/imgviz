@@ -2,8 +2,8 @@ import types
 import typing
 
 import numpy as np
-import PIL.Image
 
+from ... import utils
 from .base import check_pyglet_available
 
 
@@ -173,7 +173,7 @@ def _window_and_sprite(image, caption):
 
 def _ndarray_to_imagedata(image):
     pyglet = check_pyglet_available()
-    image = PIL.Image.fromarray(image)
+    image = utils.numpy_to_pillow(image)
     image = pyglet.image.ImageData(
         width=image.width,
         height=image.height,

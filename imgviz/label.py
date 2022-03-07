@@ -1,10 +1,10 @@
 import numbers
 
 import numpy as np
-import PIL.Image
 
 from . import color as color_module
 from . import draw as draw_module
+from . import utils
 
 
 def label_colormap(n_label=256, value=None):
@@ -138,7 +138,7 @@ def label2rgb(
         return res
 
     if loc == "centroid":
-        res = PIL.Image.fromarray(res)
+        res = utils.numpy_to_pillow(res)
         for label_i in unique_labels:
             mask = label == label_i
             if 1.0 * mask.sum() / mask.size < thresh_suppress:
@@ -191,7 +191,7 @@ def label2rgb(
         y2, x2 = aabb2.round().astype(int)
         res[y1:y2, x1:x2] = alpha * res[y1:y2, x1:x2] + alpha * 255
 
-        res = PIL.Image.fromarray(res)
+        res = utils.numpy_to_pillow(res)
         for i, l in enumerate(unique_labels):
             box_aabb1 = aabb1 + (i * text_height + 5, 5)
             box_aabb2 = box_aabb1 + (text_height - 10, text_height - 10)
@@ -208,7 +208,7 @@ def label2rgb(
     else:
         raise ValueError("unsupported loc: {}".format(loc))
 
-    return np.array(res)
+    return utils.pillow_to_numpy(res)
 
 
 def _center_of_mass(mask):

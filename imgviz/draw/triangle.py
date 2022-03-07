@@ -5,6 +5,8 @@ import PIL.Image
 import PIL.ImageDraw
 import PIL.ImageFont
 
+from .. import utils
+
 
 def triangle(src, center, size, fill=None, outline=None):
     """Draw triangle on numpy array with Pillow.
@@ -28,9 +30,9 @@ def triangle(src, center, size, fill=None, outline=None):
         Output image.
 
     """
-    dst = PIL.Image.fromarray(src)
+    dst = utils.numpy_to_pillow(src)
     triangle_(img=dst, center=center, size=size, fill=fill, outline=outline)
-    return np.array(dst)
+    return utils.pillow_to_numpy(dst)
 
 
 def triangle_(img, center, size, fill=None, outline=None):

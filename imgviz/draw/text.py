@@ -1,9 +1,10 @@
 import os.path as osp
 
-import numpy as np
 import PIL.Image
 import PIL.ImageDraw
 import PIL.ImageFont
+
+from .. import utils
 
 
 def _get_font(size, font_path=None):
@@ -69,11 +70,11 @@ def text(src, yx, text, size, color=(0, 0, 0), font_path=None):
         Output image.
 
     """
-    dst = PIL.Image.fromarray(src)
+    dst = utils.numpy_to_pillow(src)
     text_(
         img=dst, yx=yx, text=text, size=size, color=color, font_path=font_path
     )
-    return np.array(dst)
+    return utils.pillow_to_numpy(dst)
 
 
 def text_(img, yx, text, size, color=(0, 0, 0), font_path=None):
