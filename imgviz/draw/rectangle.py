@@ -1,6 +1,5 @@
 import collections
 
-import numpy as np
 import PIL.Image
 
 from .. import utils

@@ -1,7 +1,4 @@
 import numpy as np
-import PIL.Image
-import PIL.ImageDraw
-import PIL.ImageFont
 
 from .. import color as color_module
 from .. import utils
