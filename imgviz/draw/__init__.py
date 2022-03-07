@@ -21,6 +21,7 @@ from .text import text_size
 
 from .text_in_rectangle import text_in_rectangle
 from .text_in_rectangle import text_in_rectangle_
+from .text_in_rectangle import text_in_rectangle_aabb
 
 from .triangle import triangle
 from .triangle import triangle_

@@ -9,7 +9,7 @@ from .text import text_
 from .text import text_size
 
 
-def _text_in_rectangle_aabb(
+def text_in_rectangle_aabb(
     img_shape, loc, text, size, aabb1, aabb2, font_path=None
 ):
     height, width = img_shape[:2]
@@ -91,7 +91,7 @@ def text_in_rectangle(
         color = color_module.get_fg_color(background)
 
     height, width = src.shape[:2]
-    y1, x1, y2, x2 = _text_in_rectangle_aabb(
+    y1, x1, y2, x2 = text_in_rectangle_aabb(
         img_shape=src.shape,
         loc=loc,
         text=text,
@@ -158,7 +158,7 @@ def text_in_rectangle_(
     if color is None:
         color = color_module.get_fg_color(background)
 
-    y1, x1, y2, x2 = _text_in_rectangle_aabb(
+    y1, x1, y2, x2 = text_in_rectangle_aabb(
         img_shape=(img.height, img.width),
         loc=loc,
         text=text,
