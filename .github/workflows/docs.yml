@@ -1,19 +1,16 @@
-name: ci
+name: docs
 
 on:
   push:
     branches:
       - main
-  pull_request:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.6, 3.7, 3.8, 3.9]
-    env:
-      MPLBACKEND: agg
+        python-version: [3.9]
     steps:
     - uses: actions/checkout@v2
       with:
@@ -26,19 +23,21 @@ jobs:
     - name: Install
       run: |
         pip install .[all]
-    - name: Test
-      run: |
-        pip install pytest
-        pytest -vsx tests
-    - name: Run examples
+    - name: Update example images
       run: |
         python getting_started.py
         for f in examples/*.py; do
           if [ -x $f ]; then
-            $f
+            $f --save
           fi
         done
-    - name: Install from dist
+    - name: Update README.md
       run: |
-        python setup.py sdist
-        pip install dist/*.tar.gz
+        ./generate_readme.py > README.md
+    - name: Push changes
+      run: |
+        git config --global user.email "www.kentaro.wada@gmail.com"
+        git config --global user.name "Kentaro Wada"
+        git add examples/.readme README.md
+        git diff-index --cached --quiet HEAD || git commit -m "Update README.md and images"
+        git push origin main
