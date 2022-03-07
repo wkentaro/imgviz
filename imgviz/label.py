@@ -1,6 +1,7 @@
 import numbers
 
 import numpy as np
+import PIL.Image
 
 from . import color as color_module
 from . import draw as draw_module
@@ -137,6 +138,7 @@ def label2rgb(
         return res
 
     if loc == "centroid":
+        res = PIL.Image.fromarray(res)
         for label_i in unique_labels:
             mask = label == label_i
             if 1.0 * mask.sum() / mask.size < thresh_suppress:
@@ -152,8 +154,8 @@ def label2rgb(
             height, width = draw_module.text_size(
                 text, size=font_size, font_path=font_path
             )
-            color = color_module.get_fg_color(res[y, x])
-            res = draw_module.text(
+            color = color_module.get_fg_color(res.getpixel((x, y)))
+            draw_module.text_(
                 res,
                 yx=(y - height // 2, x - width // 2),
                 text=text,
@@ -175,7 +177,6 @@ def label2rgb(
         legend_width = text_width + 20 + (text_height - 10)
 
         height, width = label.shape[:2]
-        legend = np.zeros((height, width, 3), dtype=np.uint8)
         if loc == "rb":
             aabb2 = np.array([height - 5, width - 5], dtype=float)
             aabb1 = aabb2 - (legend_height, legend_width)
@@ -184,24 +185,20 @@ def label2rgb(
             aabb2 = aabb1 + (legend_height, legend_width)
         else:
             raise ValueError("unexpected loc: {}".format(loc))
-        legend = draw_module.rectangle(
-            legend, aabb1, aabb2, fill=(255, 255, 255)
-        )
 
         alpha = 0.5
         y1, x1 = aabb1.round().astype(int)
         y2, x2 = aabb2.round().astype(int)
-        res[y1:y2, x1:x2] = (
-            alpha * res[y1:y2, x1:x2] + alpha * legend[y1:y2, x1:x2]
-        )
+        res[y1:y2, x1:x2] = alpha * res[y1:y2, x1:x2] + alpha * 255
 
+        res = PIL.Image.fromarray(res)
         for i, l in enumerate(unique_labels):
             box_aabb1 = aabb1 + (i * text_height + 5, 5)
             box_aabb2 = box_aabb1 + (text_height - 10, text_height - 10)
-            res = draw_module.rectangle(
+            draw_module.rectangle_(
                 res, aabb1=box_aabb1, aabb2=box_aabb2, fill=colormap[l]
             )
-            res = draw_module.text(
+            draw_module.text_(
                 res,
                 yx=aabb1 + (i * text_height, 10 + (text_height - 10)),
                 text=label_names[l],
@@ -211,7 +208,7 @@ def label2rgb(
     else:
         raise ValueError("unsupported loc: {}".format(loc))
 
-    return res
+    return np.array(res)
 
 
 def _center_of_mass(mask):
