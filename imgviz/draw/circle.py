@@ -30,13 +30,25 @@ def circle(src, center, diameter, fill=None, outline=None, width=0):
         Output image.
 
     """
+    dst = PIL.Image.fromarray(src)
+    circle_(
+        img=dst,
+        center=center,
+        diameter=diameter,
+        fill=fill,
+        outline=outline,
+        width=width,
+    )
+    return np.array(dst)
+
+
+def circle_(img, center, diameter, fill=None, outline=None, width=0):
     if isinstance(fill, collections.abc.Iterable):
         fill = tuple(fill)
     if isinstance(outline, collections.abc.Iterable):
         outline = tuple(outline)
 
-    dst = PIL.Image.fromarray(src)
-    draw = PIL.ImageDraw.Draw(dst)
+    draw = PIL.ImageDraw.Draw(img)
 
     cy, cx = center
 
@@ -47,5 +59,3 @@ def circle(src, center, diameter, fill=None, outline=None, width=0):
     y2 = y1 + diameter
 
     draw.ellipse([x1, y1, x2, y2], fill=fill, outline=outline, width=width)
-
-    return np.array(dst)

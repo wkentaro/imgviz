@@ -38,12 +38,19 @@ def draw():
     )
 
     colors = imgviz.label_colormap(value=255)[1:]
-    shapes = ["star", "star", "rectangle", "circle", "triangle"]
+    shapes = ["star", "ellipse", "rectangle", "circle", "triangle"]
     for yx, color, shape in zip(yxs, colors, shapes):
         size = 20
         if shape == "star":
             viz = imgviz.draw.star(
                 viz, center=(yx[0], yx[1]), size=1.2 * size, fill=color
+            )
+        elif shape == "ellipse":
+            viz = imgviz.draw.ellipse(
+                viz,
+                yx1=(yx[0] - 8, yx[1] - 16),
+                yx2=(yx[0] + 8, yx[1] + 16),
+                fill=color,
             )
         elif shape == "circle":
             viz = imgviz.draw.circle(

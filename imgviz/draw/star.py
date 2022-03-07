@@ -28,13 +28,24 @@ def star(src, center, size, fill=None, outline=None):
         Output image.
 
     """
+    dst = PIL.Image.fromarray(src)
+    star_(
+        img=dst,
+        center=center,
+        size=size,
+        fill=fill,
+        outline=outline,
+    )
+    return np.array(dst)
+
+
+def star_(img, center, size, fill=None, outline=None):
     if isinstance(fill, collections.abc.Iterable):
         fill = tuple(fill)
     if isinstance(outline, collections.abc.Iterable):
         outline = tuple(outline)
 
-    dst = PIL.Image.fromarray(src)
-    draw = PIL.ImageDraw.Draw(dst)
+    draw = PIL.ImageDraw.Draw(img)
 
     radius = size / 2
     cy, cx = center
@@ -71,5 +82,3 @@ def star(src, center, size, fill=None, outline=None):
     )
     xy = xy.flatten().tolist()
     draw.polygon(xy, fill=fill, outline=outline)
-
-    return np.array(dst)
