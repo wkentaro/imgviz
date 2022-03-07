@@ -1,4 +1,5 @@
 import numpy as np
+import PIL.Image
 
 from . import color as color_module
 from . import draw as draw_module
@@ -112,6 +113,7 @@ def instances2rgb(
         except ImportError:
             pass
 
+    dst = PIL.Image.fromarray(dst)
     for instance_id in range(n_instance):
         bbox = bboxes[instance_id]
         label = labels[instance_id]
@@ -125,7 +127,7 @@ def instances2rgb(
 
         aabb1 = np.array([y1, x1], dtype=int)
         aabb2 = np.array([y2, x2], dtype=int)
-        dst = draw_module.rectangle(
+        draw_module.rectangle_(
             dst,
             aabb1,
             aabb2,
@@ -136,7 +138,7 @@ def instances2rgb(
         if caption is not None:
             for loc in ["lt+", "lt"]:
                 y1, x1, y2, x2 = draw_module.text_in_rectangle_aabb(
-                    src=dst,
+                    img_shape=(dst.height, dst.width),
                     loc=loc,
                     text=caption,
                     size=font_size,
@@ -144,15 +146,10 @@ def instances2rgb(
                     aabb2=aabb2,
                     font_path=font_path,
                 )
-                if (
-                    y1 >= 0
-                    and x1 >= 0
-                    and y2 < dst.shape[0]
-                    and x2 < dst.shape[1]
-                ):
+                if y1 >= 0 and x1 >= 0 and y2 < dst.height and x2 < dst.width:
                     break
-            dst = draw_module.text_in_rectangle(
-                src=dst,
+            draw_module.text_in_rectangle_(
+                img=dst,
                 loc=loc,
                 text=caption,
                 size=font_size,
@@ -161,4 +158,4 @@ def instances2rgb(
                 aabb2=aabb2,
                 font_path=font_path,
             )
-    return dst
+    return np.array(dst)
