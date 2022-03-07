@@ -26,28 +26,38 @@ def draw():
     )
 
     # eye, eye, nose, mouse, mouse
-    xys = [(265, 265), (330, 265), (315, 320), (270, 350), (320, 350)]
+    yxs = [(265, 265), (265, 330), (320, 315), (350, 270), (350, 320)]
+
+    # eye segment
+    viz = imgviz.draw.line(
+        viz, yx=[yxs[0], yxs[1]], fill=(255, 255, 255), width=5
+    )
+    # mouse segment
+    viz = imgviz.draw.line(
+        viz, yx=[yxs[3], yxs[4]], fill=(255, 255, 255), width=5
+    )
+
     colors = imgviz.label_colormap(value=255)[1:]
     shapes = ["star", "star", "rectangle", "circle", "triangle"]
-    for xy, color, shape in zip(xys, colors, shapes):
+    for yx, color, shape in zip(yxs, colors, shapes):
         size = 20
         if shape == "star":
             viz = imgviz.draw.star(
-                viz, center=(xy[1], xy[0]), size=1.2 * size, fill=color
+                viz, center=(yx[0], yx[1]), size=1.2 * size, fill=color
             )
         elif shape == "circle":
             viz = imgviz.draw.circle(
-                viz, center=(xy[1], xy[0]), diameter=size, fill=color
+                viz, center=(yx[0], yx[1]), diameter=size, fill=color
             )
         elif shape == "triangle":
             viz = imgviz.draw.triangle(
-                viz, center=(xy[1], xy[0]), size=size, fill=color
+                viz, center=(yx[0], yx[1]), size=size, fill=color
             )
         elif shape == "rectangle":
             viz = imgviz.draw.rectangle(
                 viz,
-                aabb1=(xy[1] - size / 2, xy[0] - size / 2),
-                aabb2=(xy[1] + size / 2, xy[0] + size / 2),
+                aabb1=(yx[0] - size / 2, yx[1] - size / 2),
+                aabb2=(yx[0] + size / 2, yx[1] + size / 2),
                 fill=color,
             )
         else:
