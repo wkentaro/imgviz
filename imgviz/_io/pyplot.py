@@ -1,6 +1,5 @@
 import io
 
-import matplotlib.pyplot
 import numpy as np
 import PIL.Image
 
@@ -17,7 +16,7 @@ def pyplot_to_numpy():
         Plotted image.
 
     """
-    import matplotlib.pyplot as plt
+    import matplotlib.pyplot as plt  # slow
 
     f = io.BytesIO()
     plt.savefig(
@@ -34,7 +33,9 @@ def pyplot_to_numpy():
 
 
 def pyplot_imshow(image):
-    matplotlib.pyplot.cla()
-    matplotlib.pyplot.imshow(image)
-    matplotlib.pyplot.tight_layout()
-    matplotlib.pyplot.show()
+    import matplotlib.pyplot as plt  # slow
+
+    plt.cla()
+    plt.imshow(image)
+    plt.tight_layout()
+    plt.show()
