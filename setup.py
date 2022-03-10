@@ -93,7 +93,14 @@ def main():
         packages=find_packages(),
         python_requires=">=3.5",
         install_requires=get_install_requires(),
-        extras_require={"all": ["pyglet", "scikit-image", "scikit-learn"]},
+        extras_require={
+            "all": [
+                "opencv-python",
+                "pyglet",
+                "scikit-image",
+                "scikit-learn",
+            ]
+        },
         description="Image Visualization Tools",
         long_description=get_long_description(),
         long_description_content_type="text/markdown",
