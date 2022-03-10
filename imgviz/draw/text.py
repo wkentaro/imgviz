@@ -1,5 +1,6 @@
 import os.path as osp
 
+import matplotlib
 import PIL.Image
 import PIL.ImageDraw
 import PIL.ImageFont
@@ -8,8 +9,6 @@ from .. import utils
 
 
 def _get_font(size, font_path=None):
-    import matplotlib
-
     if font_path is None:
         fonts_path = osp.join(
             osp.dirname(matplotlib.__file__), "mpl-data/fonts/ttf"
