@@ -67,7 +67,10 @@ class Depth2RGB(object):
         isnan = np.isnan(normalized)
         normalized[isnan] = 0
 
-        colormap_func = matplotlib.cm.get_cmap(self._colormap)
+        if isinstance(self._colormap, str):
+            colormap_func = matplotlib.cm.get_cmap(self._colormap)
+        else:
+            colormap_func = self._colormap
         rgb = colormap_func(normalized)[:, :, :3]
         rgb[isnan] = (0, 0, 0)
 
