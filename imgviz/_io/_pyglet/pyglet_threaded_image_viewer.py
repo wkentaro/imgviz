@@ -5,7 +5,7 @@ import threading
 
 import pyglet
 
-from .pyglet_imshow import _ndarray_to_imagedata
+from .pyglet_imshow import _convert_to_imagedata
 
 
 class PygletThreadedImageViewer(pyglet.window.Window):
@@ -59,7 +59,7 @@ class PygletThreadedImageViewer(pyglet.window.Window):
             The image to show on the viewer.
 
         """
-        imagedata = _ndarray_to_imagedata(image)
+        imagedata = _convert_to_imagedata(image)
 
         width, height = self.get_size()
         scale = min(
