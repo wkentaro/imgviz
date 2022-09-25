@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 import distutils.spawn
 import os
 import os.path as osp
@@ -91,7 +93,6 @@ def main():
         name="imgviz",
         version=version,
         packages=find_packages(),
-        python_requires=">=3.5",
         install_requires=get_install_requires(),
         extras_require={
             "all": [

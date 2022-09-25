@@ -1,4 +1,7 @@
-import collections
+try:
+    from collections.abc import Iterable
+except ImportError:
+    from collections import Iterable
 
 import numpy as np
 import PIL.Image
@@ -36,9 +39,9 @@ def triangle(src, center, size, fill=None, outline=None):
 
 
 def triangle_(img, center, size, fill=None, outline=None):
-    if isinstance(fill, collections.abc.Iterable):
+    if isinstance(fill, Iterable):
         fill = tuple(fill)
-    if isinstance(outline, collections.abc.Iterable):
+    if isinstance(outline, Iterable):
         outline = tuple(outline)
 
     draw = PIL.ImageDraw.Draw(img)

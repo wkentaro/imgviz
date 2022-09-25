@@ -1,4 +1,7 @@
-import collections
+try:
+    from collections.abc import Iterable
+except ImportError:
+    from collections import Iterable
 
 import PIL.Image
 import PIL.ImageDraw
@@ -16,9 +19,9 @@ def ellipse(src, yx1, yx2, fill=None, outline=None, width=0):
 
 
 def ellipse_(img, yx1, yx2, fill=None, outline=None, width=0):
-    if isinstance(fill, collections.abc.Iterable):
+    if isinstance(fill, Iterable):
         fill = tuple(fill)
-    if isinstance(outline, collections.abc.Iterable):
+    if isinstance(outline, Iterable):
         outline = tuple(outline)
 
     draw = PIL.ImageDraw.Draw(img)
