@@ -100,6 +100,9 @@ def label2rgb(
     if colormap is None:
         colormap = label_colormap()
 
+    if label.dtype == bool:
+        label = label.astype(np.int32)
+
     res = colormap[label]
 
     random_state = np.random.RandomState(seed=1234)
