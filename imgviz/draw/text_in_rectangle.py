@@ -112,6 +112,7 @@ def text_in_rectangle(
             dst = np.pad(
                 dst,
                 ((pad, 0), (0, 0), (0, 0)),
+                mode="constant",
                 constant_values=constant_values,
             )
             y1 += pad
@@ -121,6 +122,7 @@ def text_in_rectangle(
             dst = np.pad(
                 dst,
                 ((0, pad), (0, 0), (0, 0)),
+                mode="constant",
                 constant_values=constant_values,
             )
 
