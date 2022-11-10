@@ -32,6 +32,25 @@ def get_install_requires():
     return install_requires
 
 
+def get_extras_require():
+    extras_require = {
+        "all": [
+            "scikit-image",
+            "scikit-learn",
+        ]
+    }
+    if sys.version_info.major == 2:
+        extras_require["all"].append("opencv-python<3.4.10.37")
+        extras_require["all"].append("pyglet<1.5")
+    elif sys.version_info.major == 3 and sys.version_info.minor < 8:
+        extras_require["all"].append("opencv-python")
+        extras_require["all"].append("pyglet<2")
+    else:
+        extras_require["all"].append("opencv-python")
+        extras_require["all"].append("pyglet")
+    return extras_require
+
+
 def get_long_description():
     with open("README.md") as f:
         long_description = f.read()
@@ -94,14 +113,7 @@ def main():
         version=version,
         packages=find_packages(),
         install_requires=get_install_requires(),
-        extras_require={
-            "all": [
-                "opencv-python",
-                "pyglet",
-                "scikit-image",
-                "scikit-learn",
-            ]
-        },
+        extras_require=get_extras_require(),
         description="Image Visualization Tools",
         long_description=get_long_description(),
         long_description_content_type="text/markdown",
