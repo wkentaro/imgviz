@@ -25,6 +25,9 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install
       run: |
+        if [ "${{ matrix.python-version }}" == "2.7" ]; then
+          pip install 'pip<19'
+        fi
         pip install .[all]
     - name: Test
       run: |
