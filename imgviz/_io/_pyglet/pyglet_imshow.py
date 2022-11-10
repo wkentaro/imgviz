@@ -33,7 +33,7 @@ def pyglet_imshow(image, caption=None, interval=0.5):
 
 
 def _pyglet_imshow_list(images, caption=None, interval=0.5):
-    # type: (typing.List[np.ndarray], str, float) -> None
+    # type: (typing.List[np.ndarray], typing.Optional[str], float) -> None
     pyglet = check_pyglet_available()
 
     index = 0
@@ -86,7 +86,7 @@ def _pyglet_imshow_list(images, caption=None, interval=0.5):
 
 
 def _pyglet_imshow_generator(images, caption=None, interval=0.5):
-    # type: (typing.Generator[np.ndarray, None, None], str, float) -> None
+    # type: (typing.Generator[np.ndarray, None, None], typing.Optional[str], float) -> None
     pyglet = check_pyglet_available()
 
     image = _ndarray_to_imagedata(next(images))
@@ -134,7 +134,7 @@ def _pyglet_imshow_generator(images, caption=None, interval=0.5):
 
 
 def _pyglet_imshow_ndarray(image, caption=None):
-    # type: (np.ndarray, str) -> None
+    # type: (np.ndarray, typing.Optional[str]) -> None
     pyglet = check_pyglet_available()
 
     image = _ndarray_to_imagedata(image)
