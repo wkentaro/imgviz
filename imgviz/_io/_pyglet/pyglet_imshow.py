@@ -86,7 +86,7 @@ def _pyglet_imshow_list(images, caption=None, interval=0.5):
 
 
 def _pyglet_imshow_generator(images, caption=None, interval=0.5):
-    # type: (typing.Generator[np.ndarray, None, None], typing.Optional[str], float) -> None
+    # type: (typing.Generator[np.ndarray, None, None], typing.Optional[str], float) -> None  # NOQA
     pyglet = check_pyglet_available()
 
     image = _ndarray_to_imagedata(next(images))
