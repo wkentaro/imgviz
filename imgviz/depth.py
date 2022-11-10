@@ -90,7 +90,7 @@ def depth2rgb(
     colormap="jet",
     dtype=np.uint8,
 ):
-    # type: (np.ndarray, float, float, str, typing.Type) -> np.ndarray
+    # type: (np.ndarray, typing.Optional[float], typing.Optional[float], str, typing.Type) -> np.ndarray
     """Convert depth to rgb.
 
     Parameters
