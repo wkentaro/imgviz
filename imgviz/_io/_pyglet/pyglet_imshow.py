@@ -274,11 +274,15 @@ def _convert_to_imagedata(image):
     else:
         raise ValueError
 
-    image = pyglet.image.ImageData(
+    kwargs = dict(
         width=image.width,
         height=image.height,
-        format=image.mode,
         data=image.tobytes(),
         pitch=-image.width * len(image.mode),
     )
+    if pyglet.__version__[0] == '2':
+        kwargs['fmt'] = image.mode
+    else:
+        kwargs['format'] = image.mode
+    image = pyglet.image.ImageData(**kwargs)
     return image
