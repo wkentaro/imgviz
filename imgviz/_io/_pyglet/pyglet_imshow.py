@@ -280,9 +280,9 @@ def _convert_to_imagedata(image):
         data=image.tobytes(),
         pitch=-image.width * len(image.mode),
     )
-    if pyglet.__version__[0] == '2':
-        kwargs['fmt'] = image.mode
+    if hasattr(pyglet, "__version__") and pyglet.__version__[0] == "2":
+        kwargs["fmt"] = image.mode
     else:
-        kwargs['format'] = image.mode
+        kwargs["format"] = image.mode
     image = pyglet.image.ImageData(**kwargs)
     return image
