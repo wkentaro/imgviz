@@ -237,11 +237,11 @@ def _initialize_window(caption, aspect_ratio):
     max_window_height = int(round(screen.height * 0.75))
 
     if aspect_ratio > 1:  # width > height
-        window_width = max_window_width
-        window_height = int(round(window_width / aspect_ratio))
-    else:
         window_height = max_window_height
         window_width = int(round(window_height * aspect_ratio))
+    else:
+        window_width = max_window_width
+        window_height = int(round(window_width / aspect_ratio))
 
     window = pyglet.window.Window(
         width=window_width,
