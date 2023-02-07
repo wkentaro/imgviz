@@ -25,7 +25,7 @@ import _docstring_check
 
 __version__ = pkg_resources.get_distribution('imgviz').version
 on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
-tag = 'master'
+tag = 'main'
 
 # -- Project information -----------------------------------------------------
 
