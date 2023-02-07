@@ -4,7 +4,7 @@ base: docs/source
 conda:
   file: docs/rtd_conda.yml
 python:
-  version: 3.7
+  version: "3.8"
   setup_py_install: true
   extra_requirements:
     - all
