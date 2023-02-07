@@ -31,7 +31,7 @@ def plot_trajectory(
         trajectory
 
     """
-    import matplotlib.pyplot as plt
+    import matplotlib.pyplot as plt  # slow
 
     if is_relative:
         for i in range(1, len(transforms)):
