@@ -5,6 +5,7 @@ __pycache__/
 /src/
 /*.egg-info/
 /.mypy_cache/
+/build/
 
 # Sphinx
 /docs/build/
