@@ -53,7 +53,6 @@ pip install imgviz[all]
 
 import imgviz
 
-
 # sample data of rgb, depth, class label and instance masks
 data = imgviz.data.arc2017()
 
