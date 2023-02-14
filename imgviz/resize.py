@@ -11,7 +11,7 @@ except ImportError:
 
 def _resize_pillow(src, height, width, interpolation):
     if interpolation == "linear":
-        interpolation = PIL.Image.LINEAR
+        interpolation = PIL.Image.BILINEAR
     elif interpolation == "nearest":
         interpolation = PIL.Image.NEAREST
     else:
