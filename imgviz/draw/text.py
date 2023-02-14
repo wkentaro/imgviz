@@ -40,7 +40,10 @@ def text_size(text, size, font_path=None):
     lines = text.splitlines()
     n_lines = len(lines)
     longest_line = max(lines, key=len)
-    width, height = font.getbbox(longest_line)[2:]
+    if hasattr(font, "getbbox"):
+        width, height = font.getbbox(longest_line)[2:]
+    else:
+        width, height = font.getsize(longest_line)
     return height * n_lines, width
 
 
