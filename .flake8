@@ -1,3 +1,0 @@
-[flake8]
-exclude = .eggs, *.egg, build/ , .anaconda*/, src/, docs/, imgviz/external/
-ignore = E203, E741, W503, W504
