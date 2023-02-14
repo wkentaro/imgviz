@@ -61,7 +61,6 @@ def flow_compute_color(flow_u, flow_v):
     f = fk - k0
 
     for i in range(colorwheel.shape[1]):
-
         tmp = colorwheel[:, i]
         col0 = tmp[k0] / 255.0
         col1 = tmp[k1] / 255.0

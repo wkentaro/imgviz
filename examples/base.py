@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 
 import imgviz
 
-
 here = osp.dirname(osp.abspath(__file__))
 
 

@@ -2,7 +2,7 @@ try:
     import cv2
 except ImportError:
     cv2 = None
-import numpy as np
+import numpy as np  # NOQA
 
 
 def check_cv2_available():

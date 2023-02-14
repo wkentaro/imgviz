@@ -3,7 +3,7 @@ from __future__ import print_function
 
 import sys
 import types
-import typing
+import typing  # NOQA
 
 import numpy as np
 import PIL.Image

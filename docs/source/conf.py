@@ -14,9 +14,9 @@
 #
 import inspect
 import os
-import pkg_resources
 import sys
 
+import pkg_resources
 import sphinx_rtd_theme
 
 sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))  # NOQA

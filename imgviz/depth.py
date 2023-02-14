@@ -1,4 +1,4 @@
-import typing
+import typing  # NOQA
 
 import matplotlib.cm
 import numpy as np

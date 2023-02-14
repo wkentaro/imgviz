@@ -1,7 +1,7 @@
 import os
 import os.path as osp
 
-import numpy as np
+import numpy as np  # NOQA
 import PIL.Image
 
 from .. import utils

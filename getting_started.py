@@ -11,7 +11,6 @@ here = osp.dirname(osp.abspath(__file__))  # NOQA
 # GETTING_STARTED {{
 import imgviz
 
-
 # sample data of rgb, depth, class label and instance masks
 data = imgviz.data.arc2017()
 
