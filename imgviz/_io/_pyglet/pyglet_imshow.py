@@ -53,9 +53,7 @@ def _pyglet_imshow_list(images, caption=None, interval=0.5, keymap=None):
     # type: (typing.List[np.ndarray], typing.Optional[str], float, typing.Optional[typing.Callable]) -> None  # NOQA
     pyglet = check_pyglet_available()
 
-    max_image_width, max_image_height = np.max(
-        [image.size for image in images], axis=0
-    )
+    max_image_width, max_image_height = np.max([image.size for image in images], axis=0)
     aspect_ratio = max_image_width / max_image_height
 
     index = 0
@@ -236,12 +234,21 @@ def _initialize_window(caption, aspect_ratio):
     max_window_width = int(round(screen.width * 0.75))
     max_window_height = int(round(screen.height * 0.75))
 
+    # try to fit the image into the screen
     if aspect_ratio > 1:  # width > height
-        window_height = max_window_height
-        window_width = int(round(window_height * aspect_ratio))
-    else:
         window_width = max_window_width
         window_height = int(round(window_width / aspect_ratio))
+    else:
+        window_height = max_window_height
+        window_width = int(round(window_height * aspect_ratio))
+
+    # if still too large, shrink it
+    if window_width > max_window_width:
+        window_width = max_window_width
+        window_height = int(round(window_width / aspect_ratio))
+    if window_height > max_window_height:
+        window_height = max_window_height
+        window_width = int(round(window_height * aspect_ratio))
 
     window = pyglet.window.Window(
         width=window_width,
