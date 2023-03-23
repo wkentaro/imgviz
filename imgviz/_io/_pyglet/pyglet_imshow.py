@@ -53,7 +53,9 @@ def _pyglet_imshow_list(images, caption=None, interval=0.5, keymap=None):
     # type: (typing.List[np.ndarray], typing.Optional[str], float, typing.Optional[typing.Callable]) -> None  # NOQA
     pyglet = check_pyglet_available()
 
-    max_image_width, max_image_height = np.max([image.size for image in images], axis=0)
+    max_image_width, max_image_height = np.max(
+        [image.size for image in images], axis=0
+    )
     aspect_ratio = max_image_width / max_image_height
 
     index = 0
