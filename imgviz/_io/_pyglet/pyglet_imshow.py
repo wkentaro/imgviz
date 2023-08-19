@@ -70,7 +70,9 @@ def _pyglet_imshow_list(images, caption=None, interval=0.5, keymap=None):
     def _post_image_update():
         filename = images[window.index].filename
         _centerize_sprite_in_window(sprite, window)
-        window.set_caption("{} {}/{}".format(filename, window.index + 1, len(images)))
+        window.set_caption(
+            "{} {}/{}".format(filename, window.index + 1, len(images))
+        )
         print(
             filename,
             "{}/{}".format(window.index + 1, len(images)),
