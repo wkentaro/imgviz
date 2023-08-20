@@ -1,7 +1,4 @@
-try:
-    from collections.abc import Iterable
-except ImportError:
-    from collections import Iterable
+import collections
 
 import PIL.Image
 import PIL.ImageDraw
@@ -47,9 +44,9 @@ def circle(src, center, diameter, fill=None, outline=None, width=0):
 
 
 def circle_(img, center, diameter, fill=None, outline=None, width=0):
-    if isinstance(fill, Iterable):
+    if isinstance(fill, collections.abc.Iterable):
         fill = tuple(fill)
-    if isinstance(outline, Iterable):
+    if isinstance(outline, collections.abc.Iterable):
         outline = tuple(outline)
 
     draw = PIL.ImageDraw.Draw(img)

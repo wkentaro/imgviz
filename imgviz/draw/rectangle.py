@@ -1,7 +1,4 @@
-try:
-    from collections.abc import Iterable
-except ImportError:
-    from collections import Iterable
+import collections
 
 import PIL.Image
 
@@ -45,9 +42,9 @@ def rectangle(src, aabb1, aabb2, fill=None, outline=None, width=0):
 
 
 def rectangle_(img, aabb1, aabb2, fill=None, outline=None, width=0):
-    if isinstance(fill, Iterable):
+    if isinstance(fill, collections.abc.Iterable):
         fill = tuple(fill)
-    if isinstance(outline, Iterable):
+    if isinstance(outline, collections.abc.Iterable):
         outline = tuple(outline)
 
     draw = PIL.ImageDraw.ImageDraw(img)
