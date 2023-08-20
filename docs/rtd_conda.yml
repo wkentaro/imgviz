@@ -2,4 +2,4 @@
 
 name: imgviz-docs
 dependencies:
-  - python=3.8
+  - python=3
