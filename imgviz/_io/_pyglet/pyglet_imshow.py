@@ -3,7 +3,6 @@ from __future__ import print_function
 
 import sys
 import types
-import typing  # NOQA
 
 import numpy as np
 import PIL.Image
@@ -12,7 +11,7 @@ from ... import utils
 from .base import check_pyglet_available
 
 
-def pyglet_imshow(image, caption=None, interval=0.5, keymap=None):
+def pyglet_imshow(image, caption=None, interval=0.5, keymap=None, hook=None):
     """Show image with pyglet.
 
     Parameters
@@ -25,6 +24,8 @@ def pyglet_imshow(image, caption=None, interval=0.5, keymap=None):
         Interval for list or iterator of images. Default is 0.5.
     keymap: dict, optional
         Key mappings for key and function.
+    hook: callable, optional
+        Hook function called after each image update.
 
     Returns
     -------
@@ -37,25 +38,47 @@ def pyglet_imshow(image, caption=None, interval=0.5, keymap=None):
             caption=caption,
             interval=interval,
             keymap=keymap,
+            hook=hook,
         )
     elif isinstance(image, np.ndarray):
-        _pyglet_imshow_ndarray(image, caption=caption, keymap=keymap)
+        _pyglet_imshow_ndarray(
+            image, caption=caption, keymap=keymap, hook=hook
+        )
     else:
         _pyglet_imshow_list(
             image,
             caption=caption,
             interval=interval,
             keymap=keymap,
+            hook=hook,
         )
 
 
-def _pyglet_imshow_list(images, caption=None, interval=0.5, keymap=None):
-    # type: (typing.List[np.ndarray], typing.Optional[str], float, typing.Optional[typing.Callable]) -> None  # NOQA
+def _pyglet_imshow_list(
+    images, caption=None, interval=0.5, keymap=None, hook=None
+):
     pyglet = check_pyglet_available()
 
-    max_image_width, max_image_height = np.max(
-        [image.size for image in images], axis=0
-    )
+    if isinstance(images[0], np.ndarray):
+        max_image_height, max_image_width = np.max(
+            [image.shape[:2] for image in images], axis=0
+        )
+    elif isinstance(images[0], PIL.Image.Image):
+        max_image_width, max_image_height = np.max(
+            [image.size for image in images], axis=0
+        )
+    elif hook is None:
+        raise ValueError(
+            "hook must be specified when images is not list of "
+            "numpy.ndarray or PIL.Image.Image"
+        )
+    else:
+        image = hook(images[0])
+        if not isinstance(image, (np.ndarray, PIL.Image.Image)):
+            raise TypeError(
+                "hook must return numpy.ndarray or PIL.Image.Image"
+            )
+        max_image_height, max_image_width = image.shape[:2]
     aspect_ratio = max_image_width / max_image_height
 
     index = 0
@@ -64,20 +87,15 @@ def _pyglet_imshow_list(images, caption=None, interval=0.5, keymap=None):
     window.index = index
     window.play = False
 
-    image = _convert_to_imagedata(images[index])
+    image = _convert_to_imagedata(
+        hook(images[window.index]) if hook else images[window.index]
+    )
     sprite = pyglet.sprite.Sprite(image)
 
     def _post_image_update():
-        filename = images[window.index].filename
         _centerize_sprite_in_window(sprite, window)
-        window.set_caption(
-            "{} {}/{}".format(filename, window.index + 1, len(images))
-        )
-        print(
-            filename,
-            "{}/{}".format(window.index + 1, len(images)),
-            file=sys.stderr,
-        )
+        window.set_caption("{}/{}".format(window.index + 1, len(images)))
+        print("{}/{}".format(window.index + 1, len(images)), file=sys.stderr)
 
     _post_image_update()
 
@@ -103,7 +121,9 @@ def _pyglet_imshow_list(images, caption=None, interval=0.5, keymap=None):
                 print("Press 'q' to quit", file=sys.stderr)
                 window.play = False
             window.index = min(window.index + 1, len(images) - 1)
-            sprite.image = _convert_to_imagedata(images[window.index])
+            sprite.image = _convert_to_imagedata(
+                hook(images[window.index]) if hook else images[window.index]
+            )
             _centerize_sprite_in_window(sprite, window)
 
     pyglet.clock.schedule_interval(play_callback, interval)
@@ -120,12 +140,20 @@ def _pyglet_imshow_list(images, caption=None, interval=0.5, keymap=None):
         elif symbol == pyglet.window.key.N:
             if window.index + 1 <= len(images) - 1:
                 window.index += 1
-                sprite.image = _convert_to_imagedata(images[window.index])
+                sprite.image = _convert_to_imagedata(
+                    hook(images[window.index])
+                    if hook
+                    else images[window.index]
+                )
                 _post_image_update()
         elif symbol == pyglet.window.key.P:
             if window.index - 1 >= 0:
                 window.index -= 1
-                sprite.image = _convert_to_imagedata(images[window.index])
+                sprite.image = _convert_to_imagedata(
+                    hook(images[window.index])
+                    if hook
+                    else images[window.index]
+                )
                 _post_image_update()
         elif symbol == pyglet.window.key.S:
             window.play = not window.play
@@ -135,14 +163,17 @@ def _pyglet_imshow_list(images, caption=None, interval=0.5, keymap=None):
             print("Press 'h' to show help", file=sys.stderr)
 
 
-def _pyglet_imshow_generator(images, caption=None, interval=0.5, keymap=None):
-    # type: (typing.Generator[np.ndarray, None, None], typing.Optional[str], float, typing.Optional[typing.Callable]) -> None  # NOQA
+def _pyglet_imshow_generator(
+    images, caption=None, interval=0.5, keymap=None, hook=None
+):
     if keymap is not None:
         raise NotImplementedError
 
     pyglet = check_pyglet_available()
 
-    image = next(images)
+    image = hook(next(images)) if hook else images
+    if not isinstance(image, (np.ndarray, PIL.Image.Image)):
+        raise TypeError("hook must return numpy.ndarray or PIL.Image.Image")
 
     aspect_ratio = image.shape[1] / image.shape[0]  # width / height
     window = _initialize_window(caption=caption, aspect_ratio=aspect_ratio)
@@ -183,7 +214,9 @@ def _pyglet_imshow_generator(images, caption=None, interval=0.5, keymap=None):
             window.close()
         elif symbol == pyglet.window.key.N:
             try:
-                sprite.image = _convert_to_imagedata(next(images))
+                sprite.image = _convert_to_imagedata(
+                    hook(next(images)) if hook else next(images)
+                )
                 _centerize_sprite_in_window(sprite, window)
             except StopIteration:
                 print("Press 'q' to quit", file=sys.stderr)
@@ -195,13 +228,15 @@ def _pyglet_imshow_generator(images, caption=None, interval=0.5, keymap=None):
             print("Press 'h' to show help", file=sys.stderr)
 
 
-def _pyglet_imshow_ndarray(image, caption=None, keymap=None):
-    # type: (np.ndarray, typing.Optional[str], typing.Optional[typing.Callable]) -> None  # NOQA
+def _pyglet_imshow_ndarray(image, caption=None, keymap=None, hook=None):
     if keymap is not None:
         raise NotImplementedError
 
     pyglet = check_pyglet_available()
 
+    image = hook(image) if hook else image
+    if not isinstance(image, (np.ndarray, PIL.Image.Image)):
+        raise TypeError("hook must return numpy.ndarray or PIL.Image.Image")
     aspect_ratio = image.shape[1] / image.shape[0]  # width / height
     window = _initialize_window(caption=caption, aspect_ratio=aspect_ratio)
 
@@ -284,6 +319,8 @@ def _convert_to_imagedata(image):
         pass
     else:
         raise ValueError
+
+    image = image.convert("RGB")
 
     kwargs = dict(
         width=image.width,
