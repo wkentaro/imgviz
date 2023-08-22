@@ -59,6 +59,19 @@ def _pyglet_imshow_list(
 ):
     pyglet = check_pyglet_available()
 
+    def usage():
+        print("Usage: ", file=sys.stderr)
+        if keymap is not None:
+            for key, function in keymap.items():
+                print("  {}: {}".format(key, function))
+        print("  h: show help", file=sys.stderr)
+        print("  q: close window", file=sys.stderr)
+        print("  n: next image", file=sys.stderr)
+        print("  p: previous image", file=sys.stderr)
+        print("  s: toggle play", file=sys.stderr)
+
+    usage()
+
     if isinstance(images[0], np.ndarray):
         max_image_height, max_image_width = np.max(
             [image.shape[:2] for image in images], axis=0
@@ -103,17 +116,6 @@ def _pyglet_imshow_list(
     def on_draw():
         window.clear()
         sprite.draw()
-
-    def usage():
-        print("Usage: ", file=sys.stderr)
-        if keymap is not None:
-            for key, function in keymap.items():
-                print("    {}: {}".format(key, function))
-        print("  h: show help", file=sys.stderr)
-        print("  q: close window", file=sys.stderr)
-        print("  n: next image", file=sys.stderr)
-        print("  p: previous image", file=sys.stderr)
-        print("  s: toggle play", file=sys.stderr)
 
     def play_callback(dt):
         if window.play:
