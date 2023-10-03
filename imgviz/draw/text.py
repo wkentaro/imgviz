@@ -37,14 +37,21 @@ def text_size(text, size, font_path=None):
 
     """
     font = _get_font(size, font_path=font_path)
-    lines = text.splitlines()
-    n_lines = len(lines)
-    longest_line = max(lines, key=len)
-    if hasattr(font, "getbbox"):
-        width, height = font.getbbox(longest_line)[2:]
-    else:
-        width, height = font.getsize(longest_line)
-    return height * n_lines, width
+
+    text_width = 0
+    text_height = 0
+    for line in text.splitlines():
+        if line == "":
+            line = "\n"
+
+        if hasattr(font, "getbbox"):
+            line_width, line_height = font.getbbox(line)[2:]
+        else:
+            line_width, line_height = font.getsize(line)
+        text_width = max(text_width, line_width)
+        text_height += line_height
+
+    return text_height, text_width
 
 
 def text(src, yx, text, size, color=(0, 0, 0), font_path=None):
