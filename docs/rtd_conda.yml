@@ -1,5 +1,0 @@
-# Conda environment definition to build documentation on RTD
-
-name: imgviz-docs
-dependencies:
-  - python=3
