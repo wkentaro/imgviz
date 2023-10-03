@@ -12,11 +12,9 @@
   <a href="https://pypi.python.org/pypi/imgviz"><img src="https://img.shields.io/pypi/v/imgviz.svg"></a>
   <a href="https://pypi.org/project/imgviz"><img src="https://img.shields.io/pypi/pyversions/imgviz.svg"></a>
   <a href="https://github.com/wkentaro/imgviz/actions"><img src="https://github.com/wkentaro/imgviz/workflows/ci/badge.svg"></a>
-  <a href="https://imgviz.readthedocs.io/en/latest/?badge=latest"><img src="https://readthedocs.org/projects/imgviz/badge/?version=latest" alt="Documentation Status" /></a>
 </div>
 
 <div align="center">
-  <a href="https://imgviz.readthedocs.io/en/latest/?badge=latest"><b>Documentation</b></a> |
   <a href="#installation"><b>Installation</b></a> |
   <a href="#getting-started"><b>Getting Started</b></a> |
   <a href="#examples"><b>Examples</b></a> |
