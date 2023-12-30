@@ -25,6 +25,10 @@ jobs:
                         "labels": ["feature"]
                     },
                     {
+                        "title": "## ✨ Enhancement",
+                        "labels": ["enhancement"]
+                    },
+                    {
                         "title": "## 🐛 Fixes",
                         "labels": ["fix"]
                     },
