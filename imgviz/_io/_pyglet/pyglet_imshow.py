@@ -41,9 +41,7 @@ def pyglet_imshow(image, caption=None, interval=0.5, keymap=None, hook=None):
             hook=hook,
         )
     elif isinstance(image, np.ndarray):
-        _pyglet_imshow_ndarray(
-            image, caption=caption, keymap=keymap, hook=hook
-        )
+        _pyglet_imshow_ndarray(image, caption=caption, keymap=keymap, hook=hook)
     else:
         _pyglet_imshow_list(
             image,
@@ -54,9 +52,7 @@ def pyglet_imshow(image, caption=None, interval=0.5, keymap=None, hook=None):
         )
 
 
-def _pyglet_imshow_list(
-    images, caption=None, interval=0.5, keymap=None, hook=None
-):
+def _pyglet_imshow_list(images, caption=None, interval=0.5, keymap=None, hook=None):
     pyglet = check_pyglet_available()
 
     def usage():
@@ -88,9 +84,7 @@ def _pyglet_imshow_list(
     else:
         image = hook(images[0])
         if not isinstance(image, (np.ndarray, PIL.Image.Image)):
-            raise TypeError(
-                "hook must return numpy.ndarray or PIL.Image.Image"
-            )
+            raise TypeError("hook must return numpy.ndarray or PIL.Image.Image")
         max_image_height, max_image_width = image.shape[:2]
     aspect_ratio = max_image_width / max_image_height
 
@@ -108,14 +102,10 @@ def _pyglet_imshow_list(
     def _post_image_update():
         _centerize_sprite_in_window(sprite, window)
         window.set_caption(
-            "{} {}/{}".format(
-                images[window.index], window.index + 1, len(images)
-            )
+            "{} {}/{}".format(images[window.index], window.index + 1, len(images))
         )
         print(
-            "{} {}/{}".format(
-                images[window.index], window.index + 1, len(images)
-            ),
+            "{} {}/{}".format(images[window.index], window.index + 1, len(images)),
             file=sys.stderr,
         )
 
@@ -152,18 +142,14 @@ def _pyglet_imshow_list(
             if window.index + 1 <= len(images) - 1:
                 window.index += 1
                 sprite.image = _convert_to_imagedata(
-                    hook(images[window.index])
-                    if hook
-                    else images[window.index]
+                    hook(images[window.index]) if hook else images[window.index]
                 )
                 _post_image_update()
         elif symbol == pyglet.window.key.P:
             if window.index - 1 >= 0:
                 window.index -= 1
                 sprite.image = _convert_to_imagedata(
-                    hook(images[window.index])
-                    if hook
-                    else images[window.index]
+                    hook(images[window.index]) if hook else images[window.index]
                 )
                 _post_image_update()
         elif symbol == pyglet.window.key.S:

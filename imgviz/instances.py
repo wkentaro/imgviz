@@ -122,16 +122,12 @@ def instances2rgb(
 
         maskviz = mask[:, :, None] * color_ins.astype(float)
         dst = dst.copy()
-        dst[mask] = (1 - alpha) * image[mask].astype(float) + alpha * maskviz[
-            mask
-        ]
+        dst[mask] = (1 - alpha) * image[mask].astype(float) + alpha * maskviz[mask]
 
         try:
             import skimage.segmentation
 
-            boundary = skimage.segmentation.find_boundaries(
-                mask, connectivity=2
-            )
+            boundary = skimage.segmentation.find_boundaries(mask, connectivity=2)
             for _ in range(boundary_width - 1):
                 boundary = skimage.morphology.binary_dilation(boundary)
             dst[boundary] = (200, 200, 200)

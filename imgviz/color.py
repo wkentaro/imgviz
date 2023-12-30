@@ -160,8 +160,9 @@ def asgray(img):
         gray = rgb2gray(img)
     else:
         raise ValueError(
-            "Unsupported image format to convert to gray:"
-            "shape={}, dtype={}".format(img.shape, img.dtype)
+            "Unsupported image format to convert to gray:" "shape={}, dtype={}".format(
+                img.shape, img.dtype
+            )
         )
     return gray
 
@@ -190,8 +191,9 @@ def asrgb(img):
         rgb = img
     else:
         raise ValueError(
-            "Unsupported image format to convert to rgb:"
-            "shape={}, dtype={}".format(img.shape, img.dtype)
+            "Unsupported image format to convert to rgb:" "shape={}, dtype={}".format(
+                img.shape, img.dtype
+            )
         )
     return rgb
 
@@ -221,8 +223,9 @@ def asrgba(img):
         rgba = rgb2rgba(img)
     else:
         raise ValueError(
-            "Unsupported image format to convert to rgba:"
-            "shape={}, dtype={}".format(img.shape, img.dtype)
+            "Unsupported image format to convert to rgba:" "shape={}, dtype={}".format(
+                img.shape, img.dtype
+            )
         )
     return rgba
 

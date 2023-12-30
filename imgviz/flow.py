@@ -92,9 +92,7 @@ def flow2rgb(flow_uv):
     """
     assert flow_uv.ndim == 3, "flow must be 3 dimensional"
     assert flow_uv.shape[2] == 2, "flow must have shape (H, W, 2)"
-    assert np.issubdtype(
-        flow_uv.dtype, np.floating
-    ), "float must be float type"
+    assert np.issubdtype(flow_uv.dtype, np.floating), "float must be float type"
 
     flow_u = flow_uv[:, :, 0]
     flow_v = flow_uv[:, :, 1]

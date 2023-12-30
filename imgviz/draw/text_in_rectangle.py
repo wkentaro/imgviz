@@ -7,9 +7,7 @@ from .text import text_
 from .text import text_size
 
 
-def text_in_rectangle_aabb(
-    img_shape, loc, text, size, aabb1, aabb2, font_path=None
-):
+def text_in_rectangle_aabb(img_shape, loc, text, size, aabb1, aabb2, font_path=None):
     height, width = img_shape[:2]
 
     y1, x1 = (0, 0) if aabb1 is None else aabb1

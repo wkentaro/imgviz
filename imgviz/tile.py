@@ -131,6 +131,4 @@ def tile(
             img = np.full((max_h, max_w, channel), cval, dtype=np.uint8)
             imgs.append(img)
 
-    return _tile(
-        imgs=imgs, shape=shape, border=border, border_width=border_width
-    )
+    return _tile(imgs=imgs, shape=shape, border=border, border_width=border_width)

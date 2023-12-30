@@ -29,13 +29,9 @@ def draw():
     yxs = [(265, 265), (265, 330), (320, 315), (350, 270), (350, 320)]
 
     # eye segment
-    viz = imgviz.draw.line(
-        viz, yx=[yxs[0], yxs[1]], fill=(255, 255, 255), width=5
-    )
+    viz = imgviz.draw.line(viz, yx=[yxs[0], yxs[1]], fill=(255, 255, 255), width=5)
     # mouse segment
-    viz = imgviz.draw.line(
-        viz, yx=[yxs[3], yxs[4]], fill=(255, 255, 255), width=5
-    )
+    viz = imgviz.draw.line(viz, yx=[yxs[3], yxs[4]], fill=(255, 255, 255), width=5)
 
     colors = imgviz.label_colormap(value=255)[1:]
     shapes = ["star", "ellipse", "rectangle", "circle", "triangle"]
