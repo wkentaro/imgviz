@@ -1,3 +1,5 @@
+import warnings
+
 import numpy as np
 
 from . import color as color_module
@@ -7,13 +9,36 @@ from . import utils
 
 
 def mask_to_bbox(masks):
+    warnings.warn(
+        "'mask_to_bbox' is deprecated. Use 'masks_to_bboxes'",
+        DeprecationWarning,
+    )
+    bboxes = masks_to_bboxes(masks)
+    bboxes[:, 2:] += 1  # tight to loose
+    return bboxes
+
+
+def masks_to_bboxes(masks):
+    """Convert mask to tight bounding box.
+
+    Parameters
+    ----------
+    masks: numpy.ndarray, (N, H, W), bool
+        Boolean masks.
+
+    Returns
+    -------
+    bboxes: numpy.ndarray, (N, 4), float
+        Tight bounding boxes. [(ymin, xmin, ymax, xmax), ...]
+        where both left-top and right-bottom are inclusive.
+    """
     bboxes = np.zeros((len(masks), 4), dtype=float)
     for i, mask in enumerate(masks):
         if mask.sum() == 0:
             continue
         where = np.argwhere(mask)
-        (y1, x1), (y2, x2) = where.min(0), where.max(0) + 1
-        bbox = y1, x1, y2, x2
+        (ymin, xmin), (ymax, xmax) = where.min(axis=0), where.max(axis=0)
+        bbox = ymin, xmin, ymax, xmax
         bboxes[i] = bbox
     return bboxes
 
@@ -76,7 +101,7 @@ def instances2rgb(
         masks = [None] * n_instance
     if bboxes is None:
         assert masks is not None
-        bboxes = mask_to_bbox(masks)
+        bboxes = masks_to_bboxes(masks)
     if captions is None:
         captions = [None] * n_instance
 
