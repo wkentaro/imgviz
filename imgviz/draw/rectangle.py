@@ -51,6 +51,4 @@ def rectangle_(img, aabb1, aabb2, fill=None, outline=None, width=0):
 
     y1, x1 = aabb1
     y2, x2 = aabb2
-    draw.rectangle(
-        xy=(x1, y1, x2, y2), fill=fill, outline=outline, width=width
-    )
+    draw.rectangle(xy=(x1, y1, x2, y2), fill=fill, outline=outline, width=width)

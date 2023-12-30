@@ -32,9 +32,7 @@ def _resize_pillow(src, height, width, interpolation):
         for c in range(C):
             src_c = src[:, :, c]
             src_c = utils.numpy_to_pillow(src_c)
-            dst[:, :, c] = src_c.resize(
-                (width, height), resample=interpolation
-            )
+            dst[:, :, c] = src_c.resize((width, height), resample=interpolation)
 
         if ndim == 2:
             dst = dst[:, :, 0]

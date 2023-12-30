@@ -60,9 +60,7 @@ def star_(img, center, size, fill=None, outline=None):
 
     # 5 valleys
     angles_v = angles_m + np.pi / 5
-    length = radius / (
-        np.sin(np.pi / 5) / np.tan(np.pi / 10) + np.cos(np.pi / 10)
-    )
+    length = radius / (np.sin(np.pi / 5) / np.tan(np.pi / 10) + np.cos(np.pi / 10))
     x_v = cx + length * np.cos(angles_v)
     y_v = cy - length * np.sin(angles_v)
     xy_v = np.stack((x_v, y_v), axis=1)

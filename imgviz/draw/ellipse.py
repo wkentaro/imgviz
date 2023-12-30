@@ -9,9 +9,7 @@ from .. import utils
 
 def ellipse(src, yx1, yx2, fill=None, outline=None, width=0):
     dst = utils.numpy_to_pillow(src)
-    ellipse_(
-        img=dst, yx1=yx1, yx2=yx2, fill=fill, outline=outline, width=width
-    )
+    ellipse_(img=dst, yx1=yx1, yx2=yx2, fill=fill, outline=outline, width=width)
     return utils.pillow_to_numpy(dst)
 
 

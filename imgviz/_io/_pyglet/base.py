@@ -6,7 +6,5 @@ except ImportError:
 
 def check_pyglet_available():
     if pyglet is None:
-        raise ImportError(
-            "pyglet is not installed, run following: pip install pyglet"
-        )
+        raise ImportError("pyglet is not installed, run following: pip install pyglet")
     return pyglet

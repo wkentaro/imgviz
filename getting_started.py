@@ -23,7 +23,9 @@ depthviz = imgviz.depth2rgb(depth, min_value=0.3, max_value=1)
 
 # colorize label image
 class_label = data["class_label"]
-labelviz = imgviz.label2rgb(class_label, image=gray, label_names=data["class_names"], font_size=20)
+labelviz = imgviz.label2rgb(
+    class_label, image=gray, label_names=data["class_names"], font_size=20
+)
 
 # instance bboxes
 bboxes = data["bboxes"].astype(int)
@@ -33,7 +35,9 @@ captions = [data["class_names"][l] for l in labels]
 maskviz = imgviz.instances2rgb(gray, masks=masks, labels=labels, captions=captions)
 
 # tile instance masks
-insviz = [(rgb * m[:, :, None])[b[0] : b[2], b[1] : b[3]] for b, m in zip(bboxes, masks)]
+insviz = [
+    (rgb * m[:, :, None])[b[0] : b[2], b[1] : b[3]] for b, m in zip(bboxes, masks)
+]
 insviz = imgviz.tile(imgs=insviz, border=(255, 255, 255))
 insviz = imgviz.resize(insviz, height=rgb.shape[0])
 

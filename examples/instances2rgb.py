@@ -8,7 +8,7 @@ import imgviz
 def instances2rgb():
     data = imgviz.data.voc()
 
-    captions = [data["class_names"][l] for l in data["labels"]]
+    captions = [data["class_names"][label_id] for label_id in data["labels"]]
     insviz1 = imgviz.instances2rgb(
         image=data["rgb"],
         bboxes=data["bboxes"],

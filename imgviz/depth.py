@@ -53,9 +53,7 @@ class Depth2RGB(object):
 
         """
         assert depth.ndim == 2, "depth image must be 2 dimensional"
-        assert np.issubdtype(
-            depth.dtype, np.floating
-        ), "depth dtype must be float"
+        assert np.issubdtype(depth.dtype, np.floating), "depth dtype must be float"
 
         normalized, self._min_value, self._max_value = normalize(
             depth,

@@ -116,7 +116,9 @@ def label2rgb(
     if isinstance(alpha, numbers.Number):
         alpha = np.array([alpha for _ in range(max_label_id + 1)])
     elif isinstance(alpha, dict):
-        alpha = np.array([alpha.get(l, 0.5) for l in range(max_label_id + 1)])
+        alpha = np.array(
+            [alpha.get(label_id, 0.5) for label_id in range(max_label_id + 1)]
+        )
     else:
         alpha = np.asarray(alpha)
         assert alpha.ndim == 1
@@ -134,9 +136,13 @@ def label2rgb(
 
     unique_labels = unique_labels[unique_labels != -1]
     if isinstance(label_names, dict):
-        unique_labels = [l for l in unique_labels if label_names.get(l)]
+        unique_labels = [
+            label_id for label_id in unique_labels if label_names.get(label_id)
+        ]
     else:
-        unique_labels = [l for l in unique_labels if label_names[l]]
+        unique_labels = [
+            label_id for label_id in unique_labels if label_names[label_id]
+        ]
     if len(unique_labels) == 0:
         return res
 
@@ -170,9 +176,9 @@ def label2rgb(
         text_sizes = np.array(
             [
                 draw_module.text_size(
-                    label_names[l], font_size, font_path=font_path
+                    label_names[label_id], font_size, font_path=font_path
                 )
-                for l in unique_labels
+                for label_id in unique_labels
             ]
         )
         text_height, text_width = text_sizes.max(axis=0)
@@ -195,16 +201,16 @@ def label2rgb(
         res[y1:y2, x1:x2] = alpha * res[y1:y2, x1:x2] + alpha * 255
 
         res = utils.numpy_to_pillow(res)
-        for i, l in enumerate(unique_labels):
+        for i, label_id in enumerate(unique_labels):
             box_aabb1 = aabb1 + (i * text_height + 5, 5)
             box_aabb2 = box_aabb1 + (text_height - 10, text_height - 10)
             draw_module.rectangle_(
-                res, aabb1=box_aabb1, aabb2=box_aabb2, fill=colormap[l]
+                res, aabb1=box_aabb1, aabb2=box_aabb2, fill=colormap[label_id]
             )
             draw_module.text_(
                 res,
                 yx=aabb1 + (i * text_height, 10 + (text_height - 10)),
-                text=label_names[l],
+                text=label_names[label_id],
                 size=font_size,
                 font_path=font_path,
             )

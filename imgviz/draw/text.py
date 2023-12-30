@@ -10,9 +10,7 @@ from .. import utils
 
 def _get_font(size, font_path=None):
     if font_path is None:
-        fonts_path = osp.join(
-            osp.dirname(matplotlib.__file__), "mpl-data/fonts/ttf"
-        )
+        fonts_path = osp.join(osp.dirname(matplotlib.__file__), "mpl-data/fonts/ttf")
         font_path = osp.join(fonts_path, "DejaVuSansMono.ttf")
     font = PIL.ImageFont.truetype(font=font_path, size=size)
     return font
@@ -80,9 +78,7 @@ def text(src, yx, text, size, color=(0, 0, 0), font_path=None):
 
     """
     dst = utils.numpy_to_pillow(src)
-    text_(
-        img=dst, yx=yx, text=text, size=size, color=color, font_path=font_path
-    )
+    text_(img=dst, yx=yx, text=text, size=size, color=color, font_path=font_path)
     return utils.pillow_to_numpy(dst)
 
 
