@@ -1,4 +1,3 @@
-import distutils.spawn
 import os
 import os.path as osp
 import re
@@ -85,7 +84,9 @@ def main():
             )
             sys.exit(1)
 
-        if not distutils.spawn.find_executable("twine"):
+        try:
+            import twine  # NOQA
+        except ImportError:
             print(
                 "Please install twine:\n\n\tpip install twine\n",
                 file=sys.stderr,
