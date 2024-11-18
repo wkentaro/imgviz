@@ -6,9 +6,10 @@ import PIL.Image
 
 from ... import utils
 from .base import check_pyglet_available
+from .pyglet_run import pyglet_run
 
 
-def pyglet_imshow(image, caption=None, interval=0.5, keymap=None, hook=None):
+def pyglet_imshow(image, caption=None, interval=0.5, keymap=None, hook=None, run=False):
     """Show image with pyglet.
 
     Parameters
@@ -23,6 +24,8 @@ def pyglet_imshow(image, caption=None, interval=0.5, keymap=None, hook=None):
         Key mappings for key and function.
     hook: callable, optional
         Hook function called after each image update.
+    run: bool, optional
+        If True, pyglet_run is called after imshow. Default is False.
 
     Returns
     -------
@@ -47,6 +50,9 @@ def pyglet_imshow(image, caption=None, interval=0.5, keymap=None, hook=None):
             keymap=keymap,
             hook=hook,
         )
+
+    if run:
+        pyglet_run()
 
 
 def _pyglet_imshow_list(images, caption=None, interval=0.5, keymap=None, hook=None):
