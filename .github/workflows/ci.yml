@@ -25,6 +25,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install
       run: |
+        pip install setuptools
         pip install .[all]
     - name: Test
       run: |
