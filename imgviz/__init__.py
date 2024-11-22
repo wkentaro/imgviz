@@ -1,6 +1,8 @@
 # flake8: noqa
 
-__version__ = "1.7.5"
+import importlib.metadata
+
+__version__ = importlib.metadata.version("imgviz")
 
 from . import _io as io
 from . import data
