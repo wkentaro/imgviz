@@ -1,5 +1,0 @@
--r requirements.txt
-github2pypi==1.0.0
-mypy
-pytest
-ruff==0.1.9

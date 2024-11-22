@@ -17,6 +17,10 @@ def tabulate(rows):
     return html
 
 
+def _get_github_image_url(relpath: str) -> str:
+    return f"https://github.com/wkentaro/imgviz/raw/main/{relpath}"
+
+
 def main():
     examples = []
     for py_file in sorted(glob.glob("examples/*.py")):
@@ -28,24 +32,19 @@ def main():
         width = 20.0 / img.height * img.width
         examples.append(
             (
-                '<pre><a href="{}">{}</a></pre>'.format(py_file, py_file),
-                '<img src="{}" width="{}%" />'.format(img_file, width),
+                f'<pre><a href="{py_file}">{py_file}</a></pre>',
+                f'<img src="{_get_github_image_url(relpath=img_file)}" width="{width}%" />',  # NOQA: E501
             )
         )
     examples = tabulate(examples)
 
+    # TODO: read from pyproject.toml
     dependencies = []
-    with open("requirements.txt") as f:
-        for req in f:
-            if req.startswith("#"):
-                continue
-            req = req.strip()
-            pkg = req
-            for sep in "<=>":
-                pkg = pkg.split(sep)[0]
-            dependencies.append(
-                "- [{0}](https://pypi.org/project/{1})".format(req, pkg)
-            )
+    for req in ["matplotlib", "numpy", "Pillow>=5.3.0", "PyYAML"]:
+        pkg = req
+        for sep in "<=>":
+            pkg = pkg.split(sep)[0]
+        dependencies.append("- [{0}](https://pypi.org/project/{1})".format(req, pkg))
     dependencies = "\n".join(dependencies)
 
     py_file = "getting_started.py"
@@ -90,7 +89,7 @@ def main():
 <br/>
 
 <div align="center">
-  <img src=".readme/getting_started.jpg" width="95%">
+  <img src="https://github.com/wkentaro/imgviz/raw/main/.readme/getting_started.jpg" width="95%">
 </div>
 
 ## Installation
