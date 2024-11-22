@@ -7,6 +7,29 @@ on:
   pull_request:
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.9]
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+        submodules: true
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        pip install -e .[test]
+    - name: Lint
+      run: |
+        make lint
+    - name: Mypy
+      run: |
+        make mypy
   build:
     runs-on: ubuntu-latest
     strategy:
@@ -27,10 +50,10 @@ jobs:
       run: |
         pip install setuptools
         pip install .[all]
+        pip install .[test]
     - name: Test
       run: |
-        pip install pytest
-        pytest -vsx tests
+        make test
     - name: Run examples
       run: |
         python getting_started.py
@@ -41,6 +64,6 @@ jobs:
         done
     - name: Install from dist
       run: |
-        python -m build
+        make build
         pip install dist/*.tar.gz
         pip install dist/*.whl
