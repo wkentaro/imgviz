@@ -24,7 +24,7 @@
 <br/>
 
 <div align="center">
-  <img src=".readme/getting_started.jpg" width="95%">
+  <img src="https://github.com/wkentaro/imgviz/raw/main/.readme/getting_started.jpg" width="95%">
 </div>
 
 ## Installation
@@ -95,42 +95,42 @@ tiled = imgviz.tile(
 <table>
 	<tr>
 		<td><pre><a href="examples/centerize.py">examples/centerize.py</a></pre></td>
-		<td><img src="examples/.readme/centerize.jpg" width="53.333333333333336%" /></td>
+		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/.readme/centerize.jpg" width="53.333333333333336%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/depth2rgb.py">examples/depth2rgb.py</a></pre></td>
-		<td><img src="examples/.readme/depth2rgb.jpg" width="78.16091954022988%" /></td>
+		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/.readme/depth2rgb.jpg" width="78.16091954022988%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/draw.py">examples/draw.py</a></pre></td>
-		<td><img src="examples/.readme/draw.jpg" width="37.79047619047619%" /></td>
+		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/.readme/draw.jpg" width="37.79047619047619%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/flow2rgb.py">examples/flow2rgb.py</a></pre></td>
-		<td><img src="examples/.readme/flow2rgb.jpg" width="52.21052631578947%" /></td>
+		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/.readme/flow2rgb.jpg" width="52.21052631578947%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/instances2rgb.py">examples/instances2rgb.py</a></pre></td>
-		<td><img src="examples/.readme/instances2rgb.jpg" width="66.35451505016722%" /></td>
+		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/.readme/instances2rgb.jpg" width="66.35451505016722%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/label2rgb.py">examples/label2rgb.py</a></pre></td>
-		<td><img src="examples/.readme/label2rgb.jpg" width="76.01532567049807%" /></td>
+		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/.readme/label2rgb.jpg" width="76.01532567049807%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/nchannel2rgb.py">examples/nchannel2rgb.py</a></pre></td>
-		<td><img src="examples/.readme/nchannel2rgb.jpg" width="52.21052631578947%" /></td>
+		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/.readme/nchannel2rgb.jpg" width="52.21052631578947%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/plot_trajectory.py">examples/plot_trajectory.py</a></pre></td>
-		<td><img src="examples/.readme/plot_trajectory.jpg" width="26.86868686868687%" /></td>
+		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/.readme/plot_trajectory.jpg" width="26.86868686868687%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/resize.py">examples/resize.py</a></pre></td>
-		<td><img src="examples/.readme/resize.jpg" width="47.238095238095234%" /></td>
+		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/.readme/resize.jpg" width="47.238095238095234%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/tile.py">examples/tile.py</a></pre></td>
-		<td><img src="examples/.readme/tile.jpg" width="35.812274368231044%" /></td>
+		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/.readme/tile.jpg" width="35.812274368231044%" /></td>
 	</tr>
 </table>
