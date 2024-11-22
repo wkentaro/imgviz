@@ -1,7 +1,7 @@
 try:
     import cv2
 except ImportError:
-    cv2 = None
+    cv2 = None  # type: ignore
 import numpy as np  # NOQA
 
 
