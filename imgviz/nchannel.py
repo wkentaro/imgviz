@@ -4,7 +4,6 @@ from . import normalize
 
 
 class Nchannel2RGB(object):
-
     """Convert nchannel array to rgb by PCA.
 
     Parameters
