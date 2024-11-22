@@ -22,25 +22,22 @@ jobs:
                 "pr_template": "- #{{TITLE}} ##{{NUMBER}}",
                 "categories": [
                     {
-                        "title": "## 🚀 Features",
+                        "title": "## Features",
                         "labels": ["feature"]
                     },
                     {
-                        "title": "## ✨ Enhancement",
-                        "labels": ["enhancement"]
-                    },
-                    {
-                        "title": "## 🐛 Fixes",
+                        "title": "## Fixes",
                         "labels": ["fix"]
                     },
                     {
-                        "title": "## 💬 Other",
+                        "title": "## Other",
                         "labels": ["other"]
                     }
                 ]
             }
 
       - name: Create Release
-        uses: mikepenz/action-gh-release@v0.2.0-a03
+        uses: softprops/action-gh-release@v1
         with:
+          draft: true
           body: ${{steps.github_release.outputs.changelog}}
