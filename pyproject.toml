@@ -50,6 +50,7 @@ test = [
   "types-Pillow",
   "types-PyYAML",
   "pytest",
+  "pytest-xdist",
   "ruff",
   "twine",
 ]
