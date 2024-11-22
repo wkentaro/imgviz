@@ -6,7 +6,7 @@ from . import utils
 try:
     import cv2
 except ImportError:
-    cv2 = None
+    cv2 = None  # type: ignore
 
 
 def _resize_pillow(src, height, width, interpolation):
