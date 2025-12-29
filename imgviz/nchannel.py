@@ -1,6 +1,6 @@
 import numpy as np
 
-from . import normalize
+from .normalize import normalize
 
 
 class Nchannel2RGB:
@@ -62,7 +62,7 @@ class Nchannel2RGB:
                     np.nanmax(dst, axis=(0, 1)),
                 )
             min_value, max_value = self._min_max_value
-            dst = normalize.normalize(dst, min_value, max_value)
+            dst = normalize(dst, min_value, max_value)
             dst = (dst * 255).round().astype(np.uint8)
         else:
             assert np.issubdtype(dtype, np.floating)

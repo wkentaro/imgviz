@@ -34,7 +34,7 @@ format:  # Format code
 lint:  # Check code
 	$(call exec,uv run ruff format --check)
 	$(call exec,uv run ruff check)
-#	$(call exec,uv run ty check --no-progress)
+	$(call exec,uv run ty check --no-progress)
 
 mypy:
 	$(call exec,uv run mypy --package $(PACKAGE_NAME))

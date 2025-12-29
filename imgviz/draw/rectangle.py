@@ -1,6 +1,7 @@
 import collections
 
 import PIL.Image
+import PIL.ImageDraw
 
 from .. import utils
 
@@ -47,7 +48,7 @@ def rectangle_(img, aabb1, aabb2, fill=None, outline=None, width=0):
     if isinstance(outline, collections.abc.Iterable):
         outline = tuple(outline)
 
-    draw = PIL.ImageDraw.ImageDraw(img)
+    draw = PIL.ImageDraw.Draw(img)
 
     y1, x1 = aabb1
     y2, x2 = aabb2

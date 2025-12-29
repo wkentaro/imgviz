@@ -14,6 +14,7 @@ def _tile(imgs, shape, border=None, border_width=None):
 
     if border is None:
         border_width = 0
+    assert border_width is not None
 
     dst = np.zeros(
         (
