@@ -33,7 +33,6 @@ dependencies = [
   "matplotlib",
   "numpy",
   "Pillow>=5.3.0",
-  "PyYAML",
 ]
 dynamic = ["readme", "version"]
 
@@ -46,7 +45,6 @@ dev = [
   "twine>=6.2.0",
   "ty>=0.0.7",
   "types-pillow>=10.2.0.20240822",
-  "types-pyyaml>=6.0.12.20250915",
 ]
 
 [project.optional-dependencies]
@@ -68,9 +66,6 @@ fragments = [
 
 [tool.hatch.version]
 source = "vcs"
-
-[tool.mypy]
-ignore_missing_imports = true
 
 [tool.ruff]
 line-length = 88
