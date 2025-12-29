@@ -1,37 +1,66 @@
+from __future__ import annotations
+
+import typing
+from typing import Any
+from typing import Literal
+
 import numpy as np
+from numpy.typing import NDArray
 
 from .resize import resize
 
 
+@typing.overload
 def centerize(
-    src,
-    shape,
-    cval=None,
-    return_mask=False,
-    interpolation="linear",
-    loc="center",
-):
-    """Centerize image for specified image size
+    src: ...,
+    shape: tuple[int, ...],
+    cval: Any = ...,
+    return_mask: Literal[False] = ...,
+    interpolation: Literal["linear", "nearest"] = ...,
+    loc: Literal["center", "lt", "rb"] = ...,
+) -> NDArray: ...
+
+
+@typing.overload
+def centerize(
+    src: ...,
+    shape: tuple[int, ...],
+    cval: Any = ...,
+    return_mask: Literal[True] = ...,
+    interpolation: Literal["linear", "nearest"] = ...,
+    loc: Literal["center", "lt", "rb"] = ...,
+) -> tuple[NDArray, NDArray[np.bool_]]: ...
+
+
+def centerize(
+    src: NDArray,
+    shape: tuple[int, ...],
+    cval: Any = None,
+    return_mask: bool = False,
+    interpolation: Literal["linear", "nearest"] = "linear",
+    loc: Literal["center", "lt", "rb"] = "center",
+) -> NDArray | tuple[NDArray, NDArray[np.bool_]]:
+    """Centerize image for specified image size.
 
     Parameters
     ----------
-    src: numpy.ndarray
-        Image to centerize
-    shape: tuple of int
-        Image shape (height, width) or (height, width, channel)
-    cval: int or float or numpy.ndarray
+    src
+        Image to centerize.
+    shape
+        Image shape (height, width) or (height, width, channel).
+    cval
         Color to be filled in the blank.
-    return_mask: numpy.ndarray
-        Mask for centerized image.
-    interpolation: str
-        Interpolation method (default: 'linear').
-    loc: str
-        Location of image ('center', 'lt', 'rb'). (default: 'center')
+    return_mask
+        Whether to return mask for centerized image.
+    interpolation
+        Interpolation method.
+    loc
+        Location of image.
 
     Returns
     -------
-    dst: numpy.ndarray
-        Centerized image.
+    dst
+        Centerized image, or tuple of (image, mask) if return_mask is True.
 
     """
     if src.shape[:2] == shape[:2]:

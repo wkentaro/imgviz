@@ -1,6 +1,10 @@
+from __future__ import annotations
+
 import warnings
+from collections.abc import Sequence
 
 import numpy as np
+from numpy.typing import NDArray
 
 from . import color as color_module
 from . import draw as draw_module
@@ -8,7 +12,7 @@ from . import label as label_module
 from . import utils
 
 
-def mask_to_bbox(masks):
+def mask_to_bbox(masks: NDArray | Sequence[NDArray]) -> NDArray[np.floating]:
     warnings.warn(
         "'mask_to_bbox' is deprecated. Use 'masks_to_bboxes'",
         DeprecationWarning,
@@ -18,19 +22,20 @@ def mask_to_bbox(masks):
     return bboxes
 
 
-def masks_to_bboxes(masks):
+def masks_to_bboxes(masks: NDArray | Sequence[NDArray]) -> NDArray[np.floating]:
     """Convert mask to tight bounding box.
 
     Parameters
     ----------
-    masks: numpy.ndarray, (N, H, W), bool
-        Boolean masks.
+    masks
+        Boolean masks with shape (N, H, W).
 
     Returns
     -------
-    bboxes: numpy.ndarray, (N, 4), float
-        Tight bounding boxes. [(ymin, xmin, ymax, xmax), ...]
+    bboxes
+        Tight bounding boxes with shape (N, 4). [(ymin, xmin, ymax, xmax), ...]
         where both left-top and right-bottom are inclusive.
+
     """
     bboxes = np.zeros((len(masks), 4), dtype=float)
     for i, mask in enumerate(masks):
@@ -44,45 +49,49 @@ def masks_to_bboxes(masks):
 
 
 def instances2rgb(
-    image,
-    labels,
-    bboxes=None,
-    masks=None,
-    captions=None,
-    font_size=25,
-    line_width=5,
-    boundary_width=1,
-    alpha=0.7,
-    colormap=None,
-    font_path=None,
-):
+    image: NDArray[np.uint8],
+    labels: Sequence[int],
+    bboxes: NDArray | None = None,
+    masks: NDArray[np.bool_] | Sequence[NDArray[np.bool_]] | None = None,
+    captions: Sequence[str | None] | None = None,
+    font_size: int = 25,
+    line_width: int = 5,
+    boundary_width: int = 1,
+    alpha: float = 0.7,
+    colormap: NDArray[np.uint8] | None = None,
+    font_path: str | None = None,
+) -> NDArray[np.uint8]:
     """Convert instances to rgb.
 
     Parameters
     ----------
-    image: numpy.ndarray, (H, W, 3), numpy.uint8
-        RGB image.
-    labels: list of int, (N,)
-        Labels.
-    bboxes: list of numpy.ndarray, (N, 4), float
-        Bounding boxes.
-    masks: numpy.ndarray, (N, H, W), bool
-        Masks.
-    captions: list of str
-        Captions.
-    font_size: int
+    image
+        RGB image with shape (H, W, 3).
+    labels
+        Labels with length N.
+    bboxes
+        Bounding boxes with shape (N, 4).
+    masks
+        Masks with shape (N, H, W).
+    captions
+        Captions with length N.
+    font_size
         Font size.
-    line_width: int
+    line_width
         Line width.
-    alpha: float
+    boundary_width
+        Boundary width.
+    alpha
         Alpha of RGB.
-    colormap: numpy.ndarray, (M, 3), numpy.uint8
+    colormap
         Label id to RGB color.
+    font_path
+        Font path.
 
     Returns
     -------
-    dst: numpy.ndarray, (H, W, 3), numpy.uint8
-        Visualized image.
+    dst
+        Visualized image with shape (H, W, 3).
 
     """
     assert isinstance(image, np.ndarray)
@@ -96,16 +105,13 @@ def instances2rgb(
 
     n_instance = len(labels)
 
-    if masks is None:
-        assert bboxes is not None
-        masks = [None] * n_instance
     if bboxes is None:
         assert masks is not None
-        bboxes = masks_to_bboxes(masks)
+        bboxes = masks_to_bboxes(masks=masks)
     if captions is None:
         captions = [None] * n_instance
 
-    assert len(masks) == len(bboxes) == len(captions) == n_instance
+    assert len(bboxes) == len(captions) == n_instance
 
     if colormap is None:
         colormap = label_module.label_colormap()
@@ -113,9 +119,11 @@ def instances2rgb(
     dst = image
 
     for instance_id in range(n_instance):
-        mask = masks[instance_id]
+        if masks is None:
+            continue
 
-        if mask is None or mask.sum() == 0:
+        mask: NDArray[np.bool_] = masks[instance_id]
+        if mask.sum() == 0:
             continue
 
         color_ins = colormap[1:][instance_id % len(colormap[1:])]

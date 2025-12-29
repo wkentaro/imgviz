@@ -1,22 +1,25 @@
+from __future__ import annotations
+
 import numpy as np
+from numpy.typing import ArrayLike
+from numpy.typing import NDArray
 
 from . import dtype
 from . import utils
 
 
-def rgb2gray(rgb):
-    # type: (np.ndarray) -> np.ndarray
-    """Covnert rgb to gray.
+def rgb2gray(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:
+    """Convert rgb to gray.
 
     Parameters
     ----------
-    rgb: numpy.ndarray, (H, W, 3), np.uint8
-        Input rgb image.
+    rgb
+        Input rgb image with shape (H, W, 3).
 
     Returns
     -------
-    gray: numpy.ndarray, (H, W)
-        Output gray image.
+    gray
+        Output gray image with shape (H, W).
 
     """
     assert rgb.ndim == 3, "rgb must be 3 dimensional"
@@ -29,19 +32,18 @@ def rgb2gray(rgb):
     return gray
 
 
-def gray2rgb(gray):
-    # type: (np.ndarray) -> np.ndarray
-    """Covnert gray to rgb.
+def gray2rgb(gray: NDArray[np.uint8]) -> NDArray[np.uint8]:
+    """Convert gray to rgb.
 
     Parameters
     ----------
-    gray: numpy.ndarray, (H, W), np.uint8
-        Input gray image.
+    gray
+        Input gray image with shape (H, W).
 
     Returns
     -------
-    rgb: numpy.ndarray, (H, W, 3), np.uint8
-        Output rgb image.
+    rgb
+        Output rgb image with shape (H, W, 3).
 
     """
     assert gray.ndim == 2, "gray must be 2 dimensional"
@@ -51,19 +53,18 @@ def gray2rgb(gray):
     return rgb
 
 
-def rgb2rgba(rgb):
-    # type: (np.ndarray) -> np.ndarray
+def rgb2rgba(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:
     """Convert rgb to rgba.
 
     Parameters
     ----------
-    rgb: numpy.ndarray, (H, W, 3), np.uint8
-        Input rgb image.
+    rgb
+        Input rgb image with shape (H, W, 3).
 
     Returns
     -------
-    rgba: numpy.ndarray, (H, W, 4), np.uint8
-        Output rgba image.
+    rgba
+        Output rgba image with shape (H, W, 4).
 
     """
     assert rgb.ndim == 3, "rgb must be 3 dimensional"
@@ -75,19 +76,18 @@ def rgb2rgba(rgb):
     return rgba
 
 
-def rgb2hsv(rgb):
-    # type: (np.ndarray) -> np.ndarray
+def rgb2hsv(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:
     """Convert rgb to hsv.
 
     Parameters
     ----------
-    rgb: numpy.ndarray, (H, W, 3), np.uint8
-        Input rgb image.
+    rgb
+        Input rgb image with shape (H, W, 3).
 
     Returns
     -------
-    hsv: numpy.ndarray, (H, W, 3), np.uint8
-        Output hsv image.
+    hsv
+        Output hsv image with shape (H, W, 3).
 
     """
     hsv = utils.numpy_to_pillow(rgb, mode="RGB")
@@ -96,19 +96,18 @@ def rgb2hsv(rgb):
     return hsv
 
 
-def hsv2rgb(hsv):
-    # type: (np.ndarray) -> np.ndarray
+def hsv2rgb(hsv: NDArray[np.uint8]) -> NDArray[np.uint8]:
     """Convert hsv to rgb.
 
     Parameters
     ----------
-    hsv: numpy.ndarray, (H, W, 3), np.uint8
-        Input hsv image.
+    hsv
+        Input hsv image with shape (H, W, 3).
 
     Returns
     -------
-    rgb: numpy.ndarray, (H, W, 3), np.uint8
-        Output rgb image.
+    rgb
+        Output rgb image with shape (H, W, 3).
 
     """
     rgb = utils.numpy_to_pillow(hsv, mode="HSV")
@@ -117,37 +116,37 @@ def hsv2rgb(hsv):
     return rgb
 
 
-def rgba2rgb(rgba):
-    # type: (np.ndarray) -> np.ndarray
+def rgba2rgb(rgba: NDArray[np.uint8]) -> NDArray[np.uint8]:
     """Convert rgba to rgb.
 
     Parameters
     ----------
-    rgba: numpy.ndarray, (H, W, 4), np.uint8
-        Input rgba image.
+    rgba
+        Input rgba image with shape (H, W, 4).
 
     Returns
     -------
-    rgb: numpy.ndarray, (H, W, 3), np.uint8
-        Output rgb image.
+    rgb
+        Output rgb image with shape (H, W, 3).
+
     """
     rgb = rgba[:, :, :3]
     return rgb
 
 
-def asgray(img):
-    # type: (np.ndarray) -> np.ndarray
+def asgray(img: NDArray) -> NDArray[np.uint8]:
     """Convert any array to gray image.
 
     Parameters
     ----------
-    img: numpy.ndarray
+    img
         Input image.
 
     Returns
     -------
-    gray: numpy.ndarray, (H, W), np.uint8
-        Output gray image.
+    gray
+        Output gray image with shape (H, W).
+
     """
     if img.ndim == 2:
         if img.dtype == bool:
@@ -166,19 +165,19 @@ def asgray(img):
     return gray
 
 
-def asrgb(img):
-    # type: (np.ndarray) -> np.ndarray
+def asrgb(img: NDArray) -> NDArray[np.uint8]:
     """Convert any array to rgb image.
 
     Parameters
     ----------
-    img: numpy.ndarray
+    img
         Input image.
 
     Returns
     -------
-    rgb: numpy.ndarray, (H, W, 3), np.uint8
-        Output gray image.
+    rgb
+        Output rgb image with shape (H, W, 3).
+
     """
     if img.ndim == 2:
         if img.dtype == bool:
@@ -196,19 +195,19 @@ def asrgb(img):
     return rgb
 
 
-def asrgba(img):
-    # type: (np.ndarray) -> np.ndarray
+def asrgba(img: NDArray) -> NDArray[np.uint8]:
     """Convert any array to rgba image.
 
     Parameters
     ----------
-    img: numpy.ndarray
+    img
         Input image.
 
     Returns
     -------
-    rgba: numpy.ndarray, (H, W, 3), np.uint8
-        Output gray image.
+    rgba
+        Output rgba image with shape (H, W, 4).
+
     """
     if img.ndim == 2:
         if img.dtype == bool:
@@ -227,9 +226,10 @@ def asrgba(img):
     return rgba
 
 
-def get_fg_color(color):
-    color = np.asarray(color, dtype=np.uint8)
-    intensity = rgb2gray(color.reshape(1, 1, 3)).sum()
+def get_fg_color(color: ArrayLike) -> tuple[int, int, int]:
+    """Get foreground color (black or white) for given background color."""
+    color_arr: NDArray[np.uint8] = np.asarray(color, dtype=np.uint8)
+    intensity: np.uint8 = rgb2gray(color_arr.reshape(1, 1, 3)).sum()
     if intensity > 170:
         return (0, 0, 0)
     return (255, 255, 255)
