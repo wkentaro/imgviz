@@ -1,14 +1,24 @@
+from __future__ import annotations
+
 import collections
 import math
+from collections.abc import Iterable
+from typing import Any
 
 import numpy as np
+from numpy.typing import NDArray
 
 from .centerize import centerize
 from .color import gray2rgb
 from .color import rgb2rgba
 
 
-def _tile(imgs, shape, border=None, border_width=None):
+def _tile(
+    imgs: list[NDArray[np.uint8]],
+    shape: tuple[int, int],
+    border: NDArray[np.uint8] | None = None,
+    border_width: int | None = None,
+) -> NDArray[np.uint8]:
     y_num, x_num = shape
     tile_h, tile_w, channel = imgs[0].shape
 
@@ -39,7 +49,7 @@ def _tile(imgs, shape, border=None, border_width=None):
     return dst
 
 
-def _get_tile_shape(num, hw_ratio=1):
+def _get_tile_shape(num: int, hw_ratio: float = 1) -> tuple[int, int]:
     r_num = int(round(math.sqrt(num / hw_ratio)))  # weighted by wh_ratio
     c_num = 0
     while r_num * c_num < num:
@@ -50,30 +60,30 @@ def _get_tile_shape(num, hw_ratio=1):
 
 
 def tile(
-    imgs,
-    shape=None,
-    cval=None,
-    border=None,
-    border_width=None,
-):
+    imgs: Iterable[NDArray],
+    shape: tuple[int, int] | None = None,
+    cval: Any = None,
+    border: Any = None,
+    border_width: int | None = None,
+) -> NDArray[np.uint8]:
     """Tile images.
 
     Parameters
     ----------
-    imgs: numpy.ndarray
+    imgs
         Image list which should be tiled.
-    shape: tuple of int
-        Tile shape.
-    cval: array-like, optional
-        Color to fill the background. Default is (0, 0, 0).
-    border: array-like, optional
+    shape
+        Tile shape (rows, cols).
+    cval
+        Color to fill the background.
+    border
         Color for the border. If None, the border is not drawn.
-    border_width: int
+    border_width
         Pixel size of the border.
 
     Returns
     -------
-    dst: numpy.ndarray
+    dst
         Tiled image.
 
     """
@@ -117,6 +127,7 @@ def tile(
 
     # tile images
     for i in range(shape[0] * shape[1]):
+        img: NDArray
         if i < len(imgs):
             img = imgs[i]
             assert img.dtype == np.uint8
