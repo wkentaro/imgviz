@@ -2,11 +2,13 @@
 # =======================
 # Code modified from:
 # https://github.com/tomrunia/OpticalFlow_Visualization/blob/master/flow_vis.py
+from __future__ import annotations
 
 import numpy as np
+from numpy.typing import NDArray
 
 
-def make_colorwheel():
+def _make_colorwheel() -> NDArray[np.floating]:
     RY = 15
     YG = 6
     GC = 4
@@ -44,11 +46,11 @@ def make_colorwheel():
     return colorwheel
 
 
-def flow_compute_color(flow_u, flow_v):
+def _flow_compute_color(flow_u: NDArray, flow_v: NDArray) -> NDArray[np.uint8]:
     H, W = flow_u.shape[:2]
     flow_image = np.zeros((H, W, 3), np.uint8)
 
-    colorwheel = make_colorwheel()  # shape [55x3]
+    colorwheel = _make_colorwheel()  # shape [55x3]
     ncols = colorwheel.shape[0]
 
     rad = np.sqrt(np.square(flow_u) + np.square(flow_v))
@@ -76,18 +78,18 @@ def flow_compute_color(flow_u, flow_v):
     return flow_image
 
 
-def flow2rgb(flow_uv):
+def flow2rgb(flow_uv: NDArray) -> NDArray[np.uint8]:
     """Visualize optical flow.
 
     Parameters
     ----------
-    flow_uv: numpy.ndarray, (H, W, 2), float
-        Optical flow.
+    flow_uv
+        Optical flow with shape (H, W, 2).
 
     Returns
     -------
-    dst: numpy.ndarray
-        RGB image.
+    rgb
+        RGB image with shape (H, W, 3).
 
     """
     assert flow_uv.ndim == 3, "flow must be 3 dimensional"
@@ -104,4 +106,4 @@ def flow2rgb(flow_uv):
     flow_u = flow_u / (rad_max + epsilon)
     flow_v = flow_v / (rad_max + epsilon)
 
-    return flow_compute_color(flow_u, flow_v)
+    return _flow_compute_color(flow_u, flow_v)
