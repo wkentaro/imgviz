@@ -25,7 +25,7 @@ help:
 PACKAGE_NAME := imgviz
 
 setup:  # Setup dev env
-	$(call exec,uv sync --dev)
+	$(call exec,uv sync --extra all)
 
 format:  # Format code
 	$(call exec,uv run ruff format)
