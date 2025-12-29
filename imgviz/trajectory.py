@@ -1,34 +1,40 @@
+from __future__ import annotations
+
+from typing import Literal
+
+import numpy as np
+from numpy.typing import NDArray
+
 from ._io import pyplot_to_numpy
 from .external import transformations as tf
 
 
 def plot_trajectory(
-    transforms,
-    is_relative=False,
-    mode="xz",
-    style="b.",
-    axis=True,
-):
-    """Plot the trajectory using transform matrices
+    transforms: NDArray,
+    is_relative: bool = False,
+    mode: Literal["xy", "xz", "yx", "yz", "zx", "zy"] = "xz",
+    style: str = "b.",
+    axis: bool = True,
+) -> NDArray[np.uint8]:
+    """Plot the trajectory using transform matrices.
 
     Parameters
     ----------
-    transforms: numpy.ndarray
-        transform matrices with the shape of [N, 4, 4]
-        where N is the # of poses.
-    is_relative: bool
-        True for relative poses. default: False.
-    mode: str
-        x and y axis of trajectory. default: 'xz' following kitti format.
-    style: str
-        style of ploting, default: 'b.'
-    axis: bool
+    transforms
+        Transform matrices with shape (N, 4, 4) where N is the number of poses.
+    is_relative
+        True for relative poses.
+    mode
+        X and Y axis of trajectory (e.g., 'xz' following KITTI format).
+    style
+        Style of plotting.
+    axis
         False to disable axis.
 
     Returns
     -------
-    dst: numpy.ndarray
-        trajectory
+    dst
+        Trajectory image.
 
     """
     import matplotlib.pyplot as plt  # slow
