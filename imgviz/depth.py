@@ -26,8 +26,8 @@ class Depth2RGB:
 
     def __init__(
         self,
-        min_value: float | None = None,
-        max_value: float | None = None,
+        min_value: float | NDArray | None = None,
+        max_value: float | NDArray | None = None,
         colormap: str | Callable[[NDArray], NDArray] = "jet",
     ) -> None:
         self._min_value = min_value
@@ -35,12 +35,12 @@ class Depth2RGB:
         self._colormap = colormap
 
     @property
-    def min_value(self) -> float | None:
+    def min_value(self) -> float | NDArray | None:
         """Minimum value of depth."""
         return self._min_value
 
     @property
-    def max_value(self) -> float | None:
+    def max_value(self) -> float | NDArray | None:
         """Maximum value of depth."""
         return self._max_value
 
@@ -93,8 +93,8 @@ class Depth2RGB:
 
 def depth2rgb(
     depth: NDArray,
-    min_value: float | None = None,
-    max_value: float | None = None,
+    min_value: float | NDArray | None = None,
+    max_value: float | NDArray | None = None,
     colormap: str | Callable[[NDArray], NDArray] = "jet",
     dtype: DTypeLike = np.uint8,
 ) -> NDArray[np.uint8] | NDArray[np.floating]:

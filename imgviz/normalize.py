@@ -1,26 +1,54 @@
+from __future__ import annotations
+
+import typing
 import warnings
+from typing import Literal
 
 import numpy as np
+from numpy.typing import NDArray
 
 
-def normalize(src, min_value=None, max_value=None, return_minmax=False):
+@typing.overload
+def normalize(
+    src: ...,
+    min_value: float | NDArray | None = ...,
+    max_value: float | NDArray | None = ...,
+    return_minmax: Literal[False] = ...,
+) -> NDArray: ...
+
+
+@typing.overload
+def normalize(
+    src: ...,
+    min_value: float | NDArray | None = ...,
+    max_value: float | NDArray | None = ...,
+    return_minmax: Literal[True] = ...,
+) -> tuple[NDArray, NDArray, NDArray]: ...
+
+
+def normalize(
+    src: NDArray,
+    min_value: float | NDArray | None = None,
+    max_value: float | NDArray | None = None,
+    return_minmax: bool = False,
+) -> NDArray | tuple[NDArray, NDArray, NDArray]:
     """Normalize image.
 
     Parameters
     ----------
-    src: numpy.ndarray, (H, W) or (H, W, C), float
-        Input image.
-    min_value: float
+    src
+        Input image with shape (H, W) or (H, W, C).
+    min_value
         Minimum value.
-    max_value: float
+    max_value
         Maximum value.
-    return_minmax: bool
-        Flag to return min_value and max_value.
+    return_minmax
+        Whether to return min_value and max_value.
 
     Returns
     -------
-    dst: numpy.ndarray, float
-        Normalized image in [0, 1].
+    dst
+        Normalized image in [0, 1], or tuple of (dst, min_value, max_value).
 
     """
     if src.ndim == 2:
