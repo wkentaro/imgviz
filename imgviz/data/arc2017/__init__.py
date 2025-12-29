@@ -23,7 +23,7 @@ def arc2017():
         class_names = [name.strip() for name in f]
     data["class_names"] = class_names
 
-    data["res4"] = np.load(osp.join(here, "res4.npz"), allow_pickle=True)["res4"]
+    data["res4"] = np.load(osp.join(here, "res4.npz"))["res4"]
 
     with open(osp.join(here, "camera_info.json")) as f:
         data["camera_info"] = json.load(f)
