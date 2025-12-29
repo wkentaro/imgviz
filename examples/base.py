@@ -18,7 +18,7 @@ def run_example(function):
     img = function()
 
     if args.save:
-        out_file = osp.join(here, f".readme/{function.__name__}.jpg")
+        out_file = osp.join(here, f"assets/{function.__name__}.jpg")
         imgviz.io.imsave(out_file, img)
 
     plt.imshow(img)

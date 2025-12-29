@@ -25,6 +25,6 @@ jobs:
     - run: |
         git config --global user.email "www.kentaro.wada@gmail.com"
         git config --global user.name "Kentaro Wada"
-        git add examples/.readme README.md
+        git add examples/assets README.md assets
         git diff-index --cached --quiet HEAD || git commit -m "docs(readme): update with the latest examples"
         git push origin main

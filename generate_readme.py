@@ -25,7 +25,7 @@ def main():
     examples = []
     for py_file in sorted(glob.glob("examples/*.py")):
         img_file = osp.splitext(osp.basename(py_file))[0] + ".jpg"
-        img_file = osp.join("examples/.readme", img_file)
+        img_file = osp.join("examples/assets", img_file)
         if not osp.exists(img_file):
             continue
         img = PIL.Image.open(img_file)
@@ -89,7 +89,7 @@ def main():
 <br/>
 
 <div align="center">
-  <img src="https://github.com/wkentaro/imgviz/raw/main/.readme/getting_started.jpg" width="95%">
+  <img src="https://github.com/wkentaro/imgviz/raw/main/assets/getting_started.jpg" width="95%">
 </div>
 
 ## Installation

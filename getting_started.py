@@ -51,7 +51,7 @@ tiled = imgviz.tile(
 # }} GETTING_STARTED
 # -----------------------------------------------------------------------------
 
-out_file = osp.join(here, ".readme/getting_started.jpg")
+out_file = osp.join(here, "assets/getting_started.jpg")
 imgviz.io.imsave(out_file, tiled)
 
 img = imgviz.io.imread(out_file)
