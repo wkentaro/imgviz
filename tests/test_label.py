@@ -1,3 +1,6 @@
+from typing import Literal
+from typing import TypeAlias
+
 import numpy as np
 
 import imgviz
@@ -42,7 +45,8 @@ def test_label2rgb():
     assert labelviz.shape == (H, W, 3)
 
     # Test all legend locations
-    for loc in ["lt", "rt", "lb", "rb", "centroid"]:
+    Loc: TypeAlias = Literal["lt", "rt", "lb", "rb", "centroid"]
+    for loc in Loc.__args__:
         labelviz = imgviz.label2rgb(
             label=data["class_label"],
             image=data["rgb"],
