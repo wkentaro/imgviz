@@ -1,18 +1,20 @@
-import os.path as osp
+import pathlib
 
-import matplotlib
 import PIL.Image
 import PIL.ImageDraw
 import PIL.ImageFont
 
 from .. import utils
 
+_here: pathlib.Path = pathlib.Path(__file__).parent
+_default_font_path: pathlib.Path = (
+    _here / ".." / "data" / "fonts" / "DejaVuSansMono.ttf"
+)
 
-def _get_font(size, font_path=None):
+
+def _get_font(size, font_path: str | None = None):
     if font_path is None:
-        assert matplotlib.__file__ is not None
-        fonts_path = osp.join(osp.dirname(matplotlib.__file__), "mpl-data/fonts/ttf")
-        font_path = osp.join(fonts_path, "DejaVuSansMono.ttf")
+        font_path = str(_default_font_path)
     font = PIL.ImageFont.truetype(font=font_path, size=size)
     return font
 
@@ -70,7 +72,7 @@ def text(src, yx, text, size, color=(0, 0, 0), font_path=None):
         Text RGB color in uint8.
         Default is (0, 0, 0), which is black.
     font_path: str
-        Default font is DejaVuSansMono in matplotlib.
+        Default font is DejaVuSansMono.
 
     Returns
     -------
