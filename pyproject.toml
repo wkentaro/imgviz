@@ -49,10 +49,10 @@ dev = [
 
 [project.optional-dependencies]
 all = [
-  "scikit-image",
-  "scikit-learn",
   "opencv-python",
   "pyglet",
+  "scikit-image",
+  "scikit-learn",
 ]
 
 [tool.hatch.metadata]
