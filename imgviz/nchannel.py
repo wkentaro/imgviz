@@ -42,9 +42,9 @@ class Nchannel2RGB(object):
         import sklearn.decomposition
 
         assert nchannel.ndim == 3, "nchannel.ndim must be 3"
-        assert np.issubdtype(
-            nchannel.dtype, np.floating
-        ), "nchannel.dtype must be floating"
+        assert np.issubdtype(nchannel.dtype, np.floating), (
+            "nchannel.dtype must be floating"
+        )
         H, W, D = nchannel.shape
 
         dst = nchannel.reshape(-1, D)
