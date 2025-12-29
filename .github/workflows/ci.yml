@@ -17,7 +17,7 @@ jobs:
     - uses: astral-sh/setup-uv@v5
       with:
         python-version: ${{ matrix.python-version }}
-    - run: uv sync
+    - run: make setup
     - run: make lint
 
   build:
@@ -32,7 +32,7 @@ jobs:
     - uses: astral-sh/setup-uv@v5
       with:
         python-version: ${{ matrix.python-version }}
-    - run: uv sync --extra all
+    - run: make setup
     - run: make test
     - run: |
         python getting_started.py
