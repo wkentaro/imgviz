@@ -36,8 +36,5 @@ lint:  # Check code
 	$(call exec,uv run ruff check)
 	$(call exec,uv run ty check --no-progress)
 
-mypy:
-	$(call exec,uv run mypy --package $(PACKAGE_NAME))
-
 test:
 	$(call exec,uv run pytest -n=auto -v tests)

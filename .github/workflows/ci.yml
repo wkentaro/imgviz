@@ -19,7 +19,6 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - run: uv sync
     - run: make lint
-    - run: make mypy
 
   build:
     runs-on: ubuntu-latest
