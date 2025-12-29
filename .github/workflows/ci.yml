@@ -11,59 +11,38 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.9]
+        python-version: ["3.10"]
     steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-        submodules: true
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
+    - uses: actions/checkout@v4
+    - uses: astral-sh/setup-uv@v5
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
-      run: |
-        pip install -e .[test]
-    - name: Lint
-      run: |
-        make lint
-    - name: Mypy
-      run: |
-        make mypy
+    - run: uv sync
+    - run: make lint
+    - run: make mypy
+
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.9, 3.13]
+        python-version: ["3.10"]
     env:
       MPLBACKEND: agg
     steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-        submodules: true
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
+    - uses: actions/checkout@v4
+    - uses: astral-sh/setup-uv@v5
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install
-      run: |
-        pip install setuptools
-        pip install .[all]
-        pip install .[test]
-    - name: Test
-      run: |
-        make test
-    - name: Run examples
-      run: |
+    - run: uv sync --extra all
+    - run: make test
+    - run: |
         python getting_started.py
         for f in examples/*.py; do
           if [ -x $f ]; then
             $f
           fi
         done
-    - name: Install from dist
-      run: |
+    - run: |
         make build
-        pip install dist/*.tar.gz
-        pip install dist/*.whl
+        uv pip install dist/*.tar.gz
+        uv pip install dist/*.whl
