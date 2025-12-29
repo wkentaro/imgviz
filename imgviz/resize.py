@@ -1,25 +1,34 @@
+from __future__ import annotations
+
+from typing import Final
+from typing import Literal
+
 import numpy as np
 import PIL.Image
+from numpy.typing import NDArray
 
 from . import utils
 
 try:
     import cv2
 except ImportError:
-    cv2 = None  # type: ignore
+    cv2 = None  # type: ignore[assignment]
 
 
-def _resize_pillow(src, height, width, interpolation):
+def _resize_pillow(
+    src: NDArray, height: int, width: int, interpolation: Literal["linear", "nearest"]
+) -> NDArray:
+    resample: Final
     if interpolation == "linear":
-        interpolation = PIL.Image.BILINEAR
+        resample = PIL.Image.BILINEAR
     elif interpolation == "nearest":
-        interpolation = PIL.Image.NEAREST
+        resample = PIL.Image.NEAREST
     else:
         raise ValueError(f"unsupported interpolation: {interpolation}")
 
     if np.issubdtype(src.dtype, np.integer):
         dst = utils.numpy_to_pillow(src)
-        dst = dst.resize((width, height), resample=interpolation)
+        dst = dst.resize((width, height), resample=resample)
         dst = utils.pillow_to_numpy(dst)
     else:
         assert np.issubdtype(src.dtype, np.floating)
@@ -32,63 +41,56 @@ def _resize_pillow(src, height, width, interpolation):
         for c in range(C):
             src_c = src[:, :, c]
             src_c = utils.numpy_to_pillow(src_c)
-            dst[:, :, c] = src_c.resize((width, height), resample=interpolation)
+            dst[:, :, c] = src_c.resize((width, height), resample=resample)
 
         if ndim == 2:
             dst = dst[:, :, 0]
     return dst
 
 
-def _resize_opencv(src, height, width, interpolation):
+def _resize_opencv(
+    src: NDArray, height: int, width: int, interpolation: Literal["linear", "nearest"]
+) -> NDArray:
+    if cv2 is None:
+        raise ImportError("opencv-python is not installed")
+
+    interpolation_int: int
     if interpolation == "linear":
-        interpolation = cv2.INTER_LINEAR
+        interpolation_int = cv2.INTER_LINEAR
     elif interpolation == "nearest":
-        interpolation = cv2.INTER_NEAREST
+        interpolation_int = cv2.INTER_NEAREST
     else:
         raise ValueError(f"unsupported interpolation: {interpolation}")
 
-    dst = cv2.resize(src, (width, height), interpolation=interpolation)
+    dst = cv2.resize(src, (width, height), interpolation=interpolation_int)
     return dst
 
 
 def resize(
-    src,
-    height=None,
-    width=None,
-    interpolation="linear",
-    backend="auto",
-):
+    src: NDArray,
+    height: int | float | None = None,
+    width: int | float | None = None,
+    interpolation: Literal["linear", "nearest"] = "linear",
+    backend: Literal["auto", "pillow", "opencv"] = "auto",
+) -> NDArray:
     """Resize image.
 
     Parameters
     ----------
-    src: numpy.ndarray, (H, W) or (H, W, C)
-        Input image.
-    height: int, optional
-        Height of image. If not given,
-        the image is resized based on width keeping image ratio.
-    width: int, optional
-        Width of image. If not given,
-        the image is resized based on height keeping image ratio.
-    interpolation: str
-        Resizing interpolation (default: 'linear').
-
-        'linear':
-            Linear interpolation.
-        'nearest':
-            Interpolate with the nearest value.
-
-    backend: str
-        Resizing backend (default: 'auto').
-
-        'pillow':
-            Pillow is used.
-        'opencv':
-            OpenCV is used.
+    src
+        Input image with shape (H, W) or (H, W, C).
+    height
+        Height of image. If not given, resized based on width keeping ratio.
+    width
+        Width of image. If not given, resized based on height keeping ratio.
+    interpolation
+        Resizing interpolation ('linear' or 'nearest').
+    backend
+        Resizing backend ('auto', 'pillow', or 'opencv').
 
     Returns
     -------
-    dst: numpy.ndarray
+    dst
         Resized image.
 
     """
