@@ -1,3 +1,4 @@
+# type: ignore
 # transformations.py
 
 # Modified for inclusion in the `trimesh` library

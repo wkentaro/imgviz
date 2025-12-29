@@ -25,7 +25,7 @@ help:
 PACKAGE_NAME := imgviz
 
 setup:  # Setup dev env
-	$(call exec,uv sync --dev)
+	$(call exec,uv sync --extra all)
 
 format:  # Format code
 	$(call exec,uv run ruff format)
@@ -34,10 +34,7 @@ format:  # Format code
 lint:  # Check code
 	$(call exec,uv run ruff format --check)
 	$(call exec,uv run ruff check)
-#	$(call exec,uv run ty check --no-progress)
-
-mypy:
-	$(call exec,uv run mypy --package $(PACKAGE_NAME))
+	$(call exec,uv run ty check --no-progress)
 
 test:
 	$(call exec,uv run pytest -n=auto -v tests)
