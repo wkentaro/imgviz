@@ -40,7 +40,7 @@ def main():
 
     # TODO: read from pyproject.toml
     dependencies = []
-    for req in ["matplotlib", "numpy", "Pillow>=5.3.0", "PyYAML"]:
+    for req in ["cmap", "numpy", "Pillow>=5.3.0"]:
         pkg = req
         for sep in "<=>":
             pkg = pkg.split(sep)[0]
