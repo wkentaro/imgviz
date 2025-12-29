@@ -87,7 +87,7 @@ def label2rgb(
         By default, :func:`~imgviz.label_colormap` is used.
     loc: string
         Location of legend (default: 'rb').
-        'centroid', 'lt' and 'rb' are supported.
+        'centroid', 'lt', 'rt', 'lb', 'rb' are supported.
     font_path: str
         Font path.
 
@@ -172,7 +172,7 @@ def label2rgb(
                 size=font_size,
                 font_path=font_path,
             )
-    elif loc in ["rb", "lt"]:
+    elif loc in ["rb", "lt", "rt", "lb"]:
         text_sizes = np.array(
             [
                 draw_module.text_size(
@@ -192,6 +192,12 @@ def label2rgb(
         elif loc == "lt":
             aabb1 = np.array([5, 5], dtype=float)
             aabb2 = aabb1 + (legend_height, legend_width)
+        elif loc == "rt":
+            aabb1 = np.array([5, width - 5 - legend_width], dtype=float)
+            aabb2 = aabb1 + (legend_height, legend_width)
+        elif loc == "lb":
+            aabb2 = np.array([height - 5, 5 + legend_width], dtype=float)
+            aabb1 = aabb2 - (legend_height, legend_width)
         else:
             raise ValueError(f"unexpected loc: {loc}")
 
