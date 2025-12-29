@@ -11,7 +11,7 @@ def tabulate(rows):
     for row in rows:
         html += "\n\t<tr>"
         for col in row:
-            html += "\n\t\t<td>{}</td>".format(col)
+            html += f"\n\t\t<td>{col}</td>"
         html += "\n\t</tr>"
     html += "\n</table>"
     return html
@@ -44,7 +44,7 @@ def main():
         pkg = req
         for sep in "<=>":
             pkg = pkg.split(sep)[0]
-        dependencies.append("- [{0}](https://pypi.org/project/{1})".format(req, pkg))
+        dependencies.append(f"- [{req}](https://pypi.org/project/{pkg})")
     dependencies = "\n".join(dependencies)
 
     py_file = "getting_started.py"

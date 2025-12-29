@@ -38,7 +38,7 @@ def plot_trajectory(
             transforms[i] = transforms[i - 1].dot(transforms[i])
 
     if len(mode) != 2 and all(x in "xyz" for x in mode):
-        raise ValueError("Unsupported mode: {}".format(mode))
+        raise ValueError(f"Unsupported mode: {mode}")
 
     x = []
     y = []

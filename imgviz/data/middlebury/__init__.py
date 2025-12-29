@@ -15,7 +15,7 @@ def read_flow(filename):
     with open(filename, "rb") as f:
         magic = np.fromfile(f, np.float32, count=1)
         if magic != 202021.25:
-            raise IOError("Invalid .flo file: {}".format(filename))
+            raise OSError(f"Invalid .flo file: {filename}")
 
         w = np.fromfile(f, np.int32, count=1)[0]
         h = np.fromfile(f, np.int32, count=1)[0]

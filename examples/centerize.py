@@ -26,12 +26,12 @@ def centerize():
     plt.imshow(rgb)
 
     plt.subplot(132)
-    plt.title("centerized1:\n{}".format(centerized1.shape))
+    plt.title(f"centerized1:\n{centerized1.shape}")
     plt.imshow(centerized1)
     plt.axis("off")
 
     plt.subplot(133)
-    plt.title("centerized2:\n{}".format(centerized2.shape))
+    plt.title(f"centerized2:\n{centerized2.shape}")
     plt.imshow(centerized2)
     plt.axis("off")
 

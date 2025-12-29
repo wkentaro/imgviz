@@ -193,7 +193,7 @@ def label2rgb(
             aabb1 = np.array([5, 5], dtype=float)
             aabb2 = aabb1 + (legend_height, legend_width)
         else:
-            raise ValueError("unexpected loc: {}".format(loc))
+            raise ValueError(f"unexpected loc: {loc}")
 
         alpha = 0.5
         y1, x1 = aabb1.round().astype(int)
@@ -215,7 +215,7 @@ def label2rgb(
                 font_path=font_path,
             )
     else:
-        raise ValueError("unsupported loc: {}".format(loc))
+        raise ValueError(f"unsupported loc: {loc}")
 
     return utils.pillow_to_numpy(res)
 

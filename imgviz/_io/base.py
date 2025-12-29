@@ -1,7 +1,6 @@
 import os
 import os.path as osp
 import pathlib
-from typing import Union
 
 import numpy as np  # NOQA
 import PIL.Image
@@ -50,7 +49,7 @@ def imsave(filename, arr):
     return utils.numpy_to_pillow(arr).save(filename)
 
 
-def lblsave(filename: Union[str, pathlib.Path], lbl: np.ndarray) -> None:
+def lblsave(filename: str | pathlib.Path, lbl: np.ndarray) -> None:
     """Save label image to PNG file with a colormap.
 
     Parameters

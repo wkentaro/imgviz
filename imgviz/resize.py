@@ -15,7 +15,7 @@ def _resize_pillow(src, height, width, interpolation):
     elif interpolation == "nearest":
         interpolation = PIL.Image.NEAREST
     else:
-        raise ValueError("unsupported interpolation: {}".format(interpolation))
+        raise ValueError(f"unsupported interpolation: {interpolation}")
 
     if np.issubdtype(src.dtype, np.integer):
         dst = utils.numpy_to_pillow(src)
@@ -45,7 +45,7 @@ def _resize_opencv(src, height, width, interpolation):
     elif interpolation == "nearest":
         interpolation = cv2.INTER_NEAREST
     else:
-        raise ValueError("unsupported interpolation: {}".format(interpolation))
+        raise ValueError(f"unsupported interpolation: {interpolation}")
 
     dst = cv2.resize(src, (width, height), interpolation=interpolation)
     return dst
@@ -119,6 +119,6 @@ def resize(
     elif backend == "opencv":
         dst = _resize_opencv(src, height, width, interpolation)
     else:
-        raise ValueError("unsupported backend: {}".format(backend))
+        raise ValueError(f"unsupported backend: {backend}")
 
     return dst
