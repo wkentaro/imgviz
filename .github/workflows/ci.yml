@@ -43,6 +43,6 @@ jobs:
           fi
         done
     - run: |
-        make build
+        uv build
         uv pip install dist/*.tar.gz
         uv pip install dist/*.whl

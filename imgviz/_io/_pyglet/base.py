@@ -1,7 +1,7 @@
 try:
     import pyglet
 except ImportError:
-    pyglet = None
+    pyglet = None  # type: ignore[assignment]
 
 
 def check_pyglet_available():

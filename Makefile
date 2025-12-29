@@ -38,3 +38,6 @@ lint:  # Check code
 
 mypy:
 	$(call exec,uv run mypy --package $(PACKAGE_NAME))
+
+test:
+	$(call exec,uv run pytest -n=auto -v tests)
