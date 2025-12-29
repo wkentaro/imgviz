@@ -39,7 +39,7 @@ pip install imgviz[all]
 
 ## Dependencies
 
-- [matplotlib](https://pypi.org/project/matplotlib)
+- [cmap](https://pypi.org/project/cmap)
 - [numpy](https://pypi.org/project/numpy)
 - [Pillow>=5.3.0](https://pypi.org/project/Pillow)
 - [PyYAML](https://pypi.org/project/PyYAML)

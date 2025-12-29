@@ -190,6 +190,19 @@ wheels = [
 ]
 
 [[package]]
+name = "cmap"
+version = "0.6.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "numpy", version = "2.2.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
+    { name = "numpy", version = "2.4.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/91/52/f1f5f1fa34f156ca9c94b65a8f2b3d15a1fd34f6c90e1d819d127d4265e8/cmap-0.6.2.tar.gz", hash = "sha256:a511cb0ab349d2ecb7c03f0bb050f5feff5e6fc18d1a503d930b01e3fd80459e", size = 911209, upload-time = "2025-07-05T20:32:31.189Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/f2/f8/0d98cc1975f9f4505f5dfec37910f3693f268192b3a00d313f47f77bb5c3/cmap-0.6.2-py3-none-any.whl", hash = "sha256:785f4522d4aec935df93f453fa672da2850817212d1d066269f753a61595689d", size = 958864, upload-time = "2025-07-05T20:32:29.164Z" },
+]
+
+[[package]]
 name = "colorama"
 version = "0.4.6"
 source = { registry = "https://pypi.org/simple" }
@@ -544,7 +557,7 @@ wheels = [
 name = "imgviz"
 source = { editable = "." }
 dependencies = [
-    { name = "matplotlib" },
+    { name = "cmap" },
     { name = "numpy", version = "2.2.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "numpy", version = "2.4.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
     { name = "pillow" },
@@ -552,6 +565,7 @@ dependencies = [
 
 [package.optional-dependencies]
 all = [
+    { name = "matplotlib" },
     { name = "opencv-python" },
     { name = "pyglet" },
     { name = "scikit-image", version = "0.25.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
@@ -573,7 +587,8 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "matplotlib" },
+    { name = "cmap", specifier = ">=0.6.2" },
+    { name = "matplotlib", marker = "extra == 'all'" },
     { name = "numpy" },
     { name = "opencv-python", marker = "extra == 'all'" },
     { name = "pillow", specifier = ">=5.3.0" },

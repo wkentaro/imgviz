@@ -1,6 +1,6 @@
 import typing  # NOQA
 
-import matplotlib
+import cmap
 import numpy as np
 
 from .normalize import normalize
@@ -65,10 +65,7 @@ class Depth2RGB:
         normalized[isnan] = 0
 
         if isinstance(self._colormap, str):
-            if hasattr(matplotlib, "colormaps"):
-                colormap_func = matplotlib.colormaps[self._colormap]
-            else:
-                colormap_func = matplotlib.cm.get_cmap(self._colormap)
+            colormap_func = cmap.Colormap(self._colormap)
         else:
             colormap_func = self._colormap
         rgb = colormap_func(normalized)[:, :, :3]
