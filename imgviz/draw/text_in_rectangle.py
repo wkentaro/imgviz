@@ -32,7 +32,7 @@ def text_in_rectangle_aabb(img_shape, loc, text, size, aabb1, aabb2, font_path=N
     elif loc == "rb-":
         yx = (y2, x2 - tsize[1] - 2)
     else:
-        raise ValueError("unsupported loc: {}".format(loc))
+        raise ValueError(f"unsupported loc: {loc}")
 
     y1, x1 = yx
     y2, x2 = y1 + tsize[0] + 1, x1 + tsize[1] + 1

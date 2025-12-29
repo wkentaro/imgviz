@@ -3,7 +3,7 @@ import numpy as np
 from . import normalize
 
 
-class Nchannel2RGB(object):
+class Nchannel2RGB:
     """Convert nchannel array to rgb by PCA.
 
     Parameters

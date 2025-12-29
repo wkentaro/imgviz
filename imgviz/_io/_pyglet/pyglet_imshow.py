@@ -62,7 +62,7 @@ def _pyglet_imshow_list(images, caption=None, interval=0.5, keymap=None, hook=No
         print("Usage: ", file=sys.stderr)
         if keymap is not None:
             for key, function in keymap.items():
-                print("  {}: {}".format(key, function))
+                print(f"  {key}: {function}")
         print("  h: show help", file=sys.stderr)
         print("  q: close window", file=sys.stderr)
         print("  n: next image", file=sys.stderr)
@@ -104,11 +104,9 @@ def _pyglet_imshow_list(images, caption=None, interval=0.5, keymap=None, hook=No
 
     def _post_image_update():
         _centerize_sprite_in_window(sprite, window)
-        window.set_caption(
-            "{} {}/{}".format(images[window.index], window.index + 1, len(images))
-        )
+        window.set_caption(f"{images[window.index]} {window.index + 1}/{len(images)}")
         print(
-            "{} {}/{}".format(images[window.index], window.index + 1, len(images)),
+            f"{images[window.index]} {window.index + 1}/{len(images)}",
             file=sys.stderr,
         )
 

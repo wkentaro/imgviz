@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # transformations.py
 
 # Modified for inclusion in the `trimesh` library
@@ -738,7 +737,7 @@ def shear_from_matrix(matrix):
 
     i = np.where(abs(np.real(w) - 1.0) < 1e-4)[0]
     if len(i) < 2:
-        raise ValueError("no two linear independent eigenvectors found %s" % w)
+        raise ValueError(f"no two linear independent eigenvectors found {w}")
     V = np.real(V[:, i]).squeeze().T
     lenorm = -1.0
     for i0, i1 in ((0, 1), (0, 2), (1, 2)):
@@ -1567,7 +1566,7 @@ def random_rotation_matrix(rand=None):
     return quaternion_matrix(random_quaternion(rand))
 
 
-class Arcball(object):
+class Arcball:
     """Virtual Trackball Control.
 
     >>> ball = Arcball()
@@ -2100,9 +2099,7 @@ def transform_points(points, matrix, translate=True):
     matrix = np.asanyarray(matrix, dtype=np.float64)
     if len(points.shape) != 2 or (points.shape[1] + 1 != matrix.shape[1]):
         raise ValueError(
-            "matrix shape ({}) doesn't match points ({})".format(
-                matrix.shape, points.shape
-            )
+            f"matrix shape ({matrix.shape}) doesn't match points ({points.shape})"
         )
 
     # check to see if we've been passed an identity matrix

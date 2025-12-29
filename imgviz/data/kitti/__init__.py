@@ -6,7 +6,7 @@ here = osp.dirname(osp.abspath(__file__))
 
 
 def read_pose_file(filename):
-    with open(filename, "r") as f:
+    with open(filename) as f:
         transforms = []
         for one_line in f:
             one_line = one_line.split(" ")

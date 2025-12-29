@@ -6,7 +6,7 @@ import numpy as np
 from .normalize import normalize
 
 
-class Depth2RGB(object):
+class Depth2RGB:
     """Convert depth array to rgb.
 
     Parameters
