@@ -182,21 +182,22 @@ def label2rgb(
             ]
         )
         text_height, text_width = text_sizes.max(axis=0)
-        legend_height = text_height * len(unique_labels) + 5
-        legend_width = text_width + 20 + (text_height - 10)
+        pad: int = max(2, font_size // 6)
+        legend_height = text_height * len(unique_labels) + pad
+        legend_width = text_width + text_height + 2 * pad
 
         height, width = label.shape[:2]
         if loc == "rb":
-            aabb2 = np.array([height - 5, width - 5], dtype=float)
+            aabb2 = np.array([height - pad, width - pad], dtype=float)
             aabb1 = aabb2 - (legend_height, legend_width)
         elif loc == "lt":
-            aabb1 = np.array([5, 5], dtype=float)
+            aabb1 = np.array([pad, pad], dtype=float)
             aabb2 = aabb1 + (legend_height, legend_width)
         elif loc == "rt":
-            aabb1 = np.array([5, width - 5 - legend_width], dtype=float)
+            aabb1 = np.array([pad, width - pad - legend_width], dtype=float)
             aabb2 = aabb1 + (legend_height, legend_width)
         elif loc == "lb":
-            aabb2 = np.array([height - 5, 5 + legend_width], dtype=float)
+            aabb2 = np.array([height - pad, pad + legend_width], dtype=float)
             aabb1 = aabb2 - (legend_height, legend_width)
         else:
             raise ValueError(f"unexpected loc: {loc}")
@@ -206,16 +207,17 @@ def label2rgb(
         y2, x2 = aabb2.round().astype(int)
         res[y1:y2, x1:x2] = alpha * res[y1:y2, x1:x2] + alpha * 255
 
+        box_size = text_height - 2 * pad
         res = utils.numpy_to_pillow(res)
         for i, label_id in enumerate(unique_labels):
-            box_aabb1 = aabb1 + (i * text_height + 5, 5)
-            box_aabb2 = box_aabb1 + (text_height - 10, text_height - 10)
+            box_aabb1 = aabb1 + (i * text_height + pad, pad)
+            box_aabb2 = box_aabb1 + (box_size, box_size)
             draw_module.rectangle_(
                 res, aabb1=box_aabb1, aabb2=box_aabb2, fill=colormap[label_id]
             )
             draw_module.text_(
                 res,
-                yx=aabb1 + (i * text_height, 10 + (text_height - 10)),
+                yx=aabb1 + (i * text_height, text_height),
                 text=label_names[label_id],
                 size=font_size,
                 font_path=font_path,
