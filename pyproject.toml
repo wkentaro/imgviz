@@ -9,7 +9,7 @@ Homepage = "https://github.com/wkentaro/imgviz"
 name = "imgviz"
 description = "Image Visualization Tools"
 license = { text = "MIT" }
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 authors = [
   { name = "Kentaro Wada", email = "www.kentaro.wada@gmail.com" },
 ]
@@ -22,11 +22,11 @@ classifiers = [
   "Operating System :: OS Independent",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
   "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 dependencies = [
@@ -37,22 +37,24 @@ dependencies = [
 ]
 dynamic = ["readme", "version"]
 
+[dependency-groups]
+dev = [
+  "build>=1.3.0",
+  "mypy>=1.19.1",
+  "pytest>=8.4.2",
+  "pytest-xdist>=3.8.0",
+  "ruff>=0.14.10",
+  "twine>=6.2.0",
+  "types-pillow>=10.2.0.20240822",
+  "types-pyyaml>=6.0.12.20250915",
+]
+
 [project.optional-dependencies]
 all = [
   "scikit-image",
   "scikit-learn",
   "opencv-python",
   "pyglet",
-]
-test = [
-  "build",
-  "mypy",
-  "types-Pillow",
-  "types-PyYAML",
-  "pytest",
-  "pytest-xdist",
-  "ruff",
-  "twine",
 ]
 
 [tool.hatch.metadata]
@@ -71,36 +73,19 @@ source = "vcs"
 ignore_missing_imports = true
 
 [tool.ruff]
-exclude = [
-  ".conda",
-  ".git",
-  "src",
-]
-
 line-length = 88
 indent-width = 4
 
 [tool.ruff.lint]
-# Enable Pyflakes (`F`), pycodestyle (`E`), isort (`I`).
-select = ["E", "F", "I"]
-ignore = []
-
-# Allow fix for all enabled rules (when `--fix`) is provided.
-fixable = ["ALL"]
-unfixable = []
-
-[tool.ruff.format]
-# Like Black, use double quotes for strings.
-quote-style = "double"
-
-# Like Black, indent with spaces, rather than tabs.
-indent-style = "space"
-
-# Like Black, respect magic trailing commas.
-skip-magic-trailing-comma = false
-
-# Like Black, automatically detect the appropriate line ending.
-line-ending = "auto"
+select = [
+  "E",  # pycodestyle
+  "F",  # pyflakes
+  "I",  # isort
+  # "UP",  # pyupgrade
+]
 
 [tool.ruff.lint.isort]
 force-single-line = true
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
