@@ -1,6 +1,16 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+from typing import Any
+
 import numpy as np
+from numpy.typing import DTypeLike
+from numpy.typing import NDArray
 
 from .normalize import normalize
+
+if TYPE_CHECKING:
+    import sklearn.decomposition
 
 
 class Nchannel2RGB:
@@ -8,35 +18,37 @@ class Nchannel2RGB:
 
     Parameters
     ----------
-    pca: sklearn.decomposition.PCA
-        PCA.
+    pca
+        PCA object from sklearn.
 
     """
 
-    def __init__(self, pca=None):
+    def __init__(self, pca: sklearn.decomposition.PCA | None = None) -> None:
         self._pca = pca
         # for uint8
-        self._min_max_value = (None, None)
+        self._min_max_value: tuple[Any, Any] = (None, None)
 
     @property
-    def pca(self):
+    def pca(self) -> sklearn.decomposition.PCA | None:
         """PCA for N channel to 3."""
         return self._pca
 
-    def __call__(self, nchannel, dtype=np.uint8):
+    def __call__(
+        self, nchannel: NDArray, dtype: DTypeLike = np.uint8
+    ) -> NDArray[np.uint8] | NDArray[np.floating]:
         """Convert nchannel array to rgb by PCA.
 
         Parameters
         ----------
-        nchannel: numpy.ndarray, (H, W, C), float
-            N channel image.
-        dtype: numpy.dtype
-            Dtype (default: numpy.uint8).
+        nchannel
+            N channel image with shape (H, W, C).
+        dtype
+            Output dtype.
 
         Returns
         -------
-        dst: numpy.ndarray, (H, W, 3), numpy.uint8
-            Visualized image.
+        dst
+            Visualized image with shape (H, W, 3).
 
         """
         import sklearn.decomposition
@@ -71,22 +83,26 @@ class Nchannel2RGB:
         return dst
 
 
-def nchannel2rgb(nchannel, dtype=np.uint8, pca=None):
+def nchannel2rgb(
+    nchannel: NDArray,
+    dtype: DTypeLike = np.uint8,
+    pca: sklearn.decomposition.PCA | None = None,
+) -> NDArray[np.uint8] | NDArray[np.floating]:
     """Convert nchannel array to rgb by PCA.
 
     Parameters
     ----------
-    nchannel: numpy.ndarray, (H, W, C), float
-        N channel image.
-    dtype: numpy.dtype
-        Dtype (default: numpy.uint8).
-    pca: sklearn.decomposition.PCA
-        PCA.
+    nchannel
+        N channel image with shape (H, W, C).
+    dtype
+        Output dtype.
+    pca
+        PCA object from sklearn.
 
     Returns
     -------
-    dst: numpy.ndarray, (H, W, 3), numpy.uint8
-        Visualized image.
+    dst
+        Visualized image with shape (H, W, 3).
 
     """
     return Nchannel2RGB(pca)(nchannel, dtype)
