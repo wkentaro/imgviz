@@ -30,7 +30,7 @@ classifiers = [
   "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 dependencies = [
-  "cmap>=0.6.2",
+  "cmap>=0.1.0",
   "numpy>=1.21.0",
   "Pillow>=5.3.0",
 ]

@@ -588,7 +588,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "cmap", specifier = ">=0.6.2" },
+    { name = "cmap", specifier = ">=0.1.0" },
     { name = "matplotlib", marker = "extra == 'all'" },
     { name = "numpy", specifier = ">=1.21.0" },
     { name = "opencv-python", marker = "extra == 'all'" },
