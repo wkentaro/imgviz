@@ -7,9 +7,9 @@ import numpy as np
 from numpy.typing import NDArray
 
 from . import _color
+from . import _label
 from . import _utils
 from . import draw as draw_module
-from . import label as label_module
 
 
 def mask_to_bbox(masks: NDArray | Sequence[NDArray]) -> NDArray[np.floating]:
@@ -114,7 +114,7 @@ def instances2rgb(
     assert len(bboxes) == len(captions) == n_instance
 
     if colormap is None:
-        colormap = label_module.label_colormap()
+        colormap = _label.label_colormap()
 
     dst = image
 

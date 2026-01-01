@@ -6,7 +6,7 @@ import numpy as np  # NOQA
 import PIL.Image
 
 from .. import _utils
-from ..label import label_colormap
+from .._label import label_colormap
 
 
 def imread(filename):

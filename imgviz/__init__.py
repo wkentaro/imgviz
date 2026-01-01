@@ -23,8 +23,8 @@ from ._dtype import bool2ubyte
 from ._dtype import float2ubyte
 from ._flow import flow2rgb
 from ._instances import instances2rgb
-from .label import label2rgb
-from .label import label_colormap
+from ._label import label2rgb
+from ._label import label_colormap
 from .nchannel import Nchannel2RGB
 from .nchannel import nchannel2rgb
 from .normalize import normalize
