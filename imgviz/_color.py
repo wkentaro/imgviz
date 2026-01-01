@@ -165,13 +165,15 @@ def asgray(img: NDArray) -> NDArray[np.uint8]:
     return gray
 
 
-def asrgb(img: NDArray) -> NDArray[np.uint8]:
+def asrgb(img: NDArray, copy: bool = False) -> NDArray[np.uint8]:
     """Convert any array to rgb image.
 
     Parameters
     ----------
     img
         Input image.
+    copy
+        Whether to return a copy of the image. Default is False.
 
     Returns
     -------
@@ -186,7 +188,7 @@ def asrgb(img: NDArray) -> NDArray[np.uint8]:
     elif img.ndim == 3 and img.shape[2] == 4:
         rgb = rgba2rgb(img)
     elif img.ndim == 3 and img.shape[2] == 3:
-        rgb = img
+        rgb = img.copy() if copy else img
     else:
         raise ValueError(
             f"Unsupported image format to convert to rgb: "
