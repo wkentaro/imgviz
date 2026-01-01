@@ -6,10 +6,10 @@ from collections.abc import Sequence
 import numpy as np
 from numpy.typing import NDArray
 
-from . import color as color_module
+from . import _color
+from . import _label
+from . import _utils
 from . import draw as draw_module
-from . import label as label_module
-from . import utils
 
 
 def mask_to_bbox(masks: NDArray | Sequence[NDArray]) -> NDArray[np.floating]:
@@ -98,7 +98,7 @@ def instances2rgb(
     assert image.dtype == np.uint8
 
     if image.ndim == 2:
-        image = color_module.gray2rgb(image)
+        image = _color.gray2rgb(image)
     assert image.ndim == 3
 
     assert all(label_i >= 0 for label_i in labels)
@@ -114,7 +114,7 @@ def instances2rgb(
     assert len(bboxes) == len(captions) == n_instance
 
     if colormap is None:
-        colormap = label_module.label_colormap()
+        colormap = _label.label_colormap()
 
     dst = image
 
@@ -142,7 +142,7 @@ def instances2rgb(
         except ImportError:
             pass
 
-    dst = utils.numpy_to_pillow(dst)
+    dst = _utils.numpy_to_pillow(dst)
     for instance_id in range(n_instance):
         bbox = bboxes[instance_id]
         label = labels[instance_id]
@@ -187,4 +187,4 @@ def instances2rgb(
                 aabb2=aabb2,
                 font_path=font_path,
             )
-    return utils.pillow_to_numpy(dst)
+    return _utils.pillow_to_numpy(dst)

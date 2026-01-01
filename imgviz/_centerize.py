@@ -7,7 +7,7 @@ from typing import Literal
 import numpy as np
 from numpy.typing import NDArray
 
-from .resize import resize
+from ._resize import resize
 
 
 @typing.overload

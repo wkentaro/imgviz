@@ -1,10 +1,10 @@
 import numpy as np
 
-from .. import color as color_module
-from .. import utils
-from .rectangle import rectangle_
-from .text import text_
-from .text import text_size
+from .. import _color
+from .. import _utils
+from ._rectangle import rectangle_
+from ._text import text_
+from ._text import text_size
 
 
 def text_in_rectangle_aabb(img_shape, loc, text, size, aabb1, aabb2, font_path=None):
@@ -84,7 +84,7 @@ def text_in_rectangle(
 
     """
     if color is None:
-        color = color_module.get_fg_color(background)
+        color = _color.get_fg_color(background)
 
     height, width = src.shape[:2]
     y1, x1, y2, x2 = text_in_rectangle_aabb(
@@ -124,7 +124,7 @@ def text_in_rectangle(
                 constant_values=constant_values,
             )
 
-    dst = utils.numpy_to_pillow(dst)
+    dst = _utils.numpy_to_pillow(dst)
     rectangle_(
         img=dst,
         aabb1=(y1, x1),
@@ -139,7 +139,7 @@ def text_in_rectangle(
         size=size,
         font_path=font_path,
     )
-    return utils.pillow_to_numpy(dst)
+    return _utils.pillow_to_numpy(dst)
 
 
 def text_in_rectangle_(
@@ -154,7 +154,7 @@ def text_in_rectangle_(
     font_path=None,
 ):
     if color is None:
-        color = color_module.get_fg_color(background)
+        color = _color.get_fg_color(background)
 
     y1, x1, y2, x2 = text_in_rectangle_aabb(
         img_shape=(img.height, img.width),

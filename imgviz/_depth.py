@@ -7,7 +7,7 @@ import numpy as np
 from numpy.typing import DTypeLike
 from numpy.typing import NDArray
 
-from .normalize import normalize
+from ._normalize import normalize
 
 
 class Depth2RGB:

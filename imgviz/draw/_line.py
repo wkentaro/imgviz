@@ -2,13 +2,13 @@ import numpy as np
 import PIL.Image
 import PIL.ImageDraw
 
-from .. import utils
+from .. import _utils
 
 
 def line(src, yx, fill, width=1):
-    dst = utils.numpy_to_pillow(src)
+    dst = _utils.numpy_to_pillow(src)
     line_(img=dst, yx=yx, fill=fill, width=width)
-    return utils.pillow_to_numpy(dst)
+    return _utils.pillow_to_numpy(dst)
 
 
 def line_(img, yx, fill, width=1):

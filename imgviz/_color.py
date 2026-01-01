@@ -4,8 +4,8 @@ import numpy as np
 from numpy.typing import ArrayLike
 from numpy.typing import NDArray
 
-from . import dtype
-from . import utils
+from . import _dtype
+from . import _utils
 
 
 def rgb2gray(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:
@@ -26,9 +26,9 @@ def rgb2gray(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:
     assert rgb.shape[2] == 3, "rgb shape must be (H, W, 3)"
     assert rgb.dtype == np.uint8, "rgb dtype must be np.uint8"
 
-    gray = utils.numpy_to_pillow(rgb)
+    gray = _utils.numpy_to_pillow(rgb)
     gray = gray.convert("L")
-    gray = utils.pillow_to_numpy(gray)
+    gray = _utils.pillow_to_numpy(gray)
     return gray
 
 
@@ -90,9 +90,9 @@ def rgb2hsv(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:
         Output hsv image with shape (H, W, 3).
 
     """
-    hsv = utils.numpy_to_pillow(rgb, mode="RGB")
+    hsv = _utils.numpy_to_pillow(rgb, mode="RGB")
     hsv = hsv.convert("HSV")
-    hsv = utils.pillow_to_numpy(hsv)
+    hsv = _utils.pillow_to_numpy(hsv)
     return hsv
 
 
@@ -110,9 +110,9 @@ def hsv2rgb(hsv: NDArray[np.uint8]) -> NDArray[np.uint8]:
         Output rgb image with shape (H, W, 3).
 
     """
-    rgb = utils.numpy_to_pillow(hsv, mode="HSV")
+    rgb = _utils.numpy_to_pillow(hsv, mode="HSV")
     rgb = rgb.convert("RGB")
-    rgb = utils.pillow_to_numpy(rgb)
+    rgb = _utils.pillow_to_numpy(rgb)
     return rgb
 
 
@@ -150,7 +150,7 @@ def asgray(img: NDArray) -> NDArray[np.uint8]:
     """
     if img.ndim == 2:
         if img.dtype == bool:
-            gray = dtype.bool2ubyte(img)
+            gray = _dtype.bool2ubyte(img)
         else:
             gray = img
     elif img.ndim == 3 and img.shape[2] == 4:
@@ -181,7 +181,7 @@ def asrgb(img: NDArray) -> NDArray[np.uint8]:
     """
     if img.ndim == 2:
         if img.dtype == bool:
-            img = dtype.bool2ubyte(img)
+            img = _dtype.bool2ubyte(img)
         rgb = gray2rgb(img)
     elif img.ndim == 3 and img.shape[2] == 4:
         rgb = rgba2rgb(img)
@@ -211,7 +211,7 @@ def asrgba(img: NDArray) -> NDArray[np.uint8]:
     """
     if img.ndim == 2:
         if img.dtype == bool:
-            img = dtype.bool2ubyte(img)
+            img = _dtype.bool2ubyte(img)
         rgb = gray2rgb(img)
         rgba = rgb2rgba(rgb)
     if img.ndim == 3 and img.shape[2] == 4:

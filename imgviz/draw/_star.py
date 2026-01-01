@@ -5,7 +5,7 @@ import PIL.Image
 import PIL.ImageDraw
 import PIL.ImageFont
 
-from .. import utils
+from .. import _utils
 
 
 def star(src, center, size, fill=None, outline=None):
@@ -30,7 +30,7 @@ def star(src, center, size, fill=None, outline=None):
         Output image.
 
     """
-    dst = utils.numpy_to_pillow(src)
+    dst = _utils.numpy_to_pillow(src)
     star_(
         img=dst,
         center=center,
@@ -38,7 +38,7 @@ def star(src, center, size, fill=None, outline=None):
         fill=fill,
         outline=outline,
     )
-    return utils.pillow_to_numpy(dst)
+    return _utils.pillow_to_numpy(dst)
 
 
 def star_(img, center, size, fill=None, outline=None):

@@ -1,6 +1,7 @@
 import numpy as np
 
 import imgviz
+from imgviz._instances import masks_to_bboxes
 
 
 def test_masks_to_bboxes():
@@ -8,7 +9,7 @@ def test_masks_to_bboxes():
 
     class_label = data["class_label"]
     masks = [class_label == label_id for label_id in np.unique(class_label)]
-    bboxes = imgviz.instances.masks_to_bboxes(masks)
+    bboxes = masks_to_bboxes(masks)
 
     assert len(bboxes) == len(masks)
     assert bboxes.shape[1] == 4
