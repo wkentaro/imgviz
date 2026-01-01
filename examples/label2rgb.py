@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
+import typing
 from typing import Literal
-from typing import TypeAlias
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -21,21 +21,20 @@ def label2rgb() -> NDArray[np.uint8]:
 
     plt.figure(dpi=200)
 
-    plt.subplot(231)
+    plt.subplot(141)
     plt.title("+img")
     plt.imshow(imgviz.label2rgb(label=label, image=imgviz.rgb2gray(rgb)))
     plt.axis("off")
 
     kwargs: dict = dict(label_names=label_names, font_size=25)
 
-    Loc: TypeAlias = Literal["centroid", "lt", "rt", "lb", "rb"]
-    for i, loc in enumerate(Loc.__args__):
-        plt.subplot(232 + i)
+    for i, loc in enumerate(["centroid", "lt", "rb"]):
+        loc = typing.cast(Literal["centroid", "lt", "rb"], loc)
+        plt.subplot(142 + i)
         plt.title(f"loc={loc}")
         plt.imshow(imgviz.label2rgb(label, loc=loc, **kwargs))
         plt.axis("off")
 
-    plt.tight_layout()
     img = imgviz.io.pyplot_to_numpy()
     plt.close()
 
