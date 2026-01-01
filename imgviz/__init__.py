@@ -27,7 +27,7 @@ from ._label import label2rgb
 from ._label import label_colormap
 from ._nchannel import Nchannel2RGB
 from ._nchannel import nchannel2rgb
-from .normalize import normalize
+from ._normalize import normalize
 from .resize import resize
 from .tile import tile
 from .trajectory import plot_trajectory
