@@ -214,7 +214,7 @@ def asrgba(img: NDArray) -> NDArray[np.uint8]:
             img = _dtype.bool2ubyte(img)
         rgb = gray2rgb(img)
         rgba = rgb2rgba(rgb)
-    if img.ndim == 3 and img.shape[2] == 4:
+    elif img.ndim == 3 and img.shape[2] == 4:
         rgba = img
     elif img.ndim == 3 and img.shape[2] == 3:
         rgba = rgb2rgba(img)
