@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import warnings
 from collections.abc import Sequence
 
 import numpy as np
@@ -10,16 +9,6 @@ from . import _color
 from . import _label
 from . import _utils
 from . import draw as draw_module
-
-
-def mask_to_bbox(masks: NDArray | Sequence[NDArray]) -> NDArray[np.floating]:
-    warnings.warn(
-        "'mask_to_bbox' is deprecated. Use 'masks_to_bboxes'",
-        DeprecationWarning,
-    )
-    bboxes = masks_to_bboxes(masks)
-    bboxes[:, 2:] += 1  # tight to loose
-    return bboxes
 
 
 def masks_to_bboxes(masks: NDArray | Sequence[NDArray]) -> NDArray[np.floating]:
