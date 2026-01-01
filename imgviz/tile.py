@@ -8,7 +8,7 @@ from typing import Any
 import numpy as np
 from numpy.typing import NDArray
 
-from .centerize import centerize
+from ._centerize import centerize
 from .color import gray2rgb
 from .color import rgb2rgba
 

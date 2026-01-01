@@ -7,7 +7,7 @@ __version__ = importlib.metadata.version("imgviz")
 from . import _io as io
 from . import data
 from . import draw
-from .centerize import centerize
+from ._centerize import centerize
 from .color import asgray
 from .color import asrgb
 from .color import asrgba
