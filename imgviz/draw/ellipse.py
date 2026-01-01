@@ -4,13 +4,13 @@ import PIL.Image
 import PIL.ImageDraw
 import PIL.ImageFont
 
-from .. import utils
+from .. import _utils
 
 
 def ellipse(src, yx1, yx2, fill=None, outline=None, width=0):
-    dst = utils.numpy_to_pillow(src)
+    dst = _utils.numpy_to_pillow(src)
     ellipse_(img=dst, yx1=yx1, yx2=yx2, fill=fill, outline=outline, width=width)
-    return utils.pillow_to_numpy(dst)
+    return _utils.pillow_to_numpy(dst)
 
 
 def ellipse_(img, yx1, yx2, fill=None, outline=None, width=0):

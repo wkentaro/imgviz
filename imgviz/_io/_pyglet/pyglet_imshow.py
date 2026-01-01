@@ -4,7 +4,7 @@ import types
 import numpy as np
 import PIL.Image
 
-from ... import utils
+from ... import _utils
 from .base import check_pyglet_available
 from .pyglet_run import pyglet_run
 
@@ -312,7 +312,7 @@ def _convert_to_imagedata(image):
     pyglet = check_pyglet_available()
 
     if isinstance(image, np.ndarray):
-        image = utils.numpy_to_pillow(image)
+        image = _utils.numpy_to_pillow(image)
     elif isinstance(image, PIL.Image.Image):
         pass
     else:

@@ -4,7 +4,7 @@ import PIL.Image
 import PIL.ImageDraw
 import PIL.ImageFont
 
-from .. import utils
+from .. import _utils
 
 _here: pathlib.Path = pathlib.Path(__file__).parent
 _default_font_path: pathlib.Path = _here / "fonts" / "DejaVuSansMono.ttf"
@@ -78,9 +78,9 @@ def text(src, yx, text, size, color=(0, 0, 0), font_path=None):
         Output image.
 
     """
-    dst = utils.numpy_to_pillow(src)
+    dst = _utils.numpy_to_pillow(src)
     text_(img=dst, yx=yx, text=text, size=size, color=color, font_path=font_path)
-    return utils.pillow_to_numpy(dst)
+    return _utils.pillow_to_numpy(dst)
 
 
 def text_(img, yx, text, size, color=(0, 0, 0), font_path=None):

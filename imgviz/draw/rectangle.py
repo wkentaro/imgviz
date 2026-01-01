@@ -3,7 +3,7 @@ import collections
 import PIL.Image
 import PIL.ImageDraw
 
-from .. import utils
+from .. import _utils
 
 
 def rectangle(src, aabb1, aabb2, fill=None, outline=None, width=0):
@@ -30,7 +30,7 @@ def rectangle(src, aabb1, aabb2, fill=None, outline=None, width=0):
         Output image.
 
     """
-    dst = utils.numpy_to_pillow(src)
+    dst = _utils.numpy_to_pillow(src)
     rectangle_(
         img=dst,
         aabb1=aabb1,
@@ -39,7 +39,7 @@ def rectangle(src, aabb1, aabb2, fill=None, outline=None, width=0):
         outline=outline,
         width=width,
     )
-    return utils.pillow_to_numpy(dst)
+    return _utils.pillow_to_numpy(dst)
 
 
 def rectangle_(img, aabb1, aabb2, fill=None, outline=None, width=0):

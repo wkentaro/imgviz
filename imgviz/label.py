@@ -6,9 +6,9 @@ from typing import Literal
 import numpy as np
 from numpy.typing import NDArray
 
+from . import _utils
 from . import color as color_module
 from . import draw as draw_module
-from . import utils
 
 
 def label_colormap(
@@ -150,7 +150,7 @@ def label2rgb(
         return res
 
     if loc == "centroid":
-        res = utils.numpy_to_pillow(res)
+        res = _utils.numpy_to_pillow(res)
         for label_i in unique_labels:
             mask = label == label_i
             if 1.0 * mask.sum() / mask.size < thresh_suppress:
@@ -211,7 +211,7 @@ def label2rgb(
         res[y1:y2, x1:x2] = alpha * res[y1:y2, x1:x2] + alpha * 255
 
         box_size = text_height - 2 * pad
-        res = utils.numpy_to_pillow(res)
+        res = _utils.numpy_to_pillow(res)
         for i, label_id in enumerate(unique_labels):
             box_aabb1 = aabb1 + (i * text_height + pad, pad)
             box_aabb2 = box_aabb1 + (box_size, box_size)
@@ -228,7 +228,7 @@ def label2rgb(
     else:
         raise ValueError(f"unsupported loc: {loc}")
 
-    return utils.pillow_to_numpy(res)
+    return _utils.pillow_to_numpy(res)
 
 
 def _center_of_mass(mask: NDArray[np.bool_]) -> tuple[float, float]:

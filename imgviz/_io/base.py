@@ -5,7 +5,7 @@ import pathlib
 import numpy as np  # NOQA
 import PIL.Image
 
-from .. import utils
+from .. import _utils
 from ..label import label_colormap
 
 
@@ -23,7 +23,7 @@ def imread(filename):
     img: numpy.ndarray, (H, W) or (H, W, 3) or (H, W, 4)
         Image read.
     """
-    return utils.pillow_to_numpy(PIL.Image.open(filename))
+    return _utils.pillow_to_numpy(PIL.Image.open(filename))
 
 
 def imsave(filename, arr):
@@ -46,7 +46,7 @@ def imsave(filename, arr):
         os.makedirs(osp.dirname(filename))
     except OSError:
         pass
-    return utils.numpy_to_pillow(arr).save(filename)
+    return _utils.numpy_to_pillow(arr).save(filename)
 
 
 def lblsave(filename: str | pathlib.Path, lbl: np.ndarray) -> None:

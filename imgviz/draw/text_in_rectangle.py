@@ -1,7 +1,7 @@
 import numpy as np
 
+from .. import _utils
 from .. import color as color_module
-from .. import utils
 from .rectangle import rectangle_
 from .text import text_
 from .text import text_size
@@ -124,7 +124,7 @@ def text_in_rectangle(
                 constant_values=constant_values,
             )
 
-    dst = utils.numpy_to_pillow(dst)
+    dst = _utils.numpy_to_pillow(dst)
     rectangle_(
         img=dst,
         aabb1=(y1, x1),
@@ -139,7 +139,7 @@ def text_in_rectangle(
         size=size,
         font_path=font_path,
     )
-    return utils.pillow_to_numpy(dst)
+    return _utils.pillow_to_numpy(dst)
 
 
 def text_in_rectangle_(
