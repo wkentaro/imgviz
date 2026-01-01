@@ -1,44 +1,39 @@
 #!/usr/bin/env python
 
+from typing import Literal
+from typing import TypeAlias
+
 import matplotlib.pyplot as plt
+import numpy as np
+from numpy.typing import NDArray
 
 import imgviz
 
 
-def label2rgb():
-    data = imgviz.data.voc()
+def label2rgb() -> NDArray[np.uint8]:
+    data: dict[str, NDArray] = imgviz.data.voc()
 
-    rgb = data["rgb"]
-    label = data["class_label"]
-
-    label_names = [f"{i}:{n}" for i, n in enumerate(data["class_names"])]
-    labelviz_withname1 = imgviz.label2rgb(
-        label, label_names=label_names, font_size=25, loc="centroid"
-    )
-    labelviz_withname2 = imgviz.label2rgb(
-        label, label_names=label_names, font_size=25, loc="rb"
-    )
-    img = imgviz.rgb2gray(rgb)
-    labelviz_withimg = imgviz.label2rgb(label=label, image=img)
+    rgb: NDArray[np.uint8] = data["rgb"]
+    label: NDArray[np.int32] = data["class_label"]
+    label_names: list[str] = [f"{i}:{n}" for i, n in enumerate(data["class_names"])]
 
     # -------------------------------------------------------------------------
 
     plt.figure(dpi=200)
 
-    plt.subplot(131)
+    plt.subplot(231)
     plt.title("+img")
-    plt.imshow(labelviz_withimg)
+    plt.imshow(imgviz.label2rgb(label=label, image=imgviz.rgb2gray(rgb)))
     plt.axis("off")
 
-    plt.subplot(132)
-    plt.title("loc=centroid")
-    plt.imshow(labelviz_withname1)
-    plt.axis("off")
+    kwargs: dict = dict(label_names=label_names, font_size=25)
 
-    plt.subplot(133)
-    plt.title("loc=rb")
-    plt.imshow(labelviz_withname2)
-    plt.axis("off")
+    Loc: TypeAlias = Literal["centroid", "lt", "rt", "lb", "rb"]
+    for i, loc in enumerate(Loc.__args__):
+        plt.subplot(232 + i)
+        plt.title(f"loc={loc}")
+        plt.imshow(imgviz.label2rgb(label, loc=loc, **kwargs))
+        plt.axis("off")
 
     img = imgviz.io.pyplot_to_numpy()
     plt.close()
