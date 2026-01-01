@@ -25,8 +25,8 @@ from ._flow import flow2rgb
 from ._instances import instances2rgb
 from ._label import label2rgb
 from ._label import label_colormap
-from .nchannel import Nchannel2RGB
-from .nchannel import nchannel2rgb
+from ._nchannel import Nchannel2RGB
+from ._nchannel import nchannel2rgb
 from .normalize import normalize
 from .resize import resize
 from .tile import tile
