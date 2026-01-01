@@ -2,9 +2,9 @@ import numpy as np
 
 from .. import _color
 from .. import _utils
-from .rectangle import rectangle_
-from .text import text_
-from .text import text_size
+from ._rectangle import rectangle_
+from ._text import text_
+from ._text import text_size
 
 
 def text_in_rectangle_aabb(img_shape, loc, text, size, aabb1, aabb2, font_path=None):
