@@ -23,10 +23,17 @@ def test_asrgb():
 
 def test_asrgba():
     data = imgviz.data.arc2017()
+
+    # gray input
     gray = imgviz.rgb2gray(data["rgb"])
-
     rgba = imgviz.asrgba(gray)
+    assert rgba.dtype == np.uint8
+    assert rgba.ndim == 3
+    assert rgba.shape[2] == 4
 
+    # rgb input
+    rgb = data["rgb"]
+    rgba = imgviz.asrgba(rgb)
     assert rgba.dtype == np.uint8
     assert rgba.ndim == 3
     assert rgba.shape[2] == 4
