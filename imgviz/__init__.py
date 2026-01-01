@@ -22,7 +22,7 @@ from ._depth import depth2rgb
 from ._dtype import bool2ubyte
 from ._dtype import float2ubyte
 from ._flow import flow2rgb
-from .instances import instances2rgb
+from ._instances import instances2rgb
 from .label import label2rgb
 from .label import label_colormap
 from .nchannel import Nchannel2RGB
