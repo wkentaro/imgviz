@@ -30,4 +30,4 @@ from ._nchannel import nchannel2rgb
 from ._normalize import normalize
 from ._resize import resize
 from ._tile import tile
-from .trajectory import plot_trajectory
+from ._trajectory import plot_trajectory
