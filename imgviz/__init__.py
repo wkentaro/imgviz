@@ -17,8 +17,8 @@ from ._color import rgb2gray
 from ._color import rgb2hsv
 from ._color import rgb2rgba
 from ._color import rgba2rgb
-from .depth import Depth2RGB
-from .depth import depth2rgb
+from ._depth import Depth2RGB
+from ._depth import depth2rgb
 from .dtype import bool2ubyte
 from .dtype import float2ubyte
 from .flow import flow2rgb
