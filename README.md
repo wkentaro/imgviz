@@ -114,7 +114,7 @@ tiled = imgviz.tile(
 	</tr>
 	<tr>
 		<td><pre><a href="examples/label2rgb.py">examples/label2rgb.py</a></pre></td>
-		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/label2rgb.jpg" width="32.10526315789473%" /></td>
+		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/label2rgb.jpg" width="97.25490196078431%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/mask2rgb.py">examples/mask2rgb.py</a></pre></td>
