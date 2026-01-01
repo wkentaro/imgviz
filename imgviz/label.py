@@ -6,8 +6,8 @@ from typing import Literal
 import numpy as np
 from numpy.typing import NDArray
 
+from . import _color
 from . import _utils
-from . import color as color_module
 from . import draw as draw_module
 
 
@@ -49,13 +49,13 @@ def label_colormap(
     cmap = np.stack((r, g, b), axis=1).astype(np.uint8)
 
     if value is not None:
-        hsv = color_module.rgb2hsv(cmap.reshape(1, -1, 3))
+        hsv = _color.rgb2hsv(cmap.reshape(1, -1, 3))
         if isinstance(value, float):
             hsv[:, 1:, 2] = hsv[:, 1:, 2].astype(float) * value
         else:
             assert isinstance(value, int)
             hsv[:, 1:, 2] = value
-        cmap = color_module.hsv2rgb(hsv).reshape(-1, 3)
+        cmap = _color.hsv2rgb(hsv).reshape(-1, 3)
     return cmap
 
 
@@ -130,7 +130,7 @@ def label2rgb(
 
     if image is not None:
         if image.ndim == 2:
-            image = color_module.gray2rgb(image)
+            image = _color.gray2rgb(image)
         res = (1 - alpha_map) * image.astype(float) + alpha_map * res.astype(float)
         res = np.clip(res.round(), 0, 255).astype(np.uint8)
 
@@ -166,7 +166,7 @@ def label2rgb(
             height, width = draw_module.text_size(
                 text, size=font_size, font_path=font_path
             )
-            color = color_module.get_fg_color(res.getpixel((int(x), int(y))))
+            color = _color.get_fg_color(res.getpixel((int(x), int(y))))
             draw_module.text_(
                 res,
                 yx=(y - height // 2, x - width // 2),

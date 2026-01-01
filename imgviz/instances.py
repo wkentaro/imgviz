@@ -6,8 +6,8 @@ from collections.abc import Sequence
 import numpy as np
 from numpy.typing import NDArray
 
+from . import _color
 from . import _utils
-from . import color as color_module
 from . import draw as draw_module
 from . import label as label_module
 
@@ -98,7 +98,7 @@ def instances2rgb(
     assert image.dtype == np.uint8
 
     if image.ndim == 2:
-        image = color_module.gray2rgb(image)
+        image = _color.gray2rgb(image)
     assert image.ndim == 3
 
     assert all(label_i >= 0 for label_i in labels)

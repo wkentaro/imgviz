@@ -9,8 +9,8 @@ import numpy as np
 from numpy.typing import NDArray
 
 from ._centerize import centerize
-from .color import gray2rgb
-from .color import rgb2rgba
+from ._color import gray2rgb
+from ._color import rgb2rgba
 
 
 def _tile(
