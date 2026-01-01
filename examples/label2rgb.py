@@ -35,6 +35,7 @@ def label2rgb() -> NDArray[np.uint8]:
         plt.imshow(imgviz.label2rgb(label, loc=loc, **kwargs))
         plt.axis("off")
 
+    plt.tight_layout()
     img = imgviz.io.pyplot_to_numpy()
     plt.close()
 
