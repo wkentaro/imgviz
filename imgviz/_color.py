@@ -4,8 +4,8 @@ import numpy as np
 from numpy.typing import ArrayLike
 from numpy.typing import NDArray
 
+from . import _dtype
 from . import _utils
-from . import dtype
 
 
 def rgb2gray(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:
@@ -150,7 +150,7 @@ def asgray(img: NDArray) -> NDArray[np.uint8]:
     """
     if img.ndim == 2:
         if img.dtype == bool:
-            gray = dtype.bool2ubyte(img)
+            gray = _dtype.bool2ubyte(img)
         else:
             gray = img
     elif img.ndim == 3 and img.shape[2] == 4:
@@ -181,7 +181,7 @@ def asrgb(img: NDArray) -> NDArray[np.uint8]:
     """
     if img.ndim == 2:
         if img.dtype == bool:
-            img = dtype.bool2ubyte(img)
+            img = _dtype.bool2ubyte(img)
         rgb = gray2rgb(img)
     elif img.ndim == 3 and img.shape[2] == 4:
         rgb = rgba2rgb(img)
@@ -211,7 +211,7 @@ def asrgba(img: NDArray) -> NDArray[np.uint8]:
     """
     if img.ndim == 2:
         if img.dtype == bool:
-            img = dtype.bool2ubyte(img)
+            img = _dtype.bool2ubyte(img)
         rgb = gray2rgb(img)
         rgba = rgb2rgba(rgb)
     if img.ndim == 3 and img.shape[2] == 4:

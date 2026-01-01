@@ -19,8 +19,8 @@ from ._color import rgb2rgba
 from ._color import rgba2rgb
 from ._depth import Depth2RGB
 from ._depth import depth2rgb
-from .dtype import bool2ubyte
-from .dtype import float2ubyte
+from ._dtype import bool2ubyte
+from ._dtype import float2ubyte
 from .flow import flow2rgb
 from .instances import instances2rgb
 from .label import label2rgb
