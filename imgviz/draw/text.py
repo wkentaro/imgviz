@@ -7,9 +7,7 @@ import PIL.ImageFont
 from .. import utils
 
 _here: pathlib.Path = pathlib.Path(__file__).parent
-_default_font_path: pathlib.Path = (
-    _here / ".." / "data" / "fonts" / "DejaVuSansMono.ttf"
-)
+_default_font_path: pathlib.Path = _here / "fonts" / "DejaVuSansMono.ttf"
 
 
 def _get_font(size, font_path: str | None = None):
