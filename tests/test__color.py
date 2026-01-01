@@ -6,10 +6,11 @@ import imgviz
 
 
 @pytest.fixture
-def images() -> dict[str, NDArray[np.uint8]]:
+def images() -> dict[str, NDArray[np.uint8] | NDArray[np.bool_]]:
     data = imgviz.data.arc2017()
     rgb = data["rgb"]
     return {
+        "bool": imgviz.rgb2gray(rgb) > 128,
         "gray": imgviz.rgb2gray(rgb),
         "rgb": rgb,
         "rgba": imgviz.rgb2rgba(rgb),
