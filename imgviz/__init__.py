@@ -29,5 +29,5 @@ from ._nchannel import Nchannel2RGB
 from ._nchannel import nchannel2rgb
 from ._normalize import normalize
 from ._resize import resize
-from .tile import tile
+from ._tile import tile
 from .trajectory import plot_trajectory
