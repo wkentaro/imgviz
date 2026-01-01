@@ -1,75 +1,38 @@
 import numpy as np
+import pytest
 
 import imgviz
 
 
-def test_asgray():
+@pytest.fixture
+def images():
     data = imgviz.data.arc2017()
-
-    # gray input
-    gray = imgviz.rgb2gray(data["rgb"])
-    result = imgviz.asgray(gray)
-    assert result.ndim == 2
-    assert result.dtype == np.uint8
-
-    # rgb input
     rgb = data["rgb"]
-    result = imgviz.asgray(rgb)
-    assert result.ndim == 2
-    assert result.dtype == np.uint8
-
-    # rgba input
-    rgba = imgviz.rgb2rgba(data["rgb"])
-    result = imgviz.asgray(rgba)
-    assert result.ndim == 2
-    assert result.dtype == np.uint8
+    return {
+        "gray": imgviz.rgb2gray(rgb),
+        "rgb": rgb,
+        "rgba": imgviz.rgb2rgba(rgb),
+    }
 
 
-def test_asrgb():
-    data = imgviz.data.arc2017()
-
-    # gray input
-    gray = imgviz.rgb2gray(data["rgb"])
-    result = imgviz.asrgb(gray)
-    assert result.dtype == np.uint8
-    assert result.ndim == 3
-    assert result.shape[2] == 3
-
-    # rgb input
-    rgb = data["rgb"]
-    result = imgviz.asrgb(rgb)
-    assert result.dtype == np.uint8
-    assert result.ndim == 3
-    assert result.shape[2] == 3
-
-    # rgba input
-    rgba = imgviz.rgb2rgba(data["rgb"])
-    result = imgviz.asrgb(rgba)
-    assert result.dtype == np.uint8
-    assert result.ndim == 3
-    assert result.shape[2] == 3
+def test_asgray(images):
+    for img in images.values():
+        result = imgviz.asgray(img)
+        assert result.ndim == 2
+        assert result.dtype == np.uint8
 
 
-def test_asrgba():
-    data = imgviz.data.arc2017()
+def test_asrgb(images):
+    for img in images.values():
+        result = imgviz.asrgb(img)
+        assert result.dtype == np.uint8
+        assert result.ndim == 3
+        assert result.shape[2] == 3
 
-    # gray input
-    gray = imgviz.rgb2gray(data["rgb"])
-    result = imgviz.asrgba(gray)
-    assert result.dtype == np.uint8
-    assert result.ndim == 3
-    assert result.shape[2] == 4
 
-    # rgb input
-    rgb = data["rgb"]
-    result = imgviz.asrgba(rgb)
-    assert result.dtype == np.uint8
-    assert result.ndim == 3
-    assert result.shape[2] == 4
-
-    # rgba input
-    rgba = imgviz.rgb2rgba(data["rgb"])
-    result = imgviz.asrgba(rgba)
-    assert result.dtype == np.uint8
-    assert result.ndim == 3
-    assert result.shape[2] == 4
+def test_asrgba(images):
+    for img in images.values():
+        result = imgviz.asrgba(img)
+        assert result.dtype == np.uint8
+        assert result.ndim == 3
+        assert result.shape[2] == 4
