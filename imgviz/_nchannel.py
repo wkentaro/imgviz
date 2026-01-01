@@ -13,7 +13,7 @@ if TYPE_CHECKING:
     import sklearn.decomposition
 
 
-class Nchannel2RGB:
+class Nchannel2Rgb:
     """Convert nchannel array to rgb by PCA.
 
     Parameters
@@ -105,4 +105,4 @@ def nchannel2rgb(
         Visualized image with shape (H, W, 3).
 
     """
-    return Nchannel2RGB(pca)(nchannel, dtype)
+    return Nchannel2Rgb(pca)(nchannel, dtype)

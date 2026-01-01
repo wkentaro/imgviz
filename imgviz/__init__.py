@@ -17,7 +17,7 @@ from ._color import rgb2gray
 from ._color import rgb2hsv
 from ._color import rgb2rgba
 from ._color import rgba2rgb
-from ._depth import Depth2RGB
+from ._depth import Depth2Rgb
 from ._depth import depth2rgb
 from ._dtype import bool2ubyte
 from ._dtype import float2ubyte
@@ -26,7 +26,7 @@ from ._instances import instances2rgb
 from ._instances import masks_to_bboxes
 from ._label import label2rgb
 from ._label import label_colormap
-from ._nchannel import Nchannel2RGB
+from ._nchannel import Nchannel2Rgb
 from ._nchannel import nchannel2rgb
 from ._normalize import normalize
 from ._resize import resize

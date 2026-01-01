@@ -10,7 +10,7 @@ from numpy.typing import NDArray
 from ._normalize import normalize
 
 
-class Depth2RGB:
+class Depth2Rgb:
     """Convert depth array to rgb.
 
     Parameters
@@ -119,4 +119,4 @@ def depth2rgb(
         Colorized image with shape (H, W, 3).
 
     """
-    return Depth2RGB(min_value, max_value, colormap)(depth, dtype)
+    return Depth2Rgb(min_value, max_value, colormap)(depth, dtype)
