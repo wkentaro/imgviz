@@ -52,7 +52,6 @@ dev = [
 [project.optional-dependencies]
 all = [
   "opencv-python",
-  "pyglet",
   "scikit-image",  # required by instances2rgb with boundary_width>0
   "scikit-learn",  # required by nchannel2rgb
 ]
