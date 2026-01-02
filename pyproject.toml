@@ -51,7 +51,6 @@ dev = [
 
 [project.optional-dependencies]
 all = [
-  "matplotlib",
   "opencv-python",
   "pyglet",
   "scikit-image",  # required by instances2rgb with boundary_width>0

@@ -10,7 +10,7 @@ from numpy.typing import NDArray
 import imgviz
 
 
-def label2rgb() -> NDArray[np.uint8]:
+def label2rgb() -> None:
     data: dict[str, NDArray] = imgviz.data.voc()
 
     rgb: NDArray[np.uint8] = data["rgb"]
@@ -34,11 +34,6 @@ def label2rgb() -> NDArray[np.uint8]:
         plt.title(f"loc={loc}")
         plt.imshow(imgviz.label2rgb(label, loc=loc, **kwargs))
         plt.axis("off")
-
-    img = imgviz.io.pyplot_to_numpy()
-    plt.close()
-
-    return img
 
 
 if __name__ == "__main__":

@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import imgviz
 
 
-def flow2rgb():
+def flow2rgb() -> None:
     data = imgviz.data.middlebury()
 
     rgb = data["rgb"]
@@ -24,11 +24,6 @@ def flow2rgb():
     plt.title("flow")
     plt.imshow(flowviz)
     plt.axis("off")
-
-    img = imgviz.io.pyplot_to_numpy()
-    plt.close()
-
-    return img
 
 
 if __name__ == "__main__":

@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import imgviz
 
 
-def depth2rgb():
+def depth2rgb() -> None:
     data = imgviz.data.arc2017()
 
     depthviz_jet = imgviz.depth2rgb(
@@ -38,11 +38,6 @@ def depth2rgb():
     plt.title("depth (custom color)")
     plt.imshow(depthviz_custom)
     plt.axis("off")
-
-    img = imgviz.io.pyplot_to_numpy()
-    plt.close()
-
-    return img
 
 
 if __name__ == "__main__":

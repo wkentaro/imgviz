@@ -10,7 +10,7 @@ from numpy.typing import NDArray
 import imgviz
 
 
-def mask2rgb():
+def mask2rgb() -> None:
     data: dict[str, Any] = imgviz.data.voc()
 
     rgb: NDArray[np.uint8] = data["rgb"]
@@ -41,11 +41,6 @@ def mask2rgb():
         imgviz.mask2rgb(mask, image=rgb, fill=imgviz.fill.Stripe(color=(0, 255, 0)))
     )
     plt.axis("off")
-
-    img = imgviz.io.pyplot_to_numpy()
-    plt.close()
-
-    return img
 
 
 if __name__ == "__main__":
