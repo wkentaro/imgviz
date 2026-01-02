@@ -37,7 +37,7 @@ The library is organized into visualization functions that convert data to RGB i
 - **Drawing primitives** (`imgviz/draw/`): Low-level drawing functions for shapes and text
 - **Color utilities** (`imgviz/color.py`): Color space conversions (rgb2gray, hsv2rgb, etc.)
 - **Sample data** (`imgviz/data/`): Built-in datasets for examples and testing (arc2017, kitti, voc, etc.)
-- **I/O backends** (`imgviz/_io/`): Display backends (pyplot, opencv)
+- **I/O backends** (`imgviz/_io/`): Image I/O and display (pil)
 
 All public functions are exported from `imgviz/__init__.py`.
 
