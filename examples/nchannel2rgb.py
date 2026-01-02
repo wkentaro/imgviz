@@ -6,7 +6,7 @@ import numpy as np
 import imgviz
 
 
-def nchannel2rgb():
+def nchannel2rgb() -> None:
     data = imgviz.data.arc2017()
 
     nchannel_viz = imgviz.nchannel2rgb(data["res4"], dtype=np.float32)
@@ -28,11 +28,6 @@ def nchannel2rgb():
     plt.title("res4 (colorized)")
     plt.imshow(nchannel_viz)
     plt.axis("off")
-
-    img = imgviz.io.pyplot_to_numpy()
-    plt.close()
-
-    return img
 
 
 if __name__ == "__main__":

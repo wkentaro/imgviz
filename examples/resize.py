@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import imgviz
 
 
-def resize():
+def resize() -> None:
     data = imgviz.data.arc2017()
 
     rgb = data["rgb"]
@@ -26,11 +26,6 @@ def resize():
     plt.title(f"resized: {rgb_resized.shape[0]}x{rgb_resized.shape[1]}")
     plt.imshow(rgb_resized)
     plt.axis("off")
-
-    img = imgviz.io.pyplot_to_numpy()
-    plt.close()
-
-    return img
 
 
 if __name__ == "__main__":

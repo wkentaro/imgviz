@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import imgviz
 
 
-def centerize():
+def centerize() -> None:
     data = imgviz.data.arc2017()
 
     rgb = data["rgb"]
@@ -34,8 +34,6 @@ def centerize():
     plt.title("centerized2")
     plt.imshow(centerized2)
     plt.axis("off")
-
-    return imgviz.io.pyplot_to_numpy()
 
 
 if __name__ == "__main__":

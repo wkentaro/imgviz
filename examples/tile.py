@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import imgviz
 
 
-def tile():
+def tile() -> None:
     data = imgviz.data.arc2017()
 
     rgb = data["rgb"]
@@ -32,11 +32,6 @@ def tile():
     plt.title("instances")
     plt.imshow(tiled)
     plt.axis("off")
-
-    img = imgviz.io.pyplot_to_numpy()
-    plt.close()
-
-    return img
 
 
 if __name__ == "__main__":

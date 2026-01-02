@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import imgviz
 
 
-def draw():
+def draw() -> None:
     img = imgviz.data.lena()
     H, W = img.shape[:2]
     viz = img
@@ -94,11 +94,6 @@ def draw():
     plt.title("markers")
     plt.imshow(viz)
     plt.axis("off")
-
-    img = imgviz.io.pyplot_to_numpy()
-    plt.close()
-
-    return img
 
 
 if __name__ == "__main__":
