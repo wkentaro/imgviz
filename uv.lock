@@ -592,7 +592,6 @@ dependencies = [
 
 [package.optional-dependencies]
 all = [
-    { name = "matplotlib" },
     { name = "opencv-python" },
     { name = "pyglet" },
     { name = "scikit-image", version = "0.25.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
@@ -618,7 +617,6 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "cmap", specifier = ">=0.1.0" },
-    { name = "matplotlib", marker = "extra == 'all'" },
     { name = "numpy", specifier = ">=1.21.0" },
     { name = "opencv-python", marker = "extra == 'all'" },
     { name = "pillow", specifier = ">=5.3.0" },
