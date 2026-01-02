@@ -125,10 +125,6 @@ tiled = imgviz.tile(
 		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/nchannel2rgb.jpg" width="52.21052631578947%" /></td>
 	</tr>
 	<tr>
-		<td><pre><a href="examples/plot_trajectory.py">examples/plot_trajectory.py</a></pre></td>
-		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/plot_trajectory.jpg" width="26.86868686868687%" /></td>
-	</tr>
-	<tr>
 		<td><pre><a href="examples/resize.py">examples/resize.py</a></pre></td>
 		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/resize.jpg" width="52.21052631578947%" /></td>
 	</tr>
