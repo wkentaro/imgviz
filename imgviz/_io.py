@@ -76,5 +76,5 @@ def lblsave(filename: str | pathlib.Path, lbl: np.ndarray) -> None:
     lbl_pil.save(filename)
 
 
-def pil_imshow(image: NDArray[np.uint8]) -> None:
+def imshow(image: NDArray[np.uint8]) -> None:
     _utils.numpy_to_pillow(image).show()
