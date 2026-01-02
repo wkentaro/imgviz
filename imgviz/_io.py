@@ -2,11 +2,12 @@ import os
 import os.path as osp
 import pathlib
 
-import numpy as np  # NOQA
+import numpy as np
 import PIL.Image
+from numpy.typing import NDArray
 
-from .. import _utils
-from .._label import label_colormap
+from . import _utils
+from ._label import label_colormap
 
 
 def imread(filename):
@@ -73,3 +74,7 @@ def lblsave(filename: str | pathlib.Path, lbl: np.ndarray) -> None:
     colormap = label_colormap(n_label=256)
     lbl_pil.putpalette(colormap.flatten())
     lbl_pil.save(filename)
+
+
+def pil_imshow(image: NDArray[np.uint8]) -> None:
+    _utils.numpy_to_pillow(image).show()
