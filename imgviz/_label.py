@@ -131,6 +131,8 @@ def label2rgb(
         return res
 
     if loc == "centroid":
+        random_state: np.random.RandomState = np.random.RandomState(0)
+
         res = _utils.numpy_to_pillow(res)
         for label_i in unique_labels:
             mask = label == label_i
@@ -140,7 +142,7 @@ def label2rgb(
 
             if label[y, x] != label_i:
                 Y, X = np.where(mask)
-                point_index = np.random.randint(0, len(Y))
+                point_index = random_state.randint(0, len(Y))
                 y, x = Y[point_index], X[point_index]
 
             text = label_names[label_i]
