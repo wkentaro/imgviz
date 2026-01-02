@@ -71,7 +71,7 @@ def lblsave(filename: str | pathlib.Path, lbl: np.ndarray) -> None:
         raise ValueError(f"lbl.dtype must be np.uint8, but got {lbl.dtype}")
 
     lbl_pil = PIL.Image.fromarray(lbl, mode="P")
-    colormap = label_colormap(n_label=256)
+    colormap = label_colormap()
     lbl_pil.putpalette(colormap.flatten())
     lbl_pil.save(filename)
 

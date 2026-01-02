@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import functools
 import numbers
 from typing import Literal
 
@@ -11,51 +12,31 @@ from . import _utils
 from . import draw as draw_module
 
 
-def label_colormap(
-    n_label: int = 256, value: float | int | None = None
-) -> NDArray[np.uint8]:
-    """Label colormap.
+def _bitget(byte_value: NDArray[np.uint8], idx: int) -> NDArray[np.uint8]:
+    shape: tuple[int, ...] = byte_value.shape + (8,)
+    return np.unpackbits(byte_value).reshape(shape)[..., -1 - idx]
 
-    Parameters
-    ----------
-    n_label
-        Number of labels.
-    value
-        Value scale or value of label color in HSV space.
+
+@functools.lru_cache(maxsize=1)
+def label_colormap() -> NDArray[np.uint8]:
+    """Label colormap for maximum 256 labels.
 
     Returns
     -------
     cmap
-        Label id to colormap with shape (N, 3).
+        Label id to colormap with shape (256, 3).
 
     """
-
-    def bitget(byteval, idx):
-        shape = byteval.shape + (8,)
-        return np.unpackbits(byteval).reshape(shape)[..., -1 - idx]
-
-    i = np.arange(n_label, dtype=np.uint8)
-    r = np.full_like(i, 0)
-    g = np.full_like(i, 0)
-    b = np.full_like(i, 0)
-
+    i = np.arange(256, dtype=np.uint8)
     i = np.repeat(i[:, None], 8, axis=1)
     i = np.right_shift(i, np.arange(0, 24, 3)).astype(np.uint8)
     j = np.arange(8)[::-1]
-    r = np.bitwise_or.reduce(np.left_shift(bitget(i, 0), j), axis=1)
-    g = np.bitwise_or.reduce(np.left_shift(bitget(i, 1), j), axis=1)
-    b = np.bitwise_or.reduce(np.left_shift(bitget(i, 2), j), axis=1)
+    r = np.bitwise_or.reduce(np.left_shift(_bitget(i, 0), j), axis=1)
+    g = np.bitwise_or.reduce(np.left_shift(_bitget(i, 1), j), axis=1)
+    b = np.bitwise_or.reduce(np.left_shift(_bitget(i, 2), j), axis=1)
 
-    cmap = np.stack((r, g, b), axis=1).astype(np.uint8)
-
-    if value is not None:
-        hsv = _color.rgb2hsv(cmap.reshape(1, -1, 3))
-        if isinstance(value, float):
-            hsv[:, 1:, 2] = hsv[:, 1:, 2].astype(float) * value
-        else:
-            assert isinstance(value, int)
-            hsv[:, 1:, 2] = value
-        cmap = _color.hsv2rgb(hsv).reshape(-1, 3)
+    cmap: NDArray[np.uint8] = np.stack((r, g, b), axis=1).astype(np.uint8)
+    cmap.setflags(write=False)
     return cmap
 
 

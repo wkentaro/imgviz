@@ -33,7 +33,7 @@ def draw() -> None:
     # mouse segment
     viz = imgviz.draw.line(viz, yx=[yxs[3], yxs[4]], fill=(255, 255, 255), width=5)
 
-    colors = imgviz.label_colormap(value=255)[1:]
+    colors = imgviz.label_colormap()[1:]
     shapes = ["star", "ellipse", "rectangle", "circle", "triangle"]
     for yx, color, shape in zip(yxs, colors, shapes):
         size = 20
