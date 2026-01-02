@@ -45,7 +45,7 @@ def instances2rgb(
     captions: Sequence[str | None] | None = None,
     font_size: int = 25,
     line_width: int = 5,
-    boundary_width: int = 1,
+    boundary_width: int = 0,
     alpha: float = 0.7,
     colormap: NDArray[np.uint8] | None = None,
     font_path: str | None = None,
@@ -121,15 +121,19 @@ def instances2rgb(
         dst = dst.copy()
         dst[mask] = (1 - alpha) * image[mask].astype(float) + alpha * maskviz[mask]
 
-        try:
-            import skimage.segmentation
+        if boundary_width > 0:
+            try:
+                import skimage.segmentation
+            except ImportError:
+                raise ImportError(
+                    "skimage is required for boundary_width > 0. "
+                    "Please install scikit-image or use: pip install imgviz[all]"
+                ) from None
 
             boundary = skimage.segmentation.find_boundaries(mask, connectivity=2)
             for _ in range(boundary_width - 1):
                 boundary = skimage.morphology.binary_dilation(boundary)
             dst[boundary] = (200, 200, 200)
-        except ImportError:
-            pass
 
     dst = _utils.numpy_to_pillow(dst)
     for instance_id in range(n_instance):
