@@ -41,6 +41,7 @@ dev = [
   "build>=1.3.0",
   "ipython>=8.37.0",
   "matplotlib>=3.5.0",
+  "opencv-python>=4.11.0.86",
   "pytest>=8.4.2",
   "pytest-xdist>=3.8.0",
   "ruff>=0.14.10",
@@ -51,7 +52,6 @@ dev = [
 
 [project.optional-dependencies]
 all = [
-  "opencv-python",
   "scikit-image",  # required by instances2rgb with boundary_width>0
   "scikit-learn",  # required by nchannel2rgb
 ]
