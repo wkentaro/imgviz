@@ -3,17 +3,19 @@ from __future__ import annotations
 import numpy as np
 from numpy.typing import NDArray
 
-from . import _color
+from ._color import asrgb
+from .fill import Fill
+from .fill import Solid
 
 
 def mask2rgb(
     mask: NDArray[np.bool_],
     image: NDArray[np.uint8] | None = None,
+    fill: Fill | tuple[int, int, int] | NDArray[np.uint8] = (0, 255, 0),
     alpha: float = 0.5,
-    color: tuple[int, int, int] = (0, 255, 0),
     cval: tuple[int, int, int] = (0, 0, 0),
 ) -> NDArray[np.uint8]:
-    """Fill mask region with color.
+    """Fill mask region with color or pattern.
 
     Parameters
     ----------
@@ -21,12 +23,14 @@ def mask2rgb(
         Boolean mask (H, W).
     image
         Background image to blend with. If None, returns solid color.
+    fill
+        Fill specification (e.g., Solid, Stripe). If a type of Fill is not given,
+        the given value (e.g., an RGB tuple or NDArray[np.uint8]) is interpreted
+        as a color specification for Solid fill.
     alpha
-        Opacity of fill. Only used when image is provided.
-    color
-        RGB color to fill. Default green (0, 255, 0).
+        Opacity of fill (0.0 to 1.0). Only used when image is provided.
     cval
-        RGB color for background when image is None. Default black (0, 0, 0).
+        RGB color for background when image is None. Defaults to black.
 
     Returns
     -------
@@ -38,16 +42,14 @@ def mask2rgb(
         raise ValueError(f"mask.ndim must be 2, got {mask.ndim}")
     if mask.dtype != np.bool_:
         raise ValueError(f"mask.dtype must be bool, got {mask.dtype}")
+    if not isinstance(fill, Fill):
+        fill = Solid(color=fill)
 
-    result: NDArray[np.uint8]
     if image is None:
-        result = np.full(mask.shape + (3,), fill_value=cval, dtype=np.uint8)
-        result[mask] = color
+        h, w = mask.shape
+        image = np.full((h, w, 3), fill_value=cval, dtype=np.uint8)
+        alpha = 1.0  # ignore alpha when no image is given
     else:
-        result = _color.asrgb(img=image, copy=True)
-        blended: NDArray[np.float32] = (1 - alpha) * result[mask].astype(
-            np.float32
-        ) + alpha * np.array(color, dtype=np.float32)
-        result[mask] = np.clip(blended.round(), 0, 255).astype(np.uint8)
+        image = asrgb(image, copy=True)
 
-    return result
+    return fill(mask=mask, image=image, alpha=alpha, copy=False)

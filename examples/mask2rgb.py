@@ -31,13 +31,15 @@ def mask2rgb():
     plt.axis("off")
 
     plt.subplot(132)
-    plt.title("mask + image")
-    plt.imshow(imgviz.mask2rgb(mask, image=rgb, alpha=0.5))
+    plt.title("mask striped")
+    plt.imshow(imgviz.mask2rgb(mask, fill=imgviz.fill.Stripe(color=(0, 255, 0))))
     plt.axis("off")
 
     plt.subplot(133)
-    plt.title("mask + image\n(color=red)")
-    plt.imshow(imgviz.mask2rgb(mask, image=rgb, alpha=0.5, color=(255, 0, 0)))
+    plt.title("mask + image")
+    plt.imshow(
+        imgviz.mask2rgb(mask, image=rgb, fill=imgviz.fill.Stripe(color=(0, 255, 0)))
+    )
     plt.axis("off")
 
     img = imgviz.io.pyplot_to_numpy()
