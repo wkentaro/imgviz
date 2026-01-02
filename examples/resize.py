@@ -18,12 +18,12 @@ def resize():
     plt.figure(dpi=200)
 
     plt.subplot(121)
-    plt.title(f"rgb:\n{rgb.shape}")
+    plt.title(f"original: {rgb.shape[0]}x{rgb.shape[1]}")
     plt.imshow(rgb)
     plt.axis("off")
 
     plt.subplot(122)
-    plt.title(f"rgb_resized:\n{rgb_resized.shape}")
+    plt.title(f"resized: {rgb_resized.shape[0]}x{rgb_resized.shape[1]}")
     plt.imshow(rgb_resized)
     plt.axis("off")
 

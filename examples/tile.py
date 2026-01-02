@@ -17,7 +17,7 @@ def tile():
         rgb_crop = rgb[slice_]
         mask_crop = mask[slice_]
         crops.append(rgb_crop * mask_crop[:, :, None])
-    tiled = imgviz.tile(imgs=crops, border=(255, 255, 255))
+    tiled = imgviz.tile(imgs=crops, shape=(2, 4), border=(255, 255, 255))
 
     # -------------------------------------------------------------------------
 

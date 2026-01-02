@@ -32,12 +32,12 @@ def instances2rgb():
     plt.axis("off")
 
     plt.subplot(132)
-    plt.title("instances\n(bboxes)")
+    plt.title("instances (bboxes)")
     plt.imshow(insviz1)
     plt.axis("off")
 
     plt.subplot(133)
-    plt.title("instances\n(masks)")
+    plt.title("instances (masks)")
     plt.imshow(insviz2)
     plt.axis("off")
 
