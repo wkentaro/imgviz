@@ -94,7 +94,7 @@ tiled = imgviz.tile(
 <table>
 	<tr>
 		<td><pre><a href="examples/centerize.py">examples/centerize.py</a></pre></td>
-		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/centerize.jpg" width="53.333333333333336%" /></td>
+		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/centerize.jpg" width="59.40119760479042%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/depth2rgb.py">examples/depth2rgb.py</a></pre></td>
@@ -110,7 +110,7 @@ tiled = imgviz.tile(
 	</tr>
 	<tr>
 		<td><pre><a href="examples/instances2rgb.py">examples/instances2rgb.py</a></pre></td>
-		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/instances2rgb.jpg" width="66.35451505016722%" /></td>
+		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/instances2rgb.jpg" width="76.39846743295018%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/label2rgb.py">examples/label2rgb.py</a></pre></td>
@@ -130,10 +130,10 @@ tiled = imgviz.tile(
 	</tr>
 	<tr>
 		<td><pre><a href="examples/resize.py">examples/resize.py</a></pre></td>
-		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/resize.jpg" width="47.238095238095234%" /></td>
+		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/resize.jpg" width="52.21052631578947%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/tile.py">examples/tile.py</a></pre></td>
-		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/tile.jpg" width="35.812274368231044%" /></td>
+		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/tile.jpg" width="52.21052631578947%" /></td>
 	</tr>
 </table>
