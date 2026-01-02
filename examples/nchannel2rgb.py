@@ -31,6 +31,6 @@ def nchannel2rgb() -> None:
 
 
 if __name__ == "__main__":
-    from base import run_example
+    from _base import run_example
 
     run_example(nchannel2rgb)

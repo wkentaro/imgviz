@@ -37,6 +37,6 @@ def label2rgb() -> None:
 
 
 if __name__ == "__main__":
-    from base import run_example
+    from _base import run_example
 
     run_example(label2rgb)
