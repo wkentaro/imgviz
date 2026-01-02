@@ -21,16 +21,16 @@ def label2rgb() -> NDArray[np.uint8]:
 
     plt.figure(dpi=200)
 
-    plt.subplot(141)
+    plt.subplot(131)
     plt.title("+img")
     plt.imshow(imgviz.label2rgb(label=label, image=imgviz.rgb2gray(rgb)))
     plt.axis("off")
 
     kwargs: dict = dict(label_names=label_names, font_size=25)
 
-    for i, loc in enumerate(["centroid", "lt", "rb"]):
+    for i, loc in enumerate(["centroid", "lt"]):
         loc = typing.cast(Literal["centroid", "lt", "rb"], loc)
-        plt.subplot(142 + i)
+        plt.subplot(132 + i)
         plt.title(f"loc={loc}")
         plt.imshow(imgviz.label2rgb(label, loc=loc, **kwargs))
         plt.axis("off")
