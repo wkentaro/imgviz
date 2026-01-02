@@ -55,7 +55,7 @@ all = [
   "opencv-python",
   "pyglet",
   "scikit-image",
-  "scikit-learn",
+  "scikit-learn",  # required by nchannel2rgb
 ]
 
 [tool.hatch.metadata]

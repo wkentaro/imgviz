@@ -51,7 +51,13 @@ class Nchannel2Rgb:
             Visualized image with shape (H, W, 3).
 
         """
-        import sklearn.decomposition
+        try:
+            import sklearn.decomposition
+        except ImportError:
+            raise ImportError(
+                "sklearn is required for Nchannel2Rgb. "
+                "Please install scikit-learn or use: pip install imgviz[all]"
+            ) from None
 
         assert nchannel.ndim == 3, "nchannel.ndim must be 3"
         assert np.issubdtype(nchannel.dtype, np.floating), (
