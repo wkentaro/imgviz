@@ -33,4 +33,3 @@ from ._normalize import normalize
 from ._masks import mask2rgb
 from ._resize import resize
 from ._tile import tile
-from ._trajectory import plot_trajectory
