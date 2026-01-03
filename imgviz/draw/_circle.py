@@ -1,13 +1,21 @@
-import collections
-
+import numpy as np
 import PIL.Image
 import PIL.ImageDraw
-import PIL.ImageFont
+from numpy.typing import NDArray
 
 from .. import _utils
+from ._color import Color
+from ._color import get_pil_color
 
 
-def circle(src, center, diameter, fill=None, outline=None, width=0):
+def circle(
+    src: NDArray[np.uint8],
+    center: tuple[float, float],
+    diameter: float,
+    fill: Color | None = None,
+    outline: Color | None = None,
+    width: int = 0,
+) -> NDArray[np.uint8]:
     """Draw circle on numpy array with Pillow.
 
     Args:
@@ -33,12 +41,14 @@ def circle(src, center, diameter, fill=None, outline=None, width=0):
     return _utils.pillow_to_numpy(dst)
 
 
-def circle_(img, center, diameter, fill=None, outline=None, width=0):
-    if isinstance(fill, collections.abc.Iterable):
-        fill = tuple(fill)
-    if isinstance(outline, collections.abc.Iterable):
-        outline = tuple(outline)
-
+def circle_(
+    img: PIL.Image.Image,
+    center: tuple[float, float],
+    diameter: float,
+    fill: Color | None = None,
+    outline: Color | None = None,
+    width: int = 0,
+) -> None:
     draw = PIL.ImageDraw.Draw(img)
 
     cy, cx = center
@@ -49,4 +59,9 @@ def circle_(img, center, diameter, fill=None, outline=None, width=0):
     y1 = cy - radius
     y2 = y1 + diameter
 
-    draw.ellipse([x1, y1, x2, y2], fill=fill, outline=outline, width=width)
+    draw.ellipse(
+        [x1, y1, x2, y2],
+        fill=get_pil_color(fill),
+        outline=get_pil_color(outline),
+        width=width,
+    )

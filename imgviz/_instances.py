@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import typing
 from collections.abc import Sequence
+from typing import Literal
 
 import numpy as np
 from numpy.typing import NDArray
@@ -149,6 +151,7 @@ def instances2rgb(
 
         if caption is not None:
             for loc in ["lt+", "lt"]:
+                loc = typing.cast(Literal["lt+", "lt"], loc)
                 y1, x1, y2, x2 = draw_module.text_in_rectangle_aabb(
                     img_shape=(dst.height, dst.width),
                     loc=loc,
