@@ -124,18 +124,20 @@ def label2rgb(
             mask = label == label_i
             if 1.0 * mask.sum() / mask.size < thresh_suppress:
                 continue
-            y, x = np.array(_center_of_mass(mask), dtype=int)
+            y: int
+            x: int
+            y, x = np.array(_center_of_mass(mask)).round().astype(int).tolist()
 
             if label[y, x] != label_i:
                 Y, X = np.where(mask)
                 point_index = random_state.randint(0, len(Y))
-                y, x = Y[point_index], X[point_index]
+                y, x = Y[point_index].item(), X[point_index].item()
 
             text = label_names[label_i]
             height, width = draw_module.text_size(
                 text, size=font_size, font_path=font_path
             )
-            color = _color.get_fg_color(res.getpixel((int(x), int(y))))
+            color = _color.get_fg_color(res.getpixel((x, y)))
             draw_module.text_(
                 res,
                 yx=(y - height // 2, x - width // 2),
@@ -210,4 +212,4 @@ def _center_of_mass(mask: NDArray[np.bool_]) -> tuple[float, float]:
     dy = np.sum(mask_float, 1)
     cx = np.sum(dx * np.arange(mask.shape[1]))
     cy = np.sum(dy * np.arange(mask.shape[0]))
-    return cy, cx
+    return cy.item(), cx.item()
