@@ -1,11 +1,14 @@
-import os.path as osp
+from __future__ import annotations
+
+import pathlib
 
 import numpy as np
+from numpy.typing import NDArray
 
-here = osp.dirname(osp.abspath(__file__))
+_here: pathlib.Path = pathlib.Path(__file__).parent
 
 
-def read_pose_file(filename):
+def read_pose_file(filename: str | pathlib.Path) -> list[NDArray[np.float64]]:
     with open(filename) as f:
         transforms = []
         for one_line in f:
@@ -21,9 +24,9 @@ def read_pose_file(filename):
     return transforms
 
 
-def kitti_odometry():
+def kitti_odometry() -> dict[str, list[NDArray[np.float64]]]:
     # http://www.cvlibs.net/datasets/kitti/eval_odometry.php
-    pose_file = osp.join(here, "odometry/00.txt")
+    pose_file = _here / "odometry/00.txt"
     transforms = read_pose_file(pose_file)
     data = {"transforms": transforms}
     return data
