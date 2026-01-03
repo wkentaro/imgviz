@@ -4,6 +4,8 @@
 # https://github.com/tomrunia/OpticalFlow_Visualization/blob/master/flow_vis.py
 from __future__ import annotations
 
+import typing
+
 import numpy as np
 from numpy.typing import NDArray
 
@@ -78,16 +80,62 @@ def _flow_compute_color(flow_u: NDArray, flow_v: NDArray) -> NDArray[np.uint8]:
     return flow_image
 
 
+class Flow2Rgb:
+    def __init__(self, max_norm: float | np.floating | None = None) -> None:
+        self._max_norm: np.float32 | None = (
+            None if max_norm is None else np.float32(max_norm)
+        )
+
+    @property
+    def max_norm(self) -> np.float32 | None:
+        return self._max_norm
+
+    def __call__(self, flow_uv: NDArray[np.floating]) -> NDArray[np.uint8]:
+        """Visualize optical flow.
+
+        Args:
+            flow_uv: Optical flow with shape (H, W, 2).
+
+        Returns:
+            RGB image with shape (H, W, 3).
+        """
+        flow_viz, max_norm = flow2rgb(flow_uv, max_norm=self._max_norm, return_max=True)
+        if self._max_norm is None:
+            self._max_norm = max_norm
+        return flow_viz
+
+
+@typing.overload
 def flow2rgb(
-    flow_uv: NDArray[np.floating], max_norm: float | np.floating | None = None
-) -> NDArray[np.uint8]:
+    flow_uv: NDArray[np.floating],
+    max_norm: float | np.floating | None = ...,
+    return_max: typing.Literal[False] = ...,
+) -> NDArray[np.uint8]: ...
+
+
+@typing.overload
+def flow2rgb(
+    flow_uv: NDArray[np.floating],
+    max_norm: float | np.floating | None = ...,
+    return_max: typing.Literal[True] = ...,
+) -> tuple[NDArray[np.uint8], np.float32]: ...
+
+
+def flow2rgb(
+    flow_uv: NDArray[np.floating],
+    max_norm: float | np.floating | None = None,
+    return_max: bool = False,
+) -> NDArray[np.uint8] | tuple[NDArray[np.uint8], np.float32]:
     """Visualize optical flow.
 
     Args:
         flow_uv: Optical flow with shape (H, W, 2).
+        max_norm: Maximum norm for normalization. If None, use the maximum norm
+            in the flow_uv.
+        return_max: Whether to return the maximum norm used for normalization.
 
     Returns:
-        RGB image with shape (H, W, 3).
+        RGB image with shape (H, W, 3), or tuple of (flow_rgb, max_norm).
     """
     if flow_uv.ndim != 3:
         raise ValueError(f"flow must be 3 dimensional, but got {flow_uv.ndim}")
@@ -108,4 +156,8 @@ def flow2rgb(
     flow_u: NDArray[np.float32] = flow_uv[:, :, 0] / (max_norm + eps)
     flow_v: NDArray[np.float32] = flow_uv[:, :, 1] / (max_norm + eps)
 
-    return _flow_compute_color(flow_u, flow_v)
+    flow_rgb: NDArray[np.uint8] = _flow_compute_color(flow_u, flow_v)
+    if return_max:
+        return flow_rgb, max_norm
+    else:
+        return flow_rgb
