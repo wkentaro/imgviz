@@ -83,24 +83,34 @@ def instances2rgb(
         Visualized image with shape (H, W, 3).
 
     """
-    assert isinstance(image, np.ndarray)
-    assert image.dtype == np.uint8
+    if not isinstance(image, np.ndarray):
+        raise TypeError(f"image must be a numpy array, but got {type(image).__name__}")
+    if image.dtype != np.uint8:
+        raise ValueError(f"image dtype must be np.uint8, but got {image.dtype}")
 
     if image.ndim == 2:
         image = _color.gray2rgb(image)
-    assert image.ndim == 3
+    if image.ndim != 3:
+        raise ValueError(f"image must be 2 or 3 dimensional, but got {image.ndim}")
 
-    assert all(label_i >= 0 for label_i in labels)
+    negative_labels = [label_i for label_i in labels if label_i < 0]
+    if negative_labels:
+        raise ValueError(f"all labels must be >= 0, but got {negative_labels}")
 
     n_instance = len(labels)
 
     if bboxes is None:
-        assert masks is not None
+        if masks is None:
+            raise ValueError("bboxes or masks must be provided")
         bboxes = masks_to_bboxes(masks=masks)
     if captions is None:
         captions = [None] * n_instance
 
-    assert len(bboxes) == len(captions) == n_instance
+    if len(bboxes) != n_instance or len(captions) != n_instance:
+        raise ValueError(
+            f"bboxes, captions and labels must have the same length, "
+            f"but got {len(bboxes)=}, {len(captions)=}, {n_instance=}"
+        )
 
     if colormap is None:
         colormap = _label.label_colormap()

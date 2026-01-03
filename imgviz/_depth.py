@@ -62,8 +62,10 @@ class Depth2Rgb:
             Colorized image with shape (H, W, 3).
 
         """
-        assert depth.ndim == 2, "depth image must be 2 dimensional"
-        assert np.issubdtype(depth.dtype, np.floating), "depth dtype must be float"
+        if depth.ndim != 2:
+            raise ValueError(f"depth must be 2 dimensional, but got {depth.ndim}")
+        if not np.issubdtype(depth.dtype, np.floating):
+            raise ValueError(f"depth dtype must be float, but got {depth.dtype}")
 
         normalized, self._min_value, self._max_value = normalize(
             depth,
@@ -85,7 +87,10 @@ class Depth2Rgb:
         if dtype == np.uint8:
             rgb = (rgb * 255).round().astype(np.uint8)
         else:
-            assert np.issubdtype(dtype, np.floating)
+            if not np.issubdtype(dtype, np.floating):
+                raise ValueError(
+                    f"dtype must be np.uint8 or a floating type, but got {dtype}"
+                )
             rgb = rgb.astype(dtype)
 
         return rgb

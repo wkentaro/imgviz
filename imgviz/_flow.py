@@ -92,9 +92,12 @@ def flow2rgb(flow_uv: NDArray) -> NDArray[np.uint8]:
         RGB image with shape (H, W, 3).
 
     """
-    assert flow_uv.ndim == 3, "flow must be 3 dimensional"
-    assert flow_uv.shape[2] == 2, "flow must have shape (H, W, 2)"
-    assert np.issubdtype(flow_uv.dtype, np.floating), "float must be float type"
+    if flow_uv.ndim != 3:
+        raise ValueError(f"flow must be 3 dimensional, but got {flow_uv.ndim}")
+    if flow_uv.shape[2] != 2:
+        raise ValueError(f"flow must have shape (H, W, 2), but got {flow_uv.shape}")
+    if not np.issubdtype(flow_uv.dtype, np.floating):
+        raise ValueError(f"flow dtype must be float, but got {flow_uv.dtype}")
 
     flow_u = flow_uv[:, :, 0]
     flow_v = flow_uv[:, :, 1]

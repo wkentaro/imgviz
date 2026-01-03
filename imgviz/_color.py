@@ -22,9 +22,12 @@ def rgb2gray(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:
         Output gray image with shape (H, W).
 
     """
-    assert rgb.ndim == 3, "rgb must be 3 dimensional"
-    assert rgb.shape[2] == 3, "rgb shape must be (H, W, 3)"
-    assert rgb.dtype == np.uint8, "rgb dtype must be np.uint8"
+    if rgb.ndim != 3:
+        raise ValueError(f"rgb must be 3 dimensional, but got {rgb.ndim}")
+    if rgb.shape[2] != 3:
+        raise ValueError(f"rgb shape must be (H, W, 3), but got {rgb.shape}")
+    if rgb.dtype != np.uint8:
+        raise ValueError(f"rgb dtype must be np.uint8, but got {rgb.dtype}")
 
     gray = _utils.numpy_to_pillow(rgb)
     gray = gray.convert("L")
@@ -46,8 +49,10 @@ def gray2rgb(gray: NDArray[np.uint8]) -> NDArray[np.uint8]:
         Output rgb image with shape (H, W, 3).
 
     """
-    assert gray.ndim == 2, "gray must be 2 dimensional"
-    assert gray.dtype == np.uint8, "gray dtype must be np.uint8"
+    if gray.ndim != 2:
+        raise ValueError(f"gray must be 2 dimensional, but got {gray.ndim}")
+    if gray.dtype != np.uint8:
+        raise ValueError(f"gray dtype must be np.uint8, but got {gray.dtype}")
 
     rgb = gray[:, :, None].repeat(3, axis=2)
     return rgb
@@ -67,9 +72,12 @@ def rgb2rgba(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:
         Output rgba image with shape (H, W, 4).
 
     """
-    assert rgb.ndim == 3, "rgb must be 3 dimensional"
-    assert rgb.shape[2] == 3, "rgb shape must be (H, W, 3)"
-    assert rgb.dtype == np.uint8, "rgb dtype must be np.uint8"
+    if rgb.ndim != 3:
+        raise ValueError(f"rgb must be 3 dimensional, but got {rgb.ndim}")
+    if rgb.shape[2] != 3:
+        raise ValueError(f"rgb shape must be (H, W, 3), but got {rgb.shape}")
+    if rgb.dtype != np.uint8:
+        raise ValueError(f"rgb dtype must be np.uint8, but got {rgb.dtype}")
 
     a = np.full(rgb.shape[:2], 255, dtype=np.uint8)
     rgba = np.dstack((rgb, a))
