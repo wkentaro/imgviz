@@ -8,7 +8,7 @@ from . import _utils
 from ._label import label_colormap
 
 
-def imread(filename: str | pathlib.Path) -> np.ndarray:
+def imread(filename: str | pathlib.Path) -> NDArray:
     """Read image from file.
 
     Args:
@@ -20,7 +20,7 @@ def imread(filename: str | pathlib.Path) -> np.ndarray:
     return _utils.pillow_to_numpy(PIL.Image.open(filename))
 
 
-def imsave(filename: str | pathlib.Path, arr: np.ndarray) -> None:
+def imsave(filename: str | pathlib.Path, arr: NDArray) -> None:
     """Save image to file.
 
     Args:
@@ -32,7 +32,7 @@ def imsave(filename: str | pathlib.Path, arr: np.ndarray) -> None:
     _utils.numpy_to_pillow(arr).save(path)
 
 
-def lblsave(filename: str | pathlib.Path, lbl: np.ndarray) -> None:
+def lblsave(filename: str | pathlib.Path, lbl: NDArray[np.uint8]) -> None:
     """Save label image to PNG file with a colormap.
 
     Args:
