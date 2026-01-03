@@ -1,5 +1,3 @@
-import os
-import os.path as osp
 import pathlib
 
 import numpy as np
@@ -10,13 +8,12 @@ from . import _utils
 from ._label import label_colormap
 
 
-def imread(filename):
-    # type: (str) -> np.ndarray
+def imread(filename: str | pathlib.Path) -> np.ndarray:
     """Read image from file.
 
     Parameters
     ----------
-    filename: str
+    filename: str | pathlib.Path
         Filename.
 
     Returns
@@ -27,13 +24,12 @@ def imread(filename):
     return _utils.pillow_to_numpy(PIL.Image.open(filename))
 
 
-def imsave(filename, arr):
-    # type: (str, np.ndarray) -> None
+def imsave(filename: str | pathlib.Path, arr: np.ndarray) -> None:
     """Save image to file.
 
     Parameters
     ----------
-    filename: str
+    filename: str | pathlib.Path
         Filename.
     arr: numpy.ndarray, (H, W) or (H, W, 3) or (H, W, 4)
         Image to save.
@@ -43,11 +39,9 @@ def imsave(filename, arr):
     None
 
     """
-    try:
-        os.makedirs(osp.dirname(filename))
-    except OSError:
-        pass
-    return _utils.numpy_to_pillow(arr).save(filename)
+    path = pathlib.Path(filename)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    _utils.numpy_to_pillow(arr).save(path)
 
 
 def lblsave(filename: str | pathlib.Path, lbl: np.ndarray) -> None:
