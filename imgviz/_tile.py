@@ -140,7 +140,7 @@ def tile(
             if channel == 4 and img.shape[2] == 3:
                 img = rgb2rgba(img)
 
-            img = centerize(src=img, shape=(max_h, max_w, channel), cval=cval)
+            img = centerize(src=img, height=max_h, width=max_w, cval=cval)
             imgs[i] = img
         else:
             img = np.full((max_h, max_w, channel), cval, dtype=np.uint8)

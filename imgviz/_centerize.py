@@ -13,7 +13,8 @@ from ._resize import resize
 @typing.overload
 def centerize(
     src: ...,
-    shape: tuple[int, ...],
+    height: int,
+    width: int,
     cval: Any = ...,
     return_mask: Literal[False] = ...,
     interpolation: Literal["linear", "nearest"] = ...,
@@ -24,7 +25,8 @@ def centerize(
 @typing.overload
 def centerize(
     src: ...,
-    shape: tuple[int, ...],
+    height: int,
+    width: int,
     cval: Any = ...,
     return_mask: Literal[True] = ...,
     interpolation: Literal["linear", "nearest"] = ...,
@@ -34,7 +36,8 @@ def centerize(
 
 def centerize(
     src: NDArray,
-    shape: tuple[int, ...],
+    height: int,
+    width: int,
     cval: Any = None,
     return_mask: bool = False,
     interpolation: Literal["linear", "nearest"] = "linear",
@@ -44,7 +47,8 @@ def centerize(
 
     Args:
         src: Image to centerize.
-        shape: Image shape (height, width) or (height, width, channel).
+        height: Target height.
+        width: Target width.
         cval: Color to be filled in the blank.
         return_mask: Whether to return mask for centerized image.
         interpolation: Interpolation method.
@@ -53,14 +57,16 @@ def centerize(
     Returns:
         Centerized image, or tuple of (image, mask) if return_mask is True.
     """
+    if src.ndim == 3:
+        shape: tuple[int, ...] = (height, width, src.shape[2])
+    else:
+        shape = (height, width)
+
     if src.shape[:2] == shape[:2]:
         if return_mask:
             return src, np.ones(shape[:2], dtype=bool)
         else:
             return src
-
-    if len(shape) != src.ndim:
-        shape = list(shape) + [src.shape[2]]
 
     dst = np.zeros(shape, dtype=src.dtype)
     if cval is not None:
