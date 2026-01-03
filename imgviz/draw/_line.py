@@ -12,10 +12,13 @@ def line(src, yx, fill, width=1):
 
 
 def line_(img, yx, fill, width=1):
-    assert isinstance(img, PIL.Image.Image)
+    if not isinstance(img, PIL.Image.Image):
+        raise TypeError(f"img must be PIL.Image.Image, but got {type(img).__name__}")
     yx = np.asarray(yx)
-    assert yx.ndim == 2
-    assert yx.shape[1] == 2
+    if yx.ndim != 2:
+        raise ValueError(f"yx must be 2D array, but got {yx.ndim}D")
+    if yx.shape[1] != 2:
+        raise ValueError(f"yx.shape[1] must be 2, but got {yx.shape[1]}")
     fill = tuple(fill)
 
     draw = PIL.ImageDraw.Draw(img)

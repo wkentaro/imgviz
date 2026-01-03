@@ -90,8 +90,10 @@ def label2rgb(
         )
     else:
         alpha_arr = np.asarray(alpha)
-        assert alpha_arr.ndim == 1
-    assert ((0 <= alpha_arr) & (alpha_arr <= 1)).all()
+        if alpha_arr.ndim != 1:
+            raise ValueError(f"alpha must be 1D array, but got {alpha_arr.ndim}D")
+    if not ((0 <= alpha_arr) & (alpha_arr <= 1)).all():
+        raise ValueError("alpha values must be in [0, 1]")
     alpha_map = alpha_arr[label][:, :, None]
 
     if image is not None:
@@ -200,7 +202,10 @@ def label2rgb(
 
 
 def _center_of_mass(mask: NDArray[np.bool_]) -> tuple[float, float]:
-    assert mask.ndim == 2 and mask.dtype == bool
+    if mask.ndim != 2 or mask.dtype != bool:
+        raise ValueError(
+            f"mask must be 2D bool array, but got {mask.ndim}D {mask.dtype}"
+        )
     mask_float: NDArray[np.float32] = mask.astype(np.float32) / mask.sum()
     dx = np.sum(mask_float, 0)
     dy = np.sum(mask_float, 1)
