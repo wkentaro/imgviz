@@ -10,29 +10,29 @@ from ._ink import get_pil_ink
 
 def ellipse(
     src: NDArray[np.uint8],
-    yx1: tuple[float, float],
-    yx2: tuple[float, float],
+    aabb1: tuple[float, float],
+    aabb2: tuple[float, float],
     fill: Ink | None = None,
     outline: Ink | None = None,
     width: int = 0,
 ) -> NDArray[np.uint8]:
     dst = _utils.numpy_to_pillow(src)
-    ellipse_(img=dst, yx1=yx1, yx2=yx2, fill=fill, outline=outline, width=width)
+    ellipse_(img=dst, aabb1=aabb1, aabb2=aabb2, fill=fill, outline=outline, width=width)
     return _utils.pillow_to_numpy(dst)
 
 
 def ellipse_(
     img: PIL.Image.Image,
-    yx1: tuple[float, float],
-    yx2: tuple[float, float],
+    aabb1: tuple[float, float],
+    aabb2: tuple[float, float],
     fill: Ink | None = None,
     outline: Ink | None = None,
     width: int = 0,
 ) -> None:
     draw = PIL.ImageDraw.Draw(img)
 
-    y1, x1 = yx1
-    y2, x2 = yx2
+    y1, x1 = aabb1
+    y2, x2 = aabb2
 
     draw.ellipse(
         [x1, y1, x2, y2],

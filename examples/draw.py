@@ -44,8 +44,8 @@ def draw() -> None:
         elif shape == "ellipse":
             viz = imgviz.draw.ellipse(
                 viz,
-                yx1=(yx[0] - 8, yx[1] - 16),
-                yx2=(yx[0] + 8, yx[1] + 16),
+                aabb1=(yx[0] - 8, yx[1] - 16),
+                aabb2=(yx[0] + 8, yx[1] + 16),
                 fill=color,
             )
         elif shape == "circle":
