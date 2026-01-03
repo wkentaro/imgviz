@@ -1,5 +1,3 @@
-# flake8: noqa
-
 from ._circle import circle
 from ._circle import circle_
 from ._ellipse import ellipse
