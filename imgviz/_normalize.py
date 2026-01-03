@@ -45,19 +45,22 @@ def normalize(
     """
     if src.ndim == 2:
         D = 1
-    else:
-        assert src.ndim == 3, "src ndim must be 2 or 3"
+    elif src.ndim == 3:
         D = src.shape[2]
+    else:
+        raise ValueError(f"src ndim must be 2 or 3, but got {src.ndim}")
 
     if min_value is None:
         min_value = np.nanmin(src, axis=(0, 1))
     min_value = np.atleast_1d(min_value).astype(float)
-    assert min_value.shape == (D,)
+    if min_value.shape != (D,):
+        raise ValueError(f"min_value.shape must be ({D},), but got {min_value.shape}")
 
     if max_value is None:
         max_value = np.nanmax(src, axis=(0, 1))
     max_value = np.atleast_1d(max_value).astype(float)
-    assert max_value.shape == (D,)
+    if max_value.shape != (D,):
+        raise ValueError(f"max_value.shape must be ({D},), but got {max_value.shape}")
 
     if np.isinf(min_value).any() or np.isinf(max_value).any():
         warnings.warn("some of min or max values are inf.")

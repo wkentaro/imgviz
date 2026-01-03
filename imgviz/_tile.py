@@ -24,7 +24,8 @@ def _tile(
 
     if border is None:
         border_width = 0
-    assert border_width is not None
+    if border_width is None:
+        raise ValueError("border_width must be provided when border is not None")
 
     dst = np.zeros(
         (
@@ -86,16 +87,25 @@ def tile(
     if shape is None:
         shape = _get_tile_shape(len(imgs), hw_ratio=1.0 * max_h / max_w)
     else:
-        assert isinstance(shape, collections.abc.Iterable)
-        assert len(shape) == 2
-        assert isinstance(shape[0], int)
-        assert isinstance(shape[1], int)
-        if shape[0] < 0 and shape[1] > 0:
+        if not isinstance(shape, collections.abc.Iterable):
+            raise TypeError(f"shape must be iterable, but got {type(shape).__name__}")
+        if len(shape) != 2:
+            raise ValueError(f"shape must have length 2, but got {len(shape)}")
+        if not isinstance(shape[0], int) or not isinstance(shape[1], int):
+            raise TypeError(
+                f"shape elements must be int, but got ({type(shape[0]).__name__}, "
+                f"{type(shape[1]).__name__})"
+            )
+        if shape[0] == 0 or shape[1] == 0:
+            raise ValueError("shape elements must be non-zero")
+        if shape[0] < 0 and shape[1] < 0:
+            raise ValueError(
+                f"only one element of shape can be -1, but got ({shape[0]}, {shape[1]})"
+            )
+        if shape[0] < 0:
             shape = (math.ceil(len(imgs) / shape[1]), shape[1])
-        elif shape[1] < 0 and shape[0] > 0:
+        elif shape[1] < 0:
             shape = (shape[0], math.ceil(len(imgs) / shape[0]))
-        else:
-            assert shape[0] > 0 and shape[1] > 0
 
     imgs = imgs[: shape[0] * shape[1]]
 
@@ -114,14 +124,16 @@ def tile(
     else:
         ndim = 3  # gray images will be converted to rgb
         channel = 3  # all gray
-    assert channel in [3, 4]
+    if channel not in [3, 4]:
+        raise ValueError(f"channel must be 3 or 4, but got {channel}")
 
     # tile images
     for i in range(shape[0] * shape[1]):
         img: NDArray
         if i < len(imgs):
             img = imgs[i]
-            assert img.dtype == np.uint8
+            if img.dtype != np.uint8:
+                raise ValueError(f"img dtype must be np.uint8, but got {img.dtype}")
 
             if ndim == 3 and img.ndim == 2:
                 img = gray2rgb(img)

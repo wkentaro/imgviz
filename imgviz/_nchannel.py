@@ -50,10 +50,12 @@ class Nchannel2Rgb:
                 "Please install scikit-learn or use: pip install imgviz[all]"
             ) from None
 
-        assert nchannel.ndim == 3, "nchannel.ndim must be 3"
-        assert np.issubdtype(nchannel.dtype, np.floating), (
-            "nchannel.dtype must be floating"
-        )
+        if nchannel.ndim != 3:
+            raise ValueError(f"nchannel.ndim must be 3, but got {nchannel.ndim}")
+        if not np.issubdtype(nchannel.dtype, np.floating):
+            raise ValueError(
+                f"nchannel.dtype must be floating, but got {nchannel.dtype}"
+            )
         H, W, D = nchannel.shape
 
         dst = nchannel.reshape(-1, D)
@@ -74,7 +76,8 @@ class Nchannel2Rgb:
             dst = normalize(dst, min_value, max_value)
             dst = (dst * 255).round().astype(np.uint8)
         else:
-            assert np.issubdtype(dtype, np.floating)
+            if not np.issubdtype(dtype, np.floating):
+                raise ValueError(f"dtype must be floating, but got {dtype}")
             dst = dst.astype(dtype)
 
         return dst

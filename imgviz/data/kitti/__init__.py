@@ -13,7 +13,10 @@ def read_pose_file(filename):
             Rt = [float(pose) for pose in one_line] + [0, 0, 0, 1]
 
             Rt = np.reshape(np.array(Rt), (4, 4))
-            assert abs(Rt[3].sum() - 1) < 1e-5
+            if abs(Rt[3].sum() - 1) >= 1e-5:
+                raise ValueError(
+                    f"invalid pose: last row should be [0, 0, 0, 1], got {Rt[3]}"
+                )
             transforms.append(Rt)
     return transforms
 

@@ -31,7 +31,8 @@ def _resize_pillow(
         dst = dst.resize((width, height), resample=resample)
         dst = _utils.pillow_to_numpy(dst)
     else:
-        assert np.issubdtype(src.dtype, np.floating)
+        if not np.issubdtype(src.dtype, np.floating):
+            raise TypeError(f"src.dtype must be integer or floating, got {src.dtype}")
         ndim = src.ndim
         if ndim == 2:
             src = src[:, :, None]
@@ -100,13 +101,13 @@ def resize(
     if isinstance(height, float):
         scale_height = height
         height = int(round(scale_height * src_height))
+    if height is None and width is None:
+        raise ValueError("either height or width must be given")
     if height is None:
-        assert width is not None
-        scale_height = 1.0 * width / src_width
+        scale_height = width / src_width
         height = int(round(scale_height * src_height))
     if width is None:
-        assert height is not None
-        scale_width = 1.0 * height / src_height
+        scale_width = height / src_height
         width = int(round(scale_width * src_width))
 
     if backend == "pillow":
