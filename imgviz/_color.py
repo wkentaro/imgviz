@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import numpy as np
-from numpy.typing import ArrayLike
 from numpy.typing import NDArray
 
 from . import _dtype
@@ -190,7 +189,9 @@ def asrgba(img: NDArray) -> NDArray[np.uint8]:
     return rgba
 
 
-def get_fg_color(color: ArrayLike) -> tuple[int, int, int]:
+def get_fg_color(
+    color: tuple[int, int, int] | NDArray[np.uint8],
+) -> tuple[int, int, int]:
     """Get foreground color (black or white) for given background color."""
     color_arr: NDArray[np.uint8] = np.asarray(color, dtype=np.uint8)
     intensity: np.uint8 = rgb2gray(color_arr.reshape(1, 1, 3)).sum()
