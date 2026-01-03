@@ -46,10 +46,7 @@ def text_size(
         if line == "":
             line = "\n"
 
-        if hasattr(font, "getbbox"):
-            line_width, line_height = font.getbbox(line)[2:]
-        else:
-            line_width, line_height = font.getsize(line)
+        line_width, line_height = font.getbbox(line)[2:]
         text_width = max(text_width, line_width)
         text_height += line_height
 
