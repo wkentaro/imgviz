@@ -1,12 +1,8 @@
 import typing
-from typing import TypeAlias
 
 import numpy as np
-from numpy.typing import NDArray
 
-Color: TypeAlias = (
-    int | tuple[int, int, int] | tuple[int, int, int, int] | NDArray[np.uint8]
-)
+from .._color import Color
 
 
 def get_pil_color(

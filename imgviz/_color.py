@@ -1,10 +1,16 @@
 from __future__ import annotations
 
+from typing import TypeAlias
+
 import numpy as np
 from numpy.typing import NDArray
 
 from . import _dtype
 from . import _utils
+
+Color: TypeAlias = (
+    int | tuple[int, int, int] | tuple[int, int, int, int] | NDArray[np.uint8]
+)
 
 
 def rgb2gray(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:
