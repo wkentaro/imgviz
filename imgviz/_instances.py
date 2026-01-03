@@ -41,7 +41,7 @@ def instances2rgb(
     font_size: int = 25,
     line_width: int = 5,
     boundary_width: int = 0,
-    alpha: float = 0.7,
+    alpha: float = 0.5,
     colormap: NDArray[np.uint8] | None = None,
     font_path: str | None = None,
 ) -> NDArray[np.uint8]:
