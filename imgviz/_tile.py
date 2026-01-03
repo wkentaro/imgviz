@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import collections
 import math
 from collections.abc import Iterable
 from typing import Any
@@ -62,7 +61,8 @@ def _get_tile_shape(num: int, hw_ratio: float = 1) -> tuple[int, int]:
 
 def tile(
     imgs: Iterable[NDArray],
-    shape: tuple[int, int] | None = None,
+    row: int | None = None,
+    col: int | None = None,
     cval: Any = None,
     border: Any = None,
     border_width: int | None = None,
@@ -71,7 +71,8 @@ def tile(
 
     Args:
         imgs: Image list which should be tiled.
-        shape: Tile shape (rows, cols).
+        row: Number of rows in the tile grid. If None, auto-calculated.
+        col: Number of columns in the tile grid. If None, auto-calculated.
         cval: Color to fill the background.
         border: Color for the border. If None, the border is not drawn.
         border_width: Pixel size of the border.
@@ -84,28 +85,30 @@ def tile(
     # get max tile size to which each image should be resized
     max_h, max_w = np.array([img.shape[:2] for img in imgs]).max(axis=0)
 
-    if shape is None:
+    if row is None and col is None:
         shape = _get_tile_shape(len(imgs), hw_ratio=1.0 * max_h / max_w)
+    elif row is None:
+        if not isinstance(col, int):
+            raise TypeError(f"col must be int, but got {type(col).__name__}")
+        if col <= 0:
+            raise ValueError(f"col must be positive, but got {col}")
+        shape = (math.ceil(len(imgs) / col), col)
+    elif col is None:
+        if not isinstance(row, int):
+            raise TypeError(f"row must be int, but got {type(row).__name__}")
+        if row <= 0:
+            raise ValueError(f"row must be positive, but got {row}")
+        shape = (row, math.ceil(len(imgs) / row))
     else:
-        if not isinstance(shape, collections.abc.Iterable):
-            raise TypeError(f"shape must be iterable, but got {type(shape).__name__}")
-        if len(shape) != 2:
-            raise ValueError(f"shape must have length 2, but got {len(shape)}")
-        if not isinstance(shape[0], int) or not isinstance(shape[1], int):
-            raise TypeError(
-                f"shape elements must be int, but got ({type(shape[0]).__name__}, "
-                f"{type(shape[1]).__name__})"
-            )
-        if shape[0] == 0 or shape[1] == 0:
-            raise ValueError("shape elements must be non-zero")
-        if shape[0] < 0 and shape[1] < 0:
+        if not isinstance(row, int):
+            raise TypeError(f"row must be int, but got {type(row).__name__}")
+        if not isinstance(col, int):
+            raise TypeError(f"col must be int, but got {type(col).__name__}")
+        if row <= 0 or col <= 0:
             raise ValueError(
-                f"only one element of shape can be -1, but got ({shape[0]}, {shape[1]})"
+                f"row and col must be positive, but got row={row}, col={col}"
             )
-        if shape[0] < 0:
-            shape = (math.ceil(len(imgs) / shape[1]), shape[1])
-        elif shape[1] < 0:
-            shape = (shape[0], math.ceil(len(imgs) / shape[0]))
+        shape = (row, col)
 
     imgs = imgs[: shape[0] * shape[1]]
 
