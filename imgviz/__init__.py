@@ -4,7 +4,7 @@ import importlib.metadata
 
 __version__ = importlib.metadata.version("imgviz")
 
-from . import _io as io
+from . import io
 from . import data
 from . import draw
 from . import fill

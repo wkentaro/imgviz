@@ -1,6 +1,6 @@
 import os.path as osp
 
-from ..._io import imread
+from ...io import imread
 
 here = osp.dirname(osp.abspath(__file__))
 

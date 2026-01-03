@@ -2,7 +2,7 @@ import os.path as osp
 
 import numpy as np
 
-from ..._io import imread
+from ...io import imread
 
 here = osp.dirname(osp.abspath(__file__))
 
