@@ -78,7 +78,9 @@ def _flow_compute_color(flow_u: NDArray, flow_v: NDArray) -> NDArray[np.uint8]:
     return flow_image
 
 
-def flow2rgb(flow_uv: NDArray[np.floating]) -> NDArray[np.uint8]:
+def flow2rgb(
+    flow_uv: NDArray[np.floating], max_norm: float | np.floating | None = None
+) -> NDArray[np.uint8]:
     """Visualize optical flow.
 
     Args:
@@ -96,11 +98,14 @@ def flow2rgb(flow_uv: NDArray[np.floating]) -> NDArray[np.uint8]:
 
     flow_uv = flow_uv.astype(np.float32)
 
-    norm: NDArray[np.float32] = np.linalg.norm(flow_uv, axis=2)
-    norm_max: np.float32 = norm.max()
+    if max_norm is None:
+        norm: NDArray[np.float32] = np.linalg.norm(flow_uv, axis=2)
+        max_norm = norm.max()
+    else:
+        max_norm = np.float32(max_norm)
 
     eps: np.float32 = np.finfo(np.float32).eps
-    flow_u: NDArray[np.float32] = flow_uv[:, :, 0] / (norm_max + eps)
-    flow_v: NDArray[np.float32] = flow_uv[:, :, 1] / (norm_max + eps)
+    flow_u: NDArray[np.float32] = flow_uv[:, :, 0] / (max_norm + eps)
+    flow_v: NDArray[np.float32] = flow_uv[:, :, 1] / (max_norm + eps)
 
     return _flow_compute_color(flow_u, flow_v)
