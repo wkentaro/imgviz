@@ -1,11 +1,10 @@
 #!/usr/bin/env python
-# flake8: noqa
 
-import os.path as osp
+import pathlib
 
 import matplotlib.pyplot as plt
 
-here = osp.dirname(osp.abspath(__file__))  # NOQA
+_here: pathlib.Path = pathlib.Path(__file__).parent
 
 # -----------------------------------------------------------------------------
 # GETTING_STARTED {{
@@ -51,7 +50,7 @@ tiled = imgviz.tile(
 # }} GETTING_STARTED
 # -----------------------------------------------------------------------------
 
-out_file = osp.join(here, "assets/getting_started.jpg")
+out_file: pathlib.Path = _here / "assets/getting_started.jpg"
 imgviz.io.imsave(out_file, tiled)
 
 img = imgviz.io.imread(out_file)
