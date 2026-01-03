@@ -85,15 +85,15 @@ class Nchannel2Rgb:
 
 def nchannel2rgb(
     nchannel: NDArray,
-    dtype: DTypeLike = np.uint8,
     pca: sklearn.decomposition.PCA | None = None,
+    dtype: DTypeLike = np.uint8,
 ) -> NDArray[np.uint8] | NDArray[np.floating]:
     """Convert nchannel array to rgb by PCA.
 
     Args:
         nchannel: N channel image with shape (H, W, C).
-        dtype: Output dtype.
         pca: PCA object from sklearn.
+        dtype: Output dtype.
 
     Returns:
         Visualized image with shape (H, W, 3).
