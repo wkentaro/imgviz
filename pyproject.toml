@@ -45,6 +45,7 @@ dev = [
   "pytest>=8.4.2",
   "pytest-xdist>=3.8.0",
   "ruff>=0.14.10",
+  "tomli>=2.0.0; python_version < '3.11'",
   "twine>=6.2.0",
   "ty>=0.0.7",
   "types-pillow>=10.2.0.20240822",

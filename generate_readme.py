@@ -2,6 +2,12 @@
 
 import glob
 import os.path as osp
+import sys
+
+if sys.version_info >= (3, 11):
+    import tomllib
+else:
+    import tomli as tomllib
 
 import PIL.Image
 
@@ -38,9 +44,10 @@ def main():
         )
     examples = tabulate(examples)
 
-    # TODO: read from pyproject.toml
+    with open("pyproject.toml", "rb") as f:
+        pyproject = tomllib.load(f)
     dependencies = []
-    for req in ["cmap>=0.1.0", "numpy>=1.21.0", "Pillow>=5.3.0"]:
+    for req in pyproject["project"]["dependencies"]:
         pkg = req
         for sep in "<=>":
             pkg = pkg.split(sep)[0]
