@@ -1,6 +1,9 @@
+from __future__ import annotations
+
 import os.path as osp
 
 import numpy as np
+from numpy.typing import NDArray
 
 from ...io import imread
 
@@ -9,7 +12,7 @@ here = osp.dirname(osp.abspath(__file__))
 
 # Code adapted from:
 # http://stackoverflow.com/questions/28013200/reading-middlebury-flow-files-with-python-bytes-array-numpy  # NOQA
-def read_flow(filename):
+def read_flow(filename: str) -> NDArray[np.float32]:
     """Read .flo file in Middlebury format"""
 
     with open(filename, "rb") as f:
@@ -25,7 +28,7 @@ def read_flow(filename):
         return flow_uv
 
 
-def middlebury():
+def middlebury() -> dict[str, NDArray[np.float32] | NDArray[np.uint8]]:
     # http://vision.middlebury.edu/flow/data/
 
     rgb_file = osp.join(here, "grove3.png")
