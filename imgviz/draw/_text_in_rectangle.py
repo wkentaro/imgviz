@@ -54,34 +54,25 @@ def text_in_rectangle(
 ):
     """Draw text in a rectangle.
 
-    Parameters
-    ----------
-    src: numpy.ndarray
-        Input image.
-    loc: str
-        Location of text. It must be one of following:
-        lt, rt, lb, rb, lt+, rt+, lb-, rb-.
-    text: str
-        Text to draw.
-    size: int
-        Text size in pixel.
-    background: (3,) array-like
-        Background color in uint8.
-    color: (3,) array-like
-        Text RGB color in uint8.
-        If None, the color is determined by background color.
-        (default: None)
-    aabb1, aabb2: (2,) array-like
-        Coordinate of the rectangle (y_min, x_min), (y_max, x_max).
-        Default is (0, 0), (height, width).
-    keep_size: bool
-        Force to keep original size (size change happens with loc=xx+, xx-).
+    Args:
+        src: Input image.
+        loc: Location of text. Must be one of: lt, rt, lb, rb, lt+, rt+, lb-,
+            rb-.
+        text: Text to draw.
+        size: Text size in pixel.
+        background: Background color in uint8.
+        color: Text RGB color in uint8. If None, the color is determined by
+            background color.
+        aabb1: Coordinate of the rectangle minimum (y_min, x_min). Default is
+            (0, 0).
+        aabb2: Coordinate of the rectangle maximum (y_max, x_max). Default is
+            (height, width).
+        font_path: Font path.
+        keep_size: Force to keep original size (size change happens with
+            loc=xx+, xx-).
 
-    Returns
-    -------
-    dst: numpy.ndarray
+    Returns:
         Output image.
-
     """
     if color is None:
         color = _color.get_fg_color(background)

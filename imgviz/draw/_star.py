@@ -11,24 +11,15 @@ from .. import _utils
 def star(src, center, size, fill=None, outline=None):
     """Draw star on numpy array with Pillow.
 
-    Parameters
-    ----------
-    src: numpy.ndarray
-        Input image.
-    center: (2,) array-like
-        center is (cy, cx).
-    size: float
-        Diameter to create the star.
-    fill: int or (3,) array-like, optional
-        RGB color to fill the mark. None for no fill. (default: None)
-    outline: int or (3,) array-like, optional
-        RGB color to draw the outline.
+    Args:
+        src: Input image.
+        center: Center point (cy, cx).
+        size: Diameter to create the star.
+        fill: RGB color to fill the mark. None for no fill.
+        outline: RGB color to draw the outline.
 
-    Returns
-    -------
-    dst: numpy.ndarray
+    Returns:
         Output image.
-
     """
     dst = _utils.numpy_to_pillow(src)
     star_(

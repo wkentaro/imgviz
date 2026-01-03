@@ -21,11 +21,8 @@ def _bitget(byte_value: NDArray[np.uint8], idx: int) -> NDArray[np.uint8]:
 def label_colormap() -> NDArray[np.uint8]:
     """Label colormap for maximum 256 labels.
 
-    Returns
-    -------
-    cmap
+    Returns:
         Label id to colormap with shape (256, 3).
-
     """
     i = np.arange(256, dtype=np.uint8)
     i = np.repeat(i[:, None], 8, axis=1)
@@ -53,33 +50,21 @@ def label2rgb(
 ) -> NDArray[np.uint8]:
     """Convert label to rgb.
 
-    Parameters
-    ----------
-    label
-        Label image with shape (H, W).
-    image
-        RGB image with shape (H, W, 3).
-    alpha
-        Alpha of RGB. If given as a list or dict, it is treated as alpha
-        for each class according to the index or key.
-    label_names
-        Label id to label name.
-    font_size
-        Font size.
-    thresh_suppress
-        Threshold of label ratio in the label image.
-    colormap
-        Label id to color. By default, :func:`~imgviz.label_colormap` is used.
-    loc
-        Location of legend ('centroid', 'lt', 'rt', 'lb', 'rb').
-    font_path
-        Font path.
+    Args:
+        label: Label image with shape (H, W).
+        image: RGB image with shape (H, W, 3).
+        alpha: Alpha of RGB. If given as a list or dict, it is treated as alpha
+            for each class according to the index or key.
+        label_names: Label id to label name.
+        font_size: Font size.
+        thresh_suppress: Threshold of label ratio in the label image.
+        colormap: Label id to color. By default, :func:`~imgviz.label_colormap`
+            is used.
+        loc: Location of legend ('centroid', 'lt', 'rt', 'lb', 'rb').
+        font_path: Font path.
 
-    Returns
-    -------
-    res
+    Returns:
         Visualized image with shape (H, W, 3).
-
     """
     if colormap is None:
         colormap = label_colormap()

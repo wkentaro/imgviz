@@ -68,24 +68,15 @@ def tile(
 ) -> NDArray[np.uint8]:
     """Tile images.
 
-    Parameters
-    ----------
-    imgs
-        Image list which should be tiled.
-    shape
-        Tile shape (rows, cols).
-    cval
-        Color to fill the background.
-    border
-        Color for the border. If None, the border is not drawn.
-    border_width
-        Pixel size of the border.
+    Args:
+        imgs: Image list which should be tiled.
+        shape: Tile shape (rows, cols).
+        cval: Color to fill the background.
+        border: Color for the border. If None, the border is not drawn.
+        border_width: Pixel size of the border.
 
-    Returns
-    -------
-    dst
+    Returns:
         Tiled image.
-
     """
     imgs = list(imgs)  # copy
 

@@ -42,26 +42,16 @@ def centerize(
 ) -> NDArray | tuple[NDArray, NDArray[np.bool_]]:
     """Centerize image for specified image size.
 
-    Parameters
-    ----------
-    src
-        Image to centerize.
-    shape
-        Image shape (height, width) or (height, width, channel).
-    cval
-        Color to be filled in the blank.
-    return_mask
-        Whether to return mask for centerized image.
-    interpolation
-        Interpolation method.
-    loc
-        Location of image.
+    Args:
+        src: Image to centerize.
+        shape: Image shape (height, width) or (height, width, channel).
+        cval: Color to be filled in the blank.
+        return_mask: Whether to return mask for centerized image.
+        interpolation: Interpolation method.
+        loc: Location of image.
 
-    Returns
-    -------
-    dst
+    Returns:
         Centerized image, or tuple of (image, mask) if return_mask is True.
-
     """
     if src.shape[:2] == shape[:2]:
         if return_mask:

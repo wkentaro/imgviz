@@ -81,16 +81,11 @@ def _flow_compute_color(flow_u: NDArray, flow_v: NDArray) -> NDArray[np.uint8]:
 def flow2rgb(flow_uv: NDArray) -> NDArray[np.uint8]:
     """Visualize optical flow.
 
-    Parameters
-    ----------
-    flow_uv
-        Optical flow with shape (H, W, 2).
+    Args:
+        flow_uv: Optical flow with shape (H, W, 2).
 
-    Returns
-    -------
-    rgb
+    Returns:
         RGB image with shape (H, W, 3).
-
     """
     if flow_uv.ndim != 3:
         raise ValueError(f"flow must be 3 dimensional, but got {flow_uv.ndim}")

@@ -13,15 +13,10 @@ from ._normalize import normalize
 class Depth2Rgb:
     """Convert depth array to rgb.
 
-    Parameters
-    ----------
-    min_value
-        Minimum value for colorizing.
-    max_value
-        Maximum value for colorizing.
-    colormap
-        Colormap name or callable.
-
+    Args:
+        min_value: Minimum value for colorizing.
+        max_value: Maximum value for colorizing.
+        colormap: Colormap name or callable.
     """
 
     def __init__(
@@ -49,18 +44,12 @@ class Depth2Rgb:
     ) -> NDArray[np.uint8] | NDArray[np.floating]:
         """Convert depth array to rgb.
 
-        Parameters
-        ----------
-        depth
-            Depth image with shape (H, W).
-        dtype
-            Output dtype.
+        Args:
+            depth: Depth image with shape (H, W).
+            dtype: Output dtype.
 
-        Returns
-        -------
-        rgb
+        Returns:
             Colorized image with shape (H, W, 3).
-
         """
         if depth.ndim != 2:
             raise ValueError(f"depth must be 2 dimensional, but got {depth.ndim}")
@@ -105,23 +94,14 @@ def depth2rgb(
 ) -> NDArray[np.uint8] | NDArray[np.floating]:
     """Convert depth to rgb.
 
-    Parameters
-    ----------
-    depth
-        Depth image with shape (H, W).
-    min_value
-        Minimum value for colorizing.
-    max_value
-        Maximum value for colorizing.
-    colormap
-        Colormap name or callable.
-    dtype
-        Output dtype.
+    Args:
+        depth: Depth image with shape (H, W).
+        min_value: Minimum value for colorizing.
+        max_value: Maximum value for colorizing.
+        colormap: Colormap name or callable.
+        dtype: Output dtype.
 
-    Returns
-    -------
-    rgb
+    Returns:
         Colorized image with shape (H, W, 3).
-
     """
     return Depth2Rgb(min_value, max_value, colormap)(depth, dtype)

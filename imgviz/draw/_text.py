@@ -20,20 +20,13 @@ def _get_font(size, font_path: str | None = None):
 def text_size(text, size, font_path=None):
     """Get text size (height and width).
 
-    Parameters
-    ----------
-    text: str
-        Text.
-    size: int
-        Pixel font size.
+    Args:
+        text: Text.
+        size: Pixel font size.
+        font_path: Font path.
 
-    Returns
-    -------
-    height: int
-        Text height.
-    width: int
-        Text width.
-
+    Returns:
+        Tuple of (height, width).
     """
     font = _get_font(size, font_path=font_path)
 
@@ -56,27 +49,16 @@ def text_size(text, size, font_path=None):
 def text(src, yx, text, size, color=(0, 0, 0), font_path=None):
     """Draw text on numpy array with Pillow.
 
-    Parameters
-    ----------
-    src: numpy.ndarray
-        Input image.
-    yx: (2,) array-like
-        Left top point of the text.
-    text: str
-        Text to draw.
-    size: int
-        Text size in pixel.
-    color: (3,) array-like
-        Text RGB color in uint8.
-        Default is (0, 0, 0), which is black.
-    font_path: str
-        Default font is DejaVuSansMono.
+    Args:
+        src: Input image.
+        yx: Left top point of the text (y, x).
+        text: Text to draw.
+        size: Text size in pixel.
+        color: Text RGB color in uint8. Default is (0, 0, 0), which is black.
+        font_path: Font path. Default font is DejaVuSansMono.
 
-    Returns
-    -------
-    dst: numpy.ndarray
+    Returns:
         Output image.
-
     """
     dst = _utils.numpy_to_pillow(src)
     text_(img=dst, yx=yx, text=text, size=size, color=color, font_path=font_path)

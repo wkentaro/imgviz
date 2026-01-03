@@ -14,17 +14,12 @@ from . import draw as draw_module
 def masks_to_bboxes(masks: NDArray | Sequence[NDArray]) -> NDArray[np.floating]:
     """Convert mask to tight bounding box.
 
-    Parameters
-    ----------
-    masks
-        Boolean masks with shape (N, H, W).
+    Args:
+        masks: Boolean masks with shape (N, H, W).
 
-    Returns
-    -------
-    bboxes
+    Returns:
         Tight bounding boxes with shape (N, 4). [(ymin, xmin, ymax, xmax), ...]
         where both left-top and right-bottom are inclusive.
-
     """
     bboxes = np.zeros((len(masks), 4), dtype=float)
     for i, mask in enumerate(masks):
@@ -52,36 +47,21 @@ def instances2rgb(
 ) -> NDArray[np.uint8]:
     """Convert instances to rgb.
 
-    Parameters
-    ----------
-    image
-        RGB image with shape (H, W, 3).
-    labels
-        Labels with length N.
-    bboxes
-        Bounding boxes with shape (N, 4).
-    masks
-        Masks with shape (N, H, W).
-    captions
-        Captions with length N.
-    font_size
-        Font size.
-    line_width
-        Line width.
-    boundary_width
-        Boundary width.
-    alpha
-        Alpha of RGB.
-    colormap
-        Label id to RGB color.
-    font_path
-        Font path.
+    Args:
+        image: RGB image with shape (H, W, 3).
+        labels: Labels with length N.
+        bboxes: Bounding boxes with shape (N, 4).
+        masks: Masks with shape (N, H, W).
+        captions: Captions with length N.
+        font_size: Font size.
+        line_width: Line width.
+        boundary_width: Boundary width.
+        alpha: Alpha of RGB.
+        colormap: Label id to RGB color.
+        font_path: Font path.
 
-    Returns
-    -------
-    dst
+    Returns:
         Visualized image with shape (H, W, 3).
-
     """
     if not isinstance(image, np.ndarray):
         raise TypeError(f"image must be a numpy array, but got {type(image).__name__}")

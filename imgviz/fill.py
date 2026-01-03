@@ -25,22 +25,14 @@ class Fill(abc.ABC):
     ) -> NDArray[np.uint8]:
         """Apply the fill to masked region of an image.
 
-        Parameters
-        ----------
-        mask
-            Boolean mask (H, W) specifying region to fill.
-        image
-            Background image (H, W, 3) to blend onto.
-        alpha
-            Opacity of fill (0.0 to 1.0). Default 1.0 (fully opaque).
-        copy
-            If True, make a copy of the image before applying the fill.
+        Args:
+            mask: Boolean mask (H, W) specifying region to fill.
+            image: Background image (H, W, 3) to blend onto.
+            alpha: Opacity of fill (0.0 to 1.0). Default 1.0 (fully opaque).
+            copy: If True, make a copy of the image before applying the fill.
 
-        Returns
-        -------
-        result
+        Returns:
             Image with filled mask region (H, W, 3).
-
         """
         pass
 
@@ -49,16 +41,12 @@ class Fill(abc.ABC):
 class Solid(Fill):
     """Solid color fill.
 
-    Parameters
-    ----------
-    color
-        RGB color as (R, G, B) tuple or numpy array.
+    Args:
+        color: RGB color as (R, G, B) tuple or numpy array.
 
-    Examples
-    --------
-    >>> fill = imgviz.fill.Solid(color=(255, 0, 0))
-    >>> result = imgviz.mask2rgb(mask, image=rgb, fill=fill)
-
+    Examples:
+        >>> fill = imgviz.fill.Solid(color=(255, 0, 0))
+        >>> result = imgviz.mask2rgb(mask, image=rgb, fill=fill)
     """
 
     color: tuple[int, int, int] | NDArray[np.uint8]
@@ -79,23 +67,16 @@ class Stripe(Fill):
 
     Fills the masked region with diagonal, horizontal, or vertical stripes.
 
-    Parameters
-    ----------
-    color
-        RGB color as (R, G, B) tuple or numpy array.
-    angle
-        Stripe angle in radians. 0 = horizontal, pi/4 = diagonal (top-right to
-        bottom-left), pi/2 = vertical. Default pi/4 (45 degrees).
-    width
-        Width of each stripe in pixels. Must be positive. Default 3.
-    gap
-        Gap between stripes in pixels. Must be non-negative. Default 9.
+    Args:
+        color: RGB color as (R, G, B) tuple or numpy array.
+        angle: Stripe angle in radians. 0 = horizontal, pi/4 = diagonal
+            (top-right to bottom-left), pi/2 = vertical. Default pi/4.
+        width: Width of each stripe in pixels. Must be positive. Default 3.
+        gap: Gap between stripes in pixels. Must be non-negative. Default 9.
 
-    Examples
-    --------
-    >>> fill = imgviz.fill.Stripe(color=(255, 0, 0), angle=0, width=2, gap=4)
-    >>> result = imgviz.mask2rgb(mask, image=rgb, fill=fill)
-
+    Examples:
+        >>> fill = imgviz.fill.Stripe(color=(255, 0, 0), angle=0, width=2, gap=4)
+        >>> result = imgviz.mask2rgb(mask, image=rgb, fill=fill)
     """
 
     color: tuple[int, int, int] | NDArray[np.uint8]

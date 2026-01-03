@@ -75,24 +75,17 @@ def resize(
 ) -> NDArray:
     """Resize image.
 
-    Parameters
-    ----------
-    src
-        Input image with shape (H, W) or (H, W, C).
-    height
-        Height of image. If not given, resized based on width keeping ratio.
-    width
-        Width of image. If not given, resized based on height keeping ratio.
-    interpolation
-        Resizing interpolation ('linear' or 'nearest').
-    backend
-        Resizing backend ('auto', 'pillow', or 'opencv').
+    Args:
+        src: Input image with shape (H, W) or (H, W, C).
+        height: Height of image. If not given, resized based on width keeping
+            ratio.
+        width: Width of image. If not given, resized based on height keeping
+            ratio.
+        interpolation: Resizing interpolation ('linear' or 'nearest').
+        backend: Resizing backend ('auto', 'pillow', or 'opencv').
 
-    Returns
-    -------
-    dst
+    Returns:
         Resized image.
-
     """
     if not isinstance(src, np.ndarray):
         raise TypeError("src type must be numpy.ndarray")

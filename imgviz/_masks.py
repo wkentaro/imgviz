@@ -17,26 +17,17 @@ def mask2rgb(
 ) -> NDArray[np.uint8]:
     """Fill mask region with color or pattern.
 
-    Parameters
-    ----------
-    mask
-        Boolean mask (H, W).
-    image
-        Background image to blend with. If None, returns solid color.
-    fill
-        Fill specification (e.g., Solid, Stripe). If a type of Fill is not given,
-        the given value (e.g., an RGB tuple or NDArray[np.uint8]) is interpreted
-        as a color specification for Solid fill.
-    alpha
-        Opacity of fill (0.0 to 1.0). Only used when image is provided.
-    cval
-        RGB color for background when image is None. Defaults to black.
+    Args:
+        mask: Boolean mask (H, W).
+        image: Background image to blend with. If None, returns solid color.
+        fill: Fill specification (e.g., Solid, Stripe). If a type of Fill is not
+            given, the given value (e.g., an RGB tuple or NDArray[np.uint8]) is
+            interpreted as a color specification for Solid fill.
+        alpha: Opacity of fill (0.0 to 1.0). Only used when image is provided.
+        cval: RGB color for background when image is None. Defaults to black.
 
-    Returns
-    -------
-    result
+    Returns:
         Image with filled mask (H, W, 3).
-
     """
     if mask.ndim != 2:
         raise ValueError(f"mask.ndim must be 2, got {mask.ndim}")

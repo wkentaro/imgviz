@@ -34,22 +34,14 @@ def normalize(
 ) -> NDArray | tuple[NDArray, NDArray, NDArray]:
     """Normalize image.
 
-    Parameters
-    ----------
-    src
-        Input image with shape (H, W) or (H, W, C).
-    min_value
-        Minimum value.
-    max_value
-        Maximum value.
-    return_minmax
-        Whether to return min_value and max_value.
+    Args:
+        src: Input image with shape (H, W) or (H, W, C).
+        min_value: Minimum value.
+        max_value: Maximum value.
+        return_minmax: Whether to return min_value and max_value.
 
-    Returns
-    -------
-    dst
+    Returns:
         Normalized image in [0, 1], or tuple of (dst, min_value, max_value).
-
     """
     if src.ndim == 2:
         D = 1

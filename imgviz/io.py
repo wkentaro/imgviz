@@ -11,15 +11,11 @@ from ._label import label_colormap
 def imread(filename: str | pathlib.Path) -> np.ndarray:
     """Read image from file.
 
-    Parameters
-    ----------
-    filename: str | pathlib.Path
-        Filename.
+    Args:
+        filename: Filename.
 
-    Returns
-    -------
-    img: numpy.ndarray, (H, W) or (H, W, 3) or (H, W, 4)
-        Image read.
+    Returns:
+        Image with shape (H, W) or (H, W, 3) or (H, W, 4).
     """
     return _utils.pillow_to_numpy(PIL.Image.open(filename))
 
@@ -27,17 +23,9 @@ def imread(filename: str | pathlib.Path) -> np.ndarray:
 def imsave(filename: str | pathlib.Path, arr: np.ndarray) -> None:
     """Save image to file.
 
-    Parameters
-    ----------
-    filename: str | pathlib.Path
-        Filename.
-    arr: numpy.ndarray, (H, W) or (H, W, 3) or (H, W, 4)
-        Image to save.
-
-    Returns
-    -------
-    None
-
+    Args:
+        filename: Filename.
+        arr: Image with shape (H, W) or (H, W, 3) or (H, W, 4).
     """
     path = pathlib.Path(filename)
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -47,17 +35,9 @@ def imsave(filename: str | pathlib.Path, arr: np.ndarray) -> None:
 def lblsave(filename: str | pathlib.Path, lbl: np.ndarray) -> None:
     """Save label image to PNG file with a colormap.
 
-    Parameters
-    ----------
-    filename: str | pathlib.Path
-        Filename. Must end with '.png'.
-    lbl: numpy.ndarray, (H, W), np.uint8
-        Label image to save.
-
-    Returns
-    -------
-    None
-
+    Args:
+        filename: Filename. Must end with '.png'.
+        lbl: Label image with shape (H, W) and dtype np.uint8.
     """
     if not str(filename).lower().endswith(".png"):
         raise ValueError(f"filename must end with '.png': {filename}")

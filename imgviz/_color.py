@@ -11,16 +11,11 @@ from . import _utils
 def rgb2gray(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:
     """Convert rgb to gray.
 
-    Parameters
-    ----------
-    rgb
-        Input rgb image with shape (H, W, 3).
+    Args:
+        rgb: Input rgb image with shape (H, W, 3).
 
-    Returns
-    -------
-    gray
-        Output gray image with shape (H, W).
-
+    Returns:
+        Gray image with shape (H, W).
     """
     if rgb.ndim != 3:
         raise ValueError(f"rgb must be 3 dimensional, but got {rgb.ndim}")
@@ -38,16 +33,11 @@ def rgb2gray(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:
 def gray2rgb(gray: NDArray[np.uint8]) -> NDArray[np.uint8]:
     """Convert gray to rgb.
 
-    Parameters
-    ----------
-    gray
-        Input gray image with shape (H, W).
+    Args:
+        gray: Input gray image with shape (H, W).
 
-    Returns
-    -------
-    rgb
-        Output rgb image with shape (H, W, 3).
-
+    Returns:
+        RGB image with shape (H, W, 3).
     """
     if gray.ndim != 2:
         raise ValueError(f"gray must be 2 dimensional, but got {gray.ndim}")
@@ -61,16 +51,11 @@ def gray2rgb(gray: NDArray[np.uint8]) -> NDArray[np.uint8]:
 def rgb2rgba(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:
     """Convert rgb to rgba.
 
-    Parameters
-    ----------
-    rgb
-        Input rgb image with shape (H, W, 3).
+    Args:
+        rgb: Input rgb image with shape (H, W, 3).
 
-    Returns
-    -------
-    rgba
-        Output rgba image with shape (H, W, 4).
-
+    Returns:
+        RGBA image with shape (H, W, 4).
     """
     if rgb.ndim != 3:
         raise ValueError(f"rgb must be 3 dimensional, but got {rgb.ndim}")
@@ -87,16 +72,11 @@ def rgb2rgba(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:
 def rgb2hsv(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:
     """Convert rgb to hsv.
 
-    Parameters
-    ----------
-    rgb
-        Input rgb image with shape (H, W, 3).
+    Args:
+        rgb: Input rgb image with shape (H, W, 3).
 
-    Returns
-    -------
-    hsv
-        Output hsv image with shape (H, W, 3).
-
+    Returns:
+        HSV image with shape (H, W, 3).
     """
     hsv = _utils.numpy_to_pillow(rgb, mode="RGB")
     hsv = hsv.convert("HSV")
@@ -107,16 +87,11 @@ def rgb2hsv(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:
 def hsv2rgb(hsv: NDArray[np.uint8]) -> NDArray[np.uint8]:
     """Convert hsv to rgb.
 
-    Parameters
-    ----------
-    hsv
-        Input hsv image with shape (H, W, 3).
+    Args:
+        hsv: Input hsv image with shape (H, W, 3).
 
-    Returns
-    -------
-    rgb
-        Output rgb image with shape (H, W, 3).
-
+    Returns:
+        RGB image with shape (H, W, 3).
     """
     rgb = _utils.numpy_to_pillow(hsv, mode="HSV")
     rgb = rgb.convert("RGB")
@@ -127,16 +102,11 @@ def hsv2rgb(hsv: NDArray[np.uint8]) -> NDArray[np.uint8]:
 def rgba2rgb(rgba: NDArray[np.uint8]) -> NDArray[np.uint8]:
     """Convert rgba to rgb.
 
-    Parameters
-    ----------
-    rgba
-        Input rgba image with shape (H, W, 4).
+    Args:
+        rgba: Input rgba image with shape (H, W, 4).
 
-    Returns
-    -------
-    rgb
-        Output rgb image with shape (H, W, 3).
-
+    Returns:
+        RGB image with shape (H, W, 3).
     """
     rgb = rgba[:, :, :3]
     return rgb
@@ -145,16 +115,11 @@ def rgba2rgb(rgba: NDArray[np.uint8]) -> NDArray[np.uint8]:
 def asgray(img: NDArray) -> NDArray[np.uint8]:
     """Convert any array to gray image.
 
-    Parameters
-    ----------
-    img
-        Input image.
+    Args:
+        img: Input image.
 
-    Returns
-    -------
-    gray
-        Output gray image with shape (H, W).
-
+    Returns:
+        Gray image with shape (H, W).
     """
     if img.ndim == 2:
         if img.dtype == bool:
@@ -176,18 +141,12 @@ def asgray(img: NDArray) -> NDArray[np.uint8]:
 def asrgb(img: NDArray, copy: bool = False) -> NDArray[np.uint8]:
     """Convert any array to rgb image.
 
-    Parameters
-    ----------
-    img
-        Input image.
-    copy
-        Whether to return a copy of the image. Default is False.
+    Args:
+        img: Input image.
+        copy: Whether to return a copy of the image.
 
-    Returns
-    -------
-    rgb
-        Output rgb image with shape (H, W, 3).
-
+    Returns:
+        RGB image with shape (H, W, 3).
     """
     if img.ndim == 2:
         if img.dtype == bool:
@@ -208,16 +167,11 @@ def asrgb(img: NDArray, copy: bool = False) -> NDArray[np.uint8]:
 def asrgba(img: NDArray) -> NDArray[np.uint8]:
     """Convert any array to rgba image.
 
-    Parameters
-    ----------
-    img
-        Input image.
+    Args:
+        img: Input image.
 
-    Returns
-    -------
-    rgba
-        Output rgba image with shape (H, W, 4).
-
+    Returns:
+        RGBA image with shape (H, W, 4).
     """
     if img.ndim == 2:
         if img.dtype == bool:

@@ -16,11 +16,8 @@ if TYPE_CHECKING:
 class Nchannel2Rgb:
     """Convert nchannel array to rgb by PCA.
 
-    Parameters
-    ----------
-    pca
-        PCA object from sklearn.
-
+    Args:
+        pca: PCA object from sklearn.
     """
 
     def __init__(self, pca: sklearn.decomposition.PCA | None = None) -> None:
@@ -38,18 +35,12 @@ class Nchannel2Rgb:
     ) -> NDArray[np.uint8] | NDArray[np.floating]:
         """Convert nchannel array to rgb by PCA.
 
-        Parameters
-        ----------
-        nchannel
-            N channel image with shape (H, W, C).
-        dtype
-            Output dtype.
+        Args:
+            nchannel: N channel image with shape (H, W, C).
+            dtype: Output dtype.
 
-        Returns
-        -------
-        dst
+        Returns:
             Visualized image with shape (H, W, 3).
-
         """
         try:
             import sklearn.decomposition
@@ -96,19 +87,12 @@ def nchannel2rgb(
 ) -> NDArray[np.uint8] | NDArray[np.floating]:
     """Convert nchannel array to rgb by PCA.
 
-    Parameters
-    ----------
-    nchannel
-        N channel image with shape (H, W, C).
-    dtype
-        Output dtype.
-    pca
-        PCA object from sklearn.
+    Args:
+        nchannel: N channel image with shape (H, W, C).
+        dtype: Output dtype.
+        pca: PCA object from sklearn.
 
-    Returns
-    -------
-    dst
+    Returns:
         Visualized image with shape (H, W, 3).
-
     """
     return Nchannel2Rgb(pca)(nchannel, dtype)
