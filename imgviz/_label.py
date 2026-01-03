@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import functools
-import numbers
 from typing import Literal
 
 import numpy as np
@@ -82,7 +81,7 @@ def label2rgb(
     unique_labels = np.unique(label)
     max_label_id = unique_labels[-1]
 
-    if isinstance(alpha, numbers.Number):
+    if isinstance(alpha, (int, float)):
         alpha_arr = np.array([alpha for _ in range(max_label_id + 1)])
     elif isinstance(alpha, dict):
         alpha_arr = np.array(
