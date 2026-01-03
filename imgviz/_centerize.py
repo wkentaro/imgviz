@@ -73,7 +73,7 @@ def centerize(
         shape = list(shape) + [src.shape[2]]
 
     dst = np.zeros(shape, dtype=src.dtype)
-    if cval:
+    if cval is not None:
         dst[:, :] = cval
 
     src_h, src_w = src.shape[:2]
