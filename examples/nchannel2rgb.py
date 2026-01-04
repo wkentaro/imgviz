@@ -2,6 +2,7 @@
 
 import matplotlib.pyplot as plt
 import numpy as np
+from numpy.typing import NDArray
 
 import imgviz
 
@@ -9,11 +10,10 @@ import imgviz
 def nchannel2rgb() -> None:
     data = imgviz.data.arc2017()
 
-    nchannel_viz = imgviz.nchannel2rgb(data["res4"], dtype=np.float32)
+    nchannel_viz: NDArray[np.uint8] = imgviz.nchannel2rgb(data["res4"])
 
-    H, W = data["rgb"].shape[:2]
-    nchannel_viz = imgviz.resize(nchannel_viz, height=H, width=W)
-    nchannel_viz = (nchannel_viz * 255).round().astype(np.uint8)
+    height, width = data["rgb"].shape[:2]
+    nchannel_viz = imgviz.resize(nchannel_viz, height=height, width=width)
 
     # -------------------------------------------------------------------------
 
