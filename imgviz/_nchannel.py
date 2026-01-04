@@ -31,7 +31,7 @@ class Nchannel2Rgb:
         return self._pca
 
     def __call__(
-        self, nchannel: NDArray, dtype: DTypeLike = np.uint8
+        self, nchannel: NDArray, *, dtype: DTypeLike = np.uint8
     ) -> NDArray[np.uint8] | NDArray[np.floating]:
         """Convert nchannel array to rgb by PCA.
 
@@ -86,6 +86,7 @@ class Nchannel2Rgb:
 def nchannel2rgb(
     nchannel: NDArray,
     pca: sklearn.decomposition.PCA | None = None,
+    *,
     dtype: DTypeLike = np.uint8,
 ) -> NDArray[np.uint8] | NDArray[np.floating]:
     """Convert nchannel array to rgb by PCA.
@@ -98,4 +99,4 @@ def nchannel2rgb(
     Returns:
         Visualized image with shape (H, W, 3).
     """
-    return Nchannel2Rgb(pca)(nchannel, dtype)
+    return Nchannel2Rgb(pca=pca)(nchannel=nchannel, dtype=dtype)
