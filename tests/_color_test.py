@@ -38,3 +38,28 @@ def test_asrgba(images: dict[str, NDArray[np.uint8]]) -> None:
         assert result.dtype == np.uint8
         assert result.ndim == 3
         assert result.shape[2] == 4
+
+
+def test_rgb2hsv() -> None:
+    rgb = np.zeros((10, 10, 3), dtype=np.uint8)
+    rgb[:, :, 0] = 255  # red
+    hsv = imgviz.rgb2hsv(rgb)
+    assert hsv.dtype == np.uint8
+    assert hsv.shape == rgb.shape
+
+
+def test_hsv2rgb() -> None:
+    hsv = np.zeros((10, 10, 3), dtype=np.uint8)
+    hsv[:, :, 2] = 255  # value
+    rgb = imgviz.hsv2rgb(hsv)
+    assert rgb.dtype == np.uint8
+    assert rgb.shape == hsv.shape
+
+
+def test_get_fg_color() -> None:
+    from imgviz._color import get_fg_color
+
+    # Dark background -> white foreground
+    assert get_fg_color((0, 0, 0)) == (255, 255, 255)
+    # Light background -> black foreground
+    assert get_fg_color((255, 255, 255)) == (0, 0, 0)
