@@ -20,6 +20,7 @@ from ._depth import Depth2Rgb
 from ._depth import depth2rgb
 from ._dtype import bool2ubyte
 from ._dtype import float2ubyte
+from ._flow import Flow2Rgb
 from ._flow import flow2rgb
 from ._instances import instances2rgb
 from ._instances import masks_to_bboxes
