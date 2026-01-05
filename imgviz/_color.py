@@ -111,80 +111,80 @@ def rgba2rgb(rgba: NDArray[np.uint8]) -> NDArray[np.uint8]:
     return rgb
 
 
-def asgray(img: NDArray) -> NDArray[np.uint8]:
+def asgray(image: NDArray) -> NDArray[np.uint8]:
     """Convert any array to gray image.
 
     Args:
-        img: Input image.
+        image: Input image.
 
     Returns:
         Gray image with shape (H, W).
     """
-    if img.ndim == 2:
-        if img.dtype == bool:
-            gray = _dtype.bool2ubyte(img)
+    if image.ndim == 2:
+        if image.dtype == bool:
+            gray = _dtype.bool2ubyte(image)
         else:
-            gray = img
-    elif img.ndim == 3 and img.shape[2] == 4:
-        gray = rgb2gray(rgba2rgb(img))
-    elif img.ndim == 3 and img.shape[2] == 3:
-        gray = rgb2gray(img)
+            gray = image
+    elif image.ndim == 3 and image.shape[2] == 4:
+        gray = rgb2gray(rgba2rgb(image))
+    elif image.ndim == 3 and image.shape[2] == 3:
+        gray = rgb2gray(image)
     else:
         raise ValueError(
             f"unsupported image format to convert to gray: "
-            f"shape={img.shape}, dtype={img.dtype}"
+            f"shape={image.shape}, dtype={image.dtype}"
         )
     return gray
 
 
-def asrgb(img: NDArray, copy: bool = False) -> NDArray[np.uint8]:
+def asrgb(image: NDArray, copy: bool = False) -> NDArray[np.uint8]:
     """Convert any array to rgb image.
 
     Args:
-        img: Input image.
+        image: Input image.
         copy: Whether to return a copy of the image.
 
     Returns:
         RGB image with shape (H, W, 3).
     """
-    if img.ndim == 2:
-        if img.dtype == bool:
-            img = _dtype.bool2ubyte(img)
-        rgb = gray2rgb(img)
-    elif img.ndim == 3 and img.shape[2] == 4:
-        rgb = rgba2rgb(img)
-    elif img.ndim == 3 and img.shape[2] == 3:
-        rgb = img.copy() if copy else img
+    if image.ndim == 2:
+        if image.dtype == bool:
+            image = _dtype.bool2ubyte(image)
+        rgb = gray2rgb(image)
+    elif image.ndim == 3 and image.shape[2] == 4:
+        rgb = rgba2rgb(image)
+    elif image.ndim == 3 and image.shape[2] == 3:
+        rgb = image.copy() if copy else image
     else:
         raise ValueError(
             f"unsupported image format to convert to rgb: "
-            f"shape={img.shape}, dtype={img.dtype}"
+            f"shape={image.shape}, dtype={image.dtype}"
         )
     return rgb
 
 
-def asrgba(img: NDArray) -> NDArray[np.uint8]:
+def asrgba(image: NDArray) -> NDArray[np.uint8]:
     """Convert any array to rgba image.
 
     Args:
-        img: Input image.
+        image: Input image.
 
     Returns:
         RGBA image with shape (H, W, 4).
     """
-    if img.ndim == 2:
-        if img.dtype == bool:
-            img = _dtype.bool2ubyte(img)
-        rgb = gray2rgb(img)
+    if image.ndim == 2:
+        if image.dtype == bool:
+            image = _dtype.bool2ubyte(image)
+        rgb = gray2rgb(image)
         rgba = rgb2rgba(rgb)
-    elif img.ndim == 3 and img.shape[2] == 4:
-        rgba = img
-    elif img.ndim == 3 and img.shape[2] == 3:
-        rgba = rgb2rgba(img)
+    elif image.ndim == 3 and image.shape[2] == 4:
+        rgba = image
+    elif image.ndim == 3 and image.shape[2] == 3:
+        rgba = rgb2rgba(image)
     else:
         raise ValueError(
             f"unsupported image format to convert to rgba: "
-            f"shape={img.shape}, dtype={img.dtype}"
+            f"shape={image.shape}, dtype={image.dtype}"
         )
     return rgba
 

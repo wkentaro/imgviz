@@ -31,7 +31,7 @@ def circle(
     """
     dst = _utils.numpy_to_pillow(src)
     circle_(
-        img=dst,
+        image=dst,
         center=center,
         diameter=diameter,
         fill=fill,
@@ -42,7 +42,7 @@ def circle(
 
 
 def circle_(
-    img: PIL.Image.Image,
+    image: PIL.Image.Image,
     center: tuple[float, float],
     diameter: float,
     fill: Ink | None = None,
@@ -52,14 +52,14 @@ def circle_(
     """Draw circle on PIL image in-place.
 
     Args:
-        img: PIL image to draw on (modified in-place).
+        image: PIL image to draw on (modified in-place).
         center: Center point (cy, cx).
         diameter: Diameter of the circle.
         fill: RGB color to fill the mark. None for no fill.
         outline: RGB color to draw the outline.
         width: Line width.
     """
-    draw = PIL.ImageDraw.Draw(img)
+    draw = PIL.ImageDraw.Draw(image)
 
     cy, cx = center
 

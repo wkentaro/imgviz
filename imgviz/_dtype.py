@@ -4,19 +4,19 @@ import numpy as np
 from numpy.typing import NDArray
 
 
-def bool2ubyte(img: NDArray[np.bool_]) -> NDArray[np.uint8]:
+def bool2ubyte(image: NDArray[np.bool_]) -> NDArray[np.uint8]:
     """Convert boolean image to uint8."""
-    if img.dtype != bool:
-        raise ValueError(f"img dtype must be bool, but got {img.dtype}")
-    return img.astype(np.uint8) * 255
+    if image.dtype != bool:
+        raise ValueError(f"image dtype must be bool, but got {image.dtype}")
+    return image.astype(np.uint8) * 255
 
 
-def float2ubyte(img: NDArray[np.floating]) -> NDArray[np.uint8]:
+def float2ubyte(image: NDArray[np.floating]) -> NDArray[np.uint8]:
     """Convert float image in [0, 1] to uint8."""
-    if not np.issubdtype(img.dtype, np.floating):
-        raise ValueError(f"img dtype must be float, but got {img.dtype}")
-    if img.min() < 0:
-        raise ValueError(f"img.min() must be >= 0, but got {img.min()}")
-    if img.max() > 1:
-        raise ValueError(f"img.max() must be <= 1, but got {img.max()}")
-    return (img * 255).round().astype(np.uint8)
+    if not np.issubdtype(image.dtype, np.floating):
+        raise ValueError(f"image dtype must be float, but got {image.dtype}")
+    if image.min() < 0:
+        raise ValueError(f"image.min() must be >= 0, but got {image.min()}")
+    if image.max() > 1:
+        raise ValueError(f"image.max() must be <= 1, but got {image.max()}")
+    return (image * 255).round().astype(np.uint8)
