@@ -9,7 +9,7 @@ from ._ink import get_pil_ink
 
 
 def star(
-    src: NDArray[np.uint8],
+    image: NDArray[np.uint8],
     center: tuple[float, float],
     size: float,
     fill: Ink | None = None,
@@ -19,7 +19,7 @@ def star(
     """Draw star on numpy array with Pillow.
 
     Args:
-        src: Input image.
+        image: Input image.
         center: Center point (cy, cx).
         size: Diameter to create the star.
         fill: RGB color to fill the mark. None for no fill.
@@ -29,9 +29,9 @@ def star(
     Returns:
         Output image.
     """
-    dst = _utils.numpy_to_pillow(src)
+    dst = _utils.numpy_to_pillow(image)
     star_(
-        img=dst,
+        image=dst,
         center=center,
         size=size,
         fill=fill,
@@ -42,7 +42,7 @@ def star(
 
 
 def star_(
-    img: PIL.Image.Image,
+    image: PIL.Image.Image,
     center: tuple[float, float],
     size: float,
     fill: Ink | None = None,
@@ -52,14 +52,14 @@ def star_(
     """Draw star on PIL image in-place.
 
     Args:
-        img: PIL image to draw on (modified in-place).
+        image: PIL image to draw on (modified in-place).
         center: Center point (cy, cx).
         size: Diameter to create the star.
         fill: RGB color to fill the mark. None for no fill.
         outline: RGB color to draw the outline.
         width: Line width.
     """
-    draw = PIL.ImageDraw.Draw(img)
+    draw = PIL.ImageDraw.Draw(image)
 
     radius = size / 2
     cy, cx = center

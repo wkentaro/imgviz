@@ -162,7 +162,7 @@ def instances2rgb(
                 if y1 >= 0 and x1 >= 0 and y2 < dst.height and x2 < dst.width:
                     break
             draw_module.text_in_rectangle_(
-                img=dst,
+                image=dst,
                 loc=loc,
                 text=caption,
                 size=font_size,

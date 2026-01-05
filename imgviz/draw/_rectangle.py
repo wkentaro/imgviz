@@ -9,7 +9,7 @@ from ._ink import get_pil_ink
 
 
 def rectangle(
-    src: NDArray[np.uint8],
+    image: NDArray[np.uint8],
     yx1: tuple[float, float] | NDArray[np.floating],
     yx2: tuple[float, float] | NDArray[np.floating],
     fill: Ink | None = None,
@@ -19,7 +19,7 @@ def rectangle(
     """Draw rectangle on numpy array with Pillow.
 
     Args:
-        src: Input image.
+        image: Input image.
         yx1: Minimum vertex (y_min, x_min) of the axis aligned bounding box.
         yx2: Maximum vertex (y_max, x_max) of the AABB.
         fill: RGB color to fill the mark. None for no fill.
@@ -29,9 +29,9 @@ def rectangle(
     Returns:
         Output image.
     """
-    dst = _utils.numpy_to_pillow(src)
+    dst = _utils.numpy_to_pillow(image)
     rectangle_(
-        img=dst,
+        image=dst,
         yx1=yx1,
         yx2=yx2,
         fill=fill,
@@ -42,7 +42,7 @@ def rectangle(
 
 
 def rectangle_(
-    img: PIL.Image.Image,
+    image: PIL.Image.Image,
     yx1: tuple[float, float] | NDArray[np.floating],
     yx2: tuple[float, float] | NDArray[np.floating],
     fill: Ink | None = None,
@@ -52,14 +52,14 @@ def rectangle_(
     """Draw rectangle on PIL image in-place.
 
     Args:
-        img: PIL image to draw on (modified in-place).
+        image: PIL image to draw on (modified in-place).
         yx1: Minimum vertex (y_min, x_min) of the axis aligned bounding box.
         yx2: Maximum vertex (y_max, x_max) of the AABB.
         fill: RGB color to fill the mark. None for no fill.
         outline: RGB color to draw the outline.
         width: Rectangle line width.
     """
-    draw = PIL.ImageDraw.Draw(img)
+    draw = PIL.ImageDraw.Draw(image)
 
     y1, x1 = map(float, yx1)
     y2, x2 = map(float, yx2)

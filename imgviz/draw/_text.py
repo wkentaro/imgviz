@@ -54,7 +54,7 @@ def text_size(
 
 
 def text(
-    src: NDArray[np.uint8],
+    image: NDArray[np.uint8],
     yx: tuple[float, float],
     text: str,
     size: int,
@@ -64,7 +64,7 @@ def text(
     """Draw text on numpy array with Pillow.
 
     Args:
-        src: Input image.
+        image: Input image.
         yx: Left top point of the text (y, x).
         text: Text to draw.
         size: Text size in pixel.
@@ -74,13 +74,13 @@ def text(
     Returns:
         Output image.
     """
-    dst = _utils.numpy_to_pillow(src)
-    text_(img=dst, yx=yx, text=text, size=size, color=color, font_path=font_path)
+    dst = _utils.numpy_to_pillow(image)
+    text_(image=dst, yx=yx, text=text, size=size, color=color, font_path=font_path)
     return _utils.pillow_to_numpy(dst)
 
 
 def text_(
-    img: PIL.Image.Image,
+    image: PIL.Image.Image,
     yx: tuple[float, float],
     text: str,
     size: int,
@@ -90,14 +90,14 @@ def text_(
     """Draw text on PIL image in-place.
 
     Args:
-        img: PIL image to draw on (modified in-place).
+        image: PIL image to draw on (modified in-place).
         yx: Left top point of the text (y, x).
         text: Text to draw.
         size: Text size in pixel.
         color: Text RGB color in uint8. Default is (0, 0, 0), which is black.
         font_path: Font path. Default font is DejaVuSansMono.
     """
-    draw = PIL.ImageDraw.Draw(img)
+    draw = PIL.ImageDraw.Draw(image)
 
     y1, x1 = yx
     font = _get_font(size=size, font_path=font_path)

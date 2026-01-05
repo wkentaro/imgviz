@@ -12,7 +12,7 @@ from ._resize import resize
 
 @typing.overload
 def centerize(
-    src: ...,
+    image: ...,
     height: int,
     width: int,
     cval: Any = ...,
@@ -24,7 +24,7 @@ def centerize(
 
 @typing.overload
 def centerize(
-    src: ...,
+    image: ...,
     height: int,
     width: int,
     cval: Any = ...,
@@ -35,7 +35,7 @@ def centerize(
 
 
 def centerize(
-    src: NDArray,
+    image: NDArray,
     height: int,
     width: int,
     cval: Any = None,
@@ -46,7 +46,7 @@ def centerize(
     """Centerize image for specified image size.
 
     Args:
-        src: Image to centerize.
+        image: Image to centerize.
         height: Target height.
         width: Target width.
         cval: Color to be filled in the blank.
@@ -57,29 +57,29 @@ def centerize(
     Returns:
         Centerized image, or tuple of (image, mask) if return_mask is True.
     """
-    if src.ndim == 3:
-        shape: tuple[int, ...] = (height, width, src.shape[2])
+    if image.ndim == 3:
+        shape: tuple[int, ...] = (height, width, image.shape[2])
     else:
         shape = (height, width)
 
-    if src.shape[:2] == shape[:2]:
+    if image.shape[:2] == shape[:2]:
         if return_mask:
-            return src, np.ones(shape[:2], dtype=bool)
+            return image, np.ones(shape[:2], dtype=bool)
         else:
-            return src
+            return image
 
-    dst = np.zeros(shape, dtype=src.dtype)
+    dst = np.zeros(shape, dtype=image.dtype)
     if cval is not None:
         dst[:, :] = cval
 
-    src_h, src_w = src.shape[:2]
-    scale_h, scale_w = 1.0 * shape[0] / src_h, 1.0 * shape[1] / src_w
+    image_h, image_w = image.shape[:2]
+    scale_h, scale_w = 1.0 * shape[0] / image_h, 1.0 * shape[1] / image_w
     scale = min(scale_h, scale_w)
-    dst_h, dst_w = int(round(src_h * scale)), int(round(src_w * scale))
-    src = resize(src, height=dst_h, width=dst_w, interpolation=interpolation)
+    dst_h, dst_w = int(round(image_h * scale)), int(round(image_w * scale))
+    image = resize(image, height=dst_h, width=dst_w, interpolation=interpolation)
 
     ph, pw = 0, 0
-    h, w = src.shape[:2]
+    h, w = image.shape[:2]
     dst_h, dst_w = shape[:2]
     if loc == "center":
         if h < dst_h:
@@ -96,7 +96,7 @@ def centerize(
             pw = dst_w - w
     else:
         raise ValueError(f"unsupported loc: {loc}")
-    dst[ph : ph + h, pw : pw + w] = src
+    dst[ph : ph + h, pw : pw + w] = image
 
     if return_mask:
         mask = np.zeros(shape[:2], dtype=bool)

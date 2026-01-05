@@ -80,7 +80,7 @@ def text_in_rectangle_aabb(
 
 
 def text_in_rectangle(
-    src: NDArray[np.uint8],
+    image: NDArray[np.uint8],
     loc: _Loc,
     text: str,
     size: int,
@@ -94,7 +94,7 @@ def text_in_rectangle(
     """Draw text in a rectangle.
 
     Args:
-        src: Input image.
+        image: Input image.
         loc: Location of text. Must be one of: lt, rt, lb, rb, lt+, rt+, lb-,
             rb-.
         text: Text to draw.
@@ -115,7 +115,7 @@ def text_in_rectangle(
     if color is None:
         color = _color.get_fg_color(background)
 
-    height, width = src.shape[:2]
+    height, width = image.shape[:2]
     y1, x1, y2, x2 = text_in_rectangle_aabb(
         yx1=(0, 0) if yx1 is None else yx1,
         yx2=(height - 1, width - 1) if yx2 is None else yx2,
@@ -125,7 +125,7 @@ def text_in_rectangle(
         font_path=font_path,
     )
 
-    dst = src
+    dst = image
 
     if not keep_size:
         constant_values = (
@@ -154,13 +154,13 @@ def text_in_rectangle(
 
     dst = _utils.numpy_to_pillow(dst)
     rectangle_(
-        img=dst,
+        image=dst,
         yx1=(y1, x1),
         yx2=(y2, x2),
         fill=background,
     )
     text_(
-        img=dst,
+        image=dst,
         yx=(y1 + 1, x1 + 1),
         text=text,
         color=color,
@@ -171,7 +171,7 @@ def text_in_rectangle(
 
 
 def text_in_rectangle_(
-    img: PIL.Image.Image,
+    image: PIL.Image.Image,
     loc: _Loc,
     text: str,
     size: int,
@@ -184,7 +184,7 @@ def text_in_rectangle_(
     """Draw text in a rectangle on PIL image in-place.
 
     Args:
-        img: PIL image to draw on (modified in-place).
+        image: PIL image to draw on (modified in-place).
         loc: Location of text. Must be one of: lt, rt, lb, rb, lt+, rt+, lb-,
             rb-.
         text: Text to draw.
@@ -202,20 +202,20 @@ def text_in_rectangle_(
 
     y1, x1, y2, x2 = text_in_rectangle_aabb(
         yx1=(0, 0) if yx1 is None else yx1,
-        yx2=(img.height - 1, img.width - 1) if yx2 is None else yx2,
+        yx2=(image.height - 1, image.width - 1) if yx2 is None else yx2,
         loc=loc,
         text=text,
         size=size,
         font_path=font_path,
     )
     rectangle_(
-        img=img,
+        image=image,
         yx1=(y1, x1),
         yx2=(y2, x2),
         fill=background,
     )
     text_(
-        img=img,
+        image=image,
         yx=(y1 + 1, x1 + 1),
         text=text,
         color=color,
