@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import pathlib
+from typing import TypedDict
 
 import numpy as np
 from numpy.typing import NDArray
@@ -28,7 +29,12 @@ def read_flow(filename: str | pathlib.Path) -> NDArray[np.float32]:
         return flow_uv
 
 
-def middlebury() -> dict[str, NDArray[np.float32] | NDArray[np.uint8]]:
+class _MiddleburyData(TypedDict):
+    rgb: NDArray[np.uint8]
+    flow: NDArray[np.float32]
+
+
+def middlebury() -> _MiddleburyData:
     # http://vision.middlebury.edu/flow/data/
 
     rgb_file = _here / "grove3.png"
@@ -37,5 +43,5 @@ def middlebury() -> dict[str, NDArray[np.float32] | NDArray[np.uint8]]:
     flow_file = _here / "grove3.flo"
     flow = read_flow(flow_file)
 
-    data = {"rgb": rgb, "flow": flow}
+    data: _MiddleburyData = _MiddleburyData(rgb=rgb, flow=flow)
     return data

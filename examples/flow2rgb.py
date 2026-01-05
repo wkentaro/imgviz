@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import typing
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -12,13 +11,9 @@ import imgviz
 def flow2rgb() -> None:
     data = imgviz.data.middlebury()
 
-    assert isinstance(data["rgb"], np.ndarray)
-    assert data["rgb"].dtype == np.uint8
-    rgb: NDArray[np.uint8] = typing.cast(NDArray[np.uint8], data["rgb"])
+    rgb: NDArray[np.uint8] = data["rgb"]
 
-    assert isinstance(data["flow"], np.ndarray)
-    assert data["flow"].dtype == np.float32
-    flow: NDArray[np.float32] = typing.cast(NDArray[np.float32], data["flow"])
+    flow: NDArray[np.float32] = data["flow"]
     flowviz = imgviz.flow2rgb(flow)
 
     # -------------------------------------------------------------------------
