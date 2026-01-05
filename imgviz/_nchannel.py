@@ -1,10 +1,10 @@
 from __future__ import annotations
 
+import typing
 from typing import TYPE_CHECKING
 from typing import Any
 
 import numpy as np
-from numpy.typing import DTypeLike
 from numpy.typing import NDArray
 
 from ._normalize import normalize
@@ -31,7 +31,10 @@ class Nchannel2Rgb:
         return self._pca
 
     def __call__(
-        self, nchannel: NDArray, dtype: DTypeLike = np.uint8
+        self,
+        nchannel: NDArray,
+        *,
+        dtype: type[np.uint8] | type[np.floating] = np.uint8,
     ) -> NDArray[np.uint8] | NDArray[np.floating]:
         """Convert nchannel array to rgb by PCA.
 
@@ -67,7 +70,7 @@ class Nchannel2Rgb:
         dst = dst.reshape(H, W, 3)
 
         if dtype == np.uint8:
-            if self._min_max_value is None:
+            if self._min_max_value == (None, None):
                 self._min_max_value = (
                     np.nanmin(dst, axis=(0, 1)),
                     np.nanmax(dst, axis=(0, 1)),
@@ -83,19 +86,38 @@ class Nchannel2Rgb:
         return dst
 
 
+@typing.overload
 def nchannel2rgb(
     nchannel: NDArray,
-    dtype: DTypeLike = np.uint8,
+    pca: sklearn.decomposition.PCA | None = ...,
+    *,
+    dtype: type[np.uint8] = ...,
+) -> NDArray[np.uint8]: ...
+
+
+@typing.overload
+def nchannel2rgb(
+    nchannel: NDArray,
+    pca: sklearn.decomposition.PCA | None = ...,
+    *,
+    dtype: type[np.floating] = ...,
+) -> NDArray[np.floating]: ...
+
+
+def nchannel2rgb(
+    nchannel: NDArray,
     pca: sklearn.decomposition.PCA | None = None,
+    *,
+    dtype: type[np.uint8] | type[np.floating] = np.uint8,
 ) -> NDArray[np.uint8] | NDArray[np.floating]:
     """Convert nchannel array to rgb by PCA.
 
     Args:
         nchannel: N channel image with shape (H, W, C).
-        dtype: Output dtype.
         pca: PCA object from sklearn.
+        dtype: Output dtype.
 
     Returns:
         Visualized image with shape (H, W, 3).
     """
-    return Nchannel2Rgb(pca)(nchannel, dtype)
+    return Nchannel2Rgb(pca=pca)(nchannel=nchannel, dtype=dtype)
