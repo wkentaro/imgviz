@@ -14,6 +14,7 @@ def triangle(
     size: float,
     fill: Ink | None = None,
     outline: Ink | None = None,
+    width: int = 1,
 ) -> NDArray[np.uint8]:
     """Draw triangle on numpy array with Pillow.
 
@@ -23,12 +24,20 @@ def triangle(
         size: Diameter to create the triangle.
         fill: RGB color to fill the mark. None for no fill.
         outline: RGB color to draw the outline.
+        width: Line width.
 
     Returns:
         Output image.
     """
     dst = _utils.numpy_to_pillow(src)
-    triangle_(img=dst, center=center, size=size, fill=fill, outline=outline)
+    triangle_(
+        img=dst,
+        center=center,
+        size=size,
+        fill=fill,
+        outline=outline,
+        width=width,
+    )
     return _utils.pillow_to_numpy(dst)
 
 
@@ -38,6 +47,7 @@ def triangle_(
     size: float,
     fill: Ink | None = None,
     outline: Ink | None = None,
+    width: int = 1,
 ) -> None:
     """Draw triangle on PIL image in-place.
 
@@ -47,6 +57,7 @@ def triangle_(
         size: Diameter to create the triangle.
         fill: RGB color to fill the mark. None for no fill.
         outline: RGB color to draw the outline.
+        width: Line width.
     """
     draw = PIL.ImageDraw.Draw(img)
 
@@ -58,4 +69,4 @@ def triangle_(
 
     xy = np.stack((x, y), axis=1)
     xy = xy.flatten().tolist()
-    draw.polygon(xy, fill=get_pil_ink(fill), outline=get_pil_ink(outline))
+    draw.polygon(xy, fill=get_pil_ink(fill), outline=get_pil_ink(outline), width=width)

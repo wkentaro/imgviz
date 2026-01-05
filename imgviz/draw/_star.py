@@ -14,6 +14,7 @@ def star(
     size: float,
     fill: Ink | None = None,
     outline: Ink | None = None,
+    width: int = 1,
 ) -> NDArray[np.uint8]:
     """Draw star on numpy array with Pillow.
 
@@ -23,6 +24,7 @@ def star(
         size: Diameter to create the star.
         fill: RGB color to fill the mark. None for no fill.
         outline: RGB color to draw the outline.
+        width: Line width.
 
     Returns:
         Output image.
@@ -34,6 +36,7 @@ def star(
         size=size,
         fill=fill,
         outline=outline,
+        width=width,
     )
     return _utils.pillow_to_numpy(dst)
 
@@ -44,6 +47,7 @@ def star_(
     size: float,
     fill: Ink | None = None,
     outline: Ink | None = None,
+    width: int = 1,
 ) -> None:
     """Draw star on PIL image in-place.
 
@@ -53,6 +57,7 @@ def star_(
         size: Diameter to create the star.
         fill: RGB color to fill the mark. None for no fill.
         outline: RGB color to draw the outline.
+        width: Line width.
     """
     draw = PIL.ImageDraw.Draw(img)
 
@@ -88,4 +93,4 @@ def star_(
         ]
     )
     xy = xy.flatten().tolist()
-    draw.polygon(xy, fill=get_pil_ink(fill), outline=get_pil_ink(outline))
+    draw.polygon(xy, fill=get_pil_ink(fill), outline=get_pil_ink(outline), width=width)
