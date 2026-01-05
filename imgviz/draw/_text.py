@@ -7,8 +7,8 @@ import PIL.ImageFont
 from numpy.typing import NDArray
 
 from .. import _utils
-from ._color import Ink
-from ._color import get_pil_ink
+from ._ink import Ink
+from ._ink import get_pil_ink
 
 _here: pathlib.Path = pathlib.Path(__file__).parent
 _default_font_path: pathlib.Path = _here / "fonts" / "DejaVuSansMono.ttf"

@@ -5,8 +5,8 @@ from numpy.typing import ArrayLike
 from numpy.typing import NDArray
 
 from .. import _utils
-from ._color import Ink
-from ._color import get_pil_ink
+from ._ink import Ink
+from ._ink import get_pil_ink
 
 
 def line(
