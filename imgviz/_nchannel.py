@@ -33,7 +33,6 @@ class Nchannel2Rgb:
     def __call__(
         self,
         nchannel: NDArray,
-        *,
         dtype: type[np.uint8] | type[np.floating] = np.uint8,
     ) -> NDArray[np.uint8] | NDArray[np.floating]:
         """Convert nchannel array to rgb by PCA.
