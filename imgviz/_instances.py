@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import typing
 from collections.abc import Sequence
 from typing import Literal
 
@@ -150,8 +149,8 @@ def instances2rgb(
         )
 
         if caption is not None:
-            for loc in ["lt+", "lt"]:
-                loc = typing.cast(Literal["lt+", "lt"], loc)
+            locs: tuple[Literal["lt+"], Literal["lt"]] = ("lt+", "lt")
+            for loc in locs:
                 y1, x1, y2, x2 = draw_module.text_in_rectangle_aabb(
                     img_shape=(dst.height, dst.width),
                     loc=loc,
