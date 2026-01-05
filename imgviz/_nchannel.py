@@ -90,7 +90,6 @@ class Nchannel2Rgb:
 def nchannel2rgb(
     nchannel: NDArray,
     pca: sklearn.decomposition.PCA | None = ...,
-    *,
     dtype: type[np.uint8] = ...,
 ) -> NDArray[np.uint8]: ...
 
@@ -99,7 +98,6 @@ def nchannel2rgb(
 def nchannel2rgb(
     nchannel: NDArray,
     pca: sklearn.decomposition.PCA | None = ...,
-    *,
     dtype: type[np.floating] = ...,
 ) -> NDArray[np.floating]: ...
 
@@ -107,7 +105,6 @@ def nchannel2rgb(
 def nchannel2rgb(
     nchannel: NDArray,
     pca: sklearn.decomposition.PCA | None = None,
-    *,
     dtype: type[np.uint8] | type[np.floating] = np.uint8,
 ) -> NDArray[np.uint8] | NDArray[np.floating]:
     """Convert nchannel array to rgb by PCA.
