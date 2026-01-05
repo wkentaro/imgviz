@@ -11,10 +11,10 @@ def centerize() -> None:
     rgb = data["rgb"]
 
     H, W = rgb.shape[:2]
-    centerized1 = imgviz.centerize(rgb, shape=(H, H))
+    centerized1 = imgviz.centerize(rgb, height=H, width=H)
 
     rgb_T = rgb.transpose(1, 0, 2)
-    centerized2 = imgviz.centerize(rgb_T, shape=(H, H))
+    centerized2 = imgviz.centerize(rgb_T, height=H, width=H)
 
     # -------------------------------------------------------------------------
 
