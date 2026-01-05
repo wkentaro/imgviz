@@ -10,7 +10,7 @@ from ._ink import get_pil_ink
 
 
 def line(
-    src: NDArray[np.uint8],
+    image: NDArray[np.uint8],
     yx: ArrayLike,
     fill: Ink,
     width: int = 1,
@@ -18,7 +18,7 @@ def line(
     """Draw line on numpy array with Pillow.
 
     Args:
-        src: Input image.
+        image: Input image.
         yx: Array of points (y, x) with shape (N, 2).
         fill: RGB color to draw the line.
         width: Line width.
@@ -26,7 +26,7 @@ def line(
     Returns:
         Output image.
     """
-    dst = _utils.numpy_to_pillow(src)
+    dst = _utils.numpy_to_pillow(image)
     line_(image=dst, yx=yx, fill=fill, width=width)
     return _utils.pillow_to_numpy(dst)
 

@@ -54,7 +54,7 @@ def text_size(
 
 
 def text(
-    src: NDArray[np.uint8],
+    image: NDArray[np.uint8],
     yx: tuple[float, float],
     text: str,
     size: int,
@@ -64,7 +64,7 @@ def text(
     """Draw text on numpy array with Pillow.
 
     Args:
-        src: Input image.
+        image: Input image.
         yx: Left top point of the text (y, x).
         text: Text to draw.
         size: Text size in pixel.
@@ -74,7 +74,7 @@ def text(
     Returns:
         Output image.
     """
-    dst = _utils.numpy_to_pillow(src)
+    dst = _utils.numpy_to_pillow(image)
     text_(image=dst, yx=yx, text=text, size=size, color=color, font_path=font_path)
     return _utils.pillow_to_numpy(dst)
 

@@ -80,7 +80,7 @@ def text_in_rectangle_aabb(
 
 
 def text_in_rectangle(
-    src: NDArray[np.uint8],
+    image: NDArray[np.uint8],
     loc: _Loc,
     text: str,
     size: int,
@@ -94,7 +94,7 @@ def text_in_rectangle(
     """Draw text in a rectangle.
 
     Args:
-        src: Input image.
+        image: Input image.
         loc: Location of text. Must be one of: lt, rt, lb, rb, lt+, rt+, lb-,
             rb-.
         text: Text to draw.
@@ -115,7 +115,7 @@ def text_in_rectangle(
     if color is None:
         color = _color.get_fg_color(background)
 
-    height, width = src.shape[:2]
+    height, width = image.shape[:2]
     y1, x1, y2, x2 = text_in_rectangle_aabb(
         yx1=(0, 0) if yx1 is None else yx1,
         yx2=(height - 1, width - 1) if yx2 is None else yx2,
@@ -125,7 +125,7 @@ def text_in_rectangle(
         font_path=font_path,
     )
 
-    dst = src
+    dst = image
 
     if not keep_size:
         constant_values = (

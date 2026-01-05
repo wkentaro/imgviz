@@ -9,7 +9,7 @@ from ._ink import get_pil_ink
 
 
 def ellipse(
-    src: NDArray[np.uint8],
+    image: NDArray[np.uint8],
     yx1: tuple[float, float],
     yx2: tuple[float, float],
     fill: Ink | None = None,
@@ -19,7 +19,7 @@ def ellipse(
     """Draw ellipse on numpy array with Pillow.
 
     Args:
-        src: Input image.
+        image: Input image.
         yx1: Minimum vertex (y_min, x_min) of the bounding box.
         yx2: Maximum vertex (y_max, x_max) of the bounding box.
         fill: RGB color to fill the mark. None for no fill.
@@ -29,7 +29,7 @@ def ellipse(
     Returns:
         Output image.
     """
-    dst = _utils.numpy_to_pillow(src)
+    dst = _utils.numpy_to_pillow(image)
     ellipse_(image=dst, yx1=yx1, yx2=yx2, fill=fill, outline=outline, width=width)
     return _utils.pillow_to_numpy(dst)
 

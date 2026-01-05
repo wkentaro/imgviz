@@ -16,7 +16,7 @@ except ImportError:
 
 
 def _resize_pillow(
-    src: NDArray, height: int, width: int, interpolation: Literal["linear", "nearest"]
+    image: NDArray, height: int, width: int, interpolation: Literal["linear", "nearest"]
 ) -> NDArray:
     resample: Final
     if interpolation == "linear":
@@ -26,23 +26,25 @@ def _resize_pillow(
     else:
         raise ValueError(f"unsupported interpolation: {interpolation}")
 
-    if np.issubdtype(src.dtype, np.integer):
-        dst = _utils.numpy_to_pillow(src)
+    if np.issubdtype(image.dtype, np.integer):
+        dst = _utils.numpy_to_pillow(image)
         dst = dst.resize((width, height), resample=resample)
         dst = _utils.pillow_to_numpy(dst)
     else:
-        if not np.issubdtype(src.dtype, np.floating):
-            raise TypeError(f"src.dtype must be integer or floating, got {src.dtype}")
-        ndim = src.ndim
+        if not np.issubdtype(image.dtype, np.floating):
+            raise TypeError(
+                f"image.dtype must be integer or floating, got {image.dtype}"
+            )
+        ndim = image.ndim
         if ndim == 2:
-            src = src[:, :, None]
+            image = image[:, :, None]
 
-        C = src.shape[2]
-        dst = np.zeros((height, width, C), dtype=src.dtype)
+        C = image.shape[2]
+        dst = np.zeros((height, width, C), dtype=image.dtype)
         for c in range(C):
-            src_c = src[:, :, c]
-            src_c = _utils.numpy_to_pillow(src_c)
-            dst[:, :, c] = src_c.resize((width, height), resample=resample)
+            image_c = image[:, :, c]
+            image_c = _utils.numpy_to_pillow(image_c)
+            dst[:, :, c] = image_c.resize((width, height), resample=resample)
 
         if ndim == 2:
             dst = dst[:, :, 0]
@@ -50,7 +52,7 @@ def _resize_pillow(
 
 
 def _resize_opencv(
-    src: NDArray, height: int, width: int, interpolation: Literal["linear", "nearest"]
+    image: NDArray, height: int, width: int, interpolation: Literal["linear", "nearest"]
 ) -> NDArray:
     if cv2 is None:
         raise ImportError("opencv-python is not installed")
@@ -63,12 +65,12 @@ def _resize_opencv(
     else:
         raise ValueError(f"unsupported interpolation: {interpolation}")
 
-    dst = cv2.resize(src, (width, height), interpolation=interpolation_int)
+    dst = cv2.resize(image, (width, height), interpolation=interpolation_int)
     return dst
 
 
 def resize(
-    src: NDArray,
+    image: NDArray,
     height: int | float | None = None,
     width: int | float | None = None,
     interpolation: Literal["linear", "nearest"] = "linear",
@@ -77,7 +79,7 @@ def resize(
     """Resize image.
 
     Args:
-        src: Input image with shape (H, W) or (H, W, C).
+        image: Input image with shape (H, W) or (H, W, C).
         height: Height of image. If not given, resized based on width keeping
             ratio.
         width: Width of image. If not given, resized based on height keeping
@@ -88,32 +90,32 @@ def resize(
     Returns:
         Resized image.
     """
-    if not isinstance(src, np.ndarray):
-        raise TypeError("src type must be numpy.ndarray")
+    if not isinstance(image, np.ndarray):
+        raise TypeError("image type must be numpy.ndarray")
 
     if backend == "auto":
         backend = "pillow" if cv2 is None else "opencv"
 
-    src_height, src_width = src.shape[:2]
+    image_height, image_width = image.shape[:2]
     if isinstance(width, float):
         scale_width = width
-        width = int(round(scale_width * src_width))
+        width = int(round(scale_width * image_width))
     if isinstance(height, float):
         scale_height = height
-        height = int(round(scale_height * src_height))
+        height = int(round(scale_height * image_height))
     if height is None and width is None:
         raise ValueError("either height or width must be given")
     if height is None:
-        scale_height = width / src_width
-        height = int(round(scale_height * src_height))
+        scale_height = width / image_width
+        height = int(round(scale_height * image_height))
     if width is None:
-        scale_width = height / src_height
-        width = int(round(scale_width * src_width))
+        scale_width = height / image_height
+        width = int(round(scale_width * image_width))
 
     if backend == "pillow":
-        dst = _resize_pillow(src, height, width, interpolation)
+        dst = _resize_pillow(image, height, width, interpolation)
     elif backend == "opencv":
-        dst = _resize_opencv(src, height, width, interpolation)
+        dst = _resize_opencv(image, height, width, interpolation)
     else:
         raise ValueError(f"unsupported backend: {backend}")
 

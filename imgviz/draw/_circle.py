@@ -9,7 +9,7 @@ from ._ink import get_pil_ink
 
 
 def circle(
-    src: NDArray[np.uint8],
+    image: NDArray[np.uint8],
     center: tuple[float, float],
     diameter: float,
     fill: Ink | None = None,
@@ -19,7 +19,7 @@ def circle(
     """Draw circle on numpy array with Pillow.
 
     Args:
-        src: Input image.
+        image: Input image.
         center: Center point (cy, cx).
         diameter: Diameter of the circle.
         fill: RGB color to fill the mark. None for no fill.
@@ -29,7 +29,7 @@ def circle(
     Returns:
         Output image.
     """
-    dst = _utils.numpy_to_pillow(src)
+    dst = _utils.numpy_to_pillow(image)
     circle_(
         image=dst,
         center=center,

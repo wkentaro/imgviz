@@ -9,7 +9,7 @@ from ._ink import get_pil_ink
 
 
 def rectangle(
-    src: NDArray[np.uint8],
+    image: NDArray[np.uint8],
     yx1: tuple[float, float] | NDArray[np.floating],
     yx2: tuple[float, float] | NDArray[np.floating],
     fill: Ink | None = None,
@@ -19,7 +19,7 @@ def rectangle(
     """Draw rectangle on numpy array with Pillow.
 
     Args:
-        src: Input image.
+        image: Input image.
         yx1: Minimum vertex (y_min, x_min) of the axis aligned bounding box.
         yx2: Maximum vertex (y_max, x_max) of the AABB.
         fill: RGB color to fill the mark. None for no fill.
@@ -29,7 +29,7 @@ def rectangle(
     Returns:
         Output image.
     """
-    dst = _utils.numpy_to_pillow(src)
+    dst = _utils.numpy_to_pillow(image)
     rectangle_(
         image=dst,
         yx1=yx1,
