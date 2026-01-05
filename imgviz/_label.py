@@ -174,7 +174,7 @@ def label2rgb(
             aabb2 = np.array([height - pad, pad + legend_width], dtype=float)
             aabb1 = aabb2 - (legend_height, legend_width)
         else:
-            raise ValueError(f"unexpected loc: {loc}")
+            raise ValueError(f"unsupported loc: {loc}")
 
         alpha = 0.5
         y1, x1 = aabb1.round().astype(int)

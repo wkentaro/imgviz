@@ -131,7 +131,7 @@ def asgray(img: NDArray) -> NDArray[np.uint8]:
         gray = rgb2gray(img)
     else:
         raise ValueError(
-            f"Unsupported image format to convert to gray: "
+            f"unsupported image format to convert to gray: "
             f"shape={img.shape}, dtype={img.dtype}"
         )
     return gray
@@ -157,7 +157,7 @@ def asrgb(img: NDArray, copy: bool = False) -> NDArray[np.uint8]:
         rgb = img.copy() if copy else img
     else:
         raise ValueError(
-            f"Unsupported image format to convert to rgb: "
+            f"unsupported image format to convert to rgb: "
             f"shape={img.shape}, dtype={img.dtype}"
         )
     return rgb
@@ -183,7 +183,7 @@ def asrgba(img: NDArray) -> NDArray[np.uint8]:
         rgba = rgb2rgba(img)
     else:
         raise ValueError(
-            f"Unsupported image format to convert to rgba: "
+            f"unsupported image format to convert to rgba: "
             f"shape={img.shape}, dtype={img.dtype}"
         )
     return rgba

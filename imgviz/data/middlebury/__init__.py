@@ -19,7 +19,7 @@ def read_flow(filename: str | pathlib.Path) -> NDArray[np.float32]:
     with open(filename, "rb") as f:
         magic = np.fromfile(f, np.float32, count=1)
         if magic != 202021.25:
-            raise OSError(f"Invalid .flo file: {filename}")
+            raise OSError(f"invalid .flo file: {filename}")
 
         w = np.fromfile(f, np.int32, count=1)[0]
         h = np.fromfile(f, np.int32, count=1)[0]

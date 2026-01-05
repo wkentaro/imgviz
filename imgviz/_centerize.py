@@ -95,7 +95,7 @@ def centerize(
         if w < dst_w:
             pw = dst_w - w
     else:
-        raise ValueError(f"Unsupported loc: {loc}")
+        raise ValueError(f"unsupported loc: {loc}")
     dst[ph : ph + h, pw : pw + w] = src
 
     if return_mask:
