@@ -138,12 +138,12 @@ def instances2rgb(
         if (y2 - y1) * (x2 - x1) == 0:
             continue
 
-        aabb1 = np.array([y1, x1], dtype=int)
-        aabb2 = np.array([y2, x2], dtype=int)
+        yx1 = np.array([y1, x1], dtype=int)
+        yx2 = np.array([y2, x2], dtype=int)
         draw_module.rectangle_(
             dst,
-            aabb1,
-            aabb2,
+            yx1,
+            yx2,
             outline=color_cls,
             width=line_width,
         )
@@ -156,8 +156,8 @@ def instances2rgb(
                     loc=loc,
                     text=caption,
                     size=font_size,
-                    aabb1=aabb1,
-                    aabb2=aabb2,
+                    yx1=yx1,
+                    yx2=yx2,
                     font_path=font_path,
                 )
                 if y1 >= 0 and x1 >= 0 and y2 < dst.height and x2 < dst.width:
@@ -168,8 +168,8 @@ def instances2rgb(
                 text=caption,
                 size=font_size,
                 background=color_cls,
-                aabb1=aabb1,
-                aabb2=aabb2,
+                yx1=yx1,
+                yx2=yx2,
                 font_path=font_path,
             )
     return _utils.pillow_to_numpy(dst)

@@ -21,8 +21,8 @@ def text_in_rectangle_aabb(
     loc: _Loc,
     text: str,
     size: int,
-    aabb1: tuple[float, float] | NDArray[np.floating] | None,
-    aabb2: tuple[float, float] | NDArray[np.floating] | None,
+    yx1: tuple[float, float] | NDArray[np.floating] | None,
+    yx2: tuple[float, float] | NDArray[np.floating] | None,
     font_path: str | pathlib.Path | None = None,
 ) -> tuple[int, int, int, int]:
     height, width = img_shape[:2]
@@ -31,8 +31,8 @@ def text_in_rectangle_aabb(
     x1: int
     y2: int
     x2: int
-    y1, x1 = (0, 0) if aabb1 is None else map(int, aabb1)
-    y2, x2 = (height - 1, width - 1) if aabb2 is None else map(int, aabb2)
+    y1, x1 = (0, 0) if yx1 is None else map(int, yx1)
+    y2, x2 = (height - 1, width - 1) if yx2 is None else map(int, yx2)
 
     tsize: tuple[int, int] = text_size(text, size, font_path=font_path)
 
@@ -68,8 +68,8 @@ def text_in_rectangle(
     size: int,
     background: tuple[int, int, int] | NDArray[np.uint8],
     color: tuple[int, int, int] | NDArray[np.uint8] | None = None,
-    aabb1: tuple[float, float] | NDArray[np.floating] | None = None,
-    aabb2: tuple[float, float] | NDArray[np.floating] | None = None,
+    yx1: tuple[float, float] | NDArray[np.floating] | None = None,
+    yx2: tuple[float, float] | NDArray[np.floating] | None = None,
     font_path: str | pathlib.Path | None = None,
     keep_size: bool = False,
 ) -> NDArray[np.uint8]:
@@ -84,9 +84,9 @@ def text_in_rectangle(
         background: Background color in uint8.
         color: Text RGB color in uint8. If None, the color is determined by
             background color.
-        aabb1: Coordinate of the rectangle minimum (y_min, x_min). Default is
+        yx1: Coordinate of the rectangle minimum (y_min, x_min). Default is
             (0, 0).
-        aabb2: Coordinate of the rectangle maximum (y_max, x_max). Default is
+        yx2: Coordinate of the rectangle maximum (y_max, x_max). Default is
             (height, width).
         font_path: Font path.
         keep_size: Force to keep original size (size change happens with
@@ -104,8 +104,8 @@ def text_in_rectangle(
         loc=loc,
         text=text,
         size=size,
-        aabb1=aabb1,
-        aabb2=aabb2,
+        yx1=yx1,
+        yx2=yx2,
         font_path=font_path,
     )
 
@@ -139,8 +139,8 @@ def text_in_rectangle(
     dst = _utils.numpy_to_pillow(dst)
     rectangle_(
         img=dst,
-        aabb1=(y1, x1),
-        aabb2=(y2, x2),
+        yx1=(y1, x1),
+        yx2=(y2, x2),
         fill=background,
     )
     text_(
@@ -161,8 +161,8 @@ def text_in_rectangle_(
     size: int,
     background: tuple[int, int, int] | NDArray[np.uint8],
     color: tuple[int, int, int] | NDArray[np.uint8] | None = None,
-    aabb1: tuple[float, float] | NDArray[np.floating] | None = None,
-    aabb2: tuple[float, float] | NDArray[np.floating] | None = None,
+    yx1: tuple[float, float] | NDArray[np.floating] | None = None,
+    yx2: tuple[float, float] | NDArray[np.floating] | None = None,
     font_path: str | pathlib.Path | None = None,
 ) -> None:
     if color is None:
@@ -173,14 +173,14 @@ def text_in_rectangle_(
         loc=loc,
         text=text,
         size=size,
-        aabb1=aabb1,
-        aabb2=aabb2,
+        yx1=yx1,
+        yx2=yx2,
         font_path=font_path,
     )
     rectangle_(
         img=img,
-        aabb1=(y1, x1),
-        aabb2=(y2, x2),
+        yx1=(y1, x1),
+        yx2=(y2, x2),
         fill=background,
     )
     text_(

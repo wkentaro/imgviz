@@ -10,8 +10,8 @@ from ._ink import get_pil_ink
 
 def rectangle(
     src: NDArray[np.uint8],
-    aabb1: tuple[float, float] | NDArray[np.floating],
-    aabb2: tuple[float, float] | NDArray[np.floating],
+    yx1: tuple[float, float] | NDArray[np.floating],
+    yx2: tuple[float, float] | NDArray[np.floating],
     fill: Ink | None = None,
     outline: Ink | None = None,
     width: int = 0,
@@ -20,8 +20,8 @@ def rectangle(
 
     Args:
         src: Input image.
-        aabb1: Minimum vertex (y_min, x_min) of the axis aligned bounding box.
-        aabb2: Maximum vertex (y_max, x_max) of the AABB.
+        yx1: Minimum vertex (y_min, x_min) of the axis aligned bounding box.
+        yx2: Maximum vertex (y_max, x_max) of the AABB.
         fill: RGB color to fill the mark. None for no fill.
         outline: RGB color to draw the outline.
         width: Rectangle line width.
@@ -32,8 +32,8 @@ def rectangle(
     dst = _utils.numpy_to_pillow(src)
     rectangle_(
         img=dst,
-        aabb1=aabb1,
-        aabb2=aabb2,
+        yx1=yx1,
+        yx2=yx2,
         fill=fill,
         outline=outline,
         width=width,
@@ -43,16 +43,16 @@ def rectangle(
 
 def rectangle_(
     img: PIL.Image.Image,
-    aabb1: tuple[float, float] | NDArray[np.floating],
-    aabb2: tuple[float, float] | NDArray[np.floating],
+    yx1: tuple[float, float] | NDArray[np.floating],
+    yx2: tuple[float, float] | NDArray[np.floating],
     fill: Ink | None = None,
     outline: Ink | None = None,
     width: int = 0,
 ) -> None:
     draw = PIL.ImageDraw.Draw(img)
 
-    y1, x1 = map(float, aabb1)
-    y2, x2 = map(float, aabb2)
+    y1, x1 = map(float, yx1)
+    y2, x2 = map(float, yx2)
     draw.rectangle(
         xy=(x1, y1, x2, y2),
         fill=get_pil_ink(fill),
