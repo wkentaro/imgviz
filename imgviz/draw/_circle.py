@@ -49,6 +49,16 @@ def circle_(
     outline: Ink | None = None,
     width: int = 0,
 ) -> None:
+    """Draw circle on PIL image in-place.
+
+    Args:
+        img: PIL image to draw on (modified in-place).
+        center: Center point (cy, cx).
+        diameter: Diameter of the circle.
+        fill: RGB color to fill the mark. None for no fill.
+        outline: RGB color to draw the outline.
+        width: Line width.
+    """
     draw = PIL.ImageDraw.Draw(img)
 
     cy, cx = center
