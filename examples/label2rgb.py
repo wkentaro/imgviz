@@ -28,8 +28,8 @@ def label2rgb() -> None:
 
     kwargs: dict = dict(label_names=label_names, font_size=25)
 
-    for i, loc in enumerate(["centroid", "lt"]):
-        loc = typing.cast(Literal["centroid", "lt", "rb"], loc)
+    for i, loc in enumerate(["centroid", "rb"]):
+        loc = typing.cast(Literal["centroid", "rb"], loc)
         plt.subplot(132 + i)
         plt.title(f"loc={loc}")
         plt.imshow(imgviz.label2rgb(label, loc=loc, **kwargs))
