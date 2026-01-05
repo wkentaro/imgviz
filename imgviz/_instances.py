@@ -152,12 +152,11 @@ def instances2rgb(
             locs: tuple[Literal["lt+"], Literal["lt"]] = ("lt+", "lt")
             for loc in locs:
                 y1, x1, y2, x2 = draw_module.text_in_rectangle_aabb(
-                    img_shape=(dst.height, dst.width),
+                    yx1=yx1,
+                    yx2=yx2,
                     loc=loc,
                     text=caption,
                     size=font_size,
-                    yx1=yx1,
-                    yx2=yx2,
                     font_path=font_path,
                 )
                 if y1 >= 0 and x1 >= 0 and y2 < dst.height and x2 < dst.width:

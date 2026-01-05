@@ -1,5 +1,4 @@
 import pathlib
-from collections.abc import Sequence
 from typing import Literal
 from typing import NamedTuple
 from typing import TypeAlias
@@ -27,38 +26,31 @@ class _Aabb(NamedTuple):
 
 
 def text_in_rectangle_aabb(
-    img_shape: Sequence[int],
+    yx1: tuple[float, float] | NDArray[np.floating],
+    yx2: tuple[float, float] | NDArray[np.floating],
     loc: _Loc,
     text: str,
     size: int,
-    yx1: tuple[float, float] | NDArray[np.floating] | None,
-    yx2: tuple[float, float] | NDArray[np.floating] | None,
     font_path: str | pathlib.Path | None = None,
 ) -> _Aabb:
     """Calculate bounding box for text in rectangle.
 
     Args:
-        img_shape: Image shape (height, width, ...).
+        yx1: Coordinate of the rectangle minimum (y_min, x_min).
+        yx2: Coordinate of the rectangle maximum (y_max, x_max).
         loc: Location of text. Must be one of: lt, rt, lb, rb, lt+, rt+, lb-,
             rb-.
         text: Text to draw.
         size: Text size in pixel.
-        yx1: Coordinate of the rectangle minimum (y_min, x_min). None for (0, 0).
-        yx2: Coordinate of the rectangle maximum (y_max, x_max). None for
-            (height-1, width-1).
         font_path: Font path.
 
     Returns:
         _Aabb named tuple with y1, x1, y2, x2 coordinates.
     """
-    height, width = img_shape[:2]
-
-    y1: int
-    x1: int
-    y2: int
-    x2: int
-    y1, x1 = (0, 0) if yx1 is None else map(int, yx1)
-    y2, x2 = (height - 1, width - 1) if yx2 is None else map(int, yx2)
+    y1: int = int(round(yx1[0]))
+    x1: int = int(round(yx1[1]))
+    y2: int = int(round(yx2[0]))
+    x2: int = int(round(yx2[1]))
 
     tsize: tuple[int, int] = text_size(text, size, font_path=font_path)
 
@@ -111,7 +103,7 @@ def text_in_rectangle(
         color: Text RGB color in uint8. If None, the color is determined by
             background color.
         yx1: Coordinate of the rectangle minimum (y_min, x_min). None for (0, 0).
-        yx2: Coordinate of the rectangle maximum (y_max, x_max). None for
+        yx2: Coordinate of the rectangle maximum (y_max, x_max).
             (height-1, width-1).
         font_path: Font path.
         keep_size: Force to keep original size (size change happens with
@@ -125,12 +117,11 @@ def text_in_rectangle(
 
     height, width = src.shape[:2]
     y1, x1, y2, x2 = text_in_rectangle_aabb(
-        img_shape=src.shape,
+        yx1=(0, 0) if yx1 is None else yx1,
+        yx2=(height - 1, width - 1) if yx2 is None else yx2,
         loc=loc,
         text=text,
         size=size,
-        yx1=yx1,
-        yx2=yx2,
         font_path=font_path,
     )
 
@@ -210,12 +201,11 @@ def text_in_rectangle_(
         color = _color.get_fg_color(background)
 
     y1, x1, y2, x2 = text_in_rectangle_aabb(
-        img_shape=(img.height, img.width),
+        yx1=(0, 0) if yx1 is None else yx1,
+        yx2=(img.height - 1, img.width - 1) if yx2 is None else yx2,
         loc=loc,
         text=text,
         size=size,
-        yx1=yx1,
-        yx2=yx2,
         font_path=font_path,
     )
     rectangle_(
