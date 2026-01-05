@@ -4,16 +4,16 @@ import PIL.ImageDraw
 from numpy.typing import NDArray
 
 from .. import _utils
-from ._color import Color
-from ._color import get_pil_color
+from ._color import Ink
+from ._color import get_pil_ink
 
 
 def star(
     src: NDArray[np.uint8],
     center: tuple[float, float],
     size: float,
-    fill: Color | None = None,
-    outline: Color | None = None,
+    fill: Ink | None = None,
+    outline: Ink | None = None,
 ) -> NDArray[np.uint8]:
     """Draw star on numpy array with Pillow.
 
@@ -42,8 +42,8 @@ def star_(
     img: PIL.Image.Image,
     center: tuple[float, float],
     size: float,
-    fill: Color | None = None,
-    outline: Color | None = None,
+    fill: Ink | None = None,
+    outline: Ink | None = None,
 ) -> None:
     draw = PIL.ImageDraw.Draw(img)
 
@@ -79,4 +79,4 @@ def star_(
         ]
     )
     xy = xy.flatten().tolist()
-    draw.polygon(xy, fill=get_pil_color(fill), outline=get_pil_color(outline))
+    draw.polygon(xy, fill=get_pil_ink(fill), outline=get_pil_ink(outline))

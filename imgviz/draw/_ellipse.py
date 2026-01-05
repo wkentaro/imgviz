@@ -4,16 +4,16 @@ import PIL.ImageDraw
 from numpy.typing import NDArray
 
 from .. import _utils
-from ._color import Color
-from ._color import get_pil_color
+from ._color import Ink
+from ._color import get_pil_ink
 
 
 def ellipse(
     src: NDArray[np.uint8],
     yx1: tuple[float, float],
     yx2: tuple[float, float],
-    fill: Color | None = None,
-    outline: Color | None = None,
+    fill: Ink | None = None,
+    outline: Ink | None = None,
     width: int = 0,
 ) -> NDArray[np.uint8]:
     dst = _utils.numpy_to_pillow(src)
@@ -25,8 +25,8 @@ def ellipse_(
     img: PIL.Image.Image,
     yx1: tuple[float, float],
     yx2: tuple[float, float],
-    fill: Color | None = None,
-    outline: Color | None = None,
+    fill: Ink | None = None,
+    outline: Ink | None = None,
     width: int = 0,
 ) -> None:
     draw = PIL.ImageDraw.Draw(img)
@@ -36,7 +36,7 @@ def ellipse_(
 
     draw.ellipse(
         [x1, y1, x2, y2],
-        fill=get_pil_color(fill),
-        outline=get_pil_color(outline),
+        fill=get_pil_ink(fill),
+        outline=get_pil_ink(outline),
         width=width,
     )

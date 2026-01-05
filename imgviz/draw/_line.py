@@ -5,14 +5,14 @@ from numpy.typing import ArrayLike
 from numpy.typing import NDArray
 
 from .. import _utils
-from ._color import Color
-from ._color import get_pil_color
+from ._color import Ink
+from ._color import get_pil_ink
 
 
 def line(
     src: NDArray[np.uint8],
     yx: ArrayLike,
-    fill: Color,
+    fill: Ink,
     width: int = 1,
 ) -> NDArray[np.uint8]:
     dst = _utils.numpy_to_pillow(src)
@@ -23,7 +23,7 @@ def line(
 def line_(
     img: PIL.Image.Image,
     yx: ArrayLike,
-    fill: Color,
+    fill: Ink,
     width: int = 1,
 ) -> None:
     if not isinstance(img, PIL.Image.Image):
@@ -38,4 +38,4 @@ def line_(
 
     xy = yx[:, ::-1]
     xy = xy.flatten().tolist()
-    draw.line(xy, fill=get_pil_color(fill), width=width)
+    draw.line(xy, fill=get_pil_ink(fill), width=width)

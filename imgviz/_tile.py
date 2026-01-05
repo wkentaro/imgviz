@@ -2,12 +2,12 @@ from __future__ import annotations
 
 import math
 from collections.abc import Iterable
+from typing import Any
 
 import numpy as np
 from numpy.typing import NDArray
 
 from ._centerize import centerize
-from ._color import Color
 from ._color import gray2rgb
 from ._color import rgb2rgba
 
@@ -63,8 +63,8 @@ def tile(
     imgs: Iterable[NDArray],
     row: int | None = None,
     col: int | None = None,
-    cval: Color | None = None,
-    border: Color | None = None,
+    cval: Any | None = None,
+    border: Any | None = None,
     border_width: int | None = None,
 ) -> NDArray[np.uint8]:
     """Tile images.

@@ -4,16 +4,16 @@ import PIL.ImageDraw
 from numpy.typing import NDArray
 
 from .. import _utils
-from ._color import Color
-from ._color import get_pil_color
+from ._color import Ink
+from ._color import get_pil_ink
 
 
 def rectangle(
     src: NDArray[np.uint8],
     aabb1: tuple[float, float] | NDArray[np.floating],
     aabb2: tuple[float, float] | NDArray[np.floating],
-    fill: Color | None = None,
-    outline: Color | None = None,
+    fill: Ink | None = None,
+    outline: Ink | None = None,
     width: int = 0,
 ) -> NDArray[np.uint8]:
     """Draw rectangle on numpy array with Pillow.
@@ -45,8 +45,8 @@ def rectangle_(
     img: PIL.Image.Image,
     aabb1: tuple[float, float] | NDArray[np.floating],
     aabb2: tuple[float, float] | NDArray[np.floating],
-    fill: Color | None = None,
-    outline: Color | None = None,
+    fill: Ink | None = None,
+    outline: Ink | None = None,
     width: int = 0,
 ) -> None:
     draw = PIL.ImageDraw.Draw(img)
@@ -55,7 +55,7 @@ def rectangle_(
     y2, x2 = map(float, aabb2)
     draw.rectangle(
         xy=(x1, y1, x2, y2),
-        fill=get_pil_color(fill),
-        outline=get_pil_color(outline),
+        fill=get_pil_ink(fill),
+        outline=get_pil_ink(outline),
         width=width,
     )

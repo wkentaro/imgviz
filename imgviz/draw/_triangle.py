@@ -4,16 +4,16 @@ import PIL.ImageDraw
 from numpy.typing import NDArray
 
 from .. import _utils
-from ._color import Color
-from ._color import get_pil_color
+from ._color import Ink
+from ._color import get_pil_ink
 
 
 def triangle(
     src: NDArray[np.uint8],
     center: tuple[float, float],
     size: float,
-    fill: Color | None = None,
-    outline: Color | None = None,
+    fill: Ink | None = None,
+    outline: Ink | None = None,
 ) -> NDArray[np.uint8]:
     """Draw triangle on numpy array with Pillow.
 
@@ -36,8 +36,8 @@ def triangle_(
     img: PIL.Image.Image,
     center: tuple[float, float],
     size: float,
-    fill: Color | None = None,
-    outline: Color | None = None,
+    fill: Ink | None = None,
+    outline: Ink | None = None,
 ) -> None:
     draw = PIL.ImageDraw.Draw(img)
 
@@ -49,4 +49,4 @@ def triangle_(
 
     xy = np.stack((x, y), axis=1)
     xy = xy.flatten().tolist()
-    draw.polygon(xy, fill=get_pil_color(fill), outline=get_pil_color(outline))
+    draw.polygon(xy, fill=get_pil_ink(fill), outline=get_pil_ink(outline))

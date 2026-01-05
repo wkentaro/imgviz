@@ -7,8 +7,8 @@ import PIL.ImageFont
 from numpy.typing import NDArray
 
 from .. import _utils
-from ._color import Color
-from ._color import get_pil_color
+from ._color import Ink
+from ._color import get_pil_ink
 
 _here: pathlib.Path = pathlib.Path(__file__).parent
 _default_font_path: pathlib.Path = _here / "fonts" / "DejaVuSansMono.ttf"
@@ -61,7 +61,7 @@ def text(
     yx: tuple[float, float],
     text: str,
     size: int,
-    color: Color = (0, 0, 0),
+    color: Ink = (0, 0, 0),
     font_path: str | pathlib.Path | None = None,
 ) -> NDArray[np.uint8]:
     """Draw text on numpy array with Pillow.
@@ -87,11 +87,11 @@ def text_(
     yx: tuple[float, float],
     text: str,
     size: int,
-    color: Color = (0, 0, 0),
+    color: Ink = (0, 0, 0),
     font_path: str | pathlib.Path | None = None,
 ) -> None:
     draw = PIL.ImageDraw.Draw(img)
 
     y1, x1 = yx
     font = _get_font(size=size, font_path=font_path)
-    draw.text(xy=(x1, y1), text=text, fill=get_pil_color(color), font=font)
+    draw.text(xy=(x1, y1), text=text, fill=get_pil_ink(color), font=font)
