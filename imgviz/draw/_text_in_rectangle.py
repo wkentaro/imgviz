@@ -35,6 +35,22 @@ def text_in_rectangle_aabb(
     yx2: tuple[float, float] | NDArray[np.floating] | None,
     font_path: str | pathlib.Path | None = None,
 ) -> _Aabb:
+    """Calculate bounding box for text in rectangle.
+
+    Args:
+        img_shape: Image shape (height, width, ...).
+        loc: Location of text. Must be one of: lt, rt, lb, rb, lt+, rt+, lb-,
+            rb-.
+        text: Text to draw.
+        size: Text size in pixel.
+        yx1: Coordinate of the rectangle minimum (y_min, x_min). None for (0, 0).
+        yx2: Coordinate of the rectangle maximum (y_max, x_max). None for
+            (height-1, width-1).
+        font_path: Font path.
+
+    Returns:
+        _Aabb named tuple with y1, x1, y2, x2 coordinates.
+    """
     height, width = img_shape[:2]
 
     y1: int
@@ -94,10 +110,9 @@ def text_in_rectangle(
         background: Background color in uint8.
         color: Text RGB color in uint8. If None, the color is determined by
             background color.
-        yx1: Coordinate of the rectangle minimum (y_min, x_min). Default is
-            (0, 0).
-        yx2: Coordinate of the rectangle maximum (y_max, x_max). Default is
-            (height, width).
+        yx1: Coordinate of the rectangle minimum (y_min, x_min). None for (0, 0).
+        yx2: Coordinate of the rectangle maximum (y_max, x_max). None for
+            (height-1, width-1).
         font_path: Font path.
         keep_size: Force to keep original size (size change happens with
             loc=xx+, xx-).
@@ -175,6 +190,22 @@ def text_in_rectangle_(
     yx2: tuple[float, float] | NDArray[np.floating] | None = None,
     font_path: str | pathlib.Path | None = None,
 ) -> None:
+    """Draw text in a rectangle on PIL image in-place.
+
+    Args:
+        img: PIL image to draw on (modified in-place).
+        loc: Location of text. Must be one of: lt, rt, lb, rb, lt+, rt+, lb-,
+            rb-.
+        text: Text to draw.
+        size: Text size in pixel.
+        background: Background color in uint8.
+        color: Text RGB color in uint8. If None, the color is determined by
+            background color.
+        yx1: Coordinate of the rectangle minimum (y_min, x_min). None for (0, 0).
+        yx2: Coordinate of the rectangle maximum (y_max, x_max). None for
+            (height-1, width-1).
+        font_path: Font path.
+    """
     if color is None:
         color = _color.get_fg_color(background)
 

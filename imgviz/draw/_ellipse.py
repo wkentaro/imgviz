@@ -16,6 +16,19 @@ def ellipse(
     outline: Ink | None = None,
     width: int = 0,
 ) -> NDArray[np.uint8]:
+    """Draw ellipse on numpy array with Pillow.
+
+    Args:
+        src: Input image.
+        yx1: Minimum vertex (y_min, x_min) of the bounding box.
+        yx2: Maximum vertex (y_max, x_max) of the bounding box.
+        fill: RGB color to fill the mark. None for no fill.
+        outline: RGB color to draw the outline.
+        width: Line width.
+
+    Returns:
+        Output image.
+    """
     dst = _utils.numpy_to_pillow(src)
     ellipse_(img=dst, yx1=yx1, yx2=yx2, fill=fill, outline=outline, width=width)
     return _utils.pillow_to_numpy(dst)
@@ -29,6 +42,16 @@ def ellipse_(
     outline: Ink | None = None,
     width: int = 0,
 ) -> None:
+    """Draw ellipse on PIL image in-place.
+
+    Args:
+        img: PIL image to draw on (modified in-place).
+        yx1: Minimum vertex (y_min, x_min) of the bounding box.
+        yx2: Maximum vertex (y_max, x_max) of the bounding box.
+        fill: RGB color to fill the mark. None for no fill.
+        outline: RGB color to draw the outline.
+        width: Line width.
+    """
     draw = PIL.ImageDraw.Draw(img)
 
     y1, x1 = yx1

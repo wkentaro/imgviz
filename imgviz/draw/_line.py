@@ -15,6 +15,17 @@ def line(
     fill: Ink,
     width: int = 1,
 ) -> NDArray[np.uint8]:
+    """Draw line on numpy array with Pillow.
+
+    Args:
+        src: Input image.
+        yx: Array of points (y, x) with shape (N, 2).
+        fill: RGB color to draw the line.
+        width: Line width.
+
+    Returns:
+        Output image.
+    """
     dst = _utils.numpy_to_pillow(src)
     line_(img=dst, yx=yx, fill=fill, width=width)
     return _utils.pillow_to_numpy(dst)
@@ -26,6 +37,14 @@ def line_(
     fill: Ink,
     width: int = 1,
 ) -> None:
+    """Draw line on PIL image in-place.
+
+    Args:
+        img: PIL image to draw on (modified in-place).
+        yx: Array of points (y, x) with shape (N, 2).
+        fill: RGB color to draw the line.
+        width: Line width.
+    """
     if not isinstance(img, PIL.Image.Image):
         raise TypeError(f"img must be PIL.Image.Image, but got {type(img).__name__}")
     yx = np.asarray(yx)

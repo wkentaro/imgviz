@@ -49,6 +49,16 @@ def rectangle_(
     outline: Ink | None = None,
     width: int = 0,
 ) -> None:
+    """Draw rectangle on PIL image in-place.
+
+    Args:
+        img: PIL image to draw on (modified in-place).
+        yx1: Minimum vertex (y_min, x_min) of the axis aligned bounding box.
+        yx2: Maximum vertex (y_max, x_max) of the AABB.
+        fill: RGB color to fill the mark. None for no fill.
+        outline: RGB color to draw the outline.
+        width: Rectangle line width.
+    """
     draw = PIL.ImageDraw.Draw(img)
 
     y1, x1 = map(float, yx1)

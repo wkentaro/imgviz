@@ -87,6 +87,16 @@ def text_(
     color: Ink = (0, 0, 0),
     font_path: str | pathlib.Path | None = None,
 ) -> None:
+    """Draw text on PIL image in-place.
+
+    Args:
+        img: PIL image to draw on (modified in-place).
+        yx: Left top point of the text (y, x).
+        text: Text to draw.
+        size: Text size in pixel.
+        color: Text RGB color in uint8. Default is (0, 0, 0), which is black.
+        font_path: Font path. Default font is DejaVuSansMono.
+    """
     draw = PIL.ImageDraw.Draw(img)
 
     y1, x1 = yx

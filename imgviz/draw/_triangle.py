@@ -39,6 +39,15 @@ def triangle_(
     fill: Ink | None = None,
     outline: Ink | None = None,
 ) -> None:
+    """Draw triangle on PIL image in-place.
+
+    Args:
+        img: PIL image to draw on (modified in-place).
+        center: Center point (cy, cx).
+        size: Diameter to create the triangle.
+        fill: RGB color to fill the mark. None for no fill.
+        outline: RGB color to draw the outline.
+    """
     draw = PIL.ImageDraw.Draw(img)
 
     radius = size / 2
