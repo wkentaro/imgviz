@@ -1,14 +1,20 @@
-import collections
-
 import numpy as np
 import PIL.Image
 import PIL.ImageDraw
-import PIL.ImageFont
+from numpy.typing import NDArray
 
 from .. import _utils
+from ._ink import Ink
+from ._ink import get_pil_ink
 
 
-def star(src, center, size, fill=None, outline=None):
+def star(
+    src: NDArray[np.uint8],
+    center: tuple[float, float],
+    size: float,
+    fill: Ink | None = None,
+    outline: Ink | None = None,
+) -> NDArray[np.uint8]:
     """Draw star on numpy array with Pillow.
 
     Args:
@@ -32,12 +38,13 @@ def star(src, center, size, fill=None, outline=None):
     return _utils.pillow_to_numpy(dst)
 
 
-def star_(img, center, size, fill=None, outline=None):
-    if isinstance(fill, collections.abc.Iterable):
-        fill = tuple(fill)
-    if isinstance(outline, collections.abc.Iterable):
-        outline = tuple(outline)
-
+def star_(
+    img: PIL.Image.Image,
+    center: tuple[float, float],
+    size: float,
+    fill: Ink | None = None,
+    outline: Ink | None = None,
+) -> None:
     draw = PIL.ImageDraw.Draw(img)
 
     radius = size / 2
@@ -72,4 +79,4 @@ def star_(img, center, size, fill=None, outline=None):
         ]
     )
     xy = xy.flatten().tolist()
-    draw.polygon(xy, fill=fill, outline=outline)
+    draw.polygon(xy, fill=get_pil_ink(fill), outline=get_pil_ink(outline))

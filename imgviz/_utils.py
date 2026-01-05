@@ -5,7 +5,7 @@ import PIL.Image
 from numpy.typing import NDArray
 
 
-def pillow_to_numpy(img: PIL.Image.Image) -> NDArray:
+def pillow_to_numpy(img: PIL.Image.Image) -> NDArray[np.uint8]:
     """Convert Pillow image to numpy array."""
     img_numpy = np.asarray(img)
     if not img_numpy.flags.writeable:

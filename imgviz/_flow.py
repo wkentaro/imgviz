@@ -78,7 +78,7 @@ def _flow_compute_color(flow_u: NDArray, flow_v: NDArray) -> NDArray[np.uint8]:
     return flow_image
 
 
-def flow2rgb(flow_uv: NDArray) -> NDArray[np.uint8]:
+def flow2rgb(flow_uv: NDArray[np.floating]) -> NDArray[np.uint8]:
     """Visualize optical flow.
 
     Args:
@@ -94,14 +94,13 @@ def flow2rgb(flow_uv: NDArray) -> NDArray[np.uint8]:
     if not np.issubdtype(flow_uv.dtype, np.floating):
         raise ValueError(f"flow dtype must be float, but got {flow_uv.dtype}")
 
-    flow_u = flow_uv[:, :, 0]
-    flow_v = flow_uv[:, :, 1]
+    flow_uv = flow_uv.astype(np.float32)
 
-    rad = np.sqrt(np.square(flow_u) + np.square(flow_v))
-    rad_max = np.max(rad)
+    norm: NDArray[np.float32] = np.linalg.norm(flow_uv, axis=2)
+    norm_max: np.float32 = norm.max()
 
-    epsilon = 1e-5
-    flow_u = flow_u / (rad_max + epsilon)
-    flow_v = flow_v / (rad_max + epsilon)
+    eps: np.float32 = np.finfo(np.float32).eps
+    flow_u: NDArray[np.float32] = flow_uv[:, :, 0] / (norm_max + eps)
+    flow_v: NDArray[np.float32] = flow_uv[:, :, 1] / (norm_max + eps)
 
     return _flow_compute_color(flow_u, flow_v)

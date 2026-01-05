@@ -1,4 +1,11 @@
+import pathlib
+from collections.abc import Sequence
+from typing import Literal
+from typing import TypeAlias
+
 import numpy as np
+import PIL.Image
+from numpy.typing import NDArray
 
 from .. import _color
 from .. import _utils
@@ -6,14 +13,28 @@ from ._rectangle import rectangle_
 from ._text import text_
 from ._text import text_size
 
+_Loc: TypeAlias = Literal["lt", "rt", "lb", "rb", "lt+", "rt+", "lb-", "rb-"]
 
-def text_in_rectangle_aabb(img_shape, loc, text, size, aabb1, aabb2, font_path=None):
+
+def text_in_rectangle_aabb(
+    img_shape: Sequence[int],
+    loc: _Loc,
+    text: str,
+    size: int,
+    aabb1: tuple[float, float] | NDArray[np.floating] | None,
+    aabb2: tuple[float, float] | NDArray[np.floating] | None,
+    font_path: str | pathlib.Path | None = None,
+) -> tuple[int, int, int, int]:
     height, width = img_shape[:2]
 
-    y1, x1 = (0, 0) if aabb1 is None else aabb1
-    y2, x2 = (height - 1, width - 1) if aabb2 is None else aabb2
+    y1: int
+    x1: int
+    y2: int
+    x2: int
+    y1, x1 = (0, 0) if aabb1 is None else map(int, aabb1)
+    y2, x2 = (height - 1, width - 1) if aabb2 is None else map(int, aabb2)
 
-    tsize = text_size(text, size, font_path=font_path)
+    tsize: tuple[int, int] = text_size(text, size, font_path=font_path)
 
     if loc == "lt":
         yx = (y1, x1)
@@ -37,21 +58,21 @@ def text_in_rectangle_aabb(img_shape, loc, text, size, aabb1, aabb2, font_path=N
     y1, x1 = yx
     y2, x2 = y1 + tsize[0] + 1, x1 + tsize[1] + 1
 
-    return np.array([y1, x1, y2, x2])
+    return y1, x1, y2, x2
 
 
 def text_in_rectangle(
-    src,
-    loc,
-    text,
-    size,
-    background,
-    color=None,
-    aabb1=None,
-    aabb2=None,
-    font_path=None,
-    keep_size=False,
-):
+    src: NDArray[np.uint8],
+    loc: _Loc,
+    text: str,
+    size: int,
+    background: tuple[int, int, int] | NDArray[np.uint8],
+    color: tuple[int, int, int] | NDArray[np.uint8] | None = None,
+    aabb1: tuple[float, float] | NDArray[np.floating] | None = None,
+    aabb2: tuple[float, float] | NDArray[np.floating] | None = None,
+    font_path: str | pathlib.Path | None = None,
+    keep_size: bool = False,
+) -> NDArray[np.uint8]:
     """Draw text in a rectangle.
 
     Args:
@@ -134,16 +155,16 @@ def text_in_rectangle(
 
 
 def text_in_rectangle_(
-    img,
-    loc,
-    text,
-    size,
-    background,
-    color=None,
-    aabb1=None,
-    aabb2=None,
-    font_path=None,
-):
+    img: PIL.Image.Image,
+    loc: _Loc,
+    text: str,
+    size: int,
+    background: tuple[int, int, int] | NDArray[np.uint8],
+    color: tuple[int, int, int] | NDArray[np.uint8] | None = None,
+    aabb1: tuple[float, float] | NDArray[np.floating] | None = None,
+    aabb2: tuple[float, float] | NDArray[np.floating] | None = None,
+    font_path: str | pathlib.Path | None = None,
+) -> None:
     if color is None:
         color = _color.get_fg_color(background)
 

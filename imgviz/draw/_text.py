@@ -1,23 +1,33 @@
 import pathlib
 
+import numpy as np
 import PIL.Image
 import PIL.ImageDraw
 import PIL.ImageFont
+from numpy.typing import NDArray
 
 from .. import _utils
+from ._ink import Ink
+from ._ink import get_pil_ink
 
 _here: pathlib.Path = pathlib.Path(__file__).parent
 _default_font_path: pathlib.Path = _here / "fonts" / "DejaVuSansMono.ttf"
 
 
-def _get_font(size, font_path: str | None = None):
+def _get_font(
+    size: int, font_path: str | pathlib.Path | None = None
+) -> PIL.ImageFont.FreeTypeFont:
     if font_path is None:
-        font_path = str(_default_font_path)
-    font = PIL.ImageFont.truetype(font=font_path, size=size)
+        font_path = _default_font_path
+    font = PIL.ImageFont.truetype(font=str(font_path), size=size)
     return font
 
 
-def text_size(text, size, font_path=None):
+def text_size(
+    text: str,
+    size: int,
+    font_path: str | pathlib.Path | None = None,
+) -> tuple[int, int]:
     """Get text size (height and width).
 
     Args:
@@ -46,7 +56,14 @@ def text_size(text, size, font_path=None):
     return text_height, text_width
 
 
-def text(src, yx, text, size, color=(0, 0, 0), font_path=None):
+def text(
+    src: NDArray[np.uint8],
+    yx: tuple[float, float],
+    text: str,
+    size: int,
+    color: Ink = (0, 0, 0),
+    font_path: str | pathlib.Path | None = None,
+) -> NDArray[np.uint8]:
     """Draw text on numpy array with Pillow.
 
     Args:
@@ -65,10 +82,16 @@ def text(src, yx, text, size, color=(0, 0, 0), font_path=None):
     return _utils.pillow_to_numpy(dst)
 
 
-def text_(img, yx, text, size, color=(0, 0, 0), font_path=None):
+def text_(
+    img: PIL.Image.Image,
+    yx: tuple[float, float],
+    text: str,
+    size: int,
+    color: Ink = (0, 0, 0),
+    font_path: str | pathlib.Path | None = None,
+) -> None:
     draw = PIL.ImageDraw.Draw(img)
 
     y1, x1 = yx
-    color = tuple(color)
     font = _get_font(size=size, font_path=font_path)
-    draw.text(xy=(x1, y1), text=text, fill=color, font=font)
+    draw.text(xy=(x1, y1), text=text, fill=get_pil_ink(color), font=font)

@@ -2,6 +2,7 @@ from ._circle import circle
 from ._circle import circle_
 from ._ellipse import ellipse
 from ._ellipse import ellipse_
+from ._ink import Ink
 from ._line import line
 from ._line import line_
 from ._rectangle import rectangle

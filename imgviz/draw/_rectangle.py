@@ -1,12 +1,21 @@
-import collections
-
+import numpy as np
 import PIL.Image
 import PIL.ImageDraw
+from numpy.typing import NDArray
 
 from .. import _utils
+from ._ink import Ink
+from ._ink import get_pil_ink
 
 
-def rectangle(src, aabb1, aabb2, fill=None, outline=None, width=0):
+def rectangle(
+    src: NDArray[np.uint8],
+    aabb1: tuple[float, float] | NDArray[np.floating],
+    aabb2: tuple[float, float] | NDArray[np.floating],
+    fill: Ink | None = None,
+    outline: Ink | None = None,
+    width: int = 0,
+) -> NDArray[np.uint8]:
     """Draw rectangle on numpy array with Pillow.
 
     Args:
@@ -32,14 +41,21 @@ def rectangle(src, aabb1, aabb2, fill=None, outline=None, width=0):
     return _utils.pillow_to_numpy(dst)
 
 
-def rectangle_(img, aabb1, aabb2, fill=None, outline=None, width=0):
-    if isinstance(fill, collections.abc.Iterable):
-        fill = tuple(fill)
-    if isinstance(outline, collections.abc.Iterable):
-        outline = tuple(outline)
-
+def rectangle_(
+    img: PIL.Image.Image,
+    aabb1: tuple[float, float] | NDArray[np.floating],
+    aabb2: tuple[float, float] | NDArray[np.floating],
+    fill: Ink | None = None,
+    outline: Ink | None = None,
+    width: int = 0,
+) -> None:
     draw = PIL.ImageDraw.Draw(img)
 
-    y1, x1 = aabb1
-    y2, x2 = aabb2
-    draw.rectangle(xy=(x1, y1, x2, y2), fill=fill, outline=outline, width=width)
+    y1, x1 = map(float, aabb1)
+    y2, x2 = map(float, aabb2)
+    draw.rectangle(
+        xy=(x1, y1, x2, y2),
+        fill=get_pil_ink(fill),
+        outline=get_pil_ink(outline),
+        width=width,
+    )
