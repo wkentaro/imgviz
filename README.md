@@ -77,7 +77,7 @@ maskviz = imgviz.instances2rgb(gray, masks=masks, labels=labels, captions=captio
 insviz = [
     (rgb * m[:, :, None])[b[0] : b[2], b[1] : b[3]] for b, m in zip(bboxes, masks)
 ]
-insviz = imgviz.tile(imgs=insviz, border=(255, 255, 255))
+insviz = imgviz.tile(images=insviz, border=(255, 255, 255))
 insviz = imgviz.resize(insviz, height=rgb.shape[0])
 
 # tile visualization
