@@ -1,6 +1,7 @@
 import pathlib
 from collections.abc import Sequence
 from typing import Literal
+from typing import NamedTuple
 from typing import TypeAlias
 
 import numpy as np
@@ -16,6 +17,15 @@ from ._text import text_size
 _Loc: TypeAlias = Literal["lt", "rt", "lb", "rb", "lt+", "rt+", "lb-", "rb-"]
 
 
+class _Aabb(NamedTuple):
+    """Axis-Aligned Bounding Box."""
+
+    y1: int
+    x1: int
+    y2: int
+    x2: int
+
+
 def text_in_rectangle_aabb(
     img_shape: Sequence[int],
     loc: _Loc,
@@ -24,7 +34,7 @@ def text_in_rectangle_aabb(
     yx1: tuple[float, float] | NDArray[np.floating] | None,
     yx2: tuple[float, float] | NDArray[np.floating] | None,
     font_path: str | pathlib.Path | None = None,
-) -> tuple[int, int, int, int]:
+) -> _Aabb:
     height, width = img_shape[:2]
 
     y1: int
@@ -58,7 +68,7 @@ def text_in_rectangle_aabb(
     y1, x1 = yx
     y2, x2 = y1 + tsize[0] + 1, x1 + tsize[1] + 1
 
-    return y1, x1, y2, x2
+    return _Aabb(y1=y1, x1=x1, y2=y2, x2=x2)
 
 
 def text_in_rectangle(
