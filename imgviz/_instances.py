@@ -35,7 +35,7 @@ def masks_to_bboxes(masks: NDArray | Sequence[NDArray]) -> NDArray[np.floating]:
 
 def instances2rgb(
     image: NDArray[np.uint8],
-    labels: Sequence[int],
+    labels: Sequence[int] | NDArray[np.integer],
     bboxes: NDArray | None = None,
     masks: NDArray[np.bool_] | Sequence[NDArray[np.bool_]] | None = None,
     captions: Sequence[str | None] | None = None,
