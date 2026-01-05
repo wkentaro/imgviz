@@ -21,8 +21,8 @@ def draw() -> None:
         text="face",
         size=30,
         background=(255, 255, 255),
-        aabb1=(y1, x1),
-        aabb2=(y2, x2),
+        yx1=(y1, x1),
+        yx2=(y2, x2),
     )
 
     # eye, eye, nose, mouse, mouse
@@ -59,8 +59,8 @@ def draw() -> None:
         elif shape == "rectangle":
             viz = imgviz.draw.rectangle(
                 viz,
-                aabb1=(yx[0] - size / 2, yx[1] - size / 2),
-                aabb2=(yx[0] + size / 2, yx[1] + size / 2),
+                yx1=(yx[0] - size / 2, yx[1] - size / 2),
+                yx2=(yx[0] + size / 2, yx[1] + size / 2),
                 fill=color,
             )
         else:
