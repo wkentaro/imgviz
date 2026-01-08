@@ -37,7 +37,7 @@ def label_colormap() -> NDArray[np.uint8]:
 
 
 def label2rgb(
-    label: NDArray,
+    label: NDArray[np.integer],
     image: NDArray[np.uint8] | None = None,
     alpha: float | list[float] | dict[int, float] = 0.5,
     label_names: list[str] | dict[int, str] | None = None,
