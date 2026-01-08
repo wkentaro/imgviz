@@ -18,7 +18,7 @@ def centerize(
     cval: Any = ...,
     return_mask: Literal[False] = ...,
     interpolation: Literal["linear", "nearest"] = ...,
-    loc: Literal["center", "lt", "rb"] = ...,
+    loc: Literal["center", "lt", "rt", "lb", "rb"] = ...,
 ) -> NDArray: ...
 
 
@@ -30,7 +30,7 @@ def centerize(
     cval: Any = ...,
     return_mask: Literal[True] = ...,
     interpolation: Literal["linear", "nearest"] = ...,
-    loc: Literal["center", "lt", "rb"] = ...,
+    loc: Literal["center", "lt", "rt", "lb", "rb"] = ...,
 ) -> tuple[NDArray, NDArray[np.bool_]]: ...
 
 
@@ -41,7 +41,7 @@ def centerize(
     cval: Any = None,
     return_mask: bool = False,
     interpolation: Literal["linear", "nearest"] = "linear",
-    loc: Literal["center", "lt", "rb"] = "center",
+    loc: Literal["center", "lt", "rt", "lb", "rb"] = "center",
 ) -> NDArray | tuple[NDArray, NDArray[np.bool_]]:
     """Centerize image for specified image size.
 
@@ -88,6 +88,14 @@ def centerize(
             pw = (dst_w - w) // 2
     elif loc == "lt":
         ph = 0
+        pw = 0
+    elif loc == "rt":
+        ph = 0
+        if w < dst_w:
+            pw = dst_w - w
+    elif loc == "lb":
+        if h < dst_h:
+            ph = dst_h - h
         pw = 0
     elif loc == "rb":
         if h < dst_h:
