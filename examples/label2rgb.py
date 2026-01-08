@@ -11,7 +11,7 @@ import imgviz
 
 
 def label2rgb() -> None:
-    data: dict[str, NDArray] = imgviz.data.voc()
+    data = imgviz.data.voc()
 
     rgb: NDArray[np.uint8] = data["rgb"]
     label: NDArray[np.int32] = data["class_label"]

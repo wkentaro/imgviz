@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import functools
-from typing import Any
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -11,7 +10,7 @@ import imgviz
 
 
 def mask2rgb() -> None:
-    data: dict[str, Any] = imgviz.data.voc()
+    data = imgviz.data.voc()
 
     rgb: NDArray[np.uint8] = data["rgb"]
     masks: NDArray[np.bool_] = data["masks"]
