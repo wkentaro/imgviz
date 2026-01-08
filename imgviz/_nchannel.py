@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import typing
 from typing import TYPE_CHECKING
-from typing import Any
 
 import numpy as np
 from numpy.typing import NDArray
@@ -23,7 +22,9 @@ class Nchannel2Rgb:
     def __init__(self, pca: sklearn.decomposition.PCA | None = None) -> None:
         self._pca = pca
         # for uint8
-        self._min_max_value: tuple[Any, Any] = (None, None)
+        self._min_max_value: tuple[
+            NDArray[np.floating] | None, NDArray[np.floating] | None
+        ] = (None, None)
 
     @property
     def pca(self) -> sklearn.decomposition.PCA | None:
