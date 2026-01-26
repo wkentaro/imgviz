@@ -11,7 +11,7 @@ from numpy.typing import NDArray
 
 @typing.overload
 def normalize(
-    image: ...,
+    image: NDArray,
     min_value: float | Sequence[float] | NDArray[np.floating] | None = ...,
     max_value: float | Sequence[float] | NDArray[np.floating] | None = ...,
     return_minmax: Literal[False] = ...,
@@ -20,7 +20,7 @@ def normalize(
 
 @typing.overload
 def normalize(
-    image: ...,
+    image: NDArray,
     min_value: float | Sequence[float] | NDArray[np.floating] | None = ...,
     max_value: float | Sequence[float] | NDArray[np.floating] | None = ...,
     return_minmax: Literal[True] = ...,

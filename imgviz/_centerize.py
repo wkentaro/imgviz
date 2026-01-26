@@ -12,7 +12,7 @@ from ._resize import resize
 
 @typing.overload
 def centerize(
-    image: ...,
+    image: NDArray,
     height: int,
     width: int,
     cval: Any = ...,
@@ -24,7 +24,7 @@ def centerize(
 
 @typing.overload
 def centerize(
-    image: ...,
+    image: NDArray,
     height: int,
     width: int,
     cval: Any = ...,
