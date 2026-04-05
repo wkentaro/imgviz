@@ -1,10 +1,10 @@
 from __future__ import annotations
 
+import typing
 from collections.abc import Callable
 
 import cmap
 import numpy as np
-from numpy.typing import DTypeLike
 from numpy.typing import NDArray
 
 from ._normalize import normalize
@@ -39,8 +39,36 @@ class Depth2Rgb:
         """Maximum value of depth."""
         return self._max_value
 
+    @typing.overload
     def __call__(
-        self, depth: NDArray, dtype: DTypeLike = np.uint8
+        self,
+        depth: NDArray,
+        dtype: type[np.uint8] = ...,
+    ) -> NDArray[np.uint8]: ...
+
+    @typing.overload
+    def __call__(
+        self,
+        depth: NDArray,
+        dtype: type[np.float32],
+    ) -> NDArray[np.float32]: ...
+
+    @typing.overload
+    def __call__(
+        self,
+        depth: NDArray,
+        dtype: type[np.float64],
+    ) -> NDArray[np.float64]: ...
+
+    @typing.overload
+    def __call__(
+        self,
+        depth: NDArray,
+        dtype: type[np.floating],
+    ) -> NDArray[np.floating]: ...
+
+    def __call__(
+        self, depth: NDArray, dtype: type[np.uint8] | type[np.floating] = np.uint8
     ) -> NDArray[np.uint8] | NDArray[np.floating]:
         """Convert depth array to rgb.
 
@@ -85,12 +113,52 @@ class Depth2Rgb:
         return rgb
 
 
+@typing.overload
+def depth2rgb(
+    depth: NDArray,
+    min_value: float | NDArray | None = ...,
+    max_value: float | NDArray | None = ...,
+    colormap: str | Callable[[NDArray], NDArray] = ...,
+    dtype: type[np.uint8] = ...,
+) -> NDArray[np.uint8]: ...
+
+
+@typing.overload
+def depth2rgb(
+    depth: NDArray,
+    min_value: float | NDArray | None = ...,
+    max_value: float | NDArray | None = ...,
+    colormap: str | Callable[[NDArray], NDArray] = ...,
+    dtype: type[np.float32] = ...,
+) -> NDArray[np.float32]: ...
+
+
+@typing.overload
+def depth2rgb(
+    depth: NDArray,
+    min_value: float | NDArray | None = ...,
+    max_value: float | NDArray | None = ...,
+    colormap: str | Callable[[NDArray], NDArray] = ...,
+    dtype: type[np.float64] = ...,
+) -> NDArray[np.float64]: ...
+
+
+@typing.overload
+def depth2rgb(
+    depth: NDArray,
+    min_value: float | NDArray | None = ...,
+    max_value: float | NDArray | None = ...,
+    colormap: str | Callable[[NDArray], NDArray] = ...,
+    dtype: type[np.floating] = ...,
+) -> NDArray[np.floating]: ...
+
+
 def depth2rgb(
     depth: NDArray,
     min_value: float | NDArray | None = None,
     max_value: float | NDArray | None = None,
     colormap: str | Callable[[NDArray], NDArray] = "jet",
-    dtype: DTypeLike = np.uint8,
+    dtype: type[np.uint8] | type[np.floating] = np.uint8,
 ) -> NDArray[np.uint8] | NDArray[np.floating]:
     """Convert depth to rgb.
 
