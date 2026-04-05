@@ -6,7 +6,7 @@ import numpy as np
 import imgviz
 
 
-def test_label2rgb():
+def test_label2rgb() -> None:
     data = imgviz.data.arc2017()
     H, W = data["class_label"].shape[:2]
 

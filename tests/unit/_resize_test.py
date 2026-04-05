@@ -3,7 +3,7 @@ import numpy as np
 import imgviz
 
 
-def test_resize():
+def test_resize() -> None:
     img = np.random.uniform(0, 255, size=(15, 25, 3)).round().astype(np.uint8)
 
     dst = imgviz.resize(img, height=12)

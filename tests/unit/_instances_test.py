@@ -4,7 +4,7 @@ import imgviz
 from imgviz._instances import masks_to_bboxes
 
 
-def test_masks_to_bboxes():
+def test_masks_to_bboxes() -> None:
     data = imgviz.data.arc2017()
 
     class_label = data["class_label"]

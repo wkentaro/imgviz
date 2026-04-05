@@ -3,7 +3,7 @@ import numpy as np
 import imgviz
 
 
-def test_tile():
+def test_tile() -> None:
     img1 = np.random.uniform(0, 255, (15, 25, 3)).round().astype(np.uint8)
     img2 = np.random.uniform(0, 255, (25, 25, 3)).round().astype(np.uint8)
     img3 = np.random.uniform(0, 255, (25, 10, 3)).round().astype(np.uint8)

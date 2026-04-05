@@ -9,7 +9,7 @@ from numpy.typing import NDArray
 import imgviz
 
 
-def test_centerize():
+def test_centerize() -> None:
     img = np.random.uniform(0, 255, size=(15, 25, 3)).round().astype(np.uint8)
 
     dst = imgviz.centerize(img, height=25, width=25, cval=0)

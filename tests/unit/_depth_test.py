@@ -3,7 +3,7 @@ import numpy as np
 import imgviz
 
 
-def test_depth2rgb():
+def test_depth2rgb() -> None:
     data = imgviz.data.arc2017()
 
     depthviz = imgviz.depth2rgb(data["depth"])

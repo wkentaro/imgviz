@@ -78,6 +78,7 @@ select = [
   "F",  # pyflakes
   "I",  # isort
   "UP",  # pyupgrade
+  "ANN",  # flake8-annotations
 ]
 
 [tool.ruff.lint.isort]
