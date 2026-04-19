@@ -8,7 +8,8 @@ import imgviz
 def test_depth2rgb(dtype: type[np.uint8] | type[np.floating]) -> None:
     data = imgviz.data.arc2017()
 
-    depthviz = imgviz.depth2rgb(data["depth"], dtype=dtype)
+    with pytest.warns(DeprecationWarning, match="depth2rgb"):
+        depthviz = imgviz.depth2rgb(data["depth"], dtype=dtype)
 
     assert depthviz.dtype == dtype
     H, W = data["depth"].shape[:2]
@@ -18,5 +19,6 @@ def test_depth2rgb(dtype: type[np.uint8] | type[np.floating]) -> None:
 def test_depth2rgb_invalid_dtype() -> None:
     data = imgviz.data.arc2017()
 
-    with pytest.raises(ValueError, match="dtype must be"):
-        imgviz.depth2rgb(data["depth"], dtype=np.int32)  # type: ignore[call-overload]
+    with pytest.warns(DeprecationWarning):
+        with pytest.raises(ValueError, match="dtype must be"):
+            imgviz.depth2rgb(data["depth"], dtype=np.int32)  # type: ignore[call-overload]

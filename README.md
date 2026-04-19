@@ -55,9 +55,9 @@ data = imgviz.data.arc2017()
 rgb = data["rgb"]
 gray = imgviz.rgb2gray(rgb)
 
-# colorize depth image with JET colormap
+# colorize depth image with viridis colormap
 depth = data["depth"]
-depthviz = imgviz.depth2rgb(depth, min_value=0.3, max_value=1)
+depthviz = imgviz.colorize(depth, vmin=0.3, vmax=1)
 
 # colorize label image
 class_label = data["class_label"]
