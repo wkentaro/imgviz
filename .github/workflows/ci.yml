@@ -1,17 +1,15 @@
+---
 name: ci
-
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
-
 jobs:
   setup:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
+        python-version: ['3.10', '3.11', '3.12', '3.13', '3.14']
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v5
@@ -22,12 +20,11 @@ jobs:
           uv build
           uv pip install dist/*.tar.gz
           uv pip install dist/*.whl
-
   lint:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.10"]
+        python-version: ['3.10']
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v5
@@ -35,12 +32,11 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - run: make setup
       - run: make lint
-
   test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.10"]
+        python-version: ['3.10']
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v5
