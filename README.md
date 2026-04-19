@@ -97,8 +97,8 @@ tiled = imgviz.tile(
 		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/centerize.jpg" width="59.40119760479042%" /></td>
 	</tr>
 	<tr>
-		<td><pre><a href="examples/depth2rgb.py">examples/depth2rgb.py</a></pre></td>
-		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/depth2rgb.jpg" width="78.16091954022988%" /></td>
+		<td><pre><a href="examples/colorize.py">examples/colorize.py</a></pre></td>
+		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/colorize.jpg" width="78.16091954022988%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/draw.py">examples/draw.py</a></pre></td>
