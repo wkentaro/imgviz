@@ -10,9 +10,7 @@ name = "imgviz"
 description = "Image Visualization Tools"
 license = { text = "MIT" }
 requires-python = ">=3.10"
-authors = [
-  { name = "Kentaro Wada", email = "www.kentaro.wada@gmail.com" },
-]
+authors = [{ name = "Kentaro Wada", email = "www.kentaro.wada@gmail.com" }]
 keywords = []
 classifiers = [
   "Development Status :: 5 - Production/Stable",
@@ -29,11 +27,7 @@ classifiers = [
   "Programming Language :: Python :: 3.14",
   "Topic :: Software Development :: Libraries :: Python Modules",
 ]
-dependencies = [
-  "cmap>=0.1.0",
-  "numpy>=1.21.0",
-  "Pillow>=10.0.0",
-]
+dependencies = ["cmap>=0.1.0", "numpy>=1.21.0", "Pillow>=10.0.0"]
 dynamic = ["readme", "version"]
 
 [dependency-groups]
@@ -45,6 +39,7 @@ dev = [
   "pytest>=8.4.2",
   "pytest-xdist>=3.8.0",
   "ruff>=0.14.10",
+  "taplo>=0.9.3",
   "twine>=6.2.0",
   "ty>=0.0.7",
   "types-pillow>=10.2.0.20240822",
@@ -52,8 +47,8 @@ dev = [
 
 [project.optional-dependencies]
 all = [
-  "scikit-image",  # required by instances2rgb with boundary_width>0
-  "scikit-learn",  # required by nchannel2rgb
+  "scikit-image", # required by instances2rgb with boundary_width>0
+  "scikit-learn", # required by nchannel2rgb
 ]
 
 [tool.hatch.metadata]
@@ -61,9 +56,7 @@ allow-direct-references = true
 
 [tool.hatch.metadata.hooks.fancy-pypi-readme]
 content-type = "text/markdown"
-fragments = [
-  { path = "README.md" },
-]
+fragments = [{ path = "README.md" }]
 
 [tool.hatch.version]
 source = "vcs"
@@ -74,11 +67,11 @@ indent-width = 4
 
 [tool.ruff.lint]
 select = [
-  "E",  # pycodestyle
-  "F",  # pyflakes
-  "I",  # isort
+  "E",   # pycodestyle
+  "F",   # pyflakes
+  "I",   # isort
   "UP",  # pyupgrade
-  "ANN",  # flake8-annotations
+  "ANN", # flake8-annotations
 ]
 
 [tool.ruff.lint.isort]

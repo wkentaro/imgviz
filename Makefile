@@ -30,11 +30,13 @@ setup:  # Setup dev env
 format:  # Format code
 	$(call exec,uv run ruff format)
 	$(call exec,uv run ruff check --fix)
+	$(call exec,uv run taplo fmt $(shell git ls-files "*.toml"))
 
 lint:  # Check code
 	$(call exec,uv run ruff format --check)
 	$(call exec,uv run ruff check)
 	$(call exec,uv run ty check --no-progress)
+	$(call exec,uv run taplo fmt --check $(shell git ls-files "*.toml"))
 
 test:
 	$(call exec,uv run pytest -n=auto -v tests)
