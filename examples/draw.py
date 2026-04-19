@@ -64,7 +64,7 @@ def draw() -> None:
                 fill=color,
             )
         else:
-            raise ValueError(f"unsupport shape: {shape}")
+            raise ValueError(f"unsupported shape: {shape}")
 
     img = imgviz.draw.text_in_rectangle(
         img,

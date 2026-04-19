@@ -46,6 +46,7 @@ make format
 ### Drawing Module (`imgviz/draw/`)
 
 All drawing functions have two variants:
+
 - Functional (returns new image): `circle()`, `rectangle()`, `text()`, etc.
 - In-place (modifies PIL Image, ends with `_`): `circle_()`, `rectangle_()`, `text_()`, etc.
 
@@ -56,6 +57,7 @@ Provides sample datasets for examples: `arc2017()`, `voc()`, `lena()`, `middlebu
 ## Type Annotations
 
 The codebase uses NumPy type annotations with `NDArray` from `numpy.typing`. When adding type hints:
+
 - Use `NDArray[np.uint8]` for image arrays
 - Use `NDArray[np.integer]` for label arrays
 - Use `NDArray[np.floating]` for depth/flow arrays

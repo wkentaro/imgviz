@@ -1,30 +1,28 @@
+---
 name: docs
-
 on:
   push:
-    branches:
-      - main
-
+    branches: [main]
 jobs:
   update_readme:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: astral-sh/setup-uv@v5
-      with:
-        python-version: "3.10"
-    - run: make setup
-    - run: |
-        python getting_started.py
-        for f in examples/*.py; do
-          if [ -x $f ]; then
-            $f --save
-          fi
-        done
-    - run: ./generate_readme.py > README.md
-    - run: |
-        git config --global user.email "www.kentaro.wada@gmail.com"
-        git config --global user.name "Kentaro Wada"
-        git add examples/assets README.md assets
-        git diff-index --cached --quiet HEAD || git commit -m "docs(readme): update with the latest examples"
-        git push origin main
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: '3.10'
+      - run: make setup
+      - run: |
+          python getting_started.py
+          for f in examples/*.py; do
+            if [ -x $f ]; then
+              $f --save
+            fi
+          done
+      - run: ./generate_readme.py > README.md
+      - run: |-
+          git config --global user.email "www.kentaro.wada@gmail.com"
+          git config --global user.name "Kentaro Wada"
+          git add examples/assets README.md assets
+          git diff-index --cached --quiet HEAD || git commit -m "docs(readme): update with the latest examples"
+          git push origin main
