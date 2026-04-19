@@ -50,6 +50,18 @@ downstream task, it belongs in a library that depends on `imgviz`, not in
 1. **Functions over frameworks.** Inputs and outputs are `numpy.ndarray` and
    `PIL.Image.Image`. Users handle tensor conversion at the boundary.
 
+## Shipped
+
+- **`imgviz.colorize`** ([#119](https://github.com/wkentaro/imgviz/pull/119)) —
+  general 2D scalar colorizer. `depth2rgb` already applied a colormap to any
+  2D scalar field (depth, attention, heatmaps, score fields); the name was the
+  only barrier to discovery. `depth2rgb` remains as a deprecated alias for one
+  minor release before removal in the next major version.
+
+  ```python
+  imgviz.colorize(scalar, vmin=None, vmax=None, cmap="viridis")
+  ```
+
 ## Planned primitives
 
 ### Polygon and polyline
@@ -114,20 +126,6 @@ supersampling (SSAA). PIL's built-in AA is faster but inconsistent across
 primitives and doesn't extend to mask outputs; SSAA gives one uniform
 implementation that works for strokes, fills, and masks alike.
 Publication-quality output without the user managing resolution manually.
-
-### Rename `depth2rgb` → `colorize`
-
-`depth2rgb` already applies a colormap to any 2D scalar field — depth maps,
-attention maps, heatmaps, score fields, single-channel model outputs. The
-name is the only barrier to discovery: a user with an attention map doesn't
-think to look for `depth2rgb`.
-
-```python
-imgviz.colorize(scalar, vmin=None, vmax=None, cmap="viridis")
-```
-
-`depth2rgb` stays as a deprecated alias for one minor release before
-removal in the next major version.
 
 ### Directional, multi-channel `pad`
 
