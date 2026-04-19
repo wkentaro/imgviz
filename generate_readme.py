@@ -101,7 +101,6 @@ pip install imgviz
 pip install imgviz[all]
 ```
 
-
 ## Dependencies
 
 {dependencies}
