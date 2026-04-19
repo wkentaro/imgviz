@@ -8,7 +8,8 @@ import imgviz
 def test_depth2rgb(dtype: type[np.uint8] | type[np.floating]) -> None:
     data = imgviz.data.arc2017()
 
-    depthviz = imgviz.depth2rgb(data["depth"], dtype=dtype)
+    with pytest.warns(DeprecationWarning, match="depth2rgb"):
+        depthviz = imgviz.depth2rgb(data["depth"], dtype=dtype)
 
     assert depthviz.dtype == dtype
     H, W = data["depth"].shape[:2]
@@ -18,5 +19,30 @@ def test_depth2rgb(dtype: type[np.uint8] | type[np.floating]) -> None:
 def test_depth2rgb_invalid_dtype() -> None:
     data = imgviz.data.arc2017()
 
-    with pytest.raises(ValueError, match="dtype must be"):
-        imgviz.depth2rgb(data["depth"], dtype=np.int32)  # type: ignore[call-overload]
+    with pytest.warns(DeprecationWarning):
+        with pytest.raises(ValueError, match="dtype must be"):
+            imgviz.depth2rgb(data["depth"], dtype=np.int32)  # type: ignore[call-overload]
+
+
+def test_depth2rgb_matches_colorize_with_jet() -> None:
+    data = imgviz.data.arc2017()
+
+    with pytest.warns(DeprecationWarning):
+        legacy = imgviz.depth2rgb(data["depth"])
+
+    new = imgviz.colorize(data["depth"], cmap="jet")
+
+    np.testing.assert_array_equal(legacy, new)
+
+
+def test_Depth2Rgb_accepts_depth_kwarg() -> None:
+    data = imgviz.data.arc2017()
+
+    with pytest.warns(DeprecationWarning):
+        depth2rgb = imgviz.Depth2Rgb()
+
+    out = depth2rgb(depth=data["depth"])
+
+    H, W = data["depth"].shape[:2]
+    assert out.shape == (H, W, 3)
+    assert out.dtype == np.uint8

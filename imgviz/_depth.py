@@ -1,23 +1,23 @@
 from __future__ import annotations
 
 import typing
+import warnings
 from collections.abc import Callable
 
-import cmap
 import numpy as np
 from numpy.typing import NDArray
 
-from ._normalize import normalize
+from ._colorize import Colorize
+from ._colorize import colorize
+
+_DEPRECATION_MESSAGE: typing.Final[str] = (
+    "`{name}` is deprecated and will be removed in the next major release; "
+    "use `imgviz.{replacement}` instead."
+)
 
 
 class Depth2Rgb:
-    """Convert depth array to rgb.
-
-    Args:
-        min_value: Minimum value for colorizing.
-        max_value: Maximum value for colorizing.
-        colormap: Colormap name or callable.
-    """
+    """Deprecated. Use :class:`imgviz.Colorize` instead."""
 
     def __init__(
         self,
@@ -25,19 +25,20 @@ class Depth2Rgb:
         max_value: float | NDArray | None = None,
         colormap: str | Callable[[NDArray], NDArray] = "jet",
     ) -> None:
-        self._min_value = min_value
-        self._max_value = max_value
-        self._colormap = colormap
+        warnings.warn(
+            _DEPRECATION_MESSAGE.format(name="Depth2Rgb", replacement="Colorize"),
+            DeprecationWarning,
+            stacklevel=2,
+        )
+        self._colorize = Colorize(vmin=min_value, vmax=max_value, cmap=colormap)
 
     @property
     def min_value(self) -> float | NDArray | None:
-        """Minimum value of depth."""
-        return self._min_value
+        return self._colorize.vmin
 
     @property
     def max_value(self) -> float | NDArray | None:
-        """Maximum value of depth."""
-        return self._max_value
+        return self._colorize.vmax
 
     @typing.overload
     def __call__(
@@ -70,47 +71,7 @@ class Depth2Rgb:
     def __call__(
         self, depth: NDArray, dtype: type[np.uint8] | type[np.floating] = np.uint8
     ) -> NDArray[np.uint8] | NDArray[np.floating]:
-        """Convert depth array to rgb.
-
-        Args:
-            depth: Depth image with shape (H, W).
-            dtype: Output dtype.
-
-        Returns:
-            Colorized image with shape (H, W, 3).
-        """
-        if depth.ndim != 2:
-            raise ValueError(f"depth must be 2 dimensional, but got {depth.ndim}")
-        if not np.issubdtype(depth.dtype, np.floating):
-            raise ValueError(f"depth dtype must be float, but got {depth.dtype}")
-
-        normalized, self._min_value, self._max_value = normalize(
-            depth,
-            min_value=self._min_value,
-            max_value=self._max_value,
-            return_minmax=True,
-        )
-
-        isnan = np.isnan(normalized)
-        normalized[isnan] = 0
-
-        if isinstance(self._colormap, str):
-            colormap_func = cmap.Colormap(self._colormap)
-        else:
-            colormap_func = self._colormap
-        rgb = colormap_func(normalized)[:, :, :3]
-        rgb[isnan] = (0, 0, 0)
-
-        if dtype == np.uint8:
-            rgb = (rgb * 255).round().astype(np.uint8)
-        else:
-            if not np.issubdtype(dtype, np.floating):
-                raise ValueError(
-                    f"dtype must be np.uint8 or a floating type, but got {dtype}"
-                )
-            rgb = rgb.astype(dtype)
-
-        return rgb
+        return self._colorize(depth, dtype=dtype)
 
 
 @typing.overload
@@ -160,16 +121,10 @@ def depth2rgb(
     colormap: str | Callable[[NDArray], NDArray] = "jet",
     dtype: type[np.uint8] | type[np.floating] = np.uint8,
 ) -> NDArray[np.uint8] | NDArray[np.floating]:
-    """Convert depth to rgb.
-
-    Args:
-        depth: Depth image with shape (H, W).
-        min_value: Minimum value for colorizing.
-        max_value: Maximum value for colorizing.
-        colormap: Colormap name or callable.
-        dtype: Output dtype.
-
-    Returns:
-        Colorized image with shape (H, W, 3).
-    """
-    return Depth2Rgb(min_value, max_value, colormap)(depth, dtype)
+    """Deprecated. Use :func:`imgviz.colorize` instead."""
+    warnings.warn(
+        _DEPRECATION_MESSAGE.format(name="depth2rgb", replacement="colorize"),
+        DeprecationWarning,
+        stacklevel=2,
+    )
+    return colorize(depth, vmin=min_value, vmax=max_value, cmap=colormap, dtype=dtype)

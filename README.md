@@ -55,9 +55,9 @@ data = imgviz.data.arc2017()
 rgb = data["rgb"]
 gray = imgviz.rgb2gray(rgb)
 
-# colorize depth image with JET colormap
+# colorize depth image with viridis colormap
 depth = data["depth"]
-depthviz = imgviz.depth2rgb(depth, min_value=0.3, max_value=1)
+depthviz = imgviz.colorize(depth, vmin=0.3, vmax=1)
 
 # colorize label image
 class_label = data["class_label"]
@@ -97,8 +97,8 @@ tiled = imgviz.tile(
 		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/centerize.jpg" width="59.40119760479042%" /></td>
 	</tr>
 	<tr>
-		<td><pre><a href="examples/depth2rgb.py">examples/depth2rgb.py</a></pre></td>
-		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/depth2rgb.jpg" width="78.16091954022988%" /></td>
+		<td><pre><a href="examples/colorize.py">examples/colorize.py</a></pre></td>
+		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/colorize.jpg" width="78.16091954022988%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/draw.py">examples/draw.py</a></pre></td>
