@@ -33,6 +33,7 @@ format:  # Format code
 	$(call exec,uv run taplo fmt $(shell git ls-files "*.toml"))
 	$(call exec,uv run mdformat $(shell git ls-files "*.md"))
 	$(call exec,uv run yamlfix $(shell git ls-files "*.yml" "*.yaml"))
+	$(call exec,uv run typos --write-changes)
 
 lint:  # Check code
 	$(call exec,uv run ruff format --check)
@@ -41,6 +42,7 @@ lint:  # Check code
 	$(call exec,uv run taplo fmt --check $(shell git ls-files "*.toml"))
 	$(call exec,uv run mdformat --check $(shell git ls-files "*.md"))
 	$(call exec,uv run yamlfix --check $(shell git ls-files "*.yml" "*.yaml"))
+	$(call exec,uv run typos)
 
 test:
 	$(call exec,uv run pytest -n=auto -v tests)
