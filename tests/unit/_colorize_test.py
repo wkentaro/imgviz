@@ -59,3 +59,17 @@ def test_Colorize_caches_vmin_vmax_after_first_call() -> None:
 
     assert colorizer.vmin == pytest.approx(0.0)
     assert colorizer.vmax == pytest.approx(1.0)
+
+
+def test_colorize_nan_renders_as_black() -> None:
+    scalar = np.array(
+        [
+            [0.0, np.nan, 1.0],
+            [0.25, 0.5, 0.75],
+        ],
+        dtype=np.float32,
+    )
+
+    out = imgviz.colorize(scalar, vmin=0.0, vmax=1.0)
+
+    np.testing.assert_array_equal(out[0, 1], [0, 0, 0])
