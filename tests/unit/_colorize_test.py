@@ -1,3 +1,4 @@
+import cmap
 import numpy as np
 import pytest
 
@@ -20,6 +21,29 @@ def test_colorize_invalid_dtype() -> None:
 
     with pytest.raises(ValueError, match="dtype must be"):
         imgviz.colorize(data["depth"], dtype=np.int32)  # type: ignore[call-overload]
+
+
+def test_colorize_invalid_ndim() -> None:
+    scalar = np.zeros((4, 4, 3), dtype=np.float32)
+
+    with pytest.raises(ValueError, match="2 dimensional"):
+        imgviz.colorize(scalar)
+
+
+def test_colorize_invalid_scalar_dtype() -> None:
+    scalar = np.zeros((4, 4), dtype=np.int32)
+
+    with pytest.raises(ValueError, match="scalar dtype must be float"):
+        imgviz.colorize(scalar)
+
+
+def test_colorize_accepts_callable_cmap() -> None:
+    data = imgviz.data.arc2017()
+
+    via_callable = imgviz.colorize(data["depth"], cmap=cmap.Colormap("viridis"))
+    via_string = imgviz.colorize(data["depth"], cmap="viridis")
+
+    np.testing.assert_array_equal(via_callable, via_string)
 
 
 def test_colorize_default_cmap_is_viridis() -> None:
