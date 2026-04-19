@@ -78,6 +78,10 @@ class Colorize:
             raise ValueError(f"scalar must be 2 dimensional, but got {scalar.ndim}")
         if not np.issubdtype(scalar.dtype, np.floating):
             raise ValueError(f"scalar dtype must be float, but got {scalar.dtype}")
+        if dtype is not np.uint8 and not np.issubdtype(dtype, np.floating):
+            raise ValueError(
+                f"dtype must be np.uint8 or a floating type, but got {dtype}"
+            )
 
         normalized, auto_vmin, auto_vmax = normalize(
             scalar,
@@ -96,13 +100,9 @@ class Colorize:
         rgb = self._cmap_func(normalized)[:, :, :3]
         rgb[isnan] = (0, 0, 0)
 
-        if dtype == np.uint8:
+        if dtype is np.uint8:
             rgb = (rgb * 255).round().astype(np.uint8)
         else:
-            if not np.issubdtype(dtype, np.floating):
-                raise ValueError(
-                    f"dtype must be np.uint8 or a floating type, but got {dtype}"
-                )
             rgb = rgb.astype(dtype)
 
         return rgb
