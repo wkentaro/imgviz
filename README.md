@@ -36,6 +36,7 @@ pip install imgviz
 pip install imgviz[all]
 ```
 
+
 ## Dependencies
 
 - [cmap>=0.1.0](https://pypi.org/project/cmap)
