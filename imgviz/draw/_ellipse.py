@@ -6,6 +6,7 @@ from numpy.typing import NDArray
 from .. import _utils
 from ._ink import Ink
 from ._ink import get_pil_ink
+from ._ink import require_fill_or_outline
 
 
 def ellipse(
@@ -52,6 +53,8 @@ def ellipse_(
         outline: RGB color to draw the outline.
         width: Line width.
     """
+    require_fill_or_outline(fill, outline)
+
     draw = PIL.ImageDraw.Draw(image)
 
     y1, x1 = yx1
