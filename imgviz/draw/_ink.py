@@ -22,3 +22,8 @@ def get_pil_ink(
             tuple(int(c) for c in ink.tolist()),
         )
     return ink
+
+
+def require_fill_or_outline(fill: Ink | None, outline: Ink | None) -> None:
+    if fill is None and outline is None:
+        raise ValueError("at least one of `fill` or `outline` must be set")
