@@ -55,3 +55,15 @@ def test_label2rgb():
         )
         assert labelviz.dtype == np.uint8
         assert labelviz.shape == (H, W, 3)
+
+
+def test_label2rgb_all_unlabeled() -> None:
+    label = np.full((8, 8), -1, dtype=np.int32)
+    labelviz = imgviz.label2rgb(label=label)
+    assert labelviz.dtype == np.uint8
+    assert labelviz.shape == (8, 8, 3)
+
+    image = np.zeros((8, 8, 3), dtype=np.uint8)
+    labelviz = imgviz.label2rgb(label=label, image=image)
+    assert labelviz.dtype == np.uint8
+    assert labelviz.shape == (8, 8, 3)
