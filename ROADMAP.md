@@ -62,13 +62,29 @@ downstream task, it belongs in a library that depends on `imgviz`, not in
   imgviz.colorize(scalar, vmin=None, vmax=None, cmap="viridis")
   ```
 
+- **`imgviz.draw.polygon`** — filled and/or outlined polygon primitive.
+  Accepts `(N, 2)` `(y, x)` vertices and the standard `fill` / `outline` /
+  `width` triple matching `rectangle`. Closes
+  [#92](https://github.com/wkentaro/imgviz/issues/92). The polyline rename
+  (`draw.line` → `draw.polyline` with a `line` alias) remains planned.
+
+  ```python
+  imgviz.draw.polygon(image, yx, fill=None, outline=None, width=1)
+  ```
+
 ## Planned primitives
 
-### Polygon and polyline
+### Polyline rename
 
-`draw.polygon`, `draw.polygon_`, `draw.polyline`, `draw.polyline_`. Accept
-`(N, 2)` points. Integrate with the `Fill` system so any pattern can fill any
-polygon. Closes [#92](https://github.com/wkentaro/imgviz/issues/92).
+Rename `draw.line` → `draw.polyline` (keeping `line` as an alias) so the
+N-point semantics are obvious from the name. Pairs with the shipped
+`draw.polygon` to make the polygon/polyline family consistent.
+
+### `Fill`-pattern integration for polygon
+
+Extend `draw.polygon`'s `fill` to accept any `Fill` pattern (stripe, checker,
+gradient, etc.) so arbitrary patterns can fill any polygon. Lands with the
+broader `Fill` work below.
 
 ### Keypoints with edges
 

@@ -1,8 +1,23 @@
 #!/usr/bin/env python
 
+import math
+
 import matplotlib.pyplot as plt
 
 import imgviz
+
+
+def _regular_polygon_yx(
+    center: tuple[float, float], radius: float, n_sides: int
+) -> list[tuple[float, float]]:
+    cy, cx = center
+    return [
+        (
+            cy + radius * math.sin(math.radians(a)),
+            cx + radius * math.cos(math.radians(a)),
+        )
+        for a in (i * 360 / n_sides for i in range(n_sides))
+    ]
 
 
 def draw() -> None:
@@ -32,6 +47,14 @@ def draw() -> None:
     viz = imgviz.draw.line(viz, yx=[yxs[0], yxs[1]], fill=(255, 255, 255), width=5)
     # mouse segment
     viz = imgviz.draw.line(viz, yx=[yxs[3], yxs[4]], fill=(255, 255, 255), width=5)
+
+    face_padding = 30
+    octagon_yx = _regular_polygon_yx(
+        center=((y1 + y2) / 2, (x1 + x2) / 2),
+        radius=math.hypot(y2 - y1, x2 - x1) / 2 + face_padding,
+        n_sides=8,
+    )
+    viz = imgviz.draw.polygon(viz, yx=octagon_yx, outline=(255, 255, 0), width=3)
 
     colors = imgviz.label_colormap()[1:]
     shapes = ["star", "ellipse", "rectangle", "circle", "triangle"]
