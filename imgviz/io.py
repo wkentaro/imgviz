@@ -17,7 +17,8 @@ def imread(filename: str | pathlib.Path) -> NDArray[np.uint8]:
     Returns:
         Image with shape (H, W) or (H, W, 3) or (H, W, 4).
     """
-    return _utils.pillow_to_numpy(PIL.Image.open(filename))
+    with PIL.Image.open(filename) as image:
+        return _utils.pillow_to_numpy(image)
 
 
 def imsave(filename: str | pathlib.Path, arr: NDArray[np.uint8]) -> None:
