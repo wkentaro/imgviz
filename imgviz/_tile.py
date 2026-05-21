@@ -6,8 +6,8 @@ from collections.abc import Iterable
 import numpy as np
 from numpy.typing import NDArray
 
-from ._centerize import centerize
 from ._color import gray2rgb
+from ._letterbox import letterbox
 from ._color import rgb2rgba
 from .draw import Ink
 
@@ -143,7 +143,7 @@ def tile(
             if channel == 4 and image.shape[2] == 3:
                 image = rgb2rgba(image)
 
-            image = centerize(image=image, height=max_h, width=max_w, cval=cval)
+            image = letterbox(image=image, height=max_h, width=max_w, color=cval)
             images[i] = image
         else:
             image = np.full((max_h, max_w, channel), cval, dtype=np.uint8)

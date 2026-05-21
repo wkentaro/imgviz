@@ -12,19 +12,30 @@ import imgviz
 def test_centerize() -> None:
     img = np.random.uniform(0, 255, size=(15, 25, 3)).round().astype(np.uint8)
 
-    dst = imgviz.centerize(img, height=25, width=25, cval=0)
+    with pytest.warns(DeprecationWarning, match="centerize"):
+        dst = imgviz.centerize(img, height=25, width=25, cval=0)
     assert dst.shape == (25, 25, 3)
     assert dst.dtype == img.dtype
     assert (dst[:5] == 0).all()
     assert (dst[-5:] == 0).all()
     np.testing.assert_allclose(dst[5:-5], img)
 
-    dst = imgviz.centerize(img, height=15, width=35, cval=0)
+    with pytest.warns(DeprecationWarning, match="centerize"):
+        dst = imgviz.centerize(img, height=15, width=35, cval=0)
     assert dst.shape == (15, 35, 3)
     assert dst.dtype == img.dtype
     assert (dst[:, :5] == 0).all()
     assert (dst[:, -5:] == 0).all()
     np.testing.assert_allclose(dst[:, 5:-5], img)
+
+
+def test_centerize_matches_letterbox() -> None:
+    img = np.random.uniform(0, 255, size=(15, 25, 3)).round().astype(np.uint8)
+
+    with pytest.warns(DeprecationWarning):
+        from_centerize = imgviz.centerize(img, height=25, width=25, cval=128)
+    from_letterbox = imgviz.letterbox(img, height=25, width=25, color=128)
+    np.testing.assert_array_equal(from_centerize, from_letterbox)
 
 
 _Loc: TypeAlias = Literal["center", "lt", "rt", "lb", "rb"]
@@ -40,7 +51,10 @@ def test_centerize_loc_square(loc: _Loc, show: bool) -> None:
         np.random.uniform(1, 255, size=shape).round().astype(np.uint8)
     )
 
-    dst = imgviz.centerize(image, height=LONG_SIZE, width=LONG_SIZE, cval=0, loc=loc)
+    with pytest.warns(DeprecationWarning):
+        dst = imgviz.centerize(
+            image, height=LONG_SIZE, width=LONG_SIZE, cval=0, loc=loc
+        )
     if show:
         plt.imshow(dst)
         plt.show()
@@ -59,7 +73,10 @@ def test_centerize_loc_portrait(loc: _Loc, show: bool) -> None:
         np.random.uniform(1, 255, size=shape).round().astype(np.uint8)
     )
 
-    dst = imgviz.centerize(image, height=LONG_SIZE, width=LONG_SIZE, cval=0, loc=loc)
+    with pytest.warns(DeprecationWarning):
+        dst = imgviz.centerize(
+            image, height=LONG_SIZE, width=LONG_SIZE, cval=0, loc=loc
+        )
     if show:
         plt.imshow(dst)
         plt.show()
@@ -90,7 +107,10 @@ def test_centerize_loc_landscape(loc: _Loc, show: bool) -> None:
         np.random.uniform(1, 255, size=shape).round().astype(np.uint8)
     )
 
-    dst = imgviz.centerize(image, height=LONG_SIZE, width=LONG_SIZE, cval=0, loc=loc)
+    with pytest.warns(DeprecationWarning):
+        dst = imgviz.centerize(
+            image, height=LONG_SIZE, width=LONG_SIZE, cval=0, loc=loc
+        )
     if show:
         plt.imshow(dst)
         plt.show()
