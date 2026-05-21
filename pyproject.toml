@@ -36,6 +36,7 @@ dev = [
   "ipython>=8.37.0",
   "matplotlib>=3.5.0",
   "mdformat>=1.0.0",
+  "mdformat-gfm>=1.0.0",
   "opencv-python>=4.11.0.86",
   "pytest>=8.4.2",
   "pytest-xdist>=3.8.0",
