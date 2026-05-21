@@ -184,16 +184,16 @@ Would be a deliberate, breaking change reserved for a future major version.
 These came up during brainstorming but are explicitly out of scope or
 redundant. Recorded here to save future discussions.
 
-| Idea | Why dropped |
-|---|---|
-| COCO / YOLO / Pascal VOC / LabelMe parsers | Application layer. Thin adapters belong downstream. |
+| Idea                                               | Why dropped                                                                       |
+| -------------------------------------------------- | --------------------------------------------------------------------------------- |
+| COCO / YOLO / Pascal VOC / LabelMe parsers         | Application layer. Thin adapters belong downstream.                               |
 | Keypoint schemas (COCO-17, MediaPipe-33, Halpe-26) | Application layer. The primitive takes points and edges; users supply the schema. |
-| PyTorch / JAX / HuggingFace tensor interop | Application layer. Users convert at the boundary. |
-| `compare()`, `tile_annotated()` | Trivially composable from existing `tile` and `text`. |
-| `overlay()` as a separate function | Subsumed by `blend(mode="normal", alpha=...)`. |
-| `border()` | Redundant with `pad` at equal sides. |
-| 3D box projection, BEV canvas | Application layer. Belongs in AV or point-cloud tooling. |
-| GradCAM / SAM / attention-map helpers | Compose from `blend` and mask primitives; no model-specific code in `imgviz`. |
+| PyTorch / JAX / HuggingFace tensor interop         | Application layer. Users convert at the boundary.                                 |
+| `compare()`, `tile_annotated()`                    | Trivially composable from existing `tile` and `text`.                             |
+| `overlay()` as a separate function                 | Subsumed by `blend(mode="normal", alpha=...)`.                                    |
+| `border()`                                         | Redundant with `pad` at equal sides.                                              |
+| 3D box projection, BEV canvas                      | Application layer. Belongs in AV or point-cloud tooling.                          |
+| GradCAM / SAM / attention-map helpers              | Compose from `blend` and mask primitives; no model-specific code in `imgviz`.     |
 
 ## Proposing a new idea
 
