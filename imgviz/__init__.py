@@ -28,6 +28,7 @@ from ._instances import instances2rgb
 from ._instances import masks_to_bboxes
 from ._label import label2rgb
 from ._label import label_colormap
+from ._letterbox import letterbox
 from ._masks import mask2rgb
 from ._nchannel import Nchannel2Rgb
 from ._nchannel import nchannel2rgb
