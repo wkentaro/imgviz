@@ -93,10 +93,6 @@ tiled = imgviz.tile(
 
 <table>
 	<tr>
-		<td><pre><a href="examples/centerize.py">examples/centerize.py</a></pre></td>
-		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/centerize.jpg" width="59.40119760479042%" /></td>
-	</tr>
-	<tr>
 		<td><pre><a href="examples/colorize.py">examples/colorize.py</a></pre></td>
 		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/colorize.jpg" width="76.01532567049807%" /></td>
 	</tr>
@@ -115,6 +111,10 @@ tiled = imgviz.tile(
 	<tr>
 		<td><pre><a href="examples/label2rgb.py">examples/label2rgb.py</a></pre></td>
 		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/label2rgb.jpg" width="76.01532567049807%" /></td>
+	</tr>
+	<tr>
+		<td><pre><a href="examples/letterbox.py">examples/letterbox.py</a></pre></td>
+		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/letterbox.jpg" width="59.40119760479042%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/mask2rgb.py">examples/mask2rgb.py</a></pre></td>
