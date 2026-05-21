@@ -24,25 +24,27 @@ help:
 
 PACKAGE_NAME := imgviz
 
+UV_RUN := uv run --extra all
+
 setup:  # Setup dev env
 	$(call exec,uv sync --extra all)
 
 format:  # Format code
-	$(call exec,uv run ruff format)
-	$(call exec,uv run ruff check --fix)
-	$(call exec,uv run taplo fmt $(shell git ls-files "*.toml"))
-	$(call exec,uv run mdformat $(shell git ls-files "*.md"))
-	$(call exec,uv run yamlfix $(shell git ls-files "*.yml" "*.yaml"))
-	$(call exec,uv run typos --write-changes)
+	$(call exec,$(UV_RUN) ruff format)
+	$(call exec,$(UV_RUN) ruff check --fix)
+	$(call exec,$(UV_RUN) taplo fmt $(shell git ls-files "*.toml"))
+	$(call exec,$(UV_RUN) mdformat $(shell git ls-files "*.md"))
+	$(call exec,$(UV_RUN) yamlfix $(shell git ls-files "*.yml" "*.yaml"))
+	$(call exec,$(UV_RUN) typos --write-changes)
 
 lint:  # Check code
-	$(call exec,uv run ruff format --check)
-	$(call exec,uv run ruff check)
-	$(call exec,uv run ty check --no-progress)
-	$(call exec,uv run taplo fmt --check $(shell git ls-files "*.toml"))
-	$(call exec,uv run mdformat --check $(shell git ls-files "*.md"))
-	$(call exec,uv run yamlfix --check $(shell git ls-files "*.yml" "*.yaml"))
-	$(call exec,uv run typos)
+	$(call exec,$(UV_RUN) ruff format --check)
+	$(call exec,$(UV_RUN) ruff check)
+	$(call exec,$(UV_RUN) ty check --no-progress)
+	$(call exec,$(UV_RUN) taplo fmt --check $(shell git ls-files "*.toml"))
+	$(call exec,$(UV_RUN) mdformat --check $(shell git ls-files "*.md"))
+	$(call exec,$(UV_RUN) yamlfix --check $(shell git ls-files "*.yml" "*.yaml"))
+	$(call exec,$(UV_RUN) typos)
 
 test:
-	$(call exec,uv run pytest -n=auto -v tests)
+	$(call exec,$(UV_RUN) pytest -n=auto -v tests)
