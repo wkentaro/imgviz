@@ -7,8 +7,8 @@ import numpy as np
 from numpy.typing import NDArray
 
 from ._color import gray2rgb
-from ._letterbox import letterbox
 from ._color import rgb2rgba
+from ._letterbox import letterbox
 from .draw import Ink
 
 

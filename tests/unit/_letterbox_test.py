@@ -73,9 +73,7 @@ def test_letterbox_color_tuple() -> None:
 def test_letterbox_center_padding_within_one_pixel() -> None:
     img = np.full((10, 10, 3), 128, dtype=np.uint8)
 
-    dst, mask = imgviz.letterbox(
-        img, height=21, width=21, color=0, return_mask=True
-    )
+    dst, mask = imgviz.letterbox(img, height=21, width=21, color=0, return_mask=True)
     rows = np.where(mask.any(axis=1))[0]
     cols = np.where(mask.any(axis=0))[0]
     top_pad = int(rows[0])
@@ -89,9 +87,7 @@ def test_letterbox_center_padding_within_one_pixel() -> None:
 def test_letterbox_return_mask_shape() -> None:
     img = np.random.uniform(0, 255, size=(10, 20, 3)).round().astype(np.uint8)
 
-    dst, mask = imgviz.letterbox(
-        img, height=30, width=30, color=0, return_mask=True
-    )
+    dst, mask = imgviz.letterbox(img, height=30, width=30, color=0, return_mask=True)
     assert dst.shape == (30, 30, 3)
     assert mask.shape == (30, 30)
     assert mask.dtype == np.bool_
