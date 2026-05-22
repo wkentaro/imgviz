@@ -34,5 +34,6 @@ from ._masks import mask2rgb
 from ._nchannel import Nchannel2Rgb
 from ._nchannel import nchannel2rgb
 from ._normalize import normalize
+from ._pixelate import pixelate
 from ._resize import resize
 from ._tile import tile
