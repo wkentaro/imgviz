@@ -6,6 +6,7 @@ from . import data
 from . import draw
 from . import fill
 from . import io
+from ._blur import blur
 from ._centerize import centerize
 from ._color import asgray
 from ._color import asrgb
@@ -33,5 +34,6 @@ from ._masks import mask2rgb
 from ._nchannel import Nchannel2Rgb
 from ._nchannel import nchannel2rgb
 from ._normalize import normalize
+from ._pixelate import pixelate
 from ._resize import resize
 from ._tile import tile
