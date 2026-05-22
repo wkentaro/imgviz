@@ -5,16 +5,16 @@ import matplotlib.pyplot as plt
 import imgviz
 
 
-def centerize() -> None:
+def letterbox() -> None:
     data = imgviz.data.arc2017()
 
     rgb = data["rgb"]
 
     H, W = rgb.shape[:2]
-    centerized1 = imgviz.centerize(rgb, height=H, width=H)
+    letterboxed1 = imgviz.letterbox(rgb, height=H, width=H)
 
     rgb_T = rgb.transpose(1, 0, 2)
-    centerized2 = imgviz.centerize(rgb_T, height=H, width=H)
+    letterboxed2 = imgviz.letterbox(rgb_T, height=H, width=H)
 
     # -------------------------------------------------------------------------
 
@@ -26,17 +26,17 @@ def centerize() -> None:
     plt.imshow(rgb)
 
     plt.subplot(132)
-    plt.title("centerized1")
-    plt.imshow(centerized1)
+    plt.title("letterboxed1")
+    plt.imshow(letterboxed1)
     plt.axis("off")
 
     plt.subplot(133)
-    plt.title("centerized2")
-    plt.imshow(centerized2)
+    plt.title("letterboxed2")
+    plt.imshow(letterboxed2)
     plt.axis("off")
 
 
 if __name__ == "__main__":
     from _base import run_example
 
-    run_example(centerize)
+    run_example(letterbox)
