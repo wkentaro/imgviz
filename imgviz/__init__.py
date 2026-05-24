@@ -21,6 +21,7 @@ from ._colorize import Colorize
 from ._colorize import colorize
 from ._depth import Depth2Rgb
 from ._depth import depth2rgb
+from ._diff import diff
 from ._dtype import bool2ubyte
 from ._dtype import float2ubyte
 from ._flow import Flow2Rgb
