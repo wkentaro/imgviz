@@ -148,6 +148,58 @@ def test_diff_accepts_rgb_input() -> None:
     assert out.dtype == np.uint8
 
 
+def test_diff_accepts_rgba_input() -> None:
+    rgb = imgviz.data.arc2017()["rgb"]
+    a = np.dstack([rgb, np.full(rgb.shape[:2], 255, dtype=np.uint8)])
+    b = a.copy()
+    b[:50, :50, :3] = 0
+
+    out = imgviz.diff(a, b, mode="abs")
+
+    assert out.shape == (*a.shape[:2], 3)
+    assert out.dtype == np.uint8
+    assert not np.array_equal(out[0, 0], out[-1, -1])
+
+
+def test_diff_rgba_alpha_is_ignored() -> None:
+    rgb = imgviz.data.arc2017()["rgb"]
+    a = np.dstack([rgb, np.full(rgb.shape[:2], 255, dtype=np.uint8)])
+    b = a.copy()
+    b[..., 3] = 0
+
+    out = imgviz.diff(a, b, mode="abs")
+
+    np.testing.assert_array_equal(out, np.tile(out[0, 0], (*a.shape[:2], 1)))
+
+
+def test_diff_ssim_propagates_nan_locally() -> None:
+    rng = np.random.RandomState(0)
+    a = (100.0 * rng.rand(32, 32)).astype(np.float32)
+    b = a + 5.0 * rng.rand(32, 32).astype(np.float32)
+    a[0, 0] = np.nan
+
+    out = imgviz.diff(a, b, mode="ssim", vmin=-1.0, vmax=1.0)
+
+    assert out.shape == (32, 32, 3)
+    assert out.dtype == np.uint8
+    np.testing.assert_array_equal(out[0, 0], (0, 0, 0))
+    assert not np.array_equal(out[-1, -1], (0, 0, 0))
+
+
+@pytest.mark.parametrize("mode", ["signed", "abs"])
+def test_diff_propagates_nan(mode: Literal["signed", "abs"]) -> None:
+    a = np.zeros((4, 4), dtype=np.float32)
+    b = np.zeros((4, 4), dtype=np.float32)
+    a[0, 0] = np.nan
+    a[1, 1] = 1.0
+
+    out = imgviz.diff(a, b, mode=mode)
+
+    assert out.shape == (4, 4, 3)
+    assert out.dtype == np.uint8
+    np.testing.assert_array_equal(out[0, 0], (0, 0, 0))
+
+
 def test_diff_shape_mismatch_raises() -> None:
     a = np.zeros((4, 4), dtype=np.float32)
     b = np.zeros((4, 5), dtype=np.float32)
