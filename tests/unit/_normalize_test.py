@@ -19,3 +19,14 @@ def test_normalize_return_minmax() -> None:
     assert max_val.shape == (1,)
     assert min_val[0] == 0.0
     assert max_val[0] == 100.0
+
+
+def test_normalize_constant_large_float32_is_finite() -> None:
+    # When min == max and the value is large enough that float32 eps rounds
+    # away, the issame spread must remain large enough to survive the cast.
+    src = np.full((4, 4), 1e6, dtype=np.float32)
+
+    result = imgviz.normalize(src)
+
+    assert result.shape == src.shape
+    assert np.isfinite(result).all()
