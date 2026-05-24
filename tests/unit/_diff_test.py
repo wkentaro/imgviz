@@ -63,6 +63,59 @@ def test_diff_identical_inputs_are_neutral(
     np.testing.assert_array_equal(out, np.tile(out[0, 0], (*image.shape[:2], 1)))
 
 
+def test_diff_signed_identical_inputs_have_coolwarm_midpoint() -> None:
+    image = imgviz.data.arc2017()["rgb"]
+
+    out = imgviz.diff(image, image.copy(), mode="signed")
+
+    midpoint = (
+        (np.asarray(cmap.Colormap("coolwarm")(0.5))[:3] * 255).round().astype(np.uint8)
+    )
+    np.testing.assert_array_equal(out[0, 0], midpoint)
+
+
+def test_diff_signed_asymmetric_bounds_are_used_as_is() -> None:
+    a = np.tile(np.linspace(-2, 2, 9, dtype=np.float32), (9, 1))
+    b = np.zeros((9, 9), dtype=np.float32)
+
+    out = imgviz.diff(a, b, mode="signed", vmin=0.0, vmax=2.0)
+
+    # vmin=0 saturates negative diffs to coolwarm(0); positive diffs span
+    # coolwarm(0..1). The center column (diff=0) sits at the low end, not
+    # the midpoint.
+    low_end = (
+        (np.asarray(cmap.Colormap("coolwarm")(0.0))[:3] * 255).round().astype(np.uint8)
+    )
+    high_end = (
+        (np.asarray(cmap.Colormap("coolwarm")(1.0))[:3] * 255).round().astype(np.uint8)
+    )
+    np.testing.assert_array_equal(out[:, 4], np.tile(low_end, (9, 1)))
+    np.testing.assert_array_equal(out[:, 0], np.tile(low_end, (9, 1)))
+    np.testing.assert_array_equal(out[:, -1], np.tile(high_end, (9, 1)))
+
+
+@pytest.mark.parametrize(("vmin", "vmax"), [(0.0, None), (None, 0.0), (0.0, 0.0)])
+def test_diff_signed_zero_bound_falls_back_to_data(
+    vmin: float | None, vmax: float | None
+) -> None:
+    a = np.tile(np.linspace(-2, 2, 9, dtype=np.float32), (9, 1))
+    b = np.zeros((9, 9), dtype=np.float32)
+
+    out = imgviz.diff(a, b, mode="signed", vmin=vmin, vmax=vmax)
+    reference = imgviz.diff(a, b, mode="signed")
+
+    np.testing.assert_array_equal(out, reference)
+
+    midpoint = (
+        (np.asarray(cmap.Colormap("coolwarm")(0.5))[:3] * 255).round().astype(np.uint8)
+    )
+    low_end = (
+        (np.asarray(cmap.Colormap("coolwarm")(0.0))[:3] * 255).round().astype(np.uint8)
+    )
+    np.testing.assert_array_equal(out[:, 4], np.tile(midpoint, (9, 1)))
+    np.testing.assert_array_equal(out[:, 0], np.tile(low_end, (9, 1)))
+
+
 def test_diff_abs_grows_with_difference() -> None:
     a = np.zeros((9, 9), dtype=np.float32)
     small = np.full((9, 9), 0.2, dtype=np.float32)
