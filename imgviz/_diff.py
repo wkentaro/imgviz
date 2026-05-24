@@ -39,7 +39,8 @@ def diff(
         b: Second image with the same shape as ``a``.
         mode: ``"signed"`` maps ``a - b`` onto a diverging colormap centered at
             zero, ``"abs"`` maps ``|a - b|`` onto a sequential colormap, and
-            ``"ssim"`` colorizes the local SSIM map (requires scikit-image).
+            ``"ssim"`` colorizes the local SSIM map (requires scikit-image and
+            both image dimensions to be at least 7 pixels).
         vmin: Lower bound for the colormap. Mode-specific defaults:
 
             - ``"signed"``: if both ``vmin`` and ``vmax`` are ``None``, the
@@ -98,30 +99,47 @@ def diff(
 
     if mode == "ssim":
         try:
+            import scipy.ndimage
             import skimage.metrics
         except ImportError:
             raise ImportError(
-                "skimage is required for mode='ssim'. "
+                "scikit-image is required for mode='ssim'. "
                 "Please install scikit-image or use: pip install imgviz[all]"
             ) from None
 
+        WIN_SIZE: Final = 7
+        if min(luminance_a.shape) < WIN_SIZE:
+            raise ValueError(
+                f"mode='ssim' requires both image dimensions to be at least "
+                f"{WIN_SIZE}, but got shape {luminance_a.shape}"
+            )
+
+        nan_mask = np.isnan(luminance_a) | np.isnan(luminance_b)
+        if nan_mask.all():
+            return np.zeros((*luminance_a.shape, 3), dtype=np.uint8)
+
+        # SSIM's stability constants (C1, C2) scale with data_range. When
+        # both inputs share an integer dtype, use the dtype's full range so
+        # scores stay comparable across different image contents; otherwise
+        # (any float input or mixed dtypes) fall back to the observed
+        # extent since the intrinsic range is unknown.
+        if a.dtype == b.dtype and np.issubdtype(a.dtype, np.integer):
+            info = np.iinfo(a.dtype)
+            data_range = float(info.max - info.min)
+        else:
+            obs_min = min(float(np.nanmin(luminance_a)), float(np.nanmin(luminance_b)))
+            obs_max = max(float(np.nanmax(luminance_a)), float(np.nanmax(luminance_b)))
+            data_range = obs_max - obs_min if obs_max > obs_min else 1.0
+
         # scipy's uniform filter (used inside structural_similarity) uses a
         # cumsum implementation that spreads NaN across the whole image, so a
-        # single NaN would collapse the entire SSIM map. Replace NaN with a
-        # neutral fill before the call, then re-mark the win_size neighborhood
-        # of every original NaN as NaN so colorize renders those pixels black.
-        WIN_SIZE: Final = 7
-        nan_mask = np.isnan(luminance_a) | np.isnan(luminance_b)
-        data_max = float(np.nanmax([np.nanmax(luminance_a), np.nanmax(luminance_b)]))
-        data_min = float(np.nanmin([np.nanmin(luminance_a), np.nanmin(luminance_b)]))
-        data_range = data_max - data_min if data_max > data_min else 1.0
-
+        # single NaN would collapse the entire SSIM map. Replace NaN with any
+        # finite value before the call; the win_size neighborhood of every
+        # original NaN is re-marked below, so the fill never reaches the
+        # visible output.
         if nan_mask.any():
-            import scipy.ndimage
-
-            fill = (data_max + data_min) / 2.0
-            sanitized_a = np.where(np.isnan(luminance_a), fill, luminance_a)
-            sanitized_b = np.where(np.isnan(luminance_b), fill, luminance_b)
+            sanitized_a = np.where(np.isnan(luminance_a), 0.0, luminance_a)
+            sanitized_b = np.where(np.isnan(luminance_b), 0.0, luminance_b)
         else:
             sanitized_a = luminance_a
             sanitized_b = luminance_b

@@ -127,6 +127,38 @@ def test_diff_abs_grows_with_difference() -> None:
     assert not np.array_equal(out_small[0, 0], out_large[0, 0])
 
 
+def test_diff_ssim_stable_on_near_uniform_uint8() -> None:
+    # Regression: when data_range was derived from observed pixel values, a
+    # tiny change on a uniform uint8 surface collapsed SSIM toward 0. With
+    # data_range taken from the uint8 dtype, scores stay near 1 everywhere.
+    a = np.full((32, 32), 128, dtype=np.uint8)
+    b = a.copy()
+    b[16, 16] = 130
+
+    out = imgviz.diff(a, b, mode="ssim", vmin=-1.0, vmax=1.0)
+
+    near_perfect = (
+        (np.asarray(cmap.Colormap("viridis")(1.0))[:3] * 255).round().astype(np.uint8)
+    )
+    far_pixel = out[0, 0]
+    assert np.all(np.abs(far_pixel.astype(int) - near_perfect.astype(int)) <= 2), (
+        f"expected far pixel ~ {near_perfect}, got {far_pixel}"
+    )
+
+
+def test_diff_ssim_mixed_dtypes_uses_observed_range() -> None:
+    # The dtype-derived data_range only applies when both inputs share an
+    # integer dtype. Mixed inputs (e.g. uint8 against float32) must not
+    # silently key on iinfo(a.dtype); they fall back to the observed extent.
+    a = np.full((16, 16), 0.5, dtype=np.float32)
+    b = np.full((16, 16), 128, dtype=np.uint8)
+
+    out = imgviz.diff(a, b, mode="ssim", vmin=-1.0, vmax=1.0)
+
+    assert out.shape == (16, 16, 3)
+    assert out.dtype == np.uint8
+
+
 def test_diff_ssim_highlights_local_change() -> None:
     image = imgviz.data.arc2017()["rgb"]
     modified = image.copy()
@@ -214,3 +246,35 @@ def test_diff_invalid_mode_raises() -> None:
 
     with pytest.raises(ValueError, match="mode must be"):
         imgviz.diff(a, b, mode="bogus")  # type: ignore[arg-type]
+
+
+def test_diff_ssim_small_image_raises() -> None:
+    a = np.zeros((6, 100), dtype=np.float32)
+    b = np.zeros((6, 100), dtype=np.float32)
+
+    with pytest.raises(ValueError, match="at least 7"):
+        imgviz.diff(a, b, mode="ssim")
+
+
+@pytest.mark.parametrize(
+    ("a_all_nan", "b_all_nan"),
+    [(True, True), (True, False), (False, True)],
+)
+def test_diff_ssim_all_nan_inputs(a_all_nan: bool, b_all_nan: bool) -> None:
+    shape = (16, 16)
+    a = (
+        np.full(shape, np.nan, dtype=np.float32)
+        if a_all_nan
+        else np.zeros(shape, dtype=np.float32)
+    )
+    b = (
+        np.full(shape, np.nan, dtype=np.float32)
+        if b_all_nan
+        else np.zeros(shape, dtype=np.float32)
+    )
+
+    out = imgviz.diff(a, b, mode="ssim")
+
+    assert out.shape == (*shape, 3)
+    assert out.dtype == np.uint8
+    np.testing.assert_array_equal(out, np.zeros_like(out))
