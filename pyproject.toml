@@ -51,8 +51,9 @@ dev = [
 
 [project.optional-dependencies]
 all = [
-  "scikit-image", # required by instances2rgb with boundary_width>0
+  "scikit-image", # required by instances2rgb with boundary_width>0, diff with mode="ssim"
   "scikit-learn", # required by nchannel2rgb
+  "scipy",        # required by diff with mode="ssim"
 ]
 
 [tool.hatch.metadata]
