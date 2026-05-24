@@ -69,10 +69,13 @@ def normalize(
     if np.isinf(min_value).any() or np.isinf(max_value).any():
         warnings.warn("some of min or max values are inf.")
 
-    eps = np.finfo(image.dtype).eps
+    # Spread proportional to magnitude so the subtraction survives float32
+    # rounding even when min_value is large.
+    eps = np.finfo(min_value.dtype).eps
     issame = max_value == min_value
-    min_value[issame] -= eps
-    max_value[issame] += eps
+    spread = eps * np.maximum(np.abs(min_value[issame]), 1.0)
+    min_value[issame] -= spread
+    max_value[issame] += spread
 
     dst: NDArray[np.float32] = np.zeros(image.shape, dtype=np.float32)
 
