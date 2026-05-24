@@ -8,7 +8,7 @@ from numpy.typing import NDArray
 from ._colorize import colorize
 
 
-def _to_scalar(image: NDArray) -> NDArray[np.float64]:
+def _to_luminance(image: NDArray) -> NDArray[np.float64]:
     arr = image.astype(np.float64)
     if arr.ndim == 2:
         return arr
@@ -29,8 +29,9 @@ def diff(
 ) -> NDArray[np.uint8]:
     """Visualize the difference between two images.
 
-    Color images are reduced to luminance before differencing, so the result
-    is always a colorized scalar field with shape (H, W, 3).
+    Color images are reduced to BT.601 luminance before differencing
+    (alpha is ignored for 4-channel inputs), so the result is always a
+    colorized scalar field with shape (H, W, 3).
 
     Args:
         a: First image with shape (H, W), (H, W, 3) or (H, W, 4).
@@ -38,10 +39,21 @@ def diff(
         mode: ``"signed"`` maps ``a - b`` onto a diverging colormap centered at
             zero, ``"abs"`` maps ``|a - b|`` onto a sequential colormap, and
             ``"ssim"`` colorizes the local SSIM map (requires scikit-image).
-        vmin: Lower bound for normalization. Defaults are mode-specific: a
-            symmetric bound for ``"signed"``, ``0`` for ``"abs"``, and the
-            data minimum for ``"ssim"``.
-        vmax: Upper bound for normalization. Defaults to the data range.
+        vmin: Lower bound for the colormap. Mode-specific defaults:
+
+            - ``"signed"``: if both ``vmin`` and ``vmax`` are ``None``, the
+              bound is taken symmetrically from ``|a - b|``. If exactly one
+              is given, its magnitude defines the symmetric range. If both
+              are given they are used as-is (allowing asymmetric ranges).
+            - ``"abs"``: ``0``.
+            - ``"ssim"``: the minimum of the local SSIM map. Pass
+              ``vmin=-1, vmax=1`` to use the absolute SSIM bounds so two
+              diffs of different image pairs are visually comparable.
+        vmax: Upper bound for the colormap. Mode-specific defaults:
+
+            - ``"signed"``: see ``vmin``.
+            - ``"abs"``: the maximum of ``|a - b|``.
+            - ``"ssim"``: the maximum of the local SSIM map.
 
     Returns:
         Colorized difference image with shape (H, W, 3) and dtype ``uint8``.
@@ -59,24 +71,22 @@ def diff(
             f"a and b must have the same shape, but got {a.shape} and {b.shape}"
         )
 
-    scalar_a = _to_scalar(a)
-    scalar_b = _to_scalar(b)
+    luminance_a = _to_luminance(a)
+    luminance_b = _to_luminance(b)
 
     if mode == "signed":
-        signed = scalar_a - scalar_b
-        if vmin is not None and vmax is not None:
+        signed = luminance_a - luminance_b
+        given = [bound for bound in (vmin, vmax) if bound is not None]
+        if len(given) == 2:
             return colorize(signed, vmin=vmin, vmax=vmax, cmap="coolwarm")
-        if vmin is None and vmax is None:
-            extent = float(np.nanmax(np.abs(signed)))
-        elif vmin is None:
-            assert vmax is not None
-            extent = abs(vmax)
-        else:
-            extent = abs(vmin)
+        # Zero or one bound given — produce a symmetric range. A single
+        # bound's magnitude becomes the extent; otherwise it comes from
+        # the data.
+        extent = abs(given[0]) if given else float(np.nanmax(np.abs(signed)))
         return colorize(signed, vmin=-extent, vmax=extent, cmap="coolwarm")
 
     if mode == "abs":
-        magnitude = np.abs(scalar_a - scalar_b)
+        magnitude = np.abs(luminance_a - luminance_b)
         if vmin is None:
             vmin = 0.0
         return colorize(magnitude, vmin=vmin, vmax=vmax, cmap="magma")
@@ -90,11 +100,11 @@ def diff(
                 "Please install scikit-image or use: pip install imgviz[all]"
             ) from None
 
-        data_max = max(scalar_a.max(), scalar_b.max())
-        data_min = min(scalar_a.min(), scalar_b.min())
-        data_range = float(data_max - data_min) or 1.0
+        data_max = max(luminance_a.max(), luminance_b.max())
+        data_min = min(luminance_a.min(), luminance_b.min())
+        data_range = float(data_max - data_min) if data_max > data_min else 1.0
         _, similarity = skimage.metrics.structural_similarity(
-            scalar_a, scalar_b, data_range=data_range, full=True
+            luminance_a, luminance_b, data_range=data_range, full=True
         )
         return colorize(similarity, vmin=vmin, vmax=vmax, cmap="viridis")
 
