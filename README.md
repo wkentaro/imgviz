@@ -101,6 +101,10 @@ tiled = imgviz.tile(
 		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/colorize.jpg" width="76.01532567049807%" /></td>
 	</tr>
 	<tr>
+		<td><pre><a href="examples/diff.py">examples/diff.py</a></pre></td>
+		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/diff.jpg" width="103.87434554973822%" /></td>
+	</tr>
+	<tr>
 		<td><pre><a href="examples/draw.py">examples/draw.py</a></pre></td>
 		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/draw.jpg" width="37.79047619047619%" /></td>
 	</tr>

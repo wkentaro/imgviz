@@ -617,6 +617,8 @@ all = [
     { name = "scikit-image", version = "0.26.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
     { name = "scikit-learn", version = "1.7.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "scikit-learn", version = "1.8.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+    { name = "scipy", version = "1.15.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
+    { name = "scipy", version = "1.16.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
 ]
 
 [package.dev-dependencies]
@@ -646,6 +648,7 @@ requires-dist = [
     { name = "pillow", specifier = ">=10.0.0" },
     { name = "scikit-image", marker = "extra == 'all'" },
     { name = "scikit-learn", marker = "extra == 'all'" },
+    { name = "scipy", marker = "extra == 'all'" },
 ]
 provides-extras = ["all"]
 
