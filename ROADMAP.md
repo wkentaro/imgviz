@@ -156,8 +156,25 @@ fill semantics and dtype handling live in one place.
 
 ## Structural changes under consideration
 
-These are larger shifts that affect the public API. Neither is committed;
+These are larger shifts that affect the public API. None of these is committed;
 each would start as a prototype in `examples/` before any core change.
+
+### Visualization-construction layers
+
+A three-layer model for the drawing/visualization surface, recorded in
+`docs/adr/0001-visualization-construction-layers.md`:
+
+- **Primitives** (`imgviz.draw`) — atomic, semantics-free draw ops.
+- **Components** (`imgviz.components`) — reusable composites of primitives plus
+  layout, still semantics-free, e.g. `legend` (extracted from the in-image
+  legend currently inside `label2rgb`).
+- **Compositions** — flat top-level verbs that bind domain data to primitives
+  and components (`label2rgb`, `instances2rgb`, `mask2rgb`).
+
+The rule: building blocks you assemble get a namespace; end-product verbs you
+call stay flat. `draw` and `io` keep their names; color and dtype conversions
+stay flat for backward compatibility and convenience. Any wider namespace reorg
+is a major-version move behind back-compat aliases, not an incremental change.
 
 ### `Layer` + `compose()`
 
