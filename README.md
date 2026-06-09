@@ -133,6 +133,10 @@ tiled = imgviz.tile(
 		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/nchannel2rgb.jpg" width="52.21052631578947%" /></td>
 	</tr>
 	<tr>
+		<td><pre><a href="examples/pie.py">examples/pie.py</a></pre></td>
+		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/pie.jpg" width="20.0%" /></td>
+	</tr>
+	<tr>
 		<td><pre><a href="examples/resize.py">examples/resize.py</a></pre></td>
 		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/resize.jpg" width="52.21052631578947%" /></td>
 	</tr>

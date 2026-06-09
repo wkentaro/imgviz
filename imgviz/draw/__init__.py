@@ -5,6 +5,8 @@ from ._ellipse import ellipse_
 from ._ink import Ink
 from ._line import line
 from ._line import line_
+from ._pie import pie
+from ._pie import pie_
 from ._polygon import polygon
 from ._polygon import polygon_
 from ._rectangle import rectangle
