@@ -28,6 +28,7 @@ from ._dtype import float2ubyte
 from ._flags import flags2rgb
 from ._flow import Flow2Rgb
 from ._flow import flow2rgb
+from ._heatmap import heatmap
 from ._instances import instances2rgb
 from ._instances import masks_to_bboxes
 from ._label import label2rgb
