@@ -70,7 +70,7 @@ class Nchannel2Rgb:
         dst = dst.reshape(H, W, 3)
 
         if dtype == np.uint8:
-            if self._min_max_value == (None, None):
+            if self._min_max_value[0] is None:
                 self._min_max_value = (
                     np.nanmin(dst, axis=(0, 1)),
                     np.nanmax(dst, axis=(0, 1)),
