@@ -47,6 +47,8 @@ pip install imgviz[all]
 ```python
 # getting_started.py
 
+import numpy as np
+
 import imgviz
 
 # sample data of rgb, depth, class label and instance masks
@@ -72,6 +74,15 @@ masks = data["masks"] == 1
 captions = [data["class_names"][l] for l in labels]
 maskviz = imgviz.instances2rgb(gray, masks=masks, labels=labels, captions=captions)
 
+# per-instance flags as pie glyphs
+centers = np.array([np.argwhere(m).mean(axis=0) for m in masks])
+flags = np.column_stack(
+    (masks.sum(axis=(1, 2)) < 7000, centers[:, 1] < rgb.shape[1] / 2)
+)
+flagviz = imgviz.flags2rgb(
+    rgb, flags=flags, centers=centers, flag_names=["small", "left"], wedges="all"
+)
+
 # tile instance masks
 insviz = [
     (rgb * m[:, :, None])[b[0] : b[2], b[1] : b[3]] for b, m in zip(bboxes, masks)
@@ -81,9 +92,9 @@ insviz = imgviz.resize(insviz, height=rgb.shape[0])
 
 # tile visualization
 tiled = imgviz.tile(
-    [rgb, depthviz, labelviz, maskviz, insviz],
+    [rgb, depthviz, labelviz, maskviz, flagviz, insviz],
     row=1,
-    col=5,
+    col=6,
     border=(255, 255, 255),
     border_width=5,
 )
