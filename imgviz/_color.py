@@ -142,7 +142,8 @@ def asrgb(image: NDArray, copy: bool = False) -> NDArray[np.uint8]:
 
     Args:
         image: Input image.
-        copy: Whether to return a copy of the image.
+        copy: Whether to return a copy of the image. When False (the default),
+            the returned array may share memory with the input.
 
     Returns:
         RGB image with shape (H, W, 3).
@@ -154,13 +155,13 @@ def asrgb(image: NDArray, copy: bool = False) -> NDArray[np.uint8]:
     elif image.ndim == 3 and image.shape[2] == 4:
         rgb = rgba2rgb(image)
     elif image.ndim == 3 and image.shape[2] == 3:
-        rgb = image.copy() if copy else image
+        rgb = image
     else:
         raise ValueError(
             f"unsupported image format to convert to rgb: "
             f"shape={image.shape}, dtype={image.dtype}"
         )
-    return rgb
+    return rgb.copy() if copy else rgb
 
 
 def asrgba(image: NDArray) -> NDArray[np.uint8]:

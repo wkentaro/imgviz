@@ -63,6 +63,15 @@ def test_mask2rgb_stripe(show: bool, image: NDArray[np.uint8] | None) -> None:
     assert 0.48 < num_pixels / mask.sum() < 0.52
 
 
+def test_mask2rgb_does_not_mutate_rgba_image() -> None:
+    image: NDArray[np.uint8] = imgviz.rgb2rgba(_WHITE_IMAGE)
+    original = image.copy()
+
+    imgviz.mask2rgb(mask=_SIMPLE_MASK, image=image, fill=_COLOR_RED)
+
+    np.testing.assert_array_equal(image, original)
+
+
 def test_stripe_validation() -> None:
     with pytest.raises(ValueError, match="width must be positive"):
         imgviz.fill.Stripe(color=_COLOR_RED, width=0)
