@@ -63,9 +63,9 @@ def text_in_rectangle_aabb(
     elif loc == "rt+":
         yx = (y1 - tsize[0] - 2, x2 - tsize[1] - 2)
     elif loc == "lb":
-        yx = (y2 - tsize[0] - 2, 0)
+        yx = (y2 - tsize[0] - 2, x1)
     elif loc == "lb-":
-        yx = (y2, 0)
+        yx = (y2, x1)
     elif loc == "rb":
         yx = (y2 - tsize[0] - 2, x2 - tsize[1] - 2)
     elif loc == "rb-":
