@@ -7,6 +7,7 @@ from typing import Literal
 import numpy as np
 from numpy.typing import NDArray
 
+from ._pad import pad
 from ._resize import resize
 
 
@@ -68,43 +69,49 @@ def letterbox(
         else:
             return image
 
-    dst = np.zeros(shape, dtype=image.dtype)
-    if color is not None:
-        dst[:, :] = color
-
     image_h, image_w = image.shape[:2]
-    scale_h, scale_w = 1.0 * shape[0] / image_h, 1.0 * shape[1] / image_w
-    scale = min(scale_h, scale_w)
-    dst_h, dst_w = int(round(image_h * scale)), int(round(image_w * scale))
-    image = resize(image, height=dst_h, width=dst_w, interpolation=interpolation)
+    scale = min(1.0 * height / image_h, 1.0 * width / image_w)
+    image = resize(
+        image,
+        height=int(round(image_h * scale)),
+        width=int(round(image_w * scale)),
+        interpolation=interpolation,
+    )
 
     ph, pw = 0, 0
     h, w = image.shape[:2]
-    dst_h, dst_w = shape[:2]
     if loc == "center":
-        if h < dst_h:
-            ph = (dst_h - h) // 2
-        if w < dst_w:
-            pw = (dst_w - w) // 2
+        if h < height:
+            ph = (height - h) // 2
+        if w < width:
+            pw = (width - w) // 2
     elif loc == "lt":
         ph = 0
         pw = 0
     elif loc == "rt":
         ph = 0
-        if w < dst_w:
-            pw = dst_w - w
+        if w < width:
+            pw = width - w
     elif loc == "lb":
-        if h < dst_h:
-            ph = dst_h - h
+        if h < height:
+            ph = height - h
         pw = 0
     elif loc == "rb":
-        if h < dst_h:
-            ph = dst_h - h
-        if w < dst_w:
-            pw = dst_w - w
+        if h < height:
+            ph = height - h
+        if w < width:
+            pw = width - w
     else:
         raise ValueError(f"unsupported loc: {loc}")
-    dst[ph : ph + h, pw : pw + w] = image
+
+    dst = pad(
+        image,
+        top=ph,
+        bottom=height - h - ph,
+        left=pw,
+        right=width - w - pw,
+        color=0 if color is None else color,
+    )
 
     if return_mask:
         mask = np.zeros(shape[:2], dtype=bool)
