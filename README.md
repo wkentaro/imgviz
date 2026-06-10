@@ -11,7 +11,7 @@
 <div align="center">
   <a href="https://pypi.python.org/pypi/imgviz"><img src="https://img.shields.io/pypi/v/imgviz.svg"></a>
   <a href="https://pypi.org/project/imgviz"><img src="https://img.shields.io/pypi/pyversions/imgviz.svg"></a>
-  <a href="https://github.com/wkentaro/imgviz/actions"><img src="https://github.com/wkentaro/imgviz/workflows/ci/badge.svg"></a>
+  <a href="https://github.com/wkentaro/imgviz/actions/workflows/ci.yml"><img src="https://github.com/wkentaro/imgviz/actions/workflows/ci.yml/badge.svg"></a>
 </div>
 
 <div align="center">
