@@ -24,7 +24,7 @@
 <br/>
 
 <div align="center">
-  <img src="https://github.com/wkentaro/imgviz/raw/main/assets/getting_started.jpg" width="95%">
+  <img src="assets/getting_started.jpg" width="95%">
 </div>
 
 ## Installation
@@ -105,58 +105,58 @@ tiled = imgviz.tile(
 <table>
 	<tr>
 		<td><pre><a href="examples/blur_pixelate.py">examples/blur_pixelate.py</a></pre></td>
-		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/blur_pixelate.jpg" width="76.01532567049807%" /></td>
+		<td><img src="examples/assets/blur_pixelate.jpg" width="76.01532567049807%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/colorize.py">examples/colorize.py</a></pre></td>
-		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/colorize.jpg" width="76.01532567049807%" /></td>
+		<td><img src="examples/assets/colorize.jpg" width="76.01532567049807%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/diff.py">examples/diff.py</a></pre></td>
-		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/diff.jpg" width="103.87434554973822%" /></td>
+		<td><img src="examples/assets/diff.jpg" width="103.87434554973822%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/draw.py">examples/draw.py</a></pre></td>
-		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/draw.jpg" width="37.79047619047619%" /></td>
+		<td><img src="examples/assets/draw.jpg" width="37.79047619047619%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/flags2rgb.py">examples/flags2rgb.py</a></pre></td>
-		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/flags2rgb.jpg" width="77.93103448275862%" /></td>
+		<td><img src="examples/assets/flags2rgb.jpg" width="77.93103448275862%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/flow2rgb.py">examples/flow2rgb.py</a></pre></td>
-		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/flow2rgb.jpg" width="52.21052631578947%" /></td>
+		<td><img src="examples/assets/flow2rgb.jpg" width="52.21052631578947%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/instances2rgb.py">examples/instances2rgb.py</a></pre></td>
-		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/instances2rgb.jpg" width="76.39846743295018%" /></td>
+		<td><img src="examples/assets/instances2rgb.jpg" width="76.39846743295018%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/label2rgb.py">examples/label2rgb.py</a></pre></td>
-		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/label2rgb.jpg" width="76.01532567049807%" /></td>
+		<td><img src="examples/assets/label2rgb.jpg" width="76.01532567049807%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/letterbox.py">examples/letterbox.py</a></pre></td>
-		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/letterbox.jpg" width="59.40119760479042%" /></td>
+		<td><img src="examples/assets/letterbox.jpg" width="59.40119760479042%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/mask2rgb.py">examples/mask2rgb.py</a></pre></td>
-		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/mask2rgb.jpg" width="76.01532567049807%" /></td>
+		<td><img src="examples/assets/mask2rgb.jpg" width="76.01532567049807%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/nchannel2rgb.py">examples/nchannel2rgb.py</a></pre></td>
-		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/nchannel2rgb.jpg" width="52.21052631578947%" /></td>
+		<td><img src="examples/assets/nchannel2rgb.jpg" width="52.21052631578947%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/pie.py">examples/pie.py</a></pre></td>
-		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/pie.jpg" width="20.0%" /></td>
+		<td><img src="examples/assets/pie.jpg" width="20.0%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/resize.py">examples/resize.py</a></pre></td>
-		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/resize.jpg" width="52.21052631578947%" /></td>
+		<td><img src="examples/assets/resize.jpg" width="52.21052631578947%" /></td>
 	</tr>
 	<tr>
 		<td><pre><a href="examples/tile.py">examples/tile.py</a></pre></td>
-		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/tile.jpg" width="52.21052631578947%" /></td>
+		<td><img src="examples/assets/tile.jpg" width="52.21052631578947%" /></td>
 	</tr>
 </table>
