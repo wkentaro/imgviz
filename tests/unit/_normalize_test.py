@@ -1,4 +1,5 @@
 import numpy as np
+import pytest
 
 import imgviz
 
@@ -30,3 +31,87 @@ def test_normalize_constant_large_float32_is_finite() -> None:
 
     assert result.shape == src.shape
     assert np.isfinite(result).all()
+
+
+def test_normalize_multichannel_per_channel() -> None:
+    src = np.array(
+        [
+            [[0.0, 5.0, -2.0], [10.0, 15.0, 2.0]],
+            [[5.0, 8.0, 0.0], [2.0, 12.0, 1.0]],
+        ],
+        dtype=np.float32,
+    )
+
+    result = imgviz.normalize(src)
+
+    assert result.shape == src.shape
+    for channel in range(src.shape[2]):
+        assert result[:, :, channel].min() == 0.0
+        assert result[:, :, channel].max() == 1.0
+
+
+def test_normalize_multichannel_explicit_minmax() -> None:
+    src = np.array(
+        [[[0.0, 5.0, -2.0], [10.0, 15.0, 2.0]]],
+        dtype=np.float32,
+    )
+
+    # Ranges wider than the data so the explicit override changes the output;
+    # auto min/max would instead map the data to [0, 1].
+    result, min_val, max_val = imgviz.normalize(
+        src,
+        min_value=[-10.0, 0.0, -4.0],
+        max_value=[10.0, 20.0, 4.0],
+        return_minmax=True,
+    )
+
+    assert result.shape == src.shape
+    np.testing.assert_allclose(min_val, [-10.0, 0.0, -4.0])
+    np.testing.assert_allclose(max_val, [10.0, 20.0, 4.0])
+    np.testing.assert_allclose(result[0, 0], [0.5, 0.25, 0.25])
+    np.testing.assert_allclose(result[0, 1], [1.0, 0.75, 0.75])
+
+
+def test_normalize_nan_2d_stays_nan() -> None:
+    src = np.array([[0.0, np.nan], [100.0, 50.0]], dtype=np.float32)
+
+    result = imgviz.normalize(src)
+
+    assert np.isnan(result[0, 1])
+    assert result[0, 0] == 0.0
+    assert result[1, 0] == 1.0
+
+
+def test_normalize_nan_multichannel_marks_whole_pixel() -> None:
+    src = np.zeros((2, 2, 3), dtype=np.float32)
+    src[:] = np.array([1.0, 2.0, 3.0], dtype=np.float32)
+    src[1, 1, 0] = np.nan
+
+    result = imgviz.normalize(src)
+
+    assert np.isnan(result[1, 1]).all()
+    assert np.isfinite(result[0, 0]).all()
+
+
+def test_normalize_rejects_bad_ndim() -> None:
+    src = np.zeros((2, 2, 2, 2), dtype=np.float32)
+    with pytest.raises(ValueError, match="image ndim must be 2 or 3"):
+        imgviz.normalize(src)
+
+
+def test_normalize_rejects_min_value_shape() -> None:
+    src = np.zeros((2, 2, 3), dtype=np.float32)
+    with pytest.raises(ValueError, match=r"min_value\.shape must be"):
+        imgviz.normalize(src, min_value=[0.0, 0.0])
+
+
+def test_normalize_rejects_max_value_shape() -> None:
+    src = np.zeros((2, 2, 3), dtype=np.float32)
+    with pytest.raises(ValueError, match=r"max_value\.shape must be"):
+        imgviz.normalize(src, max_value=[1.0, 1.0])
+
+
+def test_normalize_warns_on_inf() -> None:
+    src = np.array([[0.0, 50.0], [100.0, 25.0]], dtype=np.float32)
+    with pytest.warns(UserWarning, match=r"some of min or max values are inf\."):
+        imgviz.normalize(src, min_value=0.0, max_value=np.inf)
