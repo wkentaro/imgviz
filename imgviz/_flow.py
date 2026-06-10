@@ -60,9 +60,10 @@ def _flow_compute_color(flow_u: NDArray, flow_v: NDArray) -> NDArray[np.uint8]:
 
     fk = (a + 1) / 2 * (ncols - 1) + 1
     k0 = np.floor(fk).astype(np.int32)
+    f = fk - k0
+    k0[k0 == ncols] = 1  # angle +pi wraps to the wheel start, same as -pi
     k1 = k0 + 1
     k1[k1 == ncols] = 1
-    f = fk - k0
 
     for i in range(colorwheel.shape[1]):
         tmp = colorwheel[:, i]
