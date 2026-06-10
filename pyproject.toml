@@ -63,6 +63,10 @@ allow-direct-references = true
 content-type = "text/markdown"
 fragments = [{ path = "README.md" }]
 
+[[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
+pattern = 'src="(?!https?://)([^"]+)"'
+replacement = 'src="https://raw.githubusercontent.com/wkentaro/imgviz/main/\1"'
+
 [tool.hatch.version]
 source = "vcs"
 

@@ -17,10 +17,6 @@ def tabulate(rows: list[list[str]]) -> str:
     return html
 
 
-def _get_github_image_url(relpath: str) -> str:
-    return f"https://github.com/wkentaro/imgviz/raw/main/{relpath}"
-
-
 def main() -> None:
     examples = []
     for py_file in sorted(glob.glob("examples/*.py")):
@@ -33,7 +29,7 @@ def main() -> None:
         examples.append(
             (
                 f'<pre><a href="{py_file}">{py_file}</a></pre>',
-                f'<img src="{_get_github_image_url(relpath=img_file)}" width="{width}%" />',  # NOQA: E501
+                f'<img src="{img_file}" width="{width}%" />',
             )
         )
     examples = tabulate(examples)
@@ -89,7 +85,7 @@ def main() -> None:
 <br/>
 
 <div align="center">
-  <img src="https://github.com/wkentaro/imgviz/raw/main/assets/getting_started.jpg" width="95%">
+  <img src="assets/getting_started.jpg" width="95%">
 </div>
 
 ## Installation
