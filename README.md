@@ -109,6 +109,10 @@ tiled = imgviz.tile(
 		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/draw.jpg" width="37.79047619047619%" /></td>
 	</tr>
 	<tr>
+		<td><pre><a href="examples/flags2rgb.py">examples/flags2rgb.py</a></pre></td>
+		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/flags2rgb.jpg" width="77.93103448275862%" /></td>
+	</tr>
+	<tr>
 		<td><pre><a href="examples/flow2rgb.py">examples/flow2rgb.py</a></pre></td>
 		<td><img src="https://github.com/wkentaro/imgviz/raw/main/examples/assets/flow2rgb.jpg" width="52.21052631578947%" /></td>
 	</tr>
