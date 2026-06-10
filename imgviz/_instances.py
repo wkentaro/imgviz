@@ -116,6 +116,7 @@ def instances2rgb(
 
         if boundary_width > 0:
             try:
+                import skimage.morphology
                 import skimage.segmentation
             except ImportError:
                 raise ImportError(
