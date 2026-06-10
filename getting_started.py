@@ -41,7 +41,7 @@ flags = np.column_stack(
     (masks.sum(axis=(1, 2)) < 7000, centers[:, 1] < rgb.shape[1] / 2)
 )
 flagviz = imgviz.flags2rgb(
-    rgb, flags=flags, centers=centers, flag_names=["small", "left"], wedges="all"
+    gray, flags=flags, centers=centers, flag_names=["small", "left"], wedges="on"
 )
 
 # tile instance masks
