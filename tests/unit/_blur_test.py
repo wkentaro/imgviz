@@ -4,7 +4,11 @@ import pytest
 import imgviz
 
 
-@pytest.mark.parametrize("shape", [(40, 50, 3), (40, 50)])
+@pytest.mark.parametrize(
+    "shape",
+    [(40, 50, 3), (40, 50), (40, 50, 4), (40, 50, 5)],
+    ids=["rgb", "gray", "rgba", "five-channel"],
+)
 def test_blur_whole_image(shape: tuple[int, ...]) -> None:
     rng = np.random.default_rng(seed=0)
     img = rng.integers(0, 256, size=shape).astype(np.uint8)
@@ -31,5 +35,19 @@ def test_blur_within_mask() -> None:
 def test_blur_rejects_non_uint8_image() -> None:
     img = np.zeros((40, 50, 3), dtype=np.uint16)
 
-    with pytest.raises(ValueError, match="image.dtype must be uint8"):
+    with pytest.raises(ValueError, match=r"image\.dtype must be uint8"):
+        imgviz.blur(img, sigma=4.0)
+
+
+def test_blur_rejects_negative_sigma() -> None:
+    img = np.zeros((40, 50, 3), dtype=np.uint8)
+
+    with pytest.raises(ValueError, match="sigma must be >= 0"):
+        imgviz.blur(img, sigma=-1.0)
+
+
+def test_blur_rejects_invalid_ndim() -> None:
+    img = np.zeros((40, 50, 3, 2), dtype=np.uint8)
+
+    with pytest.raises(ValueError, match=r"image\.ndim must be 2 or 3"):
         imgviz.blur(img, sigma=4.0)
