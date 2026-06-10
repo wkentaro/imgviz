@@ -1,3 +1,5 @@
+from ._arrow import arrow
+from ._arrow import arrow_
 from ._box_corners import box_corners
 from ._box_corners import box_corners_
 from ._circle import circle
