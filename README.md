@@ -164,6 +164,10 @@ tiled = imgviz.tile(
 		<td><img src="examples/assets/pie.jpg" width="20.0%" /></td>
 	</tr>
 	<tr>
+		<td><pre><a href="examples/progress_bar.py">examples/progress_bar.py</a></pre></td>
+		<td><img src="examples/assets/progress_bar.jpg" width="20.0%" /></td>
+	</tr>
+	<tr>
 		<td><pre><a href="examples/resize.py">examples/resize.py</a></pre></td>
 		<td><img src="examples/assets/resize.jpg" width="52.21052631578947%" /></td>
 	</tr>
