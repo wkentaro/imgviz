@@ -167,4 +167,8 @@ tiled = imgviz.tile(
 		<td><pre><a href="examples/tile.py">examples/tile.py</a></pre></td>
 		<td><img src="examples/assets/tile.jpg" width="52.21052631578947%" /></td>
 	</tr>
+	<tr>
+		<td><pre><a href="examples/tint.py">examples/tint.py</a></pre></td>
+		<td><img src="examples/assets/tint.jpg" width="97.25490196078431%" /></td>
+	</tr>
 </table>
