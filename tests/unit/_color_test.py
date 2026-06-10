@@ -32,6 +32,28 @@ def test_asrgb(images: dict[str, NDArray[np.uint8]]) -> None:
         assert result.shape[2] == 3
 
 
+def test_asrgb_copy_does_not_alias_rgba_input(
+    images: dict[str, NDArray[np.uint8]],
+) -> None:
+    rgba = images["rgba"]
+    original = rgba[:, :, :3].copy()
+
+    rgb = imgviz.asrgb(rgba, copy=True)
+    rgb[:] = 0
+
+    np.testing.assert_array_equal(rgba[:, :, :3], original)
+
+
+def test_asrgb_no_copy_returns_view_for_rgba_input(
+    images: dict[str, NDArray[np.uint8]],
+) -> None:
+    rgba = images["rgba"]
+
+    rgb = imgviz.asrgb(rgba)
+
+    assert np.shares_memory(rgb, rgba)
+
+
 def test_asrgba(images: dict[str, NDArray[np.uint8]]) -> None:
     for img in images.values():
         result = imgviz.asrgba(img)
