@@ -54,8 +54,8 @@ insviz = imgviz.resize(insviz, height=rgb.shape[0])
 # tile visualization
 tiled = imgviz.tile(
     [rgb, depthviz, labelviz, maskviz, flagviz, insviz],
-    row=1,
-    col=6,
+    row=2,
+    col=3,
     border=(255, 255, 255),
     border_width=5,
 )
