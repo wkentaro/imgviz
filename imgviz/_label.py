@@ -8,6 +8,7 @@ from numpy.typing import NDArray
 
 from . import _color
 from . import _utils
+from . import components
 from . import draw as draw_module
 
 
@@ -146,60 +147,12 @@ def label2rgb(
                 size=font_size,
                 font_path=font_path,
             )
-    elif loc in ["rb", "lt", "rt", "lb"]:
-        text_sizes = np.array(
-            [
-                draw_module.text_size(
-                    label_names[label_id], font_size, font_path=font_path
-                )
-                for label_id in unique_labels
-            ]
-        )
-        text_height, text_width = text_sizes.max(axis=0)
-        pad: int = max(2, font_size // 6)
-        legend_height = text_height * len(unique_labels) + pad
-        legend_width = text_width + text_height + 2 * pad
+        return _utils.pillow_to_numpy(res)
 
-        height, width = label.shape[:2]
-        if loc == "rb":
-            yx2 = np.array([height - pad, width - pad], dtype=float)
-            yx1 = yx2 - (legend_height, legend_width)
-        elif loc == "lt":
-            yx1 = np.array([pad, pad], dtype=float)
-            yx2 = yx1 + (legend_height, legend_width)
-        elif loc == "rt":
-            yx1 = np.array([pad, width - pad - legend_width], dtype=float)
-            yx2 = yx1 + (legend_height, legend_width)
-        elif loc == "lb":
-            yx2 = np.array([height - pad, pad + legend_width], dtype=float)
-            yx1 = yx2 - (legend_height, legend_width)
-        else:
-            raise ValueError(f"unsupported loc: {loc}")
-
-        alpha = 0.5
-        y1, x1 = yx1.round().astype(int)
-        y2, x2 = yx2.round().astype(int)
-        res[y1:y2, x1:x2] = alpha * res[y1:y2, x1:x2] + alpha * 255
-
-        box_size = text_height - 2 * pad
-        res = _utils.numpy_to_pillow(res)
-        for i, label_id in enumerate(unique_labels):
-            box_yx1 = yx1 + (i * text_height + pad, pad)
-            box_yx2 = box_yx1 + (box_size, box_size)
-            draw_module.rectangle_(
-                res, yx1=box_yx1, yx2=box_yx2, fill=colormap[label_id]
-            )
-            draw_module.text_(
-                res,
-                yx=yx1 + (i * text_height, text_height),
-                text=label_names[label_id],
-                size=font_size,
-                font_path=font_path,
-            )
-    else:
-        raise ValueError(f"unsupported loc: {loc}")
-
-    return _utils.pillow_to_numpy(res)
+    items = [(label_names[label_id], colormap[label_id]) for label_id in unique_labels]
+    return components.legend(
+        res, items=items, font_size=font_size, font_path=font_path, loc=loc
+    )
 
 
 def _center_of_mass(mask: NDArray[np.bool_]) -> tuple[float, float]:
