@@ -1,3 +1,5 @@
+from collections.abc import Callable
+
 import numpy as np
 import pytest
 from numpy.typing import NDArray
@@ -85,3 +87,49 @@ def test_get_fg_color() -> None:
     assert get_fg_color((0, 0, 0)) == (255, 255, 255)
     # Light background -> black foreground
     assert get_fg_color((255, 255, 255)) == (0, 0, 0)
+
+
+@pytest.mark.parametrize("convert", [imgviz.rgb2gray, imgviz.rgb2rgba])
+@pytest.mark.parametrize(
+    ("image", "match"),
+    [
+        (np.zeros((4, 4), dtype=np.uint8), "rgb must be 3 dimensional"),
+        (np.zeros((4, 4, 4), dtype=np.uint8), r"rgb shape must be \(H, W, 3\)"),
+        (np.zeros((4, 4, 3), dtype=np.float32), r"rgb dtype must be np\.uint8"),
+    ],
+    ids=["non-3d", "wrong-channels", "non-uint8"],
+)
+def test_rgb_converter_rejects_invalid(
+    convert: Callable[[NDArray], NDArray[np.uint8]], image: NDArray, match: str
+) -> None:
+    with pytest.raises(ValueError, match=match):
+        convert(image)
+
+
+@pytest.mark.parametrize(
+    ("image", "match"),
+    [
+        (np.zeros((4, 4, 3), dtype=np.uint8), "gray must be 2 dimensional"),
+        (np.zeros((4, 4), dtype=np.float32), r"gray dtype must be np\.uint8"),
+    ],
+    ids=["non-2d", "non-uint8"],
+)
+def test_gray2rgb_rejects_invalid(image: NDArray, match: str) -> None:
+    with pytest.raises(ValueError, match=match):
+        imgviz.gray2rgb(image)
+
+
+@pytest.mark.parametrize(
+    ("convert", "match"),
+    [
+        (imgviz.asgray, "unsupported image format to convert to gray"),
+        (imgviz.asrgb, r"unsupported image format to convert to rgb\b"),
+        (imgviz.asrgba, "unsupported image format to convert to rgba"),
+    ],
+    ids=["asgray", "asrgb", "asrgba"],
+)
+def test_as_converter_rejects_unsupported_shape(
+    convert: Callable[[NDArray], NDArray[np.uint8]], match: str
+) -> None:
+    with pytest.raises(ValueError, match=match):
+        convert(np.zeros((4, 4, 2), dtype=np.uint8))
