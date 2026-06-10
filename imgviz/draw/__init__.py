@@ -11,6 +11,8 @@ from ._polygon import polygon
 from ._polygon import polygon_
 from ._rectangle import rectangle
 from ._rectangle import rectangle_
+from ._rounded_rectangle import rounded_rectangle
+from ._rounded_rectangle import rounded_rectangle_
 from ._star import star
 from ._star import star_
 from ._text import text
