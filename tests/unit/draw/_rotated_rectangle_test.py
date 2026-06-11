@@ -91,6 +91,22 @@ def test_rotated_rectangle_outline_only(black_image: NDArray[np.uint8]) -> None:
     np.testing.assert_array_equal(res[50, 50], [0, 0, 0])
 
 
+def test_rotated_rectangle_fill_and_outline(black_image: NDArray[np.uint8]) -> None:
+    res = imgviz.draw.rotated_rectangle(
+        black_image,
+        center=(50, 50),
+        size=(40, 20),
+        angle=30,
+        fill=(0, 0, 255),
+        outline=(255, 0, 0),
+        width=3,
+    )
+
+    np.testing.assert_array_equal(res[50, 50], [0, 0, 255])
+    colors = res[res.any(axis=2)].reshape(-1, 3)
+    assert (colors == [255, 0, 0]).all(axis=1).any()
+
+
 def test_rotated_rectangle_preserves_area_under_rotation(
     black_image: NDArray[np.uint8],
 ) -> None:
