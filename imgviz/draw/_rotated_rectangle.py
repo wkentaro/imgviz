@@ -10,8 +10,8 @@ from ._polygon import polygon_
 
 def rotated_rectangle(
     image: NDArray[np.uint8],
-    center: tuple[float, float],
-    size: tuple[float, float],
+    center: tuple[float, float] | NDArray[np.floating],
+    size: tuple[float, float] | NDArray[np.floating],
     angle: float,
     fill: Ink | None = None,
     outline: Ink | None = None,
@@ -47,8 +47,8 @@ def rotated_rectangle(
 
 def rotated_rectangle_(
     image: PIL.Image.Image,
-    center: tuple[float, float],
-    size: tuple[float, float],
+    center: tuple[float, float] | NDArray[np.floating],
+    size: tuple[float, float] | NDArray[np.floating],
     angle: float,
     fill: Ink | None = None,
     outline: Ink | None = None,
