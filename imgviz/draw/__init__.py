@@ -1,3 +1,5 @@
+from ._arrow import arrow
+from ._arrow import arrow_
 from ._circle import circle
 from ._circle import circle_
 from ._ellipse import ellipse
