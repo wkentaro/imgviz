@@ -8,6 +8,7 @@ from .. import _utils
 from ._ink import Ink
 from ._ink import get_pil_ink
 from ._ink import require_fill_or_outline
+from ._ink import require_pil_image
 
 
 def polygon(
@@ -52,10 +53,7 @@ def polygon_(
         outline: RGB color to draw the outline. None for no outline.
         width: Outline width.
     """
-    if not isinstance(image, PIL.Image.Image):
-        raise TypeError(
-            f"image must be PIL.Image.Image, but got {type(image).__name__}"
-        )
+    require_pil_image(image)
     require_fill_or_outline(fill, outline)
     yx = np.asarray(yx)
     if yx.ndim != 2:
