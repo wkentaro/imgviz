@@ -164,6 +164,10 @@ tiled = imgviz.tile(
 		<td><img src="examples/assets/rounded_rectangle.jpg" width="20.0%" /></td>
 	</tr>
 	<tr>
+		<td><pre><a href="examples/scalebar.py">examples/scalebar.py</a></pre></td>
+		<td><img src="examples/assets/scalebar.jpg" width="26.65764546684709%" /></td>
+	</tr>
+	<tr>
 		<td><pre><a href="examples/tile.py">examples/tile.py</a></pre></td>
 		<td><img src="examples/assets/tile.jpg" width="52.21052631578947%" /></td>
 	</tr>
