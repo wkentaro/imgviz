@@ -108,6 +108,10 @@ tiled = imgviz.tile(
 		<td><img src="examples/assets/blur_pixelate.jpg" width="76.01532567049807%" /></td>
 	</tr>
 	<tr>
+		<td><pre><a href="examples/colorblind.py">examples/colorblind.py</a></pre></td>
+		<td><img src="examples/assets/colorblind.jpg" width="25.326504481434057%" /></td>
+	</tr>
+	<tr>
 		<td><pre><a href="examples/colorize.py">examples/colorize.py</a></pre></td>
 		<td><img src="examples/assets/colorize.jpg" width="76.01532567049807%" /></td>
 	</tr>

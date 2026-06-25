@@ -18,6 +18,7 @@ from ._color import rgb2gray
 from ._color import rgb2hsv
 from ._color import rgb2rgba
 from ._color import rgba2rgb
+from ._colorblind import colorblind
 from ._colorize import Colorize
 from ._colorize import colorize
 from ._depth import Depth2Rgb
