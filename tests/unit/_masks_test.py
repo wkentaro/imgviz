@@ -72,6 +72,16 @@ def test_mask2rgb_does_not_mutate_rgba_image() -> None:
     np.testing.assert_array_equal(image, original)
 
 
+def test_mask2rgb_rejects_non_2d() -> None:
+    with pytest.raises(ValueError, match="mask.ndim must be 2"):
+        imgviz.mask2rgb(mask=np.zeros((2, 2, 1), dtype=bool))
+
+
+def test_mask2rgb_rejects_non_bool() -> None:
+    with pytest.raises(ValueError, match="mask.dtype must be bool"):
+        imgviz.mask2rgb(mask=np.zeros((2, 2), dtype=np.uint8))
+
+
 def test_stripe_validation() -> None:
     with pytest.raises(ValueError, match="width must be positive"):
         imgviz.fill.Stripe(color=_COLOR_RED, width=0)
