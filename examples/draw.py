@@ -89,6 +89,16 @@ def draw() -> None:
         else:
             raise ValueError(f"unsupported shape: {shape}")
 
+    # arrow pointing at the face
+    viz = imgviz.draw.arrow(
+        viz,
+        yx1=(110, 450),
+        yx2=(195, 385),
+        fill=(0, 255, 255),
+        width=5,
+        head_length_ratio=0.25,
+    )
+
     img = imgviz.draw.text_in_rectangle(
         img,
         loc="lt+",
