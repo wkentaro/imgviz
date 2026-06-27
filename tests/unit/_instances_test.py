@@ -27,6 +27,13 @@ def test_masks_to_bboxes() -> None:
     assert ((0 <= xmax) & (xmax <= width - 1)).all()
 
 
+def test_masks_to_bboxes_leaves_empty_mask_as_zeros() -> None:
+    masks = [np.zeros((10, 10), dtype=bool)]
+    bboxes = masks_to_bboxes(masks)
+
+    np.testing.assert_array_equal(bboxes, np.zeros((1, 4)))
+
+
 @pytest.fixture
 def image() -> NDArray[np.uint8]:
     return np.full((50, 50, 3), 30, dtype=np.uint8)
@@ -132,3 +139,34 @@ def test_instances2rgb_rejects_non_uint8(
 def test_instances2rgb_rejects_non_array(bbox: list[float]) -> None:
     with pytest.raises(TypeError, match="image must be a numpy array"):
         imgviz.instances2rgb(image=[[1]], labels=[1], bboxes=[bbox])  # type: ignore[arg-type]
+
+
+def test_instances2rgb_accepts_grayscale_image(bbox: list[float]) -> None:
+    gray = np.full((50, 50), 30, dtype=np.uint8)
+
+    out = imgviz.instances2rgb(image=gray, labels=[1], bboxes=[bbox])
+
+    assert out.shape == (50, 50, 3)
+    assert out.dtype == np.uint8
+    np.testing.assert_array_equal(out[0, 0], np.full(3, gray[0, 0]))
+
+
+def test_instances2rgb_rejects_4d_image(bbox: list[float]) -> None:
+    image = np.full((50, 50, 3, 1), 30, dtype=np.uint8)
+    with pytest.raises(ValueError, match="image must be 2 or 3 dimensional"):
+        imgviz.instances2rgb(image=image, labels=[1], bboxes=[bbox])
+
+
+def test_instances2rgb_skips_empty_mask(image: NDArray[np.uint8]) -> None:
+    empty_mask = np.zeros((50, 50), dtype=bool)
+
+    out = imgviz.instances2rgb(image=image, labels=[1], masks=[empty_mask])
+
+    np.testing.assert_array_equal(out, image)
+
+
+def test_instances2rgb_skips_zero_area_bbox(image: NDArray[np.uint8]) -> None:
+    zero_area_bbox = [10.0, 10.0, 10.0, 10.0]
+    out = imgviz.instances2rgb(image=image, labels=[1], bboxes=[zero_area_bbox])
+
+    np.testing.assert_array_equal(out, image)
