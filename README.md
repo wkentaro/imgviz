@@ -132,6 +132,10 @@ tiled = imgviz.tile(
 		<td><img src="examples/assets/flow2rgb.jpg" width="52.21052631578947%" /></td>
 	</tr>
 	<tr>
+		<td><pre><a href="examples/heatmap.py">examples/heatmap.py</a></pre></td>
+		<td><img src="examples/assets/heatmap.jpg" width="40.24340770791075%" /></td>
+	</tr>
+	<tr>
 		<td><pre><a href="examples/instances2rgb.py">examples/instances2rgb.py</a></pre></td>
 		<td><img src="examples/assets/instances2rgb.jpg" width="76.39846743295018%" /></td>
 	</tr>
