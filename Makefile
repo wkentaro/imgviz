@@ -32,18 +32,18 @@ setup:  # Setup dev env
 format:  # Format code
 	$(call exec,$(UV_RUN) ruff format)
 	$(call exec,$(UV_RUN) ruff check --fix)
-	$(call exec,$(UV_RUN) taplo fmt $(shell git ls-files "*.toml"))
-	$(call exec,$(UV_RUN) mdformat $(shell git ls-files "*.md"))
-	$(call exec,$(UV_RUN) yamlfix $(shell git ls-files "*.yml" "*.yaml"))
+	$(call exec,git ls-files "*.toml" | xargs $(UV_RUN) taplo fmt)
+	$(call exec,git ls-files "*.md" | xargs $(UV_RUN) mdformat)
+	$(call exec,git ls-files "*.yml" "*.yaml" | xargs $(UV_RUN) yamlfix)
 	$(call exec,$(UV_RUN) typos --write-changes)
 
 lint:  # Check code
 	$(call exec,$(UV_RUN) ruff format --check)
 	$(call exec,$(UV_RUN) ruff check)
 	$(call exec,$(UV_RUN) ty check --no-progress)
-	$(call exec,$(UV_RUN) taplo fmt --check $(shell git ls-files "*.toml"))
-	$(call exec,$(UV_RUN) mdformat --check $(shell git ls-files "*.md"))
-	$(call exec,$(UV_RUN) yamlfix --check $(shell git ls-files "*.yml" "*.yaml"))
+	$(call exec,git ls-files "*.toml" | xargs $(UV_RUN) taplo fmt --check)
+	$(call exec,git ls-files "*.md" | xargs $(UV_RUN) mdformat --check)
+	$(call exec,git ls-files "*.yml" "*.yaml" | xargs $(UV_RUN) yamlfix --check)
 	$(call exec,$(UV_RUN) typos)
 
 test:
