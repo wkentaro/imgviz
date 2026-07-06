@@ -16,6 +16,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `draw.rotated_rectangle` primitive ([#184](https://github.com/wkentaro/imgviz/pull/184))
 - Added `draw.rounded_rectangle` primitive ([#176](https://github.com/wkentaro/imgviz/pull/176))
 
+### Fixed
+
+- Fixed `letterbox` returning the input array itself when the image already matches the target size, so mutating the result no longer corrupts the input ([#219](https://github.com/wkentaro/imgviz/pull/219))
+
 ## [2.1.0] - 2026-06-10
 
 ### Added

@@ -56,7 +56,8 @@ def letterbox(
         loc: Where to place the resized image inside the canvas.
 
     Returns:
-        Letterboxed image, or tuple of (image, mask) if return_mask is True.
+        A new letterboxed image (never a view of ``image``), or tuple of
+        (image, mask) if return_mask is True.
     """
     if image.ndim == 3:
         shape: tuple[int, ...] = (height, width, image.shape[2])
@@ -65,9 +66,9 @@ def letterbox(
 
     if image.shape[:2] == shape[:2]:
         if return_mask:
-            return image, np.ones(shape[:2], dtype=bool)
+            return image.copy(), np.ones(shape[:2], dtype=bool)
         else:
-            return image
+            return image.copy()
 
     image_h, image_w = image.shape[:2]
     scale = min(1.0 * height / image_h, 1.0 * width / image_w)
