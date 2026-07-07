@@ -101,6 +101,28 @@ def test_letterbox_identity_when_shape_matches() -> None:
     np.testing.assert_array_equal(dst, img)
 
 
+def test_letterbox_returns_copy_when_shape_matches() -> None:
+    img = np.random.uniform(0, 255, size=(20, 20, 3)).round().astype(np.uint8)
+    original = img.copy()
+
+    dst = imgviz.letterbox(img, height=20, width=20)
+    assert not np.shares_memory(dst, img)
+    dst[...] = 0
+    np.testing.assert_array_equal(img, original)
+
+
+def test_letterbox_returns_copy_when_shape_matches_with_mask() -> None:
+    img = np.random.uniform(0, 255, size=(20, 20, 3)).round().astype(np.uint8)
+    original = img.copy()
+
+    dst, mask = imgviz.letterbox(img, height=20, width=20, return_mask=True)
+    assert not np.shares_memory(dst, img)
+    dst[...] = 0
+    np.testing.assert_array_equal(img, original)
+    assert mask.shape == (20, 20)
+    assert mask.all()
+
+
 _Loc: TypeAlias = Literal["center", "lt", "rt", "lb", "rb"]
 
 
