@@ -8,6 +8,7 @@ import PIL.Image
 from numpy.typing import NDArray
 
 from .. import _color
+from .. import _pad
 from .. import _utils
 from ._rectangle import rectangle_
 from ._text import text_
@@ -128,29 +129,14 @@ def text_in_rectangle(
     dst = image
 
     if not keep_size:
-        constant_values = (
-            (background[0],),
-            (background[1],),
-            (background[2],),
-        )
         if y1 < 0:
             pad = -y1
-            dst = np.pad(
-                dst,
-                ((pad, 0), (0, 0), (0, 0)),
-                mode="constant",
-                constant_values=constant_values,
-            )
+            dst = _pad.pad(image=dst, top=pad, color=background)
             y1 += pad
             y2 += pad
         if y2 > height:
             pad = y2 - height
-            dst = np.pad(
-                dst,
-                ((0, pad), (0, 0), (0, 0)),
-                mode="constant",
-                constant_values=constant_values,
-            )
+            dst = _pad.pad(image=dst, bottom=pad, color=background)
 
     dst = _utils.numpy_to_pillow(dst)
     rectangle_(
