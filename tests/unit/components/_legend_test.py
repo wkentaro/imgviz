@@ -22,6 +22,19 @@ def test_legend_preserves_shape_and_dtype(white_image: NDArray[np.uint8]) -> Non
     assert not np.array_equal(res, white_image)
 
 
+def test_legend_wash_rounds_to_nearest() -> None:
+    image = np.full((80, 120, 3), 200, dtype=np.uint8)
+    res = imgviz.components.legend(
+        image,
+        items=[("a", (255, 0, 0)), ("bb", (0, 255, 0))],
+        loc="lt",
+    )
+    # wash blends the region toward white at alpha=0.5:
+    # 0.5 * 200 + 0.5 * 255 = 227.5, which must round to the nearest integer
+    # (228), not truncate down to 227.
+    assert res[5, 5].tolist() == [228, 228, 228]
+
+
 def test_legend_empty_items_is_noop(white_image: NDArray[np.uint8]) -> None:
     res = imgviz.components.legend(white_image, items=[])
     assert np.array_equal(res, white_image)
