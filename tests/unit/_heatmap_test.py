@@ -18,6 +18,23 @@ def test_heatmap_empty_is_zero() -> None:
     np.testing.assert_array_equal(res, np.zeros((100, 100)))
 
 
+def test_heatmap_skips_point_whose_window_is_outside_image() -> None:
+    inside = imgviz.heatmap([(50, 50)], shape=(100, 100), sigma=10)
+    with_outside = imgviz.heatmap([(50, 50), (-40, 50)], shape=(100, 100), sigma=10)
+    np.testing.assert_array_equal(with_outside, inside)
+
+
+def test_heatmap_all_points_outside_image_is_zero() -> None:
+    res = imgviz.heatmap([(-40, 50), (50, -40)], shape=(100, 100), sigma=10)
+    np.testing.assert_array_equal(res, np.zeros((100, 100)))
+
+
+def test_heatmap_clips_window_at_image_edge() -> None:
+    res = imgviz.heatmap([(5, 50)], shape=(100, 100), sigma=10)
+    assert res[5, 50] == pytest.approx(1.0)  # peak survives the top clip
+    assert res[0, 50] == pytest.approx(np.exp(-(5**2) / (2 * 10**2)))
+
+
 def test_heatmap_peak_equals_weight_and_falls_off() -> None:
     res = imgviz.heatmap([(50, 50)], shape=(100, 100), sigma=10)
     assert res[50, 50] == pytest.approx(1.0)
