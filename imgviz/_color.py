@@ -77,6 +77,13 @@ def rgb2hsv(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:
     Returns:
         HSV image with shape (H, W, 3).
     """
+    if rgb.ndim != 3:
+        raise ValueError(f"rgb must be 3 dimensional, but got {rgb.ndim}")
+    if rgb.shape[2] != 3:
+        raise ValueError(f"rgb shape must be (H, W, 3), but got {rgb.shape}")
+    if rgb.dtype != np.uint8:
+        raise ValueError(f"rgb dtype must be np.uint8, but got {rgb.dtype}")
+
     hsv = _utils.numpy_to_pillow(rgb, mode="RGB")
     hsv = hsv.convert("HSV")
     hsv = _utils.pillow_to_numpy(hsv)
@@ -92,6 +99,13 @@ def hsv2rgb(hsv: NDArray[np.uint8]) -> NDArray[np.uint8]:
     Returns:
         RGB image with shape (H, W, 3).
     """
+    if hsv.ndim != 3:
+        raise ValueError(f"hsv must be 3 dimensional, but got {hsv.ndim}")
+    if hsv.shape[2] != 3:
+        raise ValueError(f"hsv shape must be (H, W, 3), but got {hsv.shape}")
+    if hsv.dtype != np.uint8:
+        raise ValueError(f"hsv dtype must be np.uint8, but got {hsv.dtype}")
+
     rgb = _utils.numpy_to_pillow(hsv, mode="HSV")
     rgb = rgb.convert("RGB")
     rgb = _utils.pillow_to_numpy(rgb)

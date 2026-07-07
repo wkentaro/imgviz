@@ -89,7 +89,7 @@ def test_get_fg_color() -> None:
     assert get_fg_color((255, 255, 255)) == (0, 0, 0)
 
 
-@pytest.mark.parametrize("convert", [imgviz.rgb2gray, imgviz.rgb2rgba])
+@pytest.mark.parametrize("convert", [imgviz.rgb2gray, imgviz.rgb2rgba, imgviz.rgb2hsv])
 @pytest.mark.parametrize(
     ("image", "match"),
     [
@@ -117,6 +117,20 @@ def test_rgb_converter_rejects_invalid(
 def test_gray2rgb_rejects_invalid(image: NDArray, match: str) -> None:
     with pytest.raises(ValueError, match=match):
         imgviz.gray2rgb(image)
+
+
+@pytest.mark.parametrize(
+    ("image", "match"),
+    [
+        (np.zeros((4, 4), dtype=np.uint8), "hsv must be 3 dimensional"),
+        (np.zeros((4, 4, 4), dtype=np.uint8), r"hsv shape must be \(H, W, 3\)"),
+        (np.zeros((4, 4, 3), dtype=np.float32), r"hsv dtype must be np\.uint8"),
+    ],
+    ids=["non-3d", "wrong-channels", "non-uint8"],
+)
+def test_hsv2rgb_rejects_invalid(image: NDArray, match: str) -> None:
+    with pytest.raises(ValueError, match=match):
+        imgviz.hsv2rgb(image)
 
 
 @pytest.mark.parametrize(
