@@ -39,7 +39,7 @@ def flags2rgb(
     entry. Around 5 wedges stay legible at the default diameter.
 
     Args:
-        image: RGB image with shape (H, W, 3).
+        image: Image with shape (H, W) or (H, W, 3).
         flags: Boolean flags with shape (N, F).
         centers: Pie centers with shape (N, 2). [(cy, cx), ...]
         flag_names: Flag names with length F.
