@@ -112,7 +112,7 @@ class Stripe(Fill):
         stripe_mask[ys[stripe_on], xs[stripe_on]] = True
         return _blend(
             image=image,
-            mask=mask & stripe_mask,
+            mask=stripe_mask,
             color=self.color,
             alpha=alpha,
             copy=copy,
