@@ -70,6 +70,22 @@ def test_text_in_rectangle_grows_canvas_for_overflowing_loc(
     assert (res == [255, 0, 0]).all(axis=-1).any()
 
 
+@pytest.mark.parametrize(("loc", "corner"), [("lt+", 0), ("lb-", -1)])
+def test_text_in_rectangle_pads_with_full_background_color(
+    small_image: NDArray[np.uint8], loc: Literal["lt+", "lb-"], corner: int
+) -> None:
+    background = (200, 50, 10)
+
+    res = imgviz.draw.text_in_rectangle(
+        small_image, loc=loc, text="Hi", size=10, background=background
+    )
+
+    # the grown row lies outside the narrow left-aligned rectangle at its right
+    # edge, so it must carry the full background triplet, not background[0]
+    # replicated across every channel.
+    np.testing.assert_array_equal(res[corner, -1], background)
+
+
 def test_text_in_rectangle_keep_size_preserves_shape(
     small_image: NDArray[np.uint8],
 ) -> None:
