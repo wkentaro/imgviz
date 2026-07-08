@@ -97,7 +97,7 @@ def legend_(
     y1, x1 = yx1.round().astype(int)
     y2, x2 = yx2.round().astype(int)
     region = np.asarray(image)[y1:y2, x1:x2]
-    washed = (alpha * region + alpha * 255).astype(np.uint8)
+    washed = (alpha * region + alpha * 255).round().astype(np.uint8)
     image.paste(_utils.numpy_to_pillow(washed), (int(x1), int(y1)))
 
     box_size = text_height - 2 * pad
