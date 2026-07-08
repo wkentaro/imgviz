@@ -123,3 +123,16 @@ def test_text_in_rectangle_draws_in_place() -> None:
     )
 
     assert not np.array_equal(np.array(image), before)
+
+
+def test_text_in_rectangle_rejects_unsupported_loc(
+    small_image: NDArray[np.uint8],
+) -> None:
+    with pytest.raises(ValueError, match="unsupported loc"):
+        imgviz.draw.text_in_rectangle(
+            small_image,
+            loc="bogus",  # type: ignore[arg-type]
+            text="Hi",
+            size=10,
+            background=(0, 0, 0),
+        )

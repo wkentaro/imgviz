@@ -62,3 +62,12 @@ def test_legend_loc_places_in_corner(
     non_white = ~(res == 255).all(axis=2)
     assert non_white.any()
     assert non_white.sum() == non_white[corner].sum()
+
+
+def test_legend_rejects_unsupported_loc(white_image: NDArray[np.uint8]) -> None:
+    with pytest.raises(ValueError, match="unsupported loc"):
+        imgviz.components.legend(
+            white_image,
+            items=[("cat", (255, 0, 0))],
+            loc="bogus",  # type: ignore[arg-type]
+        )
