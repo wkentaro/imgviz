@@ -7,6 +7,7 @@ from numpy.typing import NDArray
 from .. import _utils
 from ._ink import Ink
 from ._ink import get_pil_ink
+from ._ink import require_pil_image
 
 
 def line(
@@ -45,10 +46,7 @@ def line_(
         fill: RGB color to draw the line.
         width: Line width.
     """
-    if not isinstance(image, PIL.Image.Image):
-        raise TypeError(
-            f"image must be PIL.Image.Image, but got {type(image).__name__}"
-        )
+    require_pil_image(image=image)
     yx = np.asarray(yx)
     if yx.ndim != 2:
         raise ValueError(f"yx must be 2D array, but got {yx.ndim}D")
