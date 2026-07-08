@@ -16,6 +16,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `draw.rotated_rectangle` primitive ([#184](https://github.com/wkentaro/imgviz/pull/184))
 - Added `draw.rounded_rectangle` primitive ([#176](https://github.com/wkentaro/imgviz/pull/176))
 
+### Changed
+
+- Changed `rgb2hsv` and `hsv2rgb` to validate input shape and dtype and raise a clear `ValueError`, matching the other color converters, instead of surfacing a confusing error from Pillow ([#222](https://github.com/wkentaro/imgviz/pull/222))
+
 ### Fixed
 
 - Fixed `letterbox` returning the input array itself when the image already matches the target size, so mutating the result no longer corrupts the input ([#219](https://github.com/wkentaro/imgviz/pull/219))
