@@ -25,6 +25,8 @@ def flags2rgb(
     font_size: int = 25,
     font_path: str | None = None,
     loc: Literal["lt", "rt", "lb", "rb"] = "rb",
+    outline: draw_module.Ink | None = (255, 255, 255),
+    outline_width: int = 1,
 ) -> NDArray[np.uint8]:
     """Visualize per-instance boolean flags as pie glyphs with a legend.
 
@@ -48,6 +50,8 @@ def flags2rgb(
         font_size: Font size of the legend.
         font_path: Font path.
         loc: Location of legend ('lt', 'rt', 'lb', 'rb').
+        outline: Color for the pie and wedge edges. None for no outline.
+        outline_width: Width of the pie outline in pixels.
 
     Returns:
         Visualized image with shape (H, W, 3).
@@ -111,8 +115,8 @@ def flags2rgb(
             center=(cy, cx),
             diameter=diameter,
             fills=fills,
-            outline=(255, 255, 255),
-            width=1,
+            outline=outline,
+            width=outline_width,
         )
 
     items: list[components.LegendItem] = list(zip(flag_names, flag_colors))
