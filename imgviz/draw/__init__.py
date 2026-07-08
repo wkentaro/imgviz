@@ -13,6 +13,8 @@ from ._pie import pie
 from ._pie import pie_
 from ._polygon import polygon
 from ._polygon import polygon_
+from ._progress_bar import progress_bar
+from ._progress_bar import progress_bar_
 from ._rectangle import rectangle
 from ._rectangle import rectangle_
 from ._rotated_rectangle import rotated_rectangle

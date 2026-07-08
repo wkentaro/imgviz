@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added `outline` and `outline_width` parameters to `flags2rgb` to override the pie glyph outline color and width ([#229](https://github.com/wkentaro/imgviz/pull/229))
+- Added `draw.progress_bar` primitive for a horizontal progress bar overlay ([#209](https://github.com/wkentaro/imgviz/pull/209))
 - Added `tint` for a whole-image color wash ([#204](https://github.com/wkentaro/imgviz/pull/204))
 - Added `heatmap` for visualizing a list of points as a heatmap ([#202](https://github.com/wkentaro/imgviz/pull/202))
 - Added `colorblind` for simulating color-vision deficiency ([#199](https://github.com/wkentaro/imgviz/pull/199))
