@@ -205,3 +205,9 @@ def test_letterbox_loc_landscape(loc: _Loc, show: bool) -> None:
             assert (dst[-size_diff:, :] != 0).all()
         case _:
             raise ValueError(f"unknown loc: {loc}")
+
+
+def test_letterbox_rejects_unsupported_loc() -> None:
+    img = np.zeros((10, 20, 3), dtype=np.uint8)
+    with pytest.raises(ValueError, match="unsupported loc"):
+        imgviz.letterbox(img, height=20, width=20, loc="bogus")  # type: ignore[arg-type]
