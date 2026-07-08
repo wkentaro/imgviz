@@ -127,6 +127,44 @@ def test_flags2rgb_custom_flag_colors(black_image: NDArray[np.uint8]) -> None:
     assert np.array_equal(res[100, 100], (255, 255, 0))
 
 
+def test_flags2rgb_outline_defaults_to_white(black_image: NDArray[np.uint8]) -> None:
+    res = imgviz.flags2rgb(
+        black_image,
+        flags=np.array([[True]]),
+        centers=np.array([[100.0, 100.0]]),
+        flag_names=["broken"],
+    )
+    disc = res[85:115, 85:115]
+    assert (disc == (255, 255, 255)).all(axis=2).any()
+
+
+def test_flags2rgb_custom_outline_color(black_image: NDArray[np.uint8]) -> None:
+    flags = np.array([[True]])
+    centers = np.array([[100.0, 100.0]])
+    flag_names = ["broken"]
+    white = imgviz.flags2rgb(
+        black_image,
+        flags=flags,
+        centers=centers,
+        flag_names=flag_names,
+        outline=(255, 255, 255),
+        outline_width=3,
+    )
+    black = imgviz.flags2rgb(
+        black_image,
+        flags=flags,
+        centers=centers,
+        flag_names=flag_names,
+        outline=(0, 0, 0),
+        outline_width=3,
+    )
+
+    assert not np.array_equal(white, black)
+    disc = slice(85, 115)
+    assert (white[disc, disc] == (255, 255, 255)).all(axis=2).any()
+    assert not (black[disc, disc] == (255, 255, 255)).all(axis=2).any()
+
+
 def test_flags2rgb_validates_inputs(black_image: NDArray[np.uint8]) -> None:
     flags = np.array([[True]])
     centers = np.array([[100.0, 100.0]])
