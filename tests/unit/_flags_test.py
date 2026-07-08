@@ -146,6 +146,13 @@ def test_flags2rgb_validates_inputs(black_image: NDArray[np.uint8]) -> None:
             centers=centers,
             flag_names=flag_names,
         )
+    with pytest.raises(ValueError, match="image must be 2 or 3 dimensional"):
+        imgviz.flags2rgb(
+            np.zeros((10,), dtype=np.uint8),
+            flags=flags,
+            centers=centers,
+            flag_names=flag_names,
+        )
     with pytest.raises(TypeError, match="flags must be a numpy array"):
         imgviz.flags2rgb(
             black_image,
