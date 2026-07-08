@@ -42,5 +42,6 @@ from ._normalize import normalize
 from ._pad import pad
 from ._pixelate import pixelate
 from ._resize import resize
+from ._scalebar import scalebar
 from ._tile import tile
 from ._tint import tint
