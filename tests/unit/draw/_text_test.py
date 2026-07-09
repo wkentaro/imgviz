@@ -17,3 +17,9 @@ def test_text_size() -> None:
     assert isinstance(width, int)
     assert height > 0
     assert width > 0
+
+
+def test_text_size_blank_line_adds_height() -> None:
+    height_without, _ = imgviz.draw.text_size("a\nb", size=20)
+    height_with, _ = imgviz.draw.text_size("a\n\nb", size=20)
+    assert height_with > height_without
