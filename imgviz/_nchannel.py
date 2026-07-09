@@ -59,6 +59,8 @@ class Nchannel2Rgb:
             raise ValueError(
                 f"nchannel.dtype must be floating, but got {nchannel.dtype}"
             )
+        if dtype != np.uint8 and not np.issubdtype(dtype, np.floating):
+            raise ValueError(f"dtype must be floating, but got {dtype}")
         H, W, D = nchannel.shape
 
         dst = nchannel.reshape(-1, D)
@@ -79,8 +81,6 @@ class Nchannel2Rgb:
             dst = normalize(dst, min_value, max_value)
             dst = (dst * 255).round().astype(np.uint8)
         else:
-            if not np.issubdtype(dtype, np.floating):
-                raise ValueError(f"dtype must be floating, but got {dtype}")
             dst = dst.astype(dtype)
 
         return dst

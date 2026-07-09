@@ -37,6 +37,21 @@ def test_nchannel2rgb_rejects_invalid_output_dtype(
         imgviz.nchannel2rgb(nchannel, dtype=np.int32)  # type: ignore[call-overload]
 
 
+def test_Nchannel2Rgb_invalid_dtype_does_not_fit_pca(
+    nchannel: NDArray[np.float32],
+) -> None:
+    converter = imgviz.Nchannel2Rgb()
+
+    with pytest.raises(ValueError, match="dtype must be floating"):
+        converter(nchannel, dtype=np.int32)  # type: ignore[call-overload]
+
+    assert converter.pca is None
+
+    out = converter(nchannel)
+    out_fresh = imgviz.nchannel2rgb(nchannel)
+    np.testing.assert_array_equal(out, out_fresh)
+
+
 def test_nchannel2rgb_is_deterministic(nchannel: NDArray[np.float32]) -> None:
     out1 = imgviz.nchannel2rgb(nchannel)
     out2 = imgviz.nchannel2rgb(nchannel)
