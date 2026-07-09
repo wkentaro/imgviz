@@ -85,6 +85,14 @@ def test_tile_auto_shape_shrinks_redundant_row() -> None:
     assert tiled.shape == (20, 40, 3)  # 2x2, not a wasteful 3x2 (30, 40, 3)
 
 
+def test_tile_auto_shape_handles_tall_narrow_image() -> None:
+    tall = np.zeros((100, 10, 3), dtype=np.uint8)
+
+    tiled = imgviz.tile([tall])  # extreme h:w ratio must not round the grid to 0 rows
+
+    assert tiled.shape == (100, 10, 3)
+
+
 @pytest.mark.parametrize(("row", "col"), [(0, None), (None, 0), (-1, None), (None, -1)])
 def test_tile_rejects_non_positive_row_col(
     images: list[NDArray[np.uint8]], row: int | None, col: int | None
