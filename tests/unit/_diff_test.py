@@ -278,3 +278,12 @@ def test_diff_ssim_all_nan_inputs(a_all_nan: bool, b_all_nan: bool) -> None:
     assert out.shape == (*shape, 3)
     assert out.dtype == np.uint8
     np.testing.assert_array_equal(out, np.zeros_like(out))
+
+
+@pytest.mark.parametrize("shape", [(4,), (4, 4, 2), (4, 4, 5)])
+def test_diff_rejects_unsupported_shape(shape: tuple[int, ...]) -> None:
+    a = np.zeros(shape, dtype=np.float32)
+    b = np.zeros(shape, dtype=np.float32)
+
+    with pytest.raises(ValueError, match="image must be"):
+        imgviz.diff(a, b)
