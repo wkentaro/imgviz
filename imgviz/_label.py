@@ -52,7 +52,7 @@ def label2rgb(
 
     Args:
         label: Label image with shape (H, W).
-        image: RGB image with shape (H, W, 3).
+        image: Image with shape (H, W) or (H, W, 3).
         alpha: Alpha of RGB. If given as a list or dict, it is treated as alpha
             for each class according to the index or key.
         label_names: Label id to label name.

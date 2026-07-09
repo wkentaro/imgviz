@@ -51,7 +51,7 @@ def instances2rgb(
     """Convert instances to rgb.
 
     Args:
-        image: RGB image with shape (H, W, 3).
+        image: Image with shape (H, W) or (H, W, 3).
         labels: Labels with length N.
         bboxes: Bounding boxes with shape (N, 4).
         masks: Masks with shape (N, H, W).
