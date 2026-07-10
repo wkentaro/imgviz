@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Fixed `letterbox` crashing with an opaque backend assertion when an extreme aspect ratio rounded the internally resized width or height down to 0 pixels, by clamping the resized dimensions to at least 1 pixel ([#242](https://github.com/wkentaro/imgviz/pull/242))
 - Fixed `letterbox` returning the input array itself when the image already matches the target size, so mutating the result no longer corrupts the input ([#219](https://github.com/wkentaro/imgviz/pull/219))
 - Fixed `draw.text_in_rectangle` filling the grown canvas with the background's red channel replicated across every channel instead of the full RGB color ([#224](https://github.com/wkentaro/imgviz/pull/224))
 - Fixed `components.legend` truncating instead of rounding its translucent background wash, which biased the blended pixels down by one ([#223](https://github.com/wkentaro/imgviz/pull/223))
