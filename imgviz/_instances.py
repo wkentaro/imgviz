@@ -112,7 +112,8 @@ def instances2rgb(
 
         maskviz = mask[:, :, None] * color_ins.astype(float)
         dst = dst.copy()
-        dst[mask] = (1 - alpha) * image[mask].astype(float) + alpha * maskviz[mask]
+        blended = (1 - alpha) * image[mask].astype(float) + alpha * maskviz[mask]
+        dst[mask] = blended.round().astype(np.uint8)
 
         if boundary_width > 0:
             try:
