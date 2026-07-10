@@ -73,6 +73,20 @@ def test_instances2rgb_blends_masks(
     np.testing.assert_array_equal(out[0, 0], image[0, 0])
 
 
+def test_instances2rgb_rounds_blended_mask_colors() -> None:
+    image = np.full((100, 100, 3), 50, dtype=np.uint8)
+    mask = np.zeros((100, 100), dtype=bool)
+    mask[10:90, 10:90] = True
+    colormap = np.array([[0, 0, 0], [99, 99, 99]], dtype=np.uint8)
+
+    out = imgviz.instances2rgb(
+        image=image, labels=[0], masks=[mask], alpha=0.3, colormap=colormap
+    )
+
+    # 0.7 * 50 + 0.3 * 99 = 64.7 -> rounds to 65, not truncated to 64.
+    np.testing.assert_array_equal(out[50, 50], [65, 65, 65])
+
+
 def test_instances2rgb_draws_captions(
     image: NDArray[np.uint8], bbox: list[float]
 ) -> None:
