@@ -6,6 +6,7 @@ from numpy.typing import NDArray
 
 from .. import _utils
 from ._ink import Ink
+from ._ink import as_yx_points
 from ._ink import get_pil_ink
 from ._ink import require_pil_image
 
@@ -47,11 +48,7 @@ def line_(
         width: Line width.
     """
     require_pil_image(image=image)
-    yx = np.asarray(yx)
-    if yx.ndim != 2:
-        raise ValueError(f"yx must be 2D array, but got {yx.ndim}D")
-    if yx.shape[1] != 2:
-        raise ValueError(f"yx.shape[1] must be 2, but got {yx.shape[1]}")
+    yx = as_yx_points(yx)
 
     draw = PIL.ImageDraw.Draw(image)
 
