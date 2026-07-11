@@ -6,6 +6,7 @@ __pycache__/
 /*.egg-info/
 /.mypy_cache/
 /build/
+/.coverage
 
 # Sphinx
 /docs/build/
