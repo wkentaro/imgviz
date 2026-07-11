@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Fixed `letterbox` returning the input array itself when the image already matches the target size, so mutating the result no longer corrupts the input ([#219](https://github.com/wkentaro/imgviz/pull/219))
+- Fixed `draw.text_in_rectangle` over-padding the bottom of the grown canvas when text overflowed both the top and bottom edges, because the bottom pad was measured against the pre-top-pad height ([#251](https://github.com/wkentaro/imgviz/pull/251))
 - Fixed `draw.text_in_rectangle` filling the grown canvas with the background's red channel replicated across every channel instead of the full RGB color ([#224](https://github.com/wkentaro/imgviz/pull/224))
 - Fixed `components.legend` truncating instead of rounding its translucent background wash, which biased the blended pixels down by one ([#223](https://github.com/wkentaro/imgviz/pull/223))
 

@@ -134,6 +134,7 @@ def text_in_rectangle(
             dst = _pad.pad(image=dst, top=pad, color=background)
             y1 += pad
             y2 += pad
+            height += pad
         if y2 > height:
             pad = y2 - height
             dst = _pad.pad(image=dst, bottom=pad, color=background)
