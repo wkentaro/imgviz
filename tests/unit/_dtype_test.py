@@ -39,3 +39,13 @@ def test_float2ubyte_rejects_below_zero() -> None:
 def test_float2ubyte_rejects_above_one() -> None:
     with pytest.raises(ValueError, match=r"image\.max\(\) must be <= 1"):
         imgviz.float2ubyte(np.array([0.5, 1.1], dtype=np.float32))
+
+
+def test_float2ubyte_rejects_nan() -> None:
+    with pytest.raises(ValueError, match="image must not contain NaN"):
+        imgviz.float2ubyte(np.array([np.nan, 0.5], dtype=np.float32))
+
+
+def test_float2ubyte_nan_does_not_bypass_range_guard() -> None:
+    with pytest.raises(ValueError, match="image must not contain NaN"):
+        imgviz.float2ubyte(np.array([np.nan, -5.0], dtype=np.float32))
