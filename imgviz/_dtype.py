@@ -15,6 +15,8 @@ def float2ubyte(image: NDArray[np.floating]) -> NDArray[np.uint8]:
     """Convert float image in [0, 1] to uint8."""
     if not np.issubdtype(image.dtype, np.floating):
         raise ValueError(f"image dtype must be float, but got {image.dtype}")
+    if np.isnan(image).any():
+        raise ValueError("image must not contain NaN")
     if image.min() < 0:
         raise ValueError(f"image.min() must be >= 0, but got {image.min()}")
     if image.max() > 1:
