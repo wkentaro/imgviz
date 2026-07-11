@@ -86,6 +86,27 @@ def test_text_in_rectangle_pads_with_full_background_color(
     np.testing.assert_array_equal(res[corner, -1], background)
 
 
+def test_text_in_rectangle_grows_canvas_tightly_when_overflowing_both_ends() -> None:
+    # yx2 above the top edge (y1 < 0) with text tall enough to also overflow the
+    # bottom makes both pad branches fire; the bottom pad must be measured
+    # against the already-top-padded height, not the original one.
+    image = np.full((10, 100, 3), 255, dtype=np.uint8)
+    yx1 = (0, 0)
+    yx2 = (-5, 99)
+
+    aabb = imgviz.draw.text_in_rectangle_aabb(
+        yx1=yx1, yx2=yx2, loc="lb-", text="Hi", size=40
+    )
+    assert aabb.y1 < 0 and aabb.y2 > image.shape[0]
+
+    res = imgviz.draw.text_in_rectangle(
+        image, loc="lb-", text="Hi", size=40, background=(255, 0, 0), yx1=yx1, yx2=yx2
+    )
+
+    assert res.shape[0] == aabb.y2 - aabb.y1
+    assert res.shape[1] == image.shape[1]
+
+
 def test_text_in_rectangle_keep_size_preserves_shape(
     small_image: NDArray[np.uint8],
 ) -> None:
