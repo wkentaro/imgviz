@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Sped up `masks_to_bboxes` (and `instances2rgb` when derived from masks) by computing each tight bounding box from per-axis reductions instead of materializing every foreground pixel's coordinates ([#253](https://github.com/wkentaro/imgviz/pull/253))
 - Documented that `label2rgb`, `instances2rgb`, and `flags2rgb` accept a grayscale `(H, W)` image in addition to `(H, W, 3)`, matching the input they already convert internally ([#232](https://github.com/wkentaro/imgviz/pull/232))
 - Changed `rgb2hsv` and `hsv2rgb` to validate input shape and dtype and raise a clear `ValueError`, matching the other color converters, instead of surfacing a confusing error from Pillow ([#222](https://github.com/wkentaro/imgviz/pull/222))
 
