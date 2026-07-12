@@ -78,20 +78,14 @@ def legend_(
     legend_width = text_width + text_height + 2 * pad
 
     width, height = image.size
-    if loc == "rb":
-        yx2 = np.array([height - pad, width - pad], dtype=float)
-        yx1 = yx2 - (legend_height, legend_width)
-    elif loc == "lt":
-        yx1 = np.array([pad, pad], dtype=float)
-        yx2 = yx1 + (legend_height, legend_width)
-    elif loc == "rt":
-        yx1 = np.array([pad, width - pad - legend_width], dtype=float)
-        yx2 = yx1 + (legend_height, legend_width)
-    elif loc == "lb":
-        yx2 = np.array([height - pad, pad + legend_width], dtype=float)
-        yx1 = yx2 - (legend_height, legend_width)
-    else:
-        raise ValueError(f"unsupported loc: {loc}")
+    y0, x0 = _utils.compute_corner_origin(
+        container_size=(height, width),
+        block_size=(legend_height, legend_width),
+        loc=loc,
+        margin=pad,
+    )
+    yx1 = np.array([y0, x0], dtype=float)
+    yx2 = yx1 + (legend_height, legend_width)
 
     alpha = 0.5
     y1, x1 = yx1.round().astype(int)
