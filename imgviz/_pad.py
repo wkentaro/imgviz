@@ -70,6 +70,9 @@ def pad(
     h, w = image.shape[:2]
     shape = (h + top + bottom, w + left + right) + image.shape[2:]
     dst = np.empty(shape, dtype=image.dtype)
-    dst[...] = color
+    dst[:top] = color
+    dst[top + h :] = color
+    dst[top : top + h, :left] = color
+    dst[top : top + h, left + w :] = color
     dst[top : top + h, left : left + w] = image
     return dst
