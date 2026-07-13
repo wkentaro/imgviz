@@ -71,6 +71,20 @@ def test_flags2rgb_on_zero_flags_draws_no_pie(black_image: NDArray[np.uint8]) ->
     assert np.array_equal(res[60:140, 60:140], black_image[60:140, 60:140])
 
 
+def test_flags2rgb_draws_each_instance_independently(
+    black_image: NDArray[np.uint8],
+) -> None:
+    res = imgviz.flags2rgb(
+        black_image,
+        flags=np.array([[True, False], [False, False], [False, True]]),
+        centers=np.array([[40.0, 40.0], [40.0, 100.0], [40.0, 160.0]]),
+        flag_names=["broken", "occluded"],
+    )
+    assert np.array_equal(res[40, 40], make_flag_color(0))
+    assert np.array_equal(res[40, 160], make_flag_color(1))
+    assert np.array_equal(res[25:56, 85:116], black_image[25:56, 85:116])
+
+
 def test_flags2rgb_all_draws_off_wedges_gray(black_image: NDArray[np.uint8]) -> None:
     res = imgviz.flags2rgb(
         black_image,
