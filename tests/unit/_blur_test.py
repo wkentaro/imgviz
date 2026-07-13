@@ -6,8 +6,8 @@ import imgviz
 
 @pytest.mark.parametrize(
     "shape",
-    [(40, 50, 3), (40, 50), (40, 50, 4), (40, 50, 5)],
-    ids=["rgb", "gray", "rgba", "five-channel"],
+    [(40, 50, 3), (40, 50), (40, 50, 2), (40, 50, 4), (40, 50, 5)],
+    ids=["rgb", "gray", "la", "rgba", "five-channel"],
 )
 def test_blur_whole_image(shape: tuple[int, ...]) -> None:
     rng = np.random.default_rng(seed=0)
