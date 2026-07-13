@@ -1,7 +1,8 @@
 from __future__ import annotations
 
-from typing import Final
+from collections.abc import Mapping
 from typing import Literal
+from typing import TypeVar
 
 import numpy as np
 import PIL.Image
@@ -14,17 +15,27 @@ try:
 except ImportError:
     cv2 = None  # type: ignore[assignment]
 
+_ResampleT = TypeVar("_ResampleT")
+
+
+def _resolve_interpolation(
+    interpolation: Literal["linear", "nearest"], mapping: Mapping[str, _ResampleT]
+) -> _ResampleT:
+    if interpolation not in mapping:
+        raise ValueError(f"unsupported interpolation: {interpolation}")
+    return mapping[interpolation]
+
 
 def _resize_pillow(
     image: NDArray, height: int, width: int, interpolation: Literal["linear", "nearest"]
 ) -> NDArray:
-    resample: Final
-    if interpolation == "linear":
-        resample = PIL.Image.BILINEAR
-    elif interpolation == "nearest":
-        resample = PIL.Image.NEAREST
-    else:
-        raise ValueError(f"unsupported interpolation: {interpolation}")
+    resample = _resolve_interpolation(
+        interpolation,
+        {
+            "linear": PIL.Image.Resampling.BILINEAR,
+            "nearest": PIL.Image.Resampling.NEAREST,
+        },
+    )
 
     if np.issubdtype(image.dtype, np.integer):
         dst = _utils.numpy_to_pillow(image)
@@ -57,13 +68,10 @@ def _resize_opencv(
     if cv2 is None:
         raise ImportError("opencv-python is not installed")
 
-    interpolation_int: int
-    if interpolation == "linear":
-        interpolation_int = cv2.INTER_LINEAR
-    elif interpolation == "nearest":
-        interpolation_int = cv2.INTER_NEAREST
-    else:
-        raise ValueError(f"unsupported interpolation: {interpolation}")
+    interpolation_int = _resolve_interpolation(
+        interpolation,
+        {"linear": cv2.INTER_LINEAR, "nearest": cv2.INTER_NEAREST},
+    )
 
     dst = cv2.resize(image, (width, height), interpolation=interpolation_int)
     return dst
