@@ -7,6 +7,7 @@ from numpy.typing import NDArray
 from .. import _utils
 from ._ink import Ink
 from ._ink import get_pil_ink
+from ._ink import require_pil_image
 
 
 def arrow(
@@ -65,10 +66,7 @@ def arrow_(
         head_length_ratio: Arrowhead length as a fraction of the shaft length.
         head_angle: Half-angle of the arrowhead in degrees.
     """
-    if not isinstance(image, PIL.Image.Image):
-        raise TypeError(
-            f"image must be PIL.Image.Image, but got {type(image).__name__}"
-        )
+    require_pil_image(image=image)
     tail = np.asarray(yx1, dtype=float)
     tip = np.asarray(yx2, dtype=float)
     if tail.shape != (2,):
