@@ -19,6 +19,12 @@ def numpy_to_pillow(image: NDArray, mode: str | None = None) -> PIL.Image.Image:
     return image_pillow
 
 
+def require_bool_mask(mask: NDArray) -> None:
+    """Raise ValueError unless mask has bool dtype."""
+    if mask.dtype != np.bool_:
+        raise ValueError(f"mask.dtype must be bool, got {mask.dtype}")
+
+
 def apply_mask(
     image: NDArray,
     transformed: NDArray,
@@ -32,8 +38,7 @@ def apply_mask(
     """
     if mask is None:
         return transformed
-    if mask.dtype != np.bool_:
-        raise ValueError(f"mask.dtype must be bool, got {mask.dtype}")
+    require_bool_mask(mask)
     if mask.shape != image.shape[:2]:
         raise ValueError(f"mask.shape must be {image.shape[:2]}, got {mask.shape}")
 
