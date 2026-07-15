@@ -123,6 +123,20 @@ def test_rotated_rectangle_preserves_area_under_rotation(
     assert abs(area_upright - area_tilted) / area_upright < 0.05
 
 
+def test_rotated_rectangle_center_is_yx_not_xy(
+    black_image: NDArray[np.uint8],
+) -> None:
+    # asymmetric center so a (cy, cx) <-> (cx, cy) swap moves the rectangle
+    center = (20, 70)
+    res = imgviz.draw.rotated_rectangle(
+        black_image, center=center, size=(10, 10), angle=0, fill=(255, 255, 255)
+    )
+
+    cy, cx = center
+    np.testing.assert_array_equal(res[cy, cx], [255, 255, 255])
+    np.testing.assert_array_equal(res[cx, cy], [0, 0, 0])
+
+
 def test_rotated_rectangle_in_place_mutates_pil_image() -> None:
     image = PIL.Image.new("RGB", (100, 100), (0, 0, 0))
     before = np.asarray(image).copy()
