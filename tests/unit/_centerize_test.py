@@ -38,6 +38,30 @@ def test_centerize_matches_letterbox() -> None:
     np.testing.assert_array_equal(from_centerize, from_letterbox)
 
 
+def test_centerize_forwards_return_mask_and_interpolation() -> None:
+    img = np.random.uniform(0, 255, size=(10, 10, 3)).round().astype(np.uint8)
+
+    with pytest.warns(DeprecationWarning):
+        dst, mask = imgviz.centerize(
+            img,
+            height=20,
+            width=30,
+            cval=0,
+            return_mask=True,
+            interpolation="nearest",
+        )
+    ref, ref_mask = imgviz.letterbox(
+        img,
+        height=20,
+        width=30,
+        color=0,
+        return_mask=True,
+        interpolation="nearest",
+    )
+    np.testing.assert_array_equal(dst, ref)
+    np.testing.assert_array_equal(mask, ref_mask)
+
+
 _Loc: TypeAlias = Literal["center", "lt", "rt", "lb", "rb"]
 
 
