@@ -50,6 +50,29 @@ def test_progress_bar_half(white_image: NDArray[np.uint8]) -> None:
     assert tuple(res[20, 80]) == GRAY  # right half is the track
 
 
+@pytest.mark.parametrize(
+    ("value", "green_col", "gray_col"),
+    [(0.25, 29, 31), (0.5, 49, 51), (0.75, 69, 71)],
+)
+def test_progress_bar_fill_boundary_is_linear_in_value(
+    white_image: NDArray[np.uint8], value: float, green_col: int, gray_col: int
+) -> None:
+    # The cases above only pin the endpoints; probing just inside and just
+    # outside the boundary (at 10 + value * 80) catches any non-linear
+    # value->pixel mapping, e.g. an accidental value**2 easing, that would
+    # still leave the endpoints correct.
+    res = imgviz.draw.progress_bar(
+        white_image,
+        yx1=(10, 10),
+        yx2=(30, 90),
+        value=value,
+        fill=GREEN,
+        background=GRAY,
+    )
+    assert tuple(res[20, green_col]) == GREEN
+    assert tuple(res[20, gray_col]) == GRAY
+
+
 @pytest.mark.parametrize("value", [float("nan"), float("inf"), float("-inf")])
 def test_progress_bar_rejects_non_finite_value(
     white_image: NDArray[np.uint8], value: float
