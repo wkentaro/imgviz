@@ -48,6 +48,12 @@ def test_heatmap_sigma_controls_spread() -> None:
     assert wide[50, 70] > narrow[50, 70]  # wider Gaussian reaches further
 
 
+def test_heatmap_window_extends_to_three_sigma() -> None:
+    res = imgviz.heatmap([(50, 50)], shape=(100, 100), sigma=10)
+    # 2.5 sigma away stays inside the +-3 sigma window (drops to 0 if tightened)
+    assert res[50, 75] == pytest.approx(np.exp(-(25**2) / (2 * 10**2)))
+
+
 def test_heatmap_weights() -> None:
     res = imgviz.heatmap(
         [(30, 30), (70, 70)], shape=(100, 100), sigma=8, weights=[1.0, 3.0]
