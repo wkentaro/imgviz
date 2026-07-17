@@ -58,14 +58,7 @@ def flags2rgb(
     """
     OFF_COLOR: Final = (200, 200, 200)
 
-    if not isinstance(image, np.ndarray):
-        raise TypeError(f"image must be a numpy array, but got {type(image).__name__}")
-    if image.dtype != np.uint8:
-        raise ValueError(f"image dtype must be np.uint8, but got {image.dtype}")
-    if image.ndim == 2:
-        image = _color.gray2rgb(image)
-    if image.ndim != 3:
-        raise ValueError(f"image must be 2 or 3 dimensional, but got {image.ndim}")
+    image = _color.require_uint8_image(image)
 
     if not isinstance(flags, np.ndarray):
         raise TypeError(f"flags must be a numpy array, but got {type(flags).__name__}")
