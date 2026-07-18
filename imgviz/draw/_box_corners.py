@@ -6,6 +6,7 @@ from numpy.typing import NDArray
 from .. import _utils
 from ._ink import Ink
 from ._ink import get_pil_ink
+from ._ink import require_pil_image
 
 
 def box_corners(
@@ -61,10 +62,7 @@ def box_corners_(
             width/height, so a large value degrades to a full rectangle.
         width: Line width.
     """
-    if not isinstance(image, PIL.Image.Image):
-        raise TypeError(
-            f"image must be PIL.Image.Image, but got {type(image).__name__}"
-        )
+    require_pil_image(image=image)
     y1, x1 = map(float, yx1)
     y2, x2 = map(float, yx2)
     if y2 < y1 or x2 < x1:
