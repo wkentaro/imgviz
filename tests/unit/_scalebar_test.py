@@ -43,6 +43,25 @@ def test_pick_nice_length(target: float, expected: float) -> None:
     assert result <= target  # never exceeds the budget it is given
 
 
+@pytest.mark.parametrize(
+    ("pixels_per_unit", "expected_bar_length"),
+    [
+        (100, 200),  # picks "2 m" -> 2 * 100 px
+        (50, 100),  # picks "2 m" -> 2 * 50 px
+        (200, 200),  # picks "1 m" -> 1 * 200 px
+    ],
+)
+def test_scalebar_bar_length_matches_units_times_ppu(
+    pixels_per_unit: float, expected_bar_length: int
+) -> None:
+    image = np.zeros((300, 1000, 3), dtype=np.uint8)
+    res = imgviz.scalebar(image, pixels_per_unit=pixels_per_unit, color="red", loc="lb")
+    is_red = (res == [255, 0, 0]).all(axis=2)
+    # the widest red row is the bar (the same-colored label text is far narrower)
+    bar_length_px = int(is_red.sum(axis=1).max()) - 1  # PIL fill is endpoint-inclusive
+    assert bar_length_px == expected_bar_length
+
+
 @pytest.mark.parametrize("pixels_per_unit", [0.5, 5, 50, 500, 5000, 1e6])
 def test_scalebar_runs_across_decades(
     rgb: NDArray[np.uint8], pixels_per_unit: float
