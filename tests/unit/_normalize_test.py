@@ -33,6 +33,18 @@ def test_normalize_constant_large_float32_is_finite() -> None:
     assert np.isfinite(result).all()
 
 
+def test_normalize_constant_zero_maps_to_midpoint() -> None:
+    # When min == max == 0, the issame spread is eps * abs(value) == 0 without
+    # the maximum(..., 1.0) floor, so the range stays collapsed and 0 / 0 gives
+    # NaN. The floor keeps the spread finite, mapping the constant to 0.5.
+    src = np.zeros((4, 4), dtype=np.float32)
+
+    result = imgviz.normalize(src)
+
+    assert result.shape == src.shape
+    np.testing.assert_allclose(result, 0.5)
+
+
 def test_normalize_multichannel_maps_each_channel_to_0_1() -> None:
     src = np.array(
         [
