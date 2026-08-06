@@ -57,7 +57,10 @@ def tint(image: NDArray, color: _cmap.ColorLike, alpha: float = 0.3) -> NDArray:
 
     rgba = _cmap.Color(color).rgba if is_float else _cmap.Color(color).rgba8
     solid = np.array(rgba[:3], dtype=np.float64)
-    blended = (1 - alpha) * image + alpha * solid
     if is_float:
-        return blended.astype(image.dtype)
-    return blended.round().astype(np.uint8)
+        return ((1 - alpha) * image + alpha * solid).astype(image.dtype)
+    blended = image.astype(np.float64)
+    blended *= 1 - alpha
+    blended += alpha * solid
+    np.round(blended, out=blended)
+    return blended.astype(np.uint8)

@@ -44,6 +44,25 @@ def test_tint_float(dtype: type[np.floating]) -> None:
     assert np.array_equal(imgviz.tint(img, "red", alpha=0.0), img)
 
 
+def test_tint_uint8_blends_expected_values() -> None:
+    img = np.arange(48, dtype=np.uint8).reshape(4, 4, 3)
+    color = (200, 50, 100)
+    alpha = 0.3
+    solid = np.array(color, dtype=np.float64)
+    expected = np.round((1 - alpha) * img.astype(np.float64) + alpha * solid)
+    res = imgviz.tint(img, color, alpha=alpha)
+    assert np.array_equal(res, expected.astype(np.uint8))
+
+
+@pytest.mark.parametrize("dtype", [np.uint8, np.float32])
+def test_tint_does_not_mutate_input(dtype: type[np.generic]) -> None:
+    high = 255 if dtype == np.uint8 else 1
+    img = (np.random.rand(10, 10, 3) * high).astype(dtype)
+    original = img.copy()
+    imgviz.tint(img, "red", alpha=0.5)
+    assert np.array_equal(img, original)
+
+
 def test_tint_rejects_non_rgb() -> None:
     with pytest.raises(ValueError, match="must be RGB"):
         imgviz.tint(np.zeros((10, 10), dtype=np.uint8), "red")
