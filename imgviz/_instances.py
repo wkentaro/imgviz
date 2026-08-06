@@ -26,12 +26,13 @@ def masks_to_bboxes(
     """
     bboxes = np.zeros((len(masks), 4), dtype=float)
     for i, mask in enumerate(masks):
-        if mask.sum() == 0:
+        rows = np.flatnonzero(np.any(mask, axis=1))
+        if rows.size == 0:
             continue
-        where = np.argwhere(mask)
-        (ymin, xmin), (ymax, xmax) = where.min(axis=0), where.max(axis=0)
-        bbox = ymin, xmin, ymax, xmax
-        bboxes[i] = bbox
+        cols = np.flatnonzero(np.any(mask, axis=0))
+        ymin, ymax = rows[0], rows[-1]
+        xmin, xmax = cols[0], cols[-1]
+        bboxes[i] = ymin, xmin, ymax, xmax
     return bboxes
 
 
