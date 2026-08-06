@@ -74,8 +74,8 @@ def letterbox(
     scale = min(1.0 * height / image_h, 1.0 * width / image_w)
     image = resize(
         image,
-        height=int(round(image_h * scale)),
-        width=int(round(image_w * scale)),
+        height=max(1, int(round(image_h * scale))),
+        width=max(1, int(round(image_w * scale))),
         interpolation=interpolation,
     )
 

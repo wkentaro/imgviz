@@ -42,6 +42,17 @@ def test_letterbox_portrait_to_square() -> None:
     np.testing.assert_allclose(dst[:, 5:-5], img)
 
 
+@pytest.mark.parametrize("shape", [(100, 3, 3), (3, 100, 3)])
+def test_letterbox_extreme_aspect_ratio_keeps_at_least_one_pixel(
+    shape: tuple[int, int, int],
+) -> None:
+    img = np.zeros(shape, dtype=np.uint8)
+
+    dst = imgviz.letterbox(img, height=1, width=1)  # a dimension would round to 0
+    assert dst.shape == (1, 1, 3)
+    assert dst.dtype == img.dtype
+
+
 def test_letterbox_grayscale_hw() -> None:
     img = np.random.uniform(0, 255, size=(15, 25)).round().astype(np.uint8)
 
