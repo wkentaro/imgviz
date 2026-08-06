@@ -1,3 +1,4 @@
+import math
 import pathlib
 
 import numpy as np
@@ -40,17 +41,10 @@ def text_size(
     """
     font = _get_font(size, font_path=font_path)
 
-    text_width = 0
-    text_height = 0
-    for line in text.splitlines():
-        if line == "":
-            line = "\n"
+    draw = PIL.ImageDraw.Draw(PIL.Image.new("RGB", (1, 1)))
+    _, _, text_width, text_height = draw.multiline_textbbox((0, 0), text, font=font)
 
-        line_width, line_height = font.getbbox(line)[2:]
-        text_width = max(text_width, line_width)
-        text_height += line_height
-
-    return text_height, text_width
+    return math.ceil(text_height), math.ceil(text_width)
 
 
 def text(
