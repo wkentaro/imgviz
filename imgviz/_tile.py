@@ -50,7 +50,7 @@ def _tile(
 
 
 def _get_tile_shape(num: int, hw_ratio: float = 1) -> tuple[int, int]:
-    r_num = int(round(math.sqrt(num / hw_ratio)))  # weighted by wh_ratio
+    r_num = max(1, int(round(math.sqrt(num / hw_ratio))))  # weighted by wh_ratio
     c_num = 0
     while r_num * c_num < num:
         c_num += 1
