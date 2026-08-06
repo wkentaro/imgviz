@@ -77,14 +77,15 @@ def normalize(
     min_value[issame] -= spread
     max_value[issame] += spread
 
-    dst: NDArray[np.float32] = np.zeros(image.shape, dtype=np.float32)
-
-    if image.ndim == 2:
-        isnan = np.isnan(image)
-    else:
+    dst: NDArray[np.float32] = ((image - min_value) / (max_value - min_value)).astype(
+        np.float32, copy=False
+    )
+    # For (H, W) input NaN already propagates through the arithmetic; only the
+    # multichannel case needs to collapse a per-channel NaN across the pixel.
+    if image.ndim == 3:
         isnan = np.isnan(image).any(axis=2)
-    dst[~isnan] = 1.0 * (image[~isnan] - min_value) / (max_value - min_value)
-    dst[isnan] = np.nan
+        if isnan.any():
+            dst[isnan] = np.nan
 
     if return_minmax:
         return dst, min_value, max_value
