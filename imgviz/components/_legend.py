@@ -96,6 +96,9 @@ def legend_(
     alpha = 0.5
     y1, x1 = yx1.round().astype(int)
     y2, x2 = yx2.round().astype(int)
+    # Clamp only the start: a negative slice start wraps from the array end
+    # (silently dropping the wash), while an over-large stop is already clipped.
+    y1, x1 = max(y1, 0), max(x1, 0)
     region = np.asarray(image)[y1:y2, x1:x2]
     washed = (alpha * region + alpha * 255).round().astype(np.uint8)
     image.paste(_utils.numpy_to_pillow(washed), (int(x1), int(y1)))

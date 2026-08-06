@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed `letterbox` returning the input array itself when the image already matches the target size, so mutating the result no longer corrupts the input ([#219](https://github.com/wkentaro/imgviz/pull/219))
 - Fixed `draw.text_in_rectangle` filling the grown canvas with the background's red channel replicated across every channel instead of the full RGB color ([#224](https://github.com/wkentaro/imgviz/pull/224))
 - Fixed `components.legend` truncating instead of rounding its translucent background wash, which biased the blended pixels down by one ([#223](https://github.com/wkentaro/imgviz/pull/223))
+- Fixed `components.legend` silently dropping its translucent background wash when the legend overflows a corner, by clamping the wash region to the image bounds ([#287](https://github.com/wkentaro/imgviz/pull/287))
 
 ## [2.1.0] - 2026-06-10
 
