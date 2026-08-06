@@ -77,7 +77,7 @@ def label2rgb(
     random_state = np.random.RandomState(seed=1234)
 
     mask_unlabeled = label < 0
-    res[mask_unlabeled] = random_state.rand(*(mask_unlabeled.sum(), 3)) * 255
+    res[mask_unlabeled] = (random_state.rand(*(mask_unlabeled.sum(), 3)) * 255).round()
 
     unique_labels = np.unique(label)
     max_label_id = max(int(unique_labels[-1]), 0)

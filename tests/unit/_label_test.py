@@ -78,6 +78,16 @@ def test_label2rgb_all_unlabeled() -> None:
     assert labelviz.shape == (8, 8, 3)
 
 
+def test_label2rgb_unlabeled_colors_are_rounded() -> None:
+    label = np.full((4, 4), -1, dtype=np.int32)
+    labelviz = imgviz.label2rgb(label=label)
+
+    random_state = np.random.RandomState(seed=1234)
+    expected = (random_state.rand(label.size, 3) * 255).round().astype(np.uint8)
+
+    np.testing.assert_array_equal(labelviz.reshape(-1, 3), expected)
+
+
 def test_label_colormap_is_cached_and_readonly() -> None:
     cmap = imgviz.label_colormap()
     assert cmap.shape == (256, 3)
