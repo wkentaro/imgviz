@@ -46,17 +46,20 @@ def blur(
 
 
 def _gaussian_blur(image: NDArray, sigma: float) -> NDArray:
-    if image.ndim == 2:
-        return _gaussian_blur_2d(arr=image, sigma=sigma)
+    # Pillow blurs each band independently, so blurring a whole (H, W),
+    # (H, W, 2), (H, W, 3), or (H, W, 4) image in one pass is bit-identical to
+    # blurring band by band. Other channel counts have no Pillow mode, so they
+    # fall back to the per-band loop.
+    if image.ndim == 2 or image.shape[2] in (2, 3, 4):
+        return _gaussian_blur_pil(arr=image, sigma=sigma)
 
-    C = image.shape[2]
     dst = np.empty_like(image)
-    for c in range(C):
-        dst[..., c] = _gaussian_blur_2d(arr=image[..., c], sigma=sigma)
+    for c in range(image.shape[2]):
+        dst[..., c] = _gaussian_blur_pil(arr=image[..., c], sigma=sigma)
     return dst
 
 
-def _gaussian_blur_2d(arr: NDArray, sigma: float) -> NDArray:
+def _gaussian_blur_pil(arr: NDArray, sigma: float) -> NDArray:
     pil = PIL.Image.fromarray(arr)
     blurred = pil.filter(PIL.ImageFilter.GaussianBlur(radius=sigma))
     return np.asarray(blurred)
