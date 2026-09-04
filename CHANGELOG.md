@@ -5,30 +5,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## Unreleased
 
-### Added
-
-- Added `outline` and `outline_width` parameters to `flags2rgb` to override the pie glyph outline color and width ([#229](https://github.com/wkentaro/imgviz/pull/229))
-- Added `draw.progress_bar` primitive for a horizontal progress bar overlay ([#209](https://github.com/wkentaro/imgviz/pull/209))
-- Added `tint` for a whole-image color wash ([#204](https://github.com/wkentaro/imgviz/pull/204))
-- Added `heatmap` for visualizing a list of points as a heatmap ([#202](https://github.com/wkentaro/imgviz/pull/202))
-- Added `colorblind` for simulating color-vision deficiency ([#199](https://github.com/wkentaro/imgviz/pull/199))
-- Added `draw.box_corners` primitive for a corner-only bounding-box style ([#197](https://github.com/wkentaro/imgviz/pull/197))
-- Added `draw.arrow` primitive with an arrowhead at the tip ([#193](https://github.com/wkentaro/imgviz/pull/193))
-- Added `draw.rotated_rectangle` primitive ([#184](https://github.com/wkentaro/imgviz/pull/184))
-- Added `draw.rounded_rectangle` primitive ([#176](https://github.com/wkentaro/imgviz/pull/176))
-
-### Changed
-
-- Documented that `label2rgb`, `instances2rgb`, and `flags2rgb` accept a grayscale `(H, W)` image in addition to `(H, W, 3)`, matching the input they already convert internally ([#232](https://github.com/wkentaro/imgviz/pull/232))
-- Changed `rgb2hsv` and `hsv2rgb` to validate input shape and dtype and raise a clear `ValueError`, matching the other color converters, instead of surfacing a confusing error from Pillow ([#222](https://github.com/wkentaro/imgviz/pull/222))
-
-### Fixed
-
-- Fixed `letterbox` returning the input array itself when the image already matches the target size, so mutating the result no longer corrupts the input ([#219](https://github.com/wkentaro/imgviz/pull/219))
-- Fixed `draw.text_in_rectangle` filling the grown canvas with the background's red channel replicated across every channel instead of the full RGB color ([#224](https://github.com/wkentaro/imgviz/pull/224))
-- Fixed `components.legend` truncating instead of rounding its translucent background wash, which biased the blended pixels down by one ([#223](https://github.com/wkentaro/imgviz/pull/223))
+<!-- towncrier release notes start -->
 
 ## [2.1.0] - 2026-06-10
 
@@ -867,4 +846,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [2.0.0]: https://github.com/wkentaro/imgviz/compare/v1.8.0...v2.0.0
 [2.0.1]: https://github.com/wkentaro/imgviz/compare/v2.0.0...v2.0.1
 [2.1.0]: https://github.com/wkentaro/imgviz/compare/v2.0.1...v2.1.0
-[unreleased]: https://github.com/wkentaro/imgviz/compare/v2.1.0...HEAD
