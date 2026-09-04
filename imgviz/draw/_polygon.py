@@ -6,6 +6,7 @@ from numpy.typing import NDArray
 
 from .. import _utils
 from ._ink import Ink
+from ._ink import as_yx_points
 from ._ink import get_pil_ink
 from ._ink import require_fill_or_outline
 from ._ink import require_pil_image
@@ -55,11 +56,7 @@ def polygon_(
     """
     require_pil_image(image=image)
     require_fill_or_outline(fill, outline)
-    yx = np.asarray(yx)
-    if yx.ndim != 2:
-        raise ValueError(f"yx must be 2D array, but got {yx.ndim}D")
-    if yx.shape[1] != 2:
-        raise ValueError(f"yx.shape[1] must be 2, but got {yx.shape[1]}")
+    yx = as_yx_points(yx)
     if yx.shape[0] < 3:
         raise ValueError(f"yx must have at least 3 vertices, but got {yx.shape[0]}")
 

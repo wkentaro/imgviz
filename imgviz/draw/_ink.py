@@ -3,6 +3,7 @@ from typing import TypeAlias
 
 import numpy as np
 import PIL.Image
+from numpy.typing import ArrayLike
 from numpy.typing import NDArray
 
 Ink: TypeAlias = (
@@ -23,6 +24,15 @@ def get_pil_ink(
             tuple(int(c) for c in ink.tolist()),
         )
     return ink
+
+
+def as_yx_points(yx: ArrayLike) -> NDArray:
+    yx = np.asarray(yx)
+    if yx.ndim != 2:
+        raise ValueError(f"yx must be 2D array, but got {yx.ndim}D")
+    if yx.shape[1] != 2:
+        raise ValueError(f"yx.shape[1] must be 2, but got {yx.shape[1]}")
+    return yx
 
 
 def require_fill_or_outline(fill: Ink | None, outline: Ink | None) -> None:
