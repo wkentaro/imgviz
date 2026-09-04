@@ -42,11 +42,27 @@ dev = [
   "pytest-xdist>=3.8.0",
   "ruff>=0.14.10",
   "taplo>=0.9.3",
+  "towncrier>=24.8",
   "twine>=6.2.0",
   "ty>=0.0.7",
   "types-pillow>=10.2.0.20240822",
   "typos>=1.45.1",
   "yamlfix>=1.19.1",
+]
+
+[tool.towncrier]
+directory = "changelog.d"
+filename = "CHANGELOG.md"
+title_format = "## {version} - {project_date}"
+issue_format = "[#{issue}](https://github.com/wkentaro/imgviz/pull/{issue})"
+ignore = ["README.md"]
+type = [
+  { directory = "added", name = "Added", showcontent = true },
+  { directory = "changed", name = "Changed", showcontent = true },
+  { directory = "deprecated", name = "Deprecated", showcontent = true },
+  { directory = "removed", name = "Removed", showcontent = true },
+  { directory = "fixed", name = "Fixed", showcontent = true },
+  { directory = "security", name = "Security", showcontent = true },
 ]
 
 [project.optional-dependencies]
