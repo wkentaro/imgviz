@@ -65,18 +65,19 @@ def _flow_compute_color(flow_u: NDArray, flow_v: NDArray) -> NDArray[np.uint8]:
     k1 = k0 + 1
     k1[k1 == ncols] = 1
 
+    in_range = rad <= 1
+    out_range = ~in_range
+
     for i in range(colorwheel.shape[1]):
         tmp = colorwheel[:, i]
         col0 = tmp[k0] / 255.0
         col1 = tmp[k1] / 255.0
         col = (1 - f) * col0 + f * col1
 
-        idx = rad <= 1
-        col[idx] = 1 - rad[idx] * (1 - col[idx])
-        col[~idx] = col[~idx] * 0.75  # out of range?
+        col[in_range] = 1 - rad[in_range] * (1 - col[in_range])
+        col[out_range] = col[out_range] * 0.75
 
-        ch_idx = i
-        flow_image[:, :, ch_idx] = np.floor(255 * col)
+        flow_image[:, :, i] = np.floor(255 * col)
 
     return flow_image
 
