@@ -37,6 +37,20 @@ def test_rounded_rectangle_clips_the_corners(white_image: NDArray[np.uint8]) -> 
     np.testing.assert_array_equal(res[50, 50], [0, 0, 0])
 
 
+def test_rounded_rectangle_corners_are_yx_not_xy(
+    white_image: NDArray[np.uint8],
+) -> None:
+    # non-square, off-diagonal box so a (y, x) -> (x, y) swap moves the fill
+    res = imgviz.draw.rounded_rectangle(
+        white_image, (20, 40), (60, 95), radius=10, fill=(0, 0, 0)
+    )
+
+    # interior of the true box (rows 20-60, cols 40-95); white if axes swap
+    np.testing.assert_array_equal(res[25, 80], [0, 0, 0])
+    # interior of the swapped box only (rows 40-95, cols 20-60); black if axes swap
+    np.testing.assert_array_equal(res[90, 30], [255, 255, 255])
+
+
 def test_rounded_rectangle_in_place_mutates_pil_image() -> None:
     image = PIL.Image.new("RGB", (100, 100), (255, 255, 255))
     before = np.asarray(image).copy()
