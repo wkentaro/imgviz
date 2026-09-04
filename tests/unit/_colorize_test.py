@@ -97,3 +97,20 @@ def test_colorize_nan_renders_as_black() -> None:
     out = imgviz.colorize(scalar, vmin=0.0, vmax=1.0)
 
     np.testing.assert_array_equal(out[0, 1], [0, 0, 0])
+
+
+def test_colorize_maps_normalized_values_to_viridis_colors() -> None:
+    scalar = np.array([[0.0, 0.25, 0.5, 0.75, 1.0]], dtype=np.float32)
+
+    out = imgviz.colorize(scalar, vmin=0.0, vmax=1.0, cmap="viridis")
+
+    np.testing.assert_array_equal(
+        out[0],
+        [
+            [68, 1, 84],
+            [59, 82, 139],
+            [33, 145, 140],
+            [94, 201, 98],
+            [253, 231, 37],
+        ],
+    )
