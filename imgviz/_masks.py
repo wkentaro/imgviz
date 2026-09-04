@@ -3,6 +3,7 @@ from __future__ import annotations
 import numpy as np
 from numpy.typing import NDArray
 
+from . import _utils
 from ._color import asrgb
 from .fill import Fill
 from .fill import Solid
@@ -31,8 +32,7 @@ def mask2rgb(
     """
     if mask.ndim != 2:
         raise ValueError(f"mask.ndim must be 2, got {mask.ndim}")
-    if mask.dtype != np.bool_:
-        raise ValueError(f"mask.dtype must be bool, got {mask.dtype}")
+    _utils.require_bool_mask(mask)
     if not isinstance(fill, Fill):
         fill = Solid(color=fill)
 
