@@ -12,6 +12,13 @@ def test_ellipse() -> None:
     assert not np.array_equal(res, img)
 
 
+def test_ellipse_bbox_is_yx_not_xy() -> None:
+    img = np.full((100, 100, 3), 255, dtype=np.uint8)
+    res = imgviz.draw.ellipse(img, yx1=(20, 20), yx2=(80, 60), fill=(0, 255, 0))
+    np.testing.assert_array_equal(res[75, 40], [0, 255, 0])
+    np.testing.assert_array_equal(res[40, 75], [255, 255, 255])
+
+
 def test_ellipse_rejects_missing_fill_and_outline() -> None:
     img = np.full((100, 100, 3), 255, dtype=np.uint8)
     with pytest.raises(ValueError, match="at least one of `fill` or `outline`"):
