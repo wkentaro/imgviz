@@ -18,6 +18,14 @@ def test_line(white_image: NDArray[np.uint8]) -> None:
     assert (res[50, 50] == (0, 0, 0)).all()  # line lands on the diagonal
 
 
+def test_line_points_are_yx_not_xy(white_image: NDArray[np.uint8]) -> None:
+    # Vertical segment at column x=80; a (y, x) -> (x, y) swap would instead
+    # draw it horizontally at row y=80.
+    res = imgviz.draw.line(white_image, yx=[(10, 80), (90, 80)], fill=(0, 0, 0))
+    assert (res[50, 80] == (0, 0, 0)).all()  # on the vertical line
+    assert (res[80, 50] == (255, 255, 255)).all()  # reflected point stays white
+
+
 def test_line_underscore_mutates_in_place(white_image: NDArray[np.uint8]) -> None:
     image = PIL.Image.fromarray(white_image)
 
