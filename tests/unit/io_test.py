@@ -1,6 +1,7 @@
 import pathlib
 
 import numpy as np
+import PIL.Image
 import pytest
 from numpy.typing import NDArray
 
@@ -59,3 +60,16 @@ def test_lblsave(tmp_path: pathlib.Path) -> None:
     label_cls_read = imgviz.io.imread(png_file)
 
     np.testing.assert_array_equal(label_cls, label_cls_read)
+
+
+def test_lblsave_writes_palette_colors(tmp_path: pathlib.Path) -> None:
+    lbl = np.array([[0, 1], [2, 3]], dtype=np.uint8)
+
+    png_file = tmp_path / "label.png"
+    imgviz.io.lblsave(png_file, lbl)
+
+    with PIL.Image.open(png_file) as image:
+        rgb = np.asarray(image.convert("RGB"))
+
+    expected = imgviz.label_colormap()[lbl]
+    np.testing.assert_array_equal(rgb, expected)
