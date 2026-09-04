@@ -35,6 +35,33 @@ def test_depth2rgb_matches_colorize_with_jet() -> None:
     np.testing.assert_array_equal(legacy, new)
 
 
+def test_depth2rgb_forwards_min_max_colormap_to_colorize() -> None:
+    data = imgviz.data.arc2017()
+
+    with pytest.warns(DeprecationWarning):
+        legacy = imgviz.depth2rgb(
+            data["depth"], min_value=0.5, max_value=1.0, colormap="gray"
+        )
+
+    new = imgviz.colorize(data["depth"], vmin=0.5, vmax=1.0, cmap="gray")
+
+    np.testing.assert_array_equal(legacy, new)
+
+
+def test_Depth2Rgb_forwards_constructor_args() -> None:
+    data = imgviz.data.arc2017()
+
+    with pytest.warns(DeprecationWarning):
+        depth2rgb = imgviz.Depth2Rgb(min_value=0.5, max_value=1.0, colormap="gray")
+
+    assert depth2rgb.min_value == 0.5
+    assert depth2rgb.max_value == 1.0
+
+    new = imgviz.colorize(data["depth"], vmin=0.5, vmax=1.0, cmap="gray")
+
+    np.testing.assert_array_equal(depth2rgb(data["depth"]), new)
+
+
 def test_Depth2Rgb_accepts_depth_kwarg() -> None:
     data = imgviz.data.arc2017()
 
