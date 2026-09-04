@@ -47,6 +47,16 @@ def test_box_corners_degrades_to_rectangle_when_length_exceeds_box(
     assert np.array_equal(res[20, 50], [0, 255, 0])  # top edge now fully drawn
 
 
+def test_box_corners_clamps_tick_length_per_axis() -> None:
+    img = np.full((120, 70, 3), 255, dtype=np.uint8)
+    # tall 100x20 box with length between the two axis extents
+    res = imgviz.draw.box_corners(
+        img, yx1=(10, 10), yx2=(110, 30), fill=(0, 255, 0), length=50, width=1
+    )
+    assert np.all(res[10, 45] == 255)  # x tick clamps to width 20, stops at x=30
+    assert np.array_equal(res[45, 10], [0, 255, 0])  # y tick keeps length 50
+
+
 def test_box_corners_respects_width(white_image: NDArray[np.uint8]) -> None:
     thin = imgviz.draw.box_corners(
         white_image, yx1=(20, 20), yx2=(80, 80), fill=(0, 255, 0), width=1
