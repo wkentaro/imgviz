@@ -64,6 +64,19 @@ def test_arrow_head_is_symmetric_about_the_shaft(
     assert head == reflected
 
 
+def test_arrow_head_is_symmetric_about_a_horizontal_shaft(
+    white_image: NDArray[np.uint8],
+) -> None:
+    line = imgviz.draw.line(white_image, yx=[(50, 20), (50, 80)], fill=(255, 0, 0))
+    arrow = imgviz.draw.arrow(white_image, yx1=(50, 20), yx2=(50, 80), fill=(255, 0, 0))
+    ys, xs = np.where(np.any(line != arrow, axis=2))
+    head = set(zip(ys.tolist(), xs.tolist()))
+    # the shaft lies on row y=50, so a symmetric head is invariant under
+    # reflecting across it (y -> 2 * 50 - y)
+    reflected = {(2 * 50 - y, x) for y, x in head}
+    assert head == reflected
+
+
 def test_arrow_zero_length_skips_head(white_image: NDArray[np.uint8]) -> None:
     line = imgviz.draw.line(white_image, yx=[(50, 50), (50, 50)], fill=(255, 0, 0))
     arrow = imgviz.draw.arrow(white_image, yx1=(50, 50), yx2=(50, 50), fill=(255, 0, 0))
