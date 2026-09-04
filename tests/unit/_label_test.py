@@ -87,6 +87,17 @@ def test_label_colormap_is_cached_and_readonly() -> None:
         cmap[0] = (1, 2, 3)
 
 
+def test_label_colormap_matches_known_values() -> None:
+    cmap = imgviz.label_colormap()
+    np.testing.assert_array_equal(cmap[0], (0, 0, 0))
+    np.testing.assert_array_equal(cmap[1], (128, 0, 0))
+    np.testing.assert_array_equal(cmap[2], (0, 128, 0))
+    np.testing.assert_array_equal(cmap[3], (128, 128, 0))
+    np.testing.assert_array_equal(cmap[4], (0, 0, 128))
+    np.testing.assert_array_equal(cmap[9], (192, 0, 0))
+    np.testing.assert_array_equal(cmap[255], (224, 224, 192))
+
+
 def test_label2rgb_casts_bool_label() -> None:
     label = np.array([[True, False], [False, True]], dtype=bool)
 
