@@ -90,6 +90,13 @@ def test_pad_negative_border_raises() -> None:
         imgviz.pad(image, top=-1)
 
 
+def test_pad_non_int_border_raises() -> None:
+    image = np.zeros((4, 4, 3), dtype=np.uint8)
+
+    with pytest.raises(TypeError, match="top must be int, but got float"):
+        imgviz.pad(image, top=1.5)  # ty: ignore[invalid-argument-type]
+
+
 def test_pad_invalid_ndim_raises() -> None:
     image = np.zeros((4,), dtype=np.uint8)
 
