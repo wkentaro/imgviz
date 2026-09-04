@@ -49,6 +49,12 @@ def _tile(
     return dst
 
 
+def _require_int(name: str, value: object) -> int:
+    if not isinstance(value, int):
+        raise TypeError(f"{name} must be int, but got {type(value).__name__}")
+    return value
+
+
 def _get_tile_shape(num: int, hw_ratio: float = 1) -> tuple[int, int]:
     r_num = int(round(math.sqrt(num / hw_ratio)))  # weighted by wh_ratio
     c_num = 0
@@ -88,22 +94,18 @@ def tile(
     if row is None and col is None:
         shape = _get_tile_shape(len(images), hw_ratio=1.0 * max_h / max_w)
     elif row is None:
-        if not isinstance(col, int):
-            raise TypeError(f"col must be int, but got {type(col).__name__}")
+        col = _require_int("col", col)
         if col <= 0:
             raise ValueError(f"col must be positive, but got {col}")
         shape = (math.ceil(len(images) / col), col)
     elif col is None:
-        if not isinstance(row, int):
-            raise TypeError(f"row must be int, but got {type(row).__name__}")
+        row = _require_int("row", row)
         if row <= 0:
             raise ValueError(f"row must be positive, but got {row}")
         shape = (row, math.ceil(len(images) / row))
     else:
-        if not isinstance(row, int):
-            raise TypeError(f"row must be int, but got {type(row).__name__}")
-        if not isinstance(col, int):
-            raise TypeError(f"col must be int, but got {type(col).__name__}")
+        row = _require_int("row", row)
+        col = _require_int("col", col)
         if row <= 0 or col <= 0:
             raise ValueError(
                 f"row and col must be positive, but got row={row}, col={col}"
