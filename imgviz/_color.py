@@ -7,6 +7,15 @@ from . import _dtype
 from . import _utils
 
 
+def _check_hw3_uint8(image: NDArray, name: str) -> None:
+    if image.ndim != 3:
+        raise ValueError(f"{name} must be 3 dimensional, but got {image.ndim}")
+    if image.shape[2] != 3:
+        raise ValueError(f"{name} shape must be (H, W, 3), but got {image.shape}")
+    if image.dtype != np.uint8:
+        raise ValueError(f"{name} dtype must be np.uint8, but got {image.dtype}")
+
+
 def rgb2gray(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:
     """Convert rgb to gray.
 
@@ -16,12 +25,7 @@ def rgb2gray(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:
     Returns:
         Gray image with shape (H, W).
     """
-    if rgb.ndim != 3:
-        raise ValueError(f"rgb must be 3 dimensional, but got {rgb.ndim}")
-    if rgb.shape[2] != 3:
-        raise ValueError(f"rgb shape must be (H, W, 3), but got {rgb.shape}")
-    if rgb.dtype != np.uint8:
-        raise ValueError(f"rgb dtype must be np.uint8, but got {rgb.dtype}")
+    _check_hw3_uint8(rgb, name="rgb")
 
     gray = _utils.numpy_to_pillow(rgb)
     gray = gray.convert("L")
@@ -56,12 +60,7 @@ def rgb2rgba(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:
     Returns:
         RGBA image with shape (H, W, 4).
     """
-    if rgb.ndim != 3:
-        raise ValueError(f"rgb must be 3 dimensional, but got {rgb.ndim}")
-    if rgb.shape[2] != 3:
-        raise ValueError(f"rgb shape must be (H, W, 3), but got {rgb.shape}")
-    if rgb.dtype != np.uint8:
-        raise ValueError(f"rgb dtype must be np.uint8, but got {rgb.dtype}")
+    _check_hw3_uint8(rgb, name="rgb")
 
     a = np.full(rgb.shape[:2], 255, dtype=np.uint8)
     rgba = np.dstack((rgb, a))
@@ -77,12 +76,7 @@ def rgb2hsv(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:
     Returns:
         HSV image with shape (H, W, 3).
     """
-    if rgb.ndim != 3:
-        raise ValueError(f"rgb must be 3 dimensional, but got {rgb.ndim}")
-    if rgb.shape[2] != 3:
-        raise ValueError(f"rgb shape must be (H, W, 3), but got {rgb.shape}")
-    if rgb.dtype != np.uint8:
-        raise ValueError(f"rgb dtype must be np.uint8, but got {rgb.dtype}")
+    _check_hw3_uint8(rgb, name="rgb")
 
     hsv = _utils.numpy_to_pillow(rgb, mode="RGB")
     hsv = hsv.convert("HSV")
@@ -99,12 +93,7 @@ def hsv2rgb(hsv: NDArray[np.uint8]) -> NDArray[np.uint8]:
     Returns:
         RGB image with shape (H, W, 3).
     """
-    if hsv.ndim != 3:
-        raise ValueError(f"hsv must be 3 dimensional, but got {hsv.ndim}")
-    if hsv.shape[2] != 3:
-        raise ValueError(f"hsv shape must be (H, W, 3), but got {hsv.shape}")
-    if hsv.dtype != np.uint8:
-        raise ValueError(f"hsv dtype must be np.uint8, but got {hsv.dtype}")
+    _check_hw3_uint8(hsv, name="hsv")
 
     rgb = _utils.numpy_to_pillow(hsv, mode="HSV")
     rgb = rgb.convert("RGB")
