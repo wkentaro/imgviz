@@ -36,6 +36,21 @@ def test_pixelate_block_one_is_noop() -> None:
     np.testing.assert_array_equal(dst, img)
 
 
+def test_pixelate_blends_each_block_instead_of_sampling_a_corner() -> None:
+    # Each 2x2 block holds only its two extreme values, so blending them
+    # (downsample) lands strictly inside the block's range while sampling one
+    # corner (nearest) would return an extreme. Left block spans 0..200, right
+    # 40..120. The exact blended value is resize-backend dependent, so assert
+    # the range rather than a literal.
+    gray = np.array([[0, 200, 40, 120], [200, 0, 120, 40]], dtype=np.uint8)
+    img = gray[:, :, None].repeat(3, axis=2)
+
+    dst = imgviz.pixelate(img, block=2)[:, :, 0]
+
+    assert 0 < dst[0, 0] < 200
+    assert 40 < dst[0, 2] < 120
+
+
 @pytest.mark.parametrize("block", [0, -1])
 def test_pixelate_rejects_block_below_one(block: int) -> None:
     img = np.zeros((10, 10, 3), dtype=np.uint8)
