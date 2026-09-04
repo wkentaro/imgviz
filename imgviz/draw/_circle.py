@@ -1,12 +1,10 @@
 import numpy as np
 import PIL.Image
-import PIL.ImageDraw
 from numpy.typing import NDArray
 
 from .. import _utils
+from ._ellipse import ellipse_
 from ._ink import Ink
-from ._ink import get_pil_ink
-from ._ink import require_fill_or_outline
 
 
 def circle(
@@ -60,21 +58,17 @@ def circle_(
         outline: RGB color to draw the outline.
         width: Line width.
     """
-    require_fill_or_outline(fill, outline)
-
-    draw = PIL.ImageDraw.Draw(image)
-
     cy, cx = center
 
     radius = diameter / 2.0
     x1 = cx - radius
-    x2 = x1 + diameter
     y1 = cy - radius
-    y2 = y1 + diameter
 
-    draw.ellipse(
-        [x1, y1, x2, y2],
-        fill=get_pil_ink(fill),
-        outline=get_pil_ink(outline),
+    ellipse_(
+        image=image,
+        yx1=(y1, x1),
+        yx2=(y1 + diameter, x1 + diameter),
+        fill=fill,
+        outline=outline,
         width=width,
     )
