@@ -64,6 +64,12 @@ def test_asrgba(images: dict[str, NDArray[np.uint8]]) -> None:
         assert result.shape[2] == 4
 
 
+def test_rgba2rgb_returns_rgb_channels(
+    images: dict[str, NDArray[np.uint8]],
+) -> None:
+    np.testing.assert_array_equal(imgviz.rgba2rgb(images["rgba"]), images["rgb"])
+
+
 def test_rgb2hsv() -> None:
     rgb = np.zeros((10, 10, 3), dtype=np.uint8)
     rgb[:, :, 0] = 255  # red
@@ -87,6 +93,14 @@ def test_get_fg_color() -> None:
     assert get_fg_color((0, 0, 0)) == (255, 255, 255)
     # Light background -> black foreground
     assert get_fg_color((255, 255, 255)) == (0, 0, 0)
+
+
+def test_get_fg_color_switches_at_intensity_boundary() -> None:
+    from imgviz._color import get_fg_color
+
+    # intensity 170 stays below the threshold; 171 crosses it
+    assert get_fg_color((170, 170, 170)) == (255, 255, 255)
+    assert get_fg_color((171, 171, 171)) == (0, 0, 0)
 
 
 @pytest.mark.parametrize("convert", [imgviz.rgb2gray, imgviz.rgb2rgba, imgviz.rgb2hsv])
