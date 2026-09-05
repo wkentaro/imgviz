@@ -1,10 +1,10 @@
 import numpy as np
 import PIL.Image
-import PIL.ImageDraw
 from numpy.typing import NDArray
 
 from .. import _utils
 from ._ink import Ink
+from ._ink import get_draw
 from ._ink import get_pil_ink
 from ._ink import require_fill_or_outline
 
@@ -62,7 +62,7 @@ def rectangle_(
     """
     require_fill_or_outline(fill, outline)
 
-    draw = PIL.ImageDraw.Draw(image)
+    draw = get_draw(image)
 
     y1, x1 = map(float, yx1)
     y2, x2 = map(float, yx2)

@@ -1,13 +1,12 @@
 import numpy as np
 import PIL.Image
-import PIL.ImageDraw
 from numpy.typing import ArrayLike
 from numpy.typing import NDArray
 
 from .. import _utils
 from ._ink import Ink
+from ._ink import get_draw
 from ._ink import get_pil_ink
-from ._ink import require_pil_image
 
 
 def line(
@@ -46,14 +45,12 @@ def line_(
         fill: RGB color to draw the line.
         width: Line width.
     """
-    require_pil_image(image=image)
+    draw = get_draw(image)
     yx = np.asarray(yx)
     if yx.ndim != 2:
         raise ValueError(f"yx must be 2D array, but got {yx.ndim}D")
     if yx.shape[1] != 2:
         raise ValueError(f"yx.shape[1] must be 2, but got {yx.shape[1]}")
-
-    draw = PIL.ImageDraw.Draw(image)
 
     xy = yx[:, ::-1]
     xy = xy.flatten().tolist()

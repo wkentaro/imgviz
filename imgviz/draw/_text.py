@@ -2,12 +2,12 @@ import pathlib
 
 import numpy as np
 import PIL.Image
-import PIL.ImageDraw
 import PIL.ImageFont
 from numpy.typing import NDArray
 
 from .. import _utils
 from ._ink import Ink
+from ._ink import get_draw
 from ._ink import get_pil_ink
 
 _here: pathlib.Path = pathlib.Path(__file__).parent
@@ -97,7 +97,7 @@ def text_(
         color: Text RGB color in uint8. Default is (0, 0, 0), which is black.
         font_path: Font path. Default font is DejaVuSansMono.
     """
-    draw = PIL.ImageDraw.Draw(image)
+    draw = get_draw(image)
 
     y1, x1 = yx
     font = _get_font(size=size, font_path=font_path)

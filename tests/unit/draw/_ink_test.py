@@ -1,7 +1,10 @@
+from collections.abc import Callable
+
 import numpy as np
 import pytest
 from numpy.typing import NDArray
 
+import imgviz
 from imgviz.draw._ink import Ink
 from imgviz.draw._ink import get_pil_ink
 from imgviz.draw._ink import require_fill_or_outline
@@ -47,3 +50,54 @@ def test_require_fill_or_outline_accepts_when_set(
     fill: Ink | None, outline: Ink | None
 ) -> None:
     require_fill_or_outline(fill, outline)
+
+
+@pytest.mark.parametrize(
+    "draw_",
+    [
+        lambda img: imgviz.draw.arrow_(img, yx1=(0, 0), yx2=(5, 5), fill=(255, 0, 0)),
+        lambda img: imgviz.draw.box_corners_(
+            img, yx1=(0, 0), yx2=(5, 5), fill=(255, 0, 0)
+        ),
+        lambda img: imgviz.draw.circle_(
+            img, center=(5, 5), diameter=4, fill=(255, 0, 0)
+        ),
+        lambda img: imgviz.draw.ellipse_(img, yx1=(0, 0), yx2=(5, 5), fill=(255, 0, 0)),
+        lambda img: imgviz.draw.line_(img, yx=[(0, 0), (5, 5)], fill=(255, 0, 0)),
+        lambda img: imgviz.draw.pie_(
+            img, center=(5, 5), diameter=4, fills=[(255, 0, 0)]
+        ),
+        lambda img: imgviz.draw.polygon_(
+            img, yx=[(0, 0), (5, 5), (0, 5)], fill=(255, 0, 0)
+        ),
+        lambda img: imgviz.draw.rectangle_(
+            img, yx1=(0, 0), yx2=(5, 5), fill=(255, 0, 0)
+        ),
+        lambda img: imgviz.draw.rounded_rectangle_(
+            img, yx1=(0, 0), yx2=(5, 5), radius=1, fill=(255, 0, 0)
+        ),
+        lambda img: imgviz.draw.star_(img, center=(5, 5), size=4, fill=(255, 0, 0)),
+        lambda img: imgviz.draw.text_(img, yx=(0, 0), text="a", size=8),
+        lambda img: imgviz.draw.triangle_(img, center=(5, 5), size=4, fill=(255, 0, 0)),
+    ],
+    ids=[
+        "arrow",
+        "box_corners",
+        "circle",
+        "ellipse",
+        "line",
+        "pie",
+        "polygon",
+        "rectangle",
+        "rounded_rectangle",
+        "star",
+        "text",
+        "triangle",
+    ],
+)
+def test_in_place_primitives_reject_non_pil_image(
+    draw_: Callable[[NDArray[np.uint8]], None],
+) -> None:
+    image = np.zeros((10, 10, 3), dtype=np.uint8)
+    with pytest.raises(TypeError, match="image must be PIL.Image.Image"):
+        draw_(image)

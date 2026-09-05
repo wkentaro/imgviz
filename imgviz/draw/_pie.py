@@ -2,11 +2,11 @@ from collections.abc import Sequence
 
 import numpy as np
 import PIL.Image
-import PIL.ImageDraw
 from numpy.typing import NDArray
 
 from .. import _utils
 from ._ink import Ink
+from ._ink import get_draw
 from ._ink import get_pil_ink
 
 
@@ -71,7 +71,7 @@ def pie_(
     if n == 0:
         return
 
-    draw = PIL.ImageDraw.Draw(image)
+    draw = get_draw(image)
 
     cy, cx = center
     radius = diameter / 2.0
