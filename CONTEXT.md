@@ -32,7 +32,10 @@ A pattern that colors the interior of a shape: solid, stripe, checker, gradient.
 _Avoid_: pattern, texture, brush
 
 **Blend**:
-Alpha compositing of one image or layer over another.
+Alpha compositing of one image or layer over another. Onto uint8 the result is
+rounded to nearest before the cast, as OpenCV's `saturate_cast` and
+scikit-image's `img_as_ubyte` do; Pillow's `Image.blend` truncates and is not
+the reference.
 _Avoid_: overlay, merge
 
 **Layer**:
