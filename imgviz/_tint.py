@@ -7,6 +7,8 @@ import cmap as _cmap
 import numpy as np
 from numpy.typing import NDArray
 
+from ._blend import blend
+
 _FloatT = TypeVar("_FloatT", bound=np.floating)
 
 
@@ -57,7 +59,6 @@ def tint(image: NDArray, color: _cmap.ColorLike, alpha: float = 0.3) -> NDArray:
 
     rgba = _cmap.Color(color).rgba if is_float else _cmap.Color(color).rgba8
     solid = np.array(rgba[:3], dtype=np.float64)
-    blended = (1 - alpha) * image + alpha * solid
     if is_float:
-        return blended.astype(image.dtype)
-    return blended.round().astype(np.uint8)
+        return ((1 - alpha) * image + alpha * solid).astype(image.dtype)
+    return blend(image, solid, alpha)

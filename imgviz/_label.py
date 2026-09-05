@@ -10,6 +10,7 @@ from . import _color
 from . import _utils
 from . import components
 from . import draw as draw_module
+from ._blend import blend
 
 
 def _bitget(byte_value: NDArray[np.uint8], idx: int) -> NDArray[np.uint8]:
@@ -99,8 +100,7 @@ def label2rgb(
     if image is not None:
         if image.ndim == 2:
             image = _color.gray2rgb(image)
-        res = (1 - alpha_map) * image.astype(float) + alpha_map * res.astype(float)
-        res = np.clip(res.round(), 0, 255).astype(np.uint8)
+        res = blend(image, res, alpha_map)
 
     if label_names is None:
         return res

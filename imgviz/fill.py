@@ -6,6 +6,8 @@ import dataclasses
 import numpy as np
 from numpy.typing import NDArray
 
+from ._blend import blend
+
 
 @dataclasses.dataclass
 class Fill(abc.ABC):
@@ -126,16 +128,7 @@ def _blend(
     alpha: float,
     copy: bool,
 ) -> NDArray[np.uint8]:
-    if not 0.0 <= alpha <= 1.0:
-        raise ValueError(f"alpha must be in range [0.0, 1.0], got {alpha}")
     if copy:
         image = image.copy()
-    image[mask] = np.clip(
-        (
-            (1 - alpha) * image[mask].astype(np.float32)
-            + alpha * np.array(color, dtype=np.float32)
-        ).round(),
-        0,
-        255,
-    ).astype(np.uint8)
+    image[mask] = blend(image[mask], color, alpha)
     return image
