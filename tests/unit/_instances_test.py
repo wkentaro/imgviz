@@ -73,6 +73,22 @@ def test_instances2rgb_blends_masks(
     np.testing.assert_array_equal(out[0, 0], image[0, 0])
 
 
+def test_instances2rgb_mask_blend_rounds_to_nearest() -> None:
+    image = np.full((40, 40, 3), 101, dtype=np.uint8)
+    mask = np.zeros((40, 40), dtype=bool)
+    mask[5:35, 5:35] = True
+    colormap = np.array([[0, 0, 0], [202, 202, 202]], dtype=np.uint8)
+
+    out = imgviz.instances2rgb(
+        image=image, labels=[1], masks=[mask], alpha=0.5, colormap=colormap
+    )
+
+    # 0.5 * 101 + 0.5 * 202 = 151.5 must round to 152, not truncate to 151.
+    # Pixel (20, 20) is inside the mask and clear of the bbox outline.
+    assert out[20, 20].tolist() == [152, 152, 152]
+    assert out[0, 0].tolist() == [101, 101, 101]
+
+
 def test_instances2rgb_draws_captions(
     image: NDArray[np.uint8], bbox: list[float]
 ) -> None:
