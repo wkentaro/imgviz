@@ -84,7 +84,7 @@ def label2rgb(
     max_label_id = max(int(unique_labels[-1]), 0)
 
     if isinstance(alpha, (int, float)):
-        alpha_arr = np.array([alpha for _ in range(max_label_id + 1)])
+        alpha_arr = np.full(max_label_id + 1, alpha, dtype=float)
     elif isinstance(alpha, dict):
         alpha_arr = np.array(
             [alpha.get(label_id, 0.5) for label_id in range(max_label_id + 1)]

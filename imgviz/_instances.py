@@ -100,12 +100,13 @@ def instances2rgb(
         colormap = _label.label_colormap()
 
     dst = image.copy()
+    instance_colors = colormap[1:]
 
     for mask, instance_id in zip([] if masks is None else masks, range(n_instance)):
         if mask.sum() == 0:
             continue
 
-        color_ins = colormap[1:][instance_id % len(colormap[1:])]
+        color_ins = instance_colors[instance_id % len(instance_colors)]
 
         # Each instance blends against the original image, not the running
         # result, so overlapping masks show the topmost color rather than a

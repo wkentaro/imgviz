@@ -75,8 +75,7 @@ def _flow_compute_color(flow_u: NDArray, flow_v: NDArray) -> NDArray[np.uint8]:
         col[idx] = 1 - rad[idx] * (1 - col[idx])
         col[~idx] = col[~idx] * 0.75  # out of range?
 
-        ch_idx = i
-        flow_image[:, :, ch_idx] = np.floor(255 * col)
+        flow_image[:, :, i] = np.floor(255 * col)
 
     return flow_image
 
