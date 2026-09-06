@@ -125,6 +125,26 @@ def rgba2rgb(rgba: NDArray[np.uint8]) -> NDArray[np.uint8]:
     return rgb
 
 
+def require_uint8_image(image: NDArray) -> NDArray[np.uint8]:
+    """Validate a uint8 image and promote 2D grayscale to RGB.
+
+    Args:
+        image: Input image with shape (H, W) or (H, W, C).
+
+    Returns:
+        The image with a channel axis, grayscale promoted via gray2rgb.
+    """
+    if not isinstance(image, np.ndarray):
+        raise TypeError(f"image must be a numpy array, but got {type(image).__name__}")
+    if image.dtype != np.uint8:
+        raise ValueError(f"image dtype must be np.uint8, but got {image.dtype}")
+    if image.ndim == 2:
+        image = gray2rgb(image)
+    if image.ndim != 3:
+        raise ValueError(f"image must be 2 or 3 dimensional, but got {image.ndim}")
+    return image
+
+
 def asgray(image: NDArray) -> NDArray[np.uint8]:
     """Convert any array to gray image.
 
