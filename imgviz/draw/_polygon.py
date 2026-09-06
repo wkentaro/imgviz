@@ -1,14 +1,13 @@
 import numpy as np
 import PIL.Image
-import PIL.ImageDraw
 from numpy.typing import ArrayLike
 from numpy.typing import NDArray
 
 from .. import _utils
 from ._ink import Ink
+from ._ink import get_draw
 from ._ink import get_pil_ink
 from ._ink import require_fill_or_outline
-from ._ink import require_pil_image
 
 
 def polygon(
@@ -53,7 +52,7 @@ def polygon_(
         outline: RGB color to draw the outline. None for no outline.
         width: Outline width.
     """
-    require_pil_image(image=image)
+    draw = get_draw(image)
     require_fill_or_outline(fill, outline)
     yx = np.asarray(yx)
     if yx.ndim != 2:
@@ -64,7 +63,6 @@ def polygon_(
         raise ValueError(f"yx must have at least 3 vertices, but got {yx.shape[0]}")
 
     xy = yx[:, ::-1].flatten().tolist()
-    draw = PIL.ImageDraw.Draw(image)
     draw.polygon(
         xy=xy,
         fill=get_pil_ink(fill),

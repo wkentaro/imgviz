@@ -1,10 +1,10 @@
 import numpy as np
 import PIL.Image
-import PIL.ImageDraw
 from numpy.typing import NDArray
 
 from .. import _utils
 from ._ink import Ink
+from ._ink import get_draw
 from ._ink import get_pil_ink
 
 
@@ -61,10 +61,7 @@ def box_corners_(
             width/height, so a large value degrades to a full rectangle.
         width: Line width.
     """
-    if not isinstance(image, PIL.Image.Image):
-        raise TypeError(
-            f"image must be PIL.Image.Image, but got {type(image).__name__}"
-        )
+    draw = get_draw(image)
     y1, x1 = map(float, yx1)
     y2, x2 = map(float, yx2)
     if y2 < y1 or x2 < x1:
@@ -72,7 +69,6 @@ def box_corners_(
             f"yx1 must be the min vertex and yx2 the max, but got {yx1=}, {yx2=}"
         )
 
-    draw = PIL.ImageDraw.Draw(image)
     pil_fill = get_pil_ink(fill)
 
     tick_x = float(min(length, x2 - x1))

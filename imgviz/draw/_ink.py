@@ -3,6 +3,7 @@ from typing import TypeAlias
 
 import numpy as np
 import PIL.Image
+import PIL.ImageDraw
 from numpy.typing import NDArray
 
 Ink: TypeAlias = (
@@ -30,8 +31,10 @@ def require_fill_or_outline(fill: Ink | None, outline: Ink | None) -> None:
         raise ValueError("at least one of `fill` or `outline` must be set")
 
 
-def require_pil_image(*, image: PIL.Image.Image) -> None:
+def get_draw(image: PIL.Image.Image) -> PIL.ImageDraw.ImageDraw:
+    """Return the drawing context for a PIL image, rejecting anything else."""
     if not isinstance(image, PIL.Image.Image):
         raise TypeError(
             f"image must be PIL.Image.Image, but got {type(image).__name__}"
         )
+    return PIL.ImageDraw.Draw(image)
