@@ -113,44 +113,37 @@ def text_in_rectangle(
     Returns:
         Output image.
     """
-    if color is None:
-        color = _color.get_fg_color(background)
-
     height, width = image.shape[:2]
-    y1, x1, y2, x2 = text_in_rectangle_aabb(
-        yx1=(0, 0) if yx1 is None else yx1,
-        yx2=(height - 1, width - 1) if yx2 is None else yx2,
-        loc=loc,
-        text=text,
-        size=size,
-        font_path=font_path,
+    if yx1 is None:
+        yx1 = (0, 0)
+    if yx2 is None:
+        yx2 = (height - 1, width - 1)
+    y1, _, y2, _ = text_in_rectangle_aabb(
+        yx1=yx1, yx2=yx2, loc=loc, text=text, size=size, font_path=font_path
     )
 
     dst = image
-
+    top = 0
     if not keep_size:
         if y1 < 0:
-            pad = -y1
-            dst = _pad.pad(image=dst, top=pad, color=background)
-            y1 += pad
-            y2 += pad
+            top = -y1
+            dst = _pad.pad(image=dst, top=top, color=background)
+            y2 += top
         if y2 > height:
-            pad = y2 - height
-            dst = _pad.pad(image=dst, bottom=pad, color=background)
+            dst = _pad.pad(image=dst, bottom=y2 - height, color=background)
 
     dst = _utils.numpy_to_pillow(dst)
-    rectangle_(
+    # Round before shifting so the in-place variant, which rounds again,
+    # lands on the same box even when a coordinate sits on a .5 tie.
+    text_in_rectangle_(
         image=dst,
-        yx1=(y1, x1),
-        yx2=(y2, x2),
-        fill=background,
-    )
-    text_(
-        image=dst,
-        yx=(y1 + 1, x1 + 1),
+        loc=loc,
         text=text,
-        color=color,
         size=size,
+        background=background,
+        color=color,
+        yx1=(round(yx1[0]) + top, yx1[1]),
+        yx2=(round(yx2[0]) + top, yx2[1]),
         font_path=font_path,
     )
     return _utils.pillow_to_numpy(dst)
