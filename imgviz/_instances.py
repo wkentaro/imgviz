@@ -10,6 +10,7 @@ from . import _color
 from . import _label
 from . import _utils
 from . import draw as draw_module
+from ._blend import blend
 
 
 def masks_to_bboxes(
@@ -98,21 +99,18 @@ def instances2rgb(
     if colormap is None:
         colormap = _label.label_colormap()
 
-    dst = image
+    dst = image.copy()
 
-    for instance_id in range(n_instance):
-        if masks is None:
-            continue
-
-        mask: NDArray[np.bool_] = masks[instance_id]
+    for mask, instance_id in zip([] if masks is None else masks, range(n_instance)):
         if mask.sum() == 0:
             continue
 
         color_ins = colormap[1:][instance_id % len(colormap[1:])]
 
-        maskviz = mask[:, :, None] * color_ins.astype(float)
-        dst = dst.copy()
-        dst[mask] = (1 - alpha) * image[mask].astype(float) + alpha * maskviz[mask]
+        # Each instance blends against the original image, not the running
+        # result, so overlapping masks show the topmost color rather than a
+        # stack of washes.
+        dst[mask] = blend(image[mask], color_ins, alpha)
 
         if boundary_width > 0:
             try:
