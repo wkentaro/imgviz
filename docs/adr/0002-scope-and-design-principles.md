@@ -44,13 +44,13 @@ downstream task, it belongs in a library that depends on `imgviz`, not in
 
 ## Considered and rejected
 
-| Idea                                               | Why rejected                                                                      |
+| Idea | Why rejected |
 | -------------------------------------------------- | --------------------------------------------------------------------------------- |
-| COCO / YOLO / Pascal VOC / LabelMe parsers         | Application layer. Thin adapters belong downstream.                               |
+| COCO / YOLO / Pascal VOC / LabelMe parsers | Application layer. Thin adapters belong downstream. |
 | Keypoint schemas (COCO-17, MediaPipe-33, Halpe-26) | Application layer. The primitive takes points and edges; users supply the schema. |
-| PyTorch / JAX / HuggingFace tensor interop         | Application layer. Users convert at the boundary.                                 |
-| `compare()`, `tile_annotated()`                    | Trivially composable from existing `tile` and `text`.                             |
-| `overlay()` as a separate function                 | Subsumed by `blend(mode="normal", alpha=...)`.                                    |
-| `border()`                                         | Redundant with `pad` at equal sides.                                              |
-| 3D box projection, BEV canvas                      | Application layer. Belongs in AV or point-cloud tooling.                          |
-| GradCAM / SAM / attention-map helpers              | Compose from `blend` and mask primitives; no model-specific code in `imgviz`.     |
+| PyTorch / JAX / HuggingFace tensor interop | Application layer. Users convert at the boundary. |
+| `compare()`, `tile_annotated()` | Trivially composable from existing `tile` and `text`. |
+| `overlay()` as a separate function | Subsumed by `blend(mode="normal", alpha=...)`. |
+| `border()` | Redundant with `pad` at equal sides. |
+| 3D box projection, BEV canvas | Application layer. Belongs in AV or point-cloud tooling. |
+| GradCAM / SAM / attention-map helpers | Compose from `blend` and mask primitives; no model-specific code in `imgviz`. |
