@@ -98,19 +98,15 @@ def resize(
 
     image_height, image_width = image.shape[:2]
     if isinstance(width, float):
-        scale_width = width
-        width = int(round(scale_width * image_width))
+        width = int(round(width * image_width))
     if isinstance(height, float):
-        scale_height = height
-        height = int(round(scale_height * image_height))
+        height = int(round(height * image_height))
     if height is None and width is None:
         raise ValueError("either height or width must be given")
     if height is None:
-        scale_height = width / image_width
-        height = int(round(scale_height * image_height))
+        height = int(round(width / image_width * image_height))
     if width is None:
-        scale_width = height / image_height
-        width = int(round(scale_width * image_width))
+        width = int(round(height / image_height * image_width))
 
     if backend == "pillow":
         dst = _resize_pillow(image, height, width, interpolation)
