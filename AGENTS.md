@@ -13,7 +13,7 @@ Issues are tracked in GitHub Issues on `wkentaro/imgviz`, managed via the `gh` C
 
 ### Triage labels
 
-Five canonical labels: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`. See `docs/agents/triage-labels.md`.
+Issue type, issue triage, and pull-request verdict labels follow `docs/agents/triage-labels.md`; consult it before routing issues or labeling PRs.
 
 ### Domain docs
 
