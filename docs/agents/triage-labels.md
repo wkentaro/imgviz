@@ -1,49 +1,24 @@
-# Triage and PR Labels
+# Triage labels
 
-This repository uses the following labels to route issue and pull-request work.
+`/triage` and the PR skills use role names. This file maps each role to the label string in this repository's tracker, for an issue and for a PR. The set is owned by `labels.json` in the `setup-github-labels` skill of `wkentaro/skills`.
 
-## Issue type
+| Role | On an issue | On a PR |
+| ----------------- | ----------------- | ---------------------------------------------- |
+| `bug` | `type:bug` | none, the conventional-commit title carries it |
+| `enhancement` | `type:feature` | none, the conventional-commit title carries it |
+| `needs-triage` | `needs-triage` | no verdict label, non-draft |
+| `needs-info` | `needs-info` | `recommend-revise` |
+| `ready-for-agent` | `ready-for-agent` | no verdict label, non-draft |
+| `ready-for-human` | `ready-for-human` | `recommend-merge` |
+| `wontfix` | `wontfix` | `recommend-close` |
 
-Every triaged issue carries exactly one type label:
+Use `type:task` instead of `type:feature` when an `enhancement` is maintenance, docs, or refactor work.
 
-| Label | Meaning |
-| --- | --- |
-| `type: bug` | Reporting a defect to fix |
-| `type: feature` | Requesting a new capability or improvement |
-| `type: task` | Other work, including maintenance, refactoring, documentation, and tests |
+Rules:
 
-## Issue triage
-
-Every triaged issue carries exactly one triage label. An issue with no triage
-label is fresh work for the agent to route; `needs-triage` is reserved for a
-maintainer decision.
-
-| Role | Label | Meaning |
-| --- | --- | --- |
-| Maintainer evaluates | `needs-triage` | Maintainer needs to evaluate this issue |
-| Reporter provides information | `needs-info` | Waiting on the reporter for more information; shared with PRs |
-| Agent implements | `ready-for-agent` | Fully specified and ready for an AFK agent |
-| Human implements | `ready-for-human` | Requires human implementation |
-| Closed without action | `wontfix` | Will not be actioned |
-
-## Pull-request state and verdicts
-
-The native draft flag means that a PR is still being built or iterated. A
-non-draft PR with no verdict is fresh work for the agent to finalize. After the
-agent finalizes a PR, exactly one of these mutually exclusive agent verdicts is
-used:
-
-| Label | Meaning |
-| --- | --- |
-| `recommend-merge` | Agent finalized it and endorses review and merge |
-| `recommend-close` | Agent recommends closing it; the maintainer reviews or closes |
-| `recommend-triage` | Code is sound, but the maintainer must decide the product or scope question |
-
-`needs-info` is shared between issues and PRs when waiting on an outside human.
-`maintainer-approved` is a human-only verdict: a maintainer reviewed this exact
-PR head and approves merging after required checks pass. An agent must apply it
-only after explicit maintainer direction; it may coexist with an agent verdict.
-
-Verdict labels record decisions; they never merge or close a PR. A new commit
-makes every verdict stale, so its authority must remove the stale label and
-renew the applicable verdict for the new head.
+- A triaged issue carries exactly one `type:` label and one triage state. An unlabeled issue is untriaged; `needs-triage` means under evaluation.
+- A non-draft PR with no verdict is the agent's to finalize. The draft flag is the "still being built" state.
+- The agent emits at most one `recommend-*` verdict per head. `recommend-revise` hands the PR back to its author. `recommend-merge`, `recommend-triage`, and `recommend-close` hand it to the maintainer; `recommend-triage` is for code that is sound where merge or close is a product call.
+- Verdicts are recommendations. The agent never merges and never closes.
+- `maintainer-approved` records the maintainer's own review of a self-authored PR. An agent applies it only on explicit direction. It may coexist with a `recommend-*` label.
+- A new push makes any verdict stale. The authority that set it clears and renews it.
