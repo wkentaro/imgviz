@@ -30,6 +30,24 @@ def test_resize(rgb: NDArray[np.uint8]) -> None:
     assert dst.dtype == np.uint8
 
 
+@pytest.mark.parametrize(
+    "height, width, expected_shape",
+    [
+        pytest.param(0.85, 0.75, (13, 19, 3), id="float-scale-both-axes"),
+        pytest.param(None, 11, (7, 11, 3), id="width-only-derives-height"),
+        pytest.param(13, None, (13, 22, 3), id="height-only-derives-width"),
+    ],
+)
+def test_resize_rounds_fractional_dimension_to_nearest(
+    rgb: NDArray[np.uint8],
+    height: int | float | None,
+    width: int | float | None,
+    expected_shape: tuple[int, ...],
+) -> None:
+    dst = imgviz.resize(rgb, height=height, width=width)
+    assert dst.shape == expected_shape
+
+
 def test_resize_backends_agree_on_shape(rgb: NDArray[np.uint8]) -> None:
     via_pillow = imgviz.resize(rgb, height=12, backend="pillow")
     via_opencv = imgviz.resize(rgb, height=12, backend="opencv")
