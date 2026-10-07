@@ -8,6 +8,7 @@ import cmap as _cmap
 import numpy as np
 from numpy.typing import NDArray
 
+from . import _utils
 from . import draw as draw_module
 from ._color import get_fg_color
 
@@ -90,8 +91,12 @@ def scalebar(
 
     block_width = max(bar_length, label_width)
     block_height = label_height + gap + bar_thickness
-    x0 = width - margin - block_width if loc in ("rt", "rb") else margin
-    y0 = height - margin - block_height if loc in ("lb", "rb") else margin
+    y0, x0 = _utils.compute_corner_origin(
+        container_size=(height, width),
+        block_size=(block_height, block_width),
+        loc=loc,
+        margin=margin,
+    )
 
     if isinstance(color, str) and color == "auto":
         region = image[max(0, y0) : y0 + block_height, max(0, x0) : x0 + block_width]

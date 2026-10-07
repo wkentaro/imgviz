@@ -1,8 +1,30 @@
 from __future__ import annotations
 
+from typing import Literal
+
 import numpy as np
 import PIL.Image
 from numpy.typing import NDArray
+
+
+def compute_corner_origin(
+    container_size: tuple[int, int],
+    block_size: tuple[int, int],
+    loc: Literal["lt", "rt", "lb", "rb"],
+    margin: int,
+) -> tuple[int, int]:
+    """Top-left origin (y0, x0) for placing a block in a container corner.
+
+    Places a block of ``block_size`` inside a ``container_size`` region, offset
+    by ``margin`` from the corner selected by ``loc`` ("lt", "rt", "lb", "rb").
+    """
+    if loc not in ("lt", "rt", "lb", "rb"):
+        raise ValueError(f"unsupported loc: {loc}")
+    height, width = container_size
+    block_height, block_width = block_size
+    y0 = margin if loc in ("lt", "rt") else height - margin - block_height
+    x0 = margin if loc in ("lt", "lb") else width - margin - block_width
+    return y0, x0
 
 
 def pillow_to_numpy(image: PIL.Image.Image) -> NDArray[np.uint8]:
