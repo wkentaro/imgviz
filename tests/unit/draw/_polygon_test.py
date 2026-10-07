@@ -28,6 +28,14 @@ def test_polygon_fill_only(white_image: NDArray[np.uint8]) -> None:
     assert (res[50, 50] == (255, 0, 0)).all()
 
 
+def test_polygon_vertices_are_yx_not_xy(white_image: NDArray[np.uint8]) -> None:
+    res = imgviz.draw.polygon(
+        white_image, yx=[(20, 10), (20, 90), (30, 50)], fill=(255, 0, 0)
+    )
+    assert (res[25, 50] == (255, 0, 0)).all()
+    assert (res[50, 25] == (255, 255, 255)).all()
+
+
 def test_polygon_fill_and_outline_with_width(
     white_image: NDArray[np.uint8],
 ) -> None:
