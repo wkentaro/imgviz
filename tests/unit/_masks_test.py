@@ -63,6 +63,30 @@ def test_mask2rgb_stripe(show: bool, image: NDArray[np.uint8] | None) -> None:
     assert 0.48 < num_pixels / mask.sum() < 0.52
 
 
+def test_mask2rgb_stripe_angle_0_draws_horizontal_bands() -> None:
+    result = imgviz.mask2rgb(
+        mask=_SIMPLE_MASK,
+        fill=imgviz.fill.Stripe(color=_COLOR_RED, angle=0.0, width=2, gap=2),
+    )
+
+    # bands run along rows, so each row is uniform; period 4 (width 2 + gap 2)
+    # puts row 21 mid-stripe (21 % 4 == 1) and row 23 mid-gap (23 % 4 == 3).
+    assert (result[21, 20:80] == _COLOR_RED).all()
+    assert (result[23, 20:80] == (0, 0, 0)).all()
+
+
+def test_mask2rgb_stripe_angle_half_pi_draws_vertical_bands() -> None:
+    result = imgviz.mask2rgb(
+        mask=_SIMPLE_MASK,
+        fill=imgviz.fill.Stripe(color=_COLOR_RED, angle=np.pi / 2, width=2, gap=2),
+    )
+
+    # bands run along columns, so each column is uniform; col 21 is mid-stripe
+    # and col 23 mid-gap (same period-4 phase as the horizontal case).
+    assert (result[20:80, 21] == _COLOR_RED).all()
+    assert (result[20:80, 23] == (0, 0, 0)).all()
+
+
 def test_mask2rgb_does_not_mutate_rgba_image() -> None:
     image: NDArray[np.uint8] = imgviz.rgb2rgba(_WHITE_IMAGE)
     original = image.copy()
