@@ -9,6 +9,8 @@ from numpy.typing import NDArray
 
 from ._normalize import normalize
 
+_FloatT = typing.TypeVar("_FloatT", bound=np.floating)
+
 
 class Colorize:
     """Apply a colormap to a 2D scalar field.
@@ -54,22 +56,8 @@ class Colorize:
     def __call__(
         self,
         scalar: NDArray,
-        dtype: type[np.float32],
-    ) -> NDArray[np.float32]: ...
-
-    @typing.overload
-    def __call__(
-        self,
-        scalar: NDArray,
-        dtype: type[np.float64],
-    ) -> NDArray[np.float64]: ...
-
-    @typing.overload
-    def __call__(
-        self,
-        scalar: NDArray,
-        dtype: type[np.floating],
-    ) -> NDArray[np.floating]: ...
+        dtype: type[_FloatT],
+    ) -> NDArray[_FloatT]: ...
 
     def __call__(
         self, scalar: NDArray, dtype: type[np.uint8] | type[np.floating] = np.uint8
@@ -124,28 +112,8 @@ def colorize(
     vmin: float | NDArray | None = ...,
     vmax: float | NDArray | None = ...,
     cmap: str | Callable[[NDArray], NDArray] = ...,
-    dtype: type[np.float32] = ...,
-) -> NDArray[np.float32]: ...
-
-
-@typing.overload
-def colorize(
-    scalar: NDArray,
-    vmin: float | NDArray | None = ...,
-    vmax: float | NDArray | None = ...,
-    cmap: str | Callable[[NDArray], NDArray] = ...,
-    dtype: type[np.float64] = ...,
-) -> NDArray[np.float64]: ...
-
-
-@typing.overload
-def colorize(
-    scalar: NDArray,
-    vmin: float | NDArray | None = ...,
-    vmax: float | NDArray | None = ...,
-    cmap: str | Callable[[NDArray], NDArray] = ...,
-    dtype: type[np.floating] = ...,
-) -> NDArray[np.floating]: ...
+    dtype: type[_FloatT] = ...,
+) -> NDArray[_FloatT]: ...
 
 
 def colorize(
