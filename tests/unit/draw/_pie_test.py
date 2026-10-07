@@ -49,6 +49,22 @@ def test_pie_single_fill_colors_disc(white_image: NDArray[np.uint8]) -> None:
     assert tuple(res[cy, cx]) == fill
 
 
+def test_pie_center_is_yx_not_xy() -> None:
+    # Non-square image with an asymmetric center, so a (cy, cx) -> (cx, cy)
+    # swap moves the disc to a distinguishable location instead of being
+    # masked by a square image / symmetric center.
+    image = np.full((150, 250, 3), 255, dtype=np.uint8)
+    center = (50, 120)
+    fill = (255, 0, 0)
+    res = imgviz.draw.pie(image, center=center, diameter=40, fills=[fill])
+    cy, cx = center
+    # The true (cy, cx) center is inside the disc.
+    assert tuple(res[cy, cx]) == fill
+    # The transposed (cx, cy) location, where a swap would place the disc, is
+    # far enough that a correctly placed disc cannot reach it.
+    assert tuple(res[cx, cy]) == (255, 255, 255)
+
+
 def test_pie_three_wedges_distinct_colors(white_image: NDArray[np.uint8]) -> None:
     # Three equal wedges (120 deg each) clockwise from 12 o'clock:
     #   Wedge 0 (red):   0-120  deg from 12 -- midpoint at  60 deg (upper-right)
