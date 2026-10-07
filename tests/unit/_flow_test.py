@@ -51,6 +51,28 @@ def test_flow2rgb_handles_negative_zero_v() -> None:
     np.testing.assert_array_equal(flow_viz, imgviz.flow2rgb(flow_pos))
 
 
+@pytest.mark.parametrize(
+    ("uv", "expected_rgb"),
+    [
+        pytest.param((1.0, 0.0), (255, 17, 0), id="+u"),
+        pytest.param((-1.0, 0.0), (0, 186, 255), id="-u"),
+        pytest.param((0.0, 1.0), (255, 246, 0), id="+v"),
+        pytest.param((0.0, -1.0), (107, 0, 255), id="-v"),
+    ],
+)
+def test_flow2rgb_maps_cardinal_directions_to_colors(
+    uv: tuple[float, float], expected_rgb: tuple[int, int, int]
+) -> None:
+    # The (u, v) direction selects the color-wheel hue; a u/v swap or an
+    # arctan2 sign error would recolor every vector while passing shape and
+    # dtype checks, so pin the four cardinal unit vectors to known colors.
+    flow = np.full((2, 2, 2), uv, dtype=np.float32)
+
+    flow_viz = imgviz.flow2rgb(flow, max_norm=1.0)
+
+    np.testing.assert_array_equal(flow_viz[0, 0], expected_rgb)
+
+
 def test_flow2rgb_rejects_non_3d() -> None:
     flow = np.zeros((4, 4), dtype=np.float32)
     with pytest.raises(ValueError, match="flow must be 3 dimensional"):
