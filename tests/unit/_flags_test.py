@@ -10,11 +10,11 @@ def black_image() -> NDArray[np.uint8]:
     return np.zeros((200, 200, 3), dtype=np.uint8)
 
 
-def make_flag_color(flag_index: int) -> NDArray[np.uint8]:
+def make_flag_color(flag_index: int, /) -> NDArray[np.uint8]:
     return imgviz.label_colormap()[1 + flag_index]
 
 
-def test_flags2rgb_preserves_shape_and_dtype(black_image: NDArray[np.uint8]) -> None:
+def test_flags2rgb_preserves_shape_and_dtype(*, black_image: NDArray[np.uint8]) -> None:
     res = imgviz.flags2rgb(
         black_image,
         flags=np.array([[True, False]]),
@@ -25,7 +25,7 @@ def test_flags2rgb_preserves_shape_and_dtype(black_image: NDArray[np.uint8]) -> 
     assert res.dtype == black_image.dtype
 
 
-def test_flags2rgb_promotes_grayscale(black_image: NDArray[np.uint8]) -> None:
+def test_flags2rgb_promotes_grayscale(*, black_image: NDArray[np.uint8]) -> None:
     res = imgviz.flags2rgb(
         black_image[:, :, 0],
         flags=np.array([[True]]),
@@ -36,6 +36,7 @@ def test_flags2rgb_promotes_grayscale(black_image: NDArray[np.uint8]) -> None:
 
 
 def test_flags2rgb_on_single_flag_draws_solid_disc(
+    *,
     black_image: NDArray[np.uint8],
 ) -> None:
     res = imgviz.flags2rgb(
@@ -49,6 +50,7 @@ def test_flags2rgb_on_single_flag_draws_solid_disc(
 
 
 def test_flags2rgb_on_multiple_flags_split_into_wedges(
+    *,
     black_image: NDArray[np.uint8],
 ) -> None:
     res = imgviz.flags2rgb(
@@ -61,7 +63,9 @@ def test_flags2rgb_on_multiple_flags_split_into_wedges(
     assert np.array_equal(res[100, 95], make_flag_color(1))
 
 
-def test_flags2rgb_on_zero_flags_draws_no_pie(black_image: NDArray[np.uint8]) -> None:
+def test_flags2rgb_on_zero_flags_draws_no_pie(
+    *, black_image: NDArray[np.uint8]
+) -> None:
     res = imgviz.flags2rgb(
         black_image,
         flags=np.array([[False, False]]),
@@ -71,7 +75,7 @@ def test_flags2rgb_on_zero_flags_draws_no_pie(black_image: NDArray[np.uint8]) ->
     assert np.array_equal(res[60:140, 60:140], black_image[60:140, 60:140])
 
 
-def test_flags2rgb_all_draws_off_wedges_gray(black_image: NDArray[np.uint8]) -> None:
+def test_flags2rgb_all_draws_off_wedges_gray(*, black_image: NDArray[np.uint8]) -> None:
     res = imgviz.flags2rgb(
         black_image,
         flags=np.array([[True, False]]),
@@ -83,7 +87,7 @@ def test_flags2rgb_all_draws_off_wedges_gray(black_image: NDArray[np.uint8]) -> 
     assert np.array_equal(res[100, 95], (200, 200, 200))
 
 
-def test_flags2rgb_legend_lists_all_flags(black_image: NDArray[np.uint8]) -> None:
+def test_flags2rgb_legend_lists_all_flags(*, black_image: NDArray[np.uint8]) -> None:
     res = imgviz.flags2rgb(
         black_image,
         flags=np.array([[False, False]]),
@@ -96,7 +100,9 @@ def test_flags2rgb_legend_lists_all_flags(black_image: NDArray[np.uint8]) -> Non
     assert (legend_corner == make_flag_color(1)).all(axis=2).any()
 
 
-def test_flags2rgb_all_legend_gains_off_entry(black_image: NDArray[np.uint8]) -> None:
+def test_flags2rgb_all_legend_gains_off_entry(
+    *, black_image: NDArray[np.uint8]
+) -> None:
     flags = np.array([[True, True]])
     centers = np.array([[100.0, 100.0]])
     flag_names = ["broken", "occluded"]
@@ -116,7 +122,7 @@ def test_flags2rgb_all_legend_gains_off_entry(black_image: NDArray[np.uint8]) ->
     assert (res_all[:100, :100] == (200, 200, 200)).all(axis=2).any()
 
 
-def test_flags2rgb_custom_flag_colors(black_image: NDArray[np.uint8]) -> None:
+def test_flags2rgb_custom_flag_colors(*, black_image: NDArray[np.uint8]) -> None:
     res = imgviz.flags2rgb(
         black_image,
         flags=np.array([[True]]),
@@ -127,7 +133,7 @@ def test_flags2rgb_custom_flag_colors(black_image: NDArray[np.uint8]) -> None:
     assert np.array_equal(res[100, 100], (255, 255, 0))
 
 
-def test_flags2rgb_outline_defaults_to_white(black_image: NDArray[np.uint8]) -> None:
+def test_flags2rgb_outline_defaults_to_white(*, black_image: NDArray[np.uint8]) -> None:
     res = imgviz.flags2rgb(
         black_image,
         flags=np.array([[True]]),
@@ -138,7 +144,7 @@ def test_flags2rgb_outline_defaults_to_white(black_image: NDArray[np.uint8]) -> 
     assert (disc == (255, 255, 255)).all(axis=2).any()
 
 
-def test_flags2rgb_custom_outline_color(black_image: NDArray[np.uint8]) -> None:
+def test_flags2rgb_custom_outline_color(*, black_image: NDArray[np.uint8]) -> None:
     flags = np.array([[True]])
     centers = np.array([[100.0, 100.0]])
     flag_names = ["broken"]
@@ -165,7 +171,7 @@ def test_flags2rgb_custom_outline_color(black_image: NDArray[np.uint8]) -> None:
     assert not (black[disc, disc] == (255, 255, 255)).all(axis=2).any()
 
 
-def test_flags2rgb_validates_inputs(black_image: NDArray[np.uint8]) -> None:
+def test_flags2rgb_validates_inputs(*, black_image: NDArray[np.uint8]) -> None:
     flags = np.array([[True]])
     centers = np.array([[100.0, 100.0]])
     flag_names = ["broken"]

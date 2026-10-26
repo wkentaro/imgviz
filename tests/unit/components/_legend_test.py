@@ -12,7 +12,7 @@ def white_image() -> NDArray[np.uint8]:
     return np.full((200, 200, 3), 255, dtype=np.uint8)
 
 
-def test_legend_preserves_shape_and_dtype(white_image: NDArray[np.uint8]) -> None:
+def test_legend_preserves_shape_and_dtype(*, white_image: NDArray[np.uint8]) -> None:
     res = imgviz.components.legend(
         white_image,
         items=[("cat", (255, 0, 0)), ("dog", (0, 0, 255))],
@@ -35,7 +35,7 @@ def test_legend_wash_rounds_to_nearest() -> None:
     assert res[5, 5].tolist() == [228, 228, 228]
 
 
-def test_legend_empty_items_is_noop(white_image: NDArray[np.uint8]) -> None:
+def test_legend_empty_items_is_noop(*, white_image: NDArray[np.uint8]) -> None:
     res = imgviz.components.legend(white_image, items=[])
     assert np.array_equal(res, white_image)
 
@@ -50,6 +50,7 @@ def test_legend_empty_items_is_noop(white_image: NDArray[np.uint8]) -> None:
     ],
 )
 def test_legend_loc_places_in_corner(
+    *,
     white_image: NDArray[np.uint8],
     loc: Literal["lt", "rt", "lb", "rb"],
     corner: tuple[slice, slice],
@@ -64,7 +65,7 @@ def test_legend_loc_places_in_corner(
     assert non_white.sum() == non_white[corner].sum()
 
 
-def test_legend_rejects_unsupported_loc(white_image: NDArray[np.uint8]) -> None:
+def test_legend_rejects_unsupported_loc(*, white_image: NDArray[np.uint8]) -> None:
     with pytest.raises(ValueError, match="unsupported loc"):
         imgviz.components.legend(
             white_image,

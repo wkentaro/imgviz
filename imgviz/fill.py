@@ -122,6 +122,7 @@ class Stripe(Fill):
 
 
 def _blend(
+    *,
     image: NDArray[np.uint8],
     mask: NDArray[np.bool_],
     color: tuple[int, int, int] | NDArray[np.uint8],

@@ -8,7 +8,7 @@ import imgviz
 
 
 def _regular_polygon_yx(
-    center: tuple[float, float], radius: float, n_sides: int
+    *, center: tuple[float, float], radius: float, n_sides: int
 ) -> list[tuple[float, float]]:
     cy, cx = center
     return [

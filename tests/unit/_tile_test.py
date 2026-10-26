@@ -20,26 +20,26 @@ def images() -> list[NDArray[np.uint8]]:
     return [np.full((10, 12, 3), i * 10, dtype=np.uint8) for i in range(4)]
 
 
-def test_tile_auto_shape(images: list[NDArray[np.uint8]]) -> None:
+def test_tile_auto_shape(*, images: list[NDArray[np.uint8]]) -> None:
     tiled = imgviz.tile(images)
 
     assert tiled.shape == (20, 24, 3)
     assert tiled.dtype == np.uint8
 
 
-def test_tile_row_only(images: list[NDArray[np.uint8]]) -> None:
+def test_tile_row_only(*, images: list[NDArray[np.uint8]]) -> None:
     tiled = imgviz.tile(images, row=1)
 
     assert tiled.shape == (10, 48, 3)
 
 
-def test_tile_col_only(images: list[NDArray[np.uint8]]) -> None:
+def test_tile_col_only(*, images: list[NDArray[np.uint8]]) -> None:
     tiled = imgviz.tile(images, col=1)
 
     assert tiled.shape == (40, 12, 3)
 
 
-def test_tile_draws_border(images: list[NDArray[np.uint8]]) -> None:
+def test_tile_draws_border(*, images: list[NDArray[np.uint8]]) -> None:
     tiled = imgviz.tile(images, row=2, col=2, border=(255, 0, 0), border_width=3)
 
     assert tiled.shape == (23, 27, 3)
@@ -87,7 +87,7 @@ def test_tile_auto_shape_shrinks_redundant_row() -> None:
 
 @pytest.mark.parametrize(("row", "col"), [(0, None), (None, 0), (-1, None), (None, -1)])
 def test_tile_rejects_non_positive_row_col(
-    images: list[NDArray[np.uint8]], row: int | None, col: int | None
+    *, images: list[NDArray[np.uint8]], row: int | None, col: int | None
 ) -> None:
     with pytest.raises(ValueError, match="must be positive"):
         imgviz.tile(images, row=row, col=col)
@@ -95,7 +95,7 @@ def test_tile_rejects_non_positive_row_col(
 
 @pytest.mark.parametrize(("row", "col"), [(0, 2), (2, 0), (-1, 2), (2, -1)])
 def test_tile_rejects_non_positive_row_and_col(
-    images: list[NDArray[np.uint8]], row: int, col: int
+    *, images: list[NDArray[np.uint8]], row: int, col: int
 ) -> None:
     with pytest.raises(ValueError, match="row and col must be positive"):
         imgviz.tile(images, row=row, col=col)
@@ -103,7 +103,7 @@ def test_tile_rejects_non_positive_row_and_col(
 
 @pytest.mark.parametrize("kwargs", [{"col": "2"}, {"row": "2"}])
 def test_tile_rejects_non_int_dimension(
-    images: list[NDArray[np.uint8]], kwargs: dict[str, str]
+    *, images: list[NDArray[np.uint8]], kwargs: dict[str, str]
 ) -> None:
     with pytest.raises(TypeError, match="must be int"):
         imgviz.tile(images, **kwargs)  # type: ignore[arg-type]
@@ -111,7 +111,7 @@ def test_tile_rejects_non_int_dimension(
 
 @pytest.mark.parametrize("kwargs", [{"row": "1", "col": 2}, {"row": 1, "col": "2"}])
 def test_tile_rejects_non_int_row_and_col(
-    images: list[NDArray[np.uint8]], kwargs: dict[str, object]
+    *, images: list[NDArray[np.uint8]], kwargs: dict[str, object]
 ) -> None:
     with pytest.raises(TypeError, match="must be int"):
         imgviz.tile(images, **kwargs)  # type: ignore[arg-type]

@@ -11,12 +11,12 @@ def black_image() -> NDArray[np.uint8]:
     return np.zeros((100, 100, 3), dtype=np.uint8)
 
 
-def _filled_bbox(image: NDArray[np.uint8]) -> tuple[int, int, int, int]:
+def _filled_bbox(image: NDArray[np.uint8], /) -> tuple[int, int, int, int]:
     ys, xs = np.where(image[:, :, 0] > 0)
     return int(ys.min()), int(ys.max()), int(xs.min()), int(xs.max())
 
 
-def test_rotated_rectangle(black_image: NDArray[np.uint8]) -> None:
+def test_rotated_rectangle(*, black_image: NDArray[np.uint8]) -> None:
     res = imgviz.draw.rotated_rectangle(
         black_image, center=(50, 50), size=(40, 20), angle=30, fill=(255, 255, 255)
     )
@@ -26,6 +26,7 @@ def test_rotated_rectangle(black_image: NDArray[np.uint8]) -> None:
 
 
 def test_rotated_rectangle_rejects_missing_fill_and_outline(
+    *,
     black_image: NDArray[np.uint8],
 ) -> None:
     with pytest.raises(ValueError, match="at least one of `fill` or `outline`"):
@@ -35,6 +36,7 @@ def test_rotated_rectangle_rejects_missing_fill_and_outline(
 
 
 def test_rotated_rectangle_zero_angle_is_axis_aligned(
+    *,
     black_image: NDArray[np.uint8],
 ) -> None:
     res = imgviz.draw.rotated_rectangle(
@@ -48,6 +50,7 @@ def test_rotated_rectangle_zero_angle_is_axis_aligned(
 
 
 def test_rotated_rectangle_ninety_degrees_swaps_extent(
+    *,
     black_image: NDArray[np.uint8],
 ) -> None:
     res = imgviz.draw.rotated_rectangle(
@@ -61,6 +64,7 @@ def test_rotated_rectangle_ninety_degrees_swaps_extent(
 
 
 def test_rotated_rectangle_positive_angle_rotates_clockwise(
+    *,
     black_image: NDArray[np.uint8],
 ) -> None:
     # a thin vertical bar; clockwise (image y-axis down) swings its top to the
@@ -76,7 +80,7 @@ def test_rotated_rectangle_positive_angle_rotates_clockwise(
     assert bottom_x_mean < 50
 
 
-def test_rotated_rectangle_outline_only(black_image: NDArray[np.uint8]) -> None:
+def test_rotated_rectangle_outline_only(*, black_image: NDArray[np.uint8]) -> None:
     res = imgviz.draw.rotated_rectangle(
         black_image,
         center=(50, 50),
@@ -91,7 +95,7 @@ def test_rotated_rectangle_outline_only(black_image: NDArray[np.uint8]) -> None:
     np.testing.assert_array_equal(res[50, 50], [0, 0, 0])
 
 
-def test_rotated_rectangle_fill_and_outline(black_image: NDArray[np.uint8]) -> None:
+def test_rotated_rectangle_fill_and_outline(*, black_image: NDArray[np.uint8]) -> None:
     res = imgviz.draw.rotated_rectangle(
         black_image,
         center=(50, 50),
@@ -108,6 +112,7 @@ def test_rotated_rectangle_fill_and_outline(black_image: NDArray[np.uint8]) -> N
 
 
 def test_rotated_rectangle_preserves_area_under_rotation(
+    *,
     black_image: NDArray[np.uint8],
 ) -> None:
     upright = imgviz.draw.rotated_rectangle(

@@ -75,7 +75,7 @@ def test_heatmap_peak_lands_at_yx_on_non_square_image() -> None:
 
 
 @pytest.mark.parametrize("points", [[[1, 2, 3]], np.zeros((0, 3))])
-def test_heatmap_rejects_bad_points_shape(points: ArrayLike) -> None:
+def test_heatmap_rejects_bad_points_shape(*, points: ArrayLike) -> None:
     with pytest.raises(ValueError, match=r"shape \(N, 2\)"):
         imgviz.heatmap(points, shape=(10, 10))
 
@@ -96,6 +96,6 @@ def test_heatmap_rejects_non_finite_weights() -> None:
 
 
 @pytest.mark.parametrize("sigma", [0, -1, float("nan"), float("inf")])
-def test_heatmap_rejects_invalid_sigma(sigma: float) -> None:
+def test_heatmap_rejects_invalid_sigma(*, sigma: float) -> None:
     with pytest.raises(ValueError, match="sigma must be"):
         imgviz.heatmap([(1, 1)], shape=(10, 10), sigma=sigma)

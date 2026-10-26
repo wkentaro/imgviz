@@ -9,7 +9,7 @@ import imgviz
     [(40, 50, 3), (40, 50), (40, 50, 4), (40, 50, 5)],
     ids=["rgb", "gray", "rgba", "five-channel"],
 )
-def test_blur_whole_image(shape: tuple[int, ...]) -> None:
+def test_blur_whole_image(*, shape: tuple[int, ...]) -> None:
     rng = np.random.default_rng(seed=0)
     img = rng.integers(0, 256, size=shape).astype(np.uint8)
 

@@ -9,7 +9,7 @@ from numpy.typing import NDArray
 from ._colorize import colorize
 
 
-def _to_luminance(image: NDArray) -> NDArray[np.float32]:
+def _to_luminance(image: NDArray, /) -> NDArray[np.float32]:
     arr = image.astype(np.float32)
     if arr.ndim == 2:
         return arr

@@ -52,7 +52,7 @@ def bbox() -> list[float]:
 
 
 def test_instances2rgb_draws_bboxes(
-    image: NDArray[np.uint8], bbox: list[float]
+    *, image: NDArray[np.uint8], bbox: list[float]
 ) -> None:
     out = imgviz.instances2rgb(image=image, labels=[1], bboxes=[bbox])
 
@@ -63,7 +63,7 @@ def test_instances2rgb_draws_bboxes(
 
 
 def test_instances2rgb_blends_masks(
-    image: NDArray[np.uint8], mask: NDArray[np.bool_]
+    *, image: NDArray[np.uint8], mask: NDArray[np.bool_]
 ) -> None:
     out = imgviz.instances2rgb(image=image, labels=[1], masks=[mask])
 
@@ -90,7 +90,7 @@ def test_instances2rgb_mask_blend_rounds_to_nearest() -> None:
 
 
 def test_instances2rgb_draws_captions(
-    image: NDArray[np.uint8], bbox: list[float]
+    *, image: NDArray[np.uint8], bbox: list[float]
 ) -> None:
     out = imgviz.instances2rgb(image=image, labels=[1], bboxes=[bbox], captions=["cat"])
 
@@ -100,7 +100,7 @@ def test_instances2rgb_draws_captions(
 
 
 def test_instances2rgb_draws_boundary(
-    image: NDArray[np.uint8], mask: NDArray[np.bool_]
+    *, image: NDArray[np.uint8], mask: NDArray[np.bool_]
 ) -> None:
     out = imgviz.instances2rgb(image=image, labels=[1], masks=[mask], boundary_width=3)
 
@@ -125,6 +125,7 @@ def test_instances2rgb_runs_on_voc_example() -> None:
 
 
 def test_instances2rgb_requires_bboxes_or_masks(
+    *,
     image: NDArray[np.uint8],
 ) -> None:
     with pytest.raises(ValueError, match="bboxes or masks must be provided"):
@@ -132,32 +133,32 @@ def test_instances2rgb_requires_bboxes_or_masks(
 
 
 def test_instances2rgb_rejects_negative_labels(
-    image: NDArray[np.uint8], bbox: list[float]
+    *, image: NDArray[np.uint8], bbox: list[float]
 ) -> None:
     with pytest.raises(ValueError, match="all labels must be >= 0"):
         imgviz.instances2rgb(image=image, labels=[-1], bboxes=[bbox])
 
 
 def test_instances2rgb_rejects_length_mismatch(
-    image: NDArray[np.uint8], bbox: list[float]
+    *, image: NDArray[np.uint8], bbox: list[float]
 ) -> None:
     with pytest.raises(ValueError, match="must have the same length"):
         imgviz.instances2rgb(image=image, labels=[1, 2], bboxes=[bbox])
 
 
 def test_instances2rgb_rejects_non_uint8(
-    image: NDArray[np.uint8], bbox: list[float]
+    *, image: NDArray[np.uint8], bbox: list[float]
 ) -> None:
     with pytest.raises(ValueError, match="image dtype must be np.uint8"):
         imgviz.instances2rgb(image=image.astype(float), labels=[1], bboxes=[bbox])
 
 
-def test_instances2rgb_rejects_non_array(bbox: list[float]) -> None:
+def test_instances2rgb_rejects_non_array(*, bbox: list[float]) -> None:
     with pytest.raises(TypeError, match="image must be a numpy array"):
         imgviz.instances2rgb(image=[[1]], labels=[1], bboxes=[bbox])  # type: ignore[arg-type]
 
 
-def test_instances2rgb_accepts_grayscale_image(bbox: list[float]) -> None:
+def test_instances2rgb_accepts_grayscale_image(*, bbox: list[float]) -> None:
     gray = np.full((50, 50), 30, dtype=np.uint8)
 
     out = imgviz.instances2rgb(image=gray, labels=[1], bboxes=[bbox])
@@ -167,13 +168,13 @@ def test_instances2rgb_accepts_grayscale_image(bbox: list[float]) -> None:
     np.testing.assert_array_equal(out[0, 0], np.full(3, gray[0, 0]))
 
 
-def test_instances2rgb_rejects_4d_image(bbox: list[float]) -> None:
+def test_instances2rgb_rejects_4d_image(*, bbox: list[float]) -> None:
     image = np.full((50, 50, 3, 1), 30, dtype=np.uint8)
     with pytest.raises(ValueError, match="image must be 2 or 3 dimensional"):
         imgviz.instances2rgb(image=image, labels=[1], bboxes=[bbox])
 
 
-def test_instances2rgb_skips_empty_mask(image: NDArray[np.uint8]) -> None:
+def test_instances2rgb_skips_empty_mask(*, image: NDArray[np.uint8]) -> None:
     empty_mask = np.zeros((50, 50), dtype=bool)
 
     out = imgviz.instances2rgb(image=image, labels=[1], masks=[empty_mask])
@@ -181,7 +182,7 @@ def test_instances2rgb_skips_empty_mask(image: NDArray[np.uint8]) -> None:
     np.testing.assert_array_equal(out, image)
 
 
-def test_instances2rgb_skips_zero_area_bbox(image: NDArray[np.uint8]) -> None:
+def test_instances2rgb_skips_zero_area_bbox(*, image: NDArray[np.uint8]) -> None:
     zero_area_bbox = [10.0, 10.0, 10.0, 10.0]
     out = imgviz.instances2rgb(image=image, labels=[1], bboxes=[zero_area_bbox])
 

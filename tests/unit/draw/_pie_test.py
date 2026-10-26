@@ -12,7 +12,7 @@ def white_image() -> NDArray[np.uint8]:
     return np.full((200, 200, 3), 255, dtype=np.uint8)
 
 
-def test_pie_preserves_shape_and_dtype(white_image: NDArray[np.uint8]) -> None:
+def test_pie_preserves_shape_and_dtype(*, white_image: NDArray[np.uint8]) -> None:
     res = imgviz.draw.pie(
         white_image,
         center=(100, 100),
@@ -24,7 +24,7 @@ def test_pie_preserves_shape_and_dtype(white_image: NDArray[np.uint8]) -> None:
     assert not np.array_equal(res, white_image)
 
 
-def test_pie_empty_fills_is_noop(white_image: NDArray[np.uint8]) -> None:
+def test_pie_empty_fills_is_noop(*, white_image: NDArray[np.uint8]) -> None:
     res = imgviz.draw.pie(
         white_image,
         center=(100, 100),
@@ -34,7 +34,7 @@ def test_pie_empty_fills_is_noop(white_image: NDArray[np.uint8]) -> None:
     assert np.array_equal(res, white_image)
 
 
-def test_pie_single_fill_colors_disc(white_image: NDArray[np.uint8]) -> None:
+def test_pie_single_fill_colors_disc(*, white_image: NDArray[np.uint8]) -> None:
     center = (100, 100)
     diameter = 80
     fill = (0, 0, 255)
@@ -49,7 +49,7 @@ def test_pie_single_fill_colors_disc(white_image: NDArray[np.uint8]) -> None:
     assert tuple(res[cy, cx]) == fill
 
 
-def test_pie_three_wedges_distinct_colors(white_image: NDArray[np.uint8]) -> None:
+def test_pie_three_wedges_distinct_colors(*, white_image: NDArray[np.uint8]) -> None:
     # Three equal wedges (120 deg each) clockwise from 12 o'clock:
     #   Wedge 0 (red):   0-120  deg from 12 -- midpoint at  60 deg (upper-right)
     #   Wedge 1 (green): 120-240 deg from 12 -- midpoint at 180 deg (bottom)
@@ -81,7 +81,7 @@ def test_pie_three_wedges_distinct_colors(white_image: NDArray[np.uint8]) -> Non
     assert sample_at(300) == fills[2], "midpoint of wedge 2 should be blue"
 
 
-def test_pie_outline_is_drawn(white_image: NDArray[np.uint8]) -> None:
+def test_pie_outline_is_drawn(*, white_image: NDArray[np.uint8]) -> None:
     outline = (0, 0, 0)
     res = imgviz.draw.pie(
         white_image,

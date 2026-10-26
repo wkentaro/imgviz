@@ -29,7 +29,7 @@ def test_diff_signed_centered_at_zero() -> None:
     [(-2.0, None), (None, 2.0), (2.0, None), (None, -2.0)],
 )
 def test_diff_signed_single_bound_is_symmetric(
-    vmin: float | None, vmax: float | None
+    *, vmin: float | None, vmax: float | None
 ) -> None:
     a = np.tile(np.linspace(-3, 3, 9, dtype=np.float32), (9, 1))
     b = np.zeros((9, 9), dtype=np.float32)
@@ -52,6 +52,7 @@ def test_diff_signed_symmetric_under_swap() -> None:
 
 @pytest.mark.parametrize("mode", ["signed", "abs", "ssim"])
 def test_diff_identical_inputs_are_neutral(
+    *,
     mode: Literal["signed", "abs", "ssim"],
 ) -> None:
     image = imgviz.data.arc2017()["rgb"]
@@ -96,7 +97,7 @@ def test_diff_signed_asymmetric_bounds_are_used_as_is() -> None:
 
 @pytest.mark.parametrize(("vmin", "vmax"), [(0.0, None), (None, 0.0), (0.0, 0.0)])
 def test_diff_signed_zero_bound_falls_back_to_data(
-    vmin: float | None, vmax: float | None
+    *, vmin: float | None, vmax: float | None
 ) -> None:
     a = np.tile(np.linspace(-2, 2, 9, dtype=np.float32), (9, 1))
     b = np.zeros((9, 9), dtype=np.float32)
@@ -219,7 +220,7 @@ def test_diff_ssim_propagates_nan_locally() -> None:
 
 
 @pytest.mark.parametrize("mode", ["signed", "abs"])
-def test_diff_propagates_nan(mode: Literal["signed", "abs"]) -> None:
+def test_diff_propagates_nan(*, mode: Literal["signed", "abs"]) -> None:
     a = np.zeros((4, 4), dtype=np.float32)
     b = np.zeros((4, 4), dtype=np.float32)
     a[0, 0] = np.nan
@@ -260,7 +261,7 @@ def test_diff_ssim_small_image_raises() -> None:
     ("a_all_nan", "b_all_nan"),
     [(True, True), (True, False), (False, True)],
 )
-def test_diff_ssim_all_nan_inputs(a_all_nan: bool, b_all_nan: bool) -> None:
+def test_diff_ssim_all_nan_inputs(*, a_all_nan: bool, b_all_nan: bool) -> None:
     shape = (16, 16)
     a = (
         np.full(shape, np.nan, dtype=np.float32)

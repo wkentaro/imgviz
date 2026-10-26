@@ -118,7 +118,9 @@ def test_label2rgb_rejects_out_of_range_alpha() -> None:
         imgviz.label2rgb(label=label, alpha=[0.5, 1.5])
 
 
-def test_label2rgb_dict_label_names_centroid(labeled_square: NDArray[np.int32]) -> None:
+def test_label2rgb_dict_label_names_centroid(
+    *, labeled_square: NDArray[np.int32]
+) -> None:
     plain = imgviz.label2rgb(label=labeled_square)
     labelviz = imgviz.label2rgb(
         label=labeled_square,
@@ -132,6 +134,7 @@ def test_label2rgb_dict_label_names_centroid(labeled_square: NDArray[np.int32]) 
 
 
 def test_label2rgb_thresh_suppress_draws_no_text(
+    *,
     labeled_square: NDArray[np.int32],
 ) -> None:
     plain = imgviz.label2rgb(label=labeled_square)

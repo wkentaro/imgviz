@@ -45,7 +45,7 @@ def blur(
     return _utils.apply_mask(image=image, transformed=blurred, mask=mask)
 
 
-def _gaussian_blur(image: NDArray, sigma: float) -> NDArray:
+def _gaussian_blur(*, image: NDArray, sigma: float) -> NDArray:
     if image.ndim == 2:
         return _gaussian_blur_2d(arr=image, sigma=sigma)
 
@@ -56,7 +56,7 @@ def _gaussian_blur(image: NDArray, sigma: float) -> NDArray:
     return dst
 
 
-def _gaussian_blur_2d(arr: NDArray, sigma: float) -> NDArray:
+def _gaussian_blur_2d(*, arr: NDArray, sigma: float) -> NDArray:
     pil = PIL.Image.fromarray(arr)
     blurred = pil.filter(PIL.ImageFilter.GaussianBlur(radius=sigma))
     return np.asarray(blurred)

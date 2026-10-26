@@ -5,7 +5,7 @@ import imgviz
 
 
 @pytest.mark.parametrize("dtype", [np.uint8, np.float32, np.float64])
-def test_depth2rgb(dtype: type[np.uint8] | type[np.floating]) -> None:
+def test_depth2rgb(*, dtype: type[np.uint8] | type[np.floating]) -> None:
     data = imgviz.data.arc2017()
 
     with pytest.warns(DeprecationWarning, match="depth2rgb"):

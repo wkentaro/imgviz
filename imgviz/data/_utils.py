@@ -7,6 +7,7 @@ from numpy.typing import NDArray
 
 
 def compose_class_label(
+    *,
     shape: tuple[int, int],
     labels: NDArray[np.int32],
     masks: NDArray,
@@ -18,7 +19,7 @@ def compose_class_label(
     return class_label
 
 
-def read_class_names(path: pathlib.Path) -> list[str]:
+def read_class_names(path: pathlib.Path, /) -> list[str]:
     """Read newline-delimited class names from a text file."""
     with open(path) as f:
         return [name.strip() for name in f]

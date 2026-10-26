@@ -125,7 +125,7 @@ def rgba2rgb(rgba: NDArray[np.uint8]) -> NDArray[np.uint8]:
     return rgb
 
 
-def require_uint8_image(image: NDArray) -> NDArray[np.uint8]:
+def require_uint8_image(image: NDArray, /) -> NDArray[np.uint8]:
     """Validate a uint8 image and promote 2D grayscale to RGB.
 
     Args:
@@ -226,6 +226,7 @@ def asrgba(image: NDArray) -> NDArray[np.uint8]:
 
 def get_fg_color(
     color: tuple[int, int, int] | NDArray[np.uint8],
+    /,
 ) -> tuple[int, int, int]:
     """Get foreground color (black or white) for given background color."""
     color_arr: NDArray[np.uint8] = np.asarray(color, dtype=np.uint8)

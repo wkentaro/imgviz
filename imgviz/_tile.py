@@ -13,6 +13,7 @@ from .draw import Ink
 
 
 def _tile(
+    *,
     images: list[NDArray[np.uint8]],
     shape: tuple[int, int],
     border: NDArray[np.uint8] | None,
@@ -49,7 +50,7 @@ def _tile(
     return dst
 
 
-def _get_tile_shape(num: int, hw_ratio: float) -> tuple[int, int]:
+def _get_tile_shape(num: int, /, *, hw_ratio: float) -> tuple[int, int]:
     r_num = int(round(math.sqrt(num / hw_ratio)))  # weighted by wh_ratio
     c_num = 0
     while r_num * c_num < num:

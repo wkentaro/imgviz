@@ -11,7 +11,7 @@ def white_image() -> NDArray[np.uint8]:
     return np.full((100, 100, 3), 255, dtype=np.uint8)
 
 
-def test_box_corners(white_image: NDArray[np.uint8]) -> None:
+def test_box_corners(*, white_image: NDArray[np.uint8]) -> None:
     res = imgviz.draw.box_corners(
         white_image, yx1=(20, 20), yx2=(80, 80), fill=(0, 255, 0)
     )
@@ -30,7 +30,7 @@ def test_box_corners_four_corners_symmetric() -> None:
     assert np.array_equal(changed, np.flipud(changed))
 
 
-def test_box_corners_draws_only_corners(white_image: NDArray[np.uint8]) -> None:
+def test_box_corners_draws_only_corners(*, white_image: NDArray[np.uint8]) -> None:
     res = imgviz.draw.box_corners(
         white_image, yx1=(20, 20), yx2=(80, 80), fill=(0, 255, 0), length=12
     )
@@ -39,6 +39,7 @@ def test_box_corners_draws_only_corners(white_image: NDArray[np.uint8]) -> None:
 
 
 def test_box_corners_degrades_to_rectangle_when_length_exceeds_box(
+    *,
     white_image: NDArray[np.uint8],
 ) -> None:
     res = imgviz.draw.box_corners(
@@ -47,7 +48,7 @@ def test_box_corners_degrades_to_rectangle_when_length_exceeds_box(
     assert np.array_equal(res[20, 50], [0, 255, 0])  # top edge now fully drawn
 
 
-def test_box_corners_respects_width(white_image: NDArray[np.uint8]) -> None:
+def test_box_corners_respects_width(*, white_image: NDArray[np.uint8]) -> None:
     thin = imgviz.draw.box_corners(
         white_image, yx1=(20, 20), yx2=(80, 80), fill=(0, 255, 0), width=1
     )
@@ -59,14 +60,14 @@ def test_box_corners_respects_width(white_image: NDArray[np.uint8]) -> None:
     assert n_thin < n_thick
 
 
-def test_box_corners_rejects_inverted_box(white_image: NDArray[np.uint8]) -> None:
+def test_box_corners_rejects_inverted_box(*, white_image: NDArray[np.uint8]) -> None:
     with pytest.raises(ValueError, match="min vertex"):
         imgviz.draw.box_corners(
             white_image, yx1=(80, 80), yx2=(20, 20), fill=(0, 255, 0)
         )
 
 
-def test_box_corners_rejects_non_pil_image(white_image: NDArray[np.uint8]) -> None:
+def test_box_corners_rejects_non_pil_image(*, white_image: NDArray[np.uint8]) -> None:
     with pytest.raises(TypeError, match="PIL.Image.Image"):
         imgviz.draw.box_corners_(
             white_image,  # type: ignore[arg-type]

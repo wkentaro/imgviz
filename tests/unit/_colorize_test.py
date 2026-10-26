@@ -6,7 +6,7 @@ import imgviz
 
 
 @pytest.mark.parametrize("dtype", [np.uint8, np.float32, np.float64])
-def test_colorize(dtype: type[np.uint8] | type[np.floating]) -> None:
+def test_colorize(*, dtype: type[np.uint8] | type[np.floating]) -> None:
     data = imgviz.data.arc2017()
 
     out = imgviz.colorize(data["depth"], dtype=dtype)

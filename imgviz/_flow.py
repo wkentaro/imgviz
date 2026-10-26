@@ -49,7 +49,7 @@ def _make_colorwheel() -> NDArray[np.floating]:
     return colorwheel
 
 
-def _flow_compute_color(flow_u: NDArray, flow_v: NDArray) -> NDArray[np.uint8]:
+def _flow_compute_color(flow_u: NDArray, flow_v: NDArray, /) -> NDArray[np.uint8]:
     H, W = flow_u.shape[:2]
     flow_image = np.zeros((H, W, 3), np.uint8)
 

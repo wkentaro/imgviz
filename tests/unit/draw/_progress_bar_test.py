@@ -17,7 +17,7 @@ def white_image() -> NDArray[np.uint8]:
     return np.full((100, 100, 3), 255, dtype=np.uint8)
 
 
-def test_progress_bar(white_image: NDArray[np.uint8]) -> None:
+def test_progress_bar(*, white_image: NDArray[np.uint8]) -> None:
     res = imgviz.draw.progress_bar(
         white_image, yx1=(10, 10), yx2=(30, 90), value=0.5, fill=GREEN, background=GRAY
     )
@@ -31,7 +31,7 @@ def test_progress_bar(white_image: NDArray[np.uint8]) -> None:
     [(-1.0, GRAY), (0.0, GRAY), (1.0, GREEN), (1.5, GREEN)],
 )
 def test_progress_bar_fills_region_by_value(
-    white_image: NDArray[np.uint8], value: float, expected: tuple[int, int, int]
+    *, white_image: NDArray[np.uint8], value: float, expected: tuple[int, int, int]
 ) -> None:
     res = imgviz.draw.progress_bar(
         white_image,
@@ -44,7 +44,7 @@ def test_progress_bar_fills_region_by_value(
     assert (res[10:30, 10:90] == expected).all()
 
 
-def test_progress_bar_half(white_image: NDArray[np.uint8]) -> None:
+def test_progress_bar_half(*, white_image: NDArray[np.uint8]) -> None:
     res = imgviz.draw.progress_bar(
         white_image, yx1=(10, 10), yx2=(30, 90), value=0.5, fill=GREEN, background=GRAY
     )
@@ -54,7 +54,7 @@ def test_progress_bar_half(white_image: NDArray[np.uint8]) -> None:
 
 @pytest.mark.parametrize("value", [float("nan"), float("inf"), float("-inf")])
 def test_progress_bar_rejects_non_finite_value(
-    white_image: NDArray[np.uint8], value: float
+    *, white_image: NDArray[np.uint8], value: float
 ) -> None:
     with pytest.raises(ValueError, match="value must be finite"):
         imgviz.draw.progress_bar(
@@ -68,7 +68,7 @@ def test_progress_bar_rejects_non_finite_value(
 
 
 @pytest.mark.parametrize("value", [0.0, 0.5, 1.0])
-def test_progress_bar_border(white_image: NDArray[np.uint8], value: float) -> None:
+def test_progress_bar_border(*, white_image: NDArray[np.uint8], value: float) -> None:
     res = imgviz.draw.progress_bar(
         white_image,
         yx1=(10, 10),
@@ -82,6 +82,7 @@ def test_progress_bar_border(white_image: NDArray[np.uint8], value: float) -> No
 
 
 def test_progress_bar_border_does_not_overpaint_fill(
+    *,
     white_image: NDArray[np.uint8],
 ) -> None:
     res = imgviz.draw.progress_bar(
@@ -96,7 +97,7 @@ def test_progress_bar_border_does_not_overpaint_fill(
     assert tuple(res[20, 50]) == GREEN  # 1px border leaves the interior filled
 
 
-def test_progress_bar_width(white_image: NDArray[np.uint8]) -> None:
+def test_progress_bar_width(*, white_image: NDArray[np.uint8]) -> None:
     res = imgviz.draw.progress_bar(
         white_image,
         yx1=(10, 10),

@@ -14,7 +14,7 @@ _here: pathlib.Path = pathlib.Path(__file__).parent
 
 
 def _get_font(
-    size: int, font_path: str | pathlib.Path | None
+    size: int, /, *, font_path: str | pathlib.Path | None
 ) -> PIL.ImageFont.FreeTypeFont:
     if font_path is None:
         font_path = _here / "fonts" / "DejaVuSansMono.ttf"
@@ -99,5 +99,5 @@ def text_(
     draw = get_draw(image)
 
     y1, x1 = yx
-    font = _get_font(size=size, font_path=font_path)
+    font = _get_font(size, font_path=font_path)
     draw.text(xy=(x1, y1), text=text, fill=get_pil_ink(color), font=font)

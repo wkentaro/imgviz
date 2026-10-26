@@ -88,6 +88,7 @@ source = "vcs"
 
 [tool.gruff.lint]
 select = [
+  "GR001",
   "GR002",
   "GR003",
   "GR004",

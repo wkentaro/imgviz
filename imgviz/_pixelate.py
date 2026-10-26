@@ -43,7 +43,7 @@ def pixelate(
     return _utils.apply_mask(image=image, transformed=pixelated, mask=mask)
 
 
-def _pixelate(image: NDArray, block: int) -> NDArray:
+def _pixelate(*, image: NDArray, block: int) -> NDArray:
     H, W = image.shape[:2]
     h = max(H // block, 1)
     w = max(W // block, 1)

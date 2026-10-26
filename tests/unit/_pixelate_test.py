@@ -37,7 +37,7 @@ def test_pixelate_block_one_is_noop() -> None:
 
 
 @pytest.mark.parametrize("block", [0, -1])
-def test_pixelate_rejects_block_below_one(block: int) -> None:
+def test_pixelate_rejects_block_below_one(*, block: int) -> None:
     img = np.zeros((10, 10, 3), dtype=np.uint8)
     with pytest.raises(ValueError, match="block must be >= 1"):
         imgviz.pixelate(img, block=block)

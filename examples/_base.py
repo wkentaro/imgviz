@@ -34,7 +34,7 @@ def _pyplot_to_numpy() -> NDArray[np.uint8]:
     return arr
 
 
-def run_example(example_fn: _ExampleFn) -> None:
+def run_example(example_fn: _ExampleFn, /) -> None:
     parser = argparse.ArgumentParser(
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )

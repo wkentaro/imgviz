@@ -13,7 +13,7 @@ from . import draw as draw_module
 from ._blend import blend
 
 
-def _bitget(byte_value: NDArray[np.uint8], idx: int) -> NDArray[np.uint8]:
+def _bitget(byte_value: NDArray[np.uint8], idx: int, /) -> NDArray[np.uint8]:
     shape: tuple[int, ...] = byte_value.shape + (8,)
     return np.unpackbits(byte_value).reshape(shape)[..., -1 - idx]
 
@@ -155,7 +155,7 @@ def label2rgb(
     )
 
 
-def _center_of_mass(mask: NDArray[np.bool_]) -> tuple[float, float]:
+def _center_of_mass(mask: NDArray[np.bool_], /) -> tuple[float, float]:
     if mask.ndim != 2 or mask.dtype != bool:
         raise ValueError(
             f"mask must be 2D bool array, but got {mask.ndim}D {mask.dtype}"

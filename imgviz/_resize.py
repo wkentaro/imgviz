@@ -16,7 +16,11 @@ except ImportError:
 
 
 def _resize_pillow(
-    image: NDArray, height: int, width: int, interpolation: Literal["linear", "nearest"]
+    image: NDArray,
+    height: int,
+    width: int,
+    interpolation: Literal["linear", "nearest"],
+    /,
 ) -> NDArray:
     if interpolation == "linear":
         RESAMPLE: Final = PIL.Image.BILINEAR
@@ -51,7 +55,11 @@ def _resize_pillow(
 
 
 def _resize_opencv(
-    image: NDArray, height: int, width: int, interpolation: Literal["linear", "nearest"]
+    image: NDArray,
+    height: int,
+    width: int,
+    interpolation: Literal["linear", "nearest"],
+    /,
 ) -> NDArray:
     if cv2 is None:
         raise ImportError("opencv-python is not installed")

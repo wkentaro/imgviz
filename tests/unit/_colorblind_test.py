@@ -16,7 +16,7 @@ def rgb() -> NDArray[np.uint8]:
 
 
 @pytest.mark.parametrize("kind", KINDS)
-def test_colorblind(rgb: NDArray[np.uint8], kind: Kind) -> None:
+def test_colorblind(*, rgb: NDArray[np.uint8], kind: Kind) -> None:
     res = imgviz.colorblind(rgb, kind=kind)
     assert res.shape == rgb.shape
     assert res.dtype == rgb.dtype
@@ -24,7 +24,7 @@ def test_colorblind(rgb: NDArray[np.uint8], kind: Kind) -> None:
 
 
 @pytest.mark.parametrize("kind", KINDS)
-def test_colorblind_is_noop_on_gray(kind: Kind) -> None:
+def test_colorblind_is_noop_on_gray(*, kind: Kind) -> None:
     gray = np.repeat(
         np.random.randint(0, 256, size=(20, 20, 1), dtype=np.uint8), 3, axis=2
     )
@@ -34,7 +34,7 @@ def test_colorblind_is_noop_on_gray(kind: Kind) -> None:
 
 @pytest.mark.parametrize("kind", KINDS)
 @pytest.mark.parametrize("dtype", [np.float32, np.float64])
-def test_colorblind_float(dtype: type[np.floating], kind: Kind) -> None:
+def test_colorblind_float(*, dtype: type[np.floating], kind: Kind) -> None:
     img = np.random.rand(20, 20, 3).astype(dtype)
     res = imgviz.colorblind(img, kind=kind)
     assert res.dtype == dtype
@@ -44,13 +44,13 @@ def test_colorblind_float(dtype: type[np.floating], kind: Kind) -> None:
     assert np.allclose(imgviz.colorblind(gray, kind=kind), gray)
 
 
-def test_colorblind_rejects_invalid_kind(rgb: NDArray[np.uint8]) -> None:
+def test_colorblind_rejects_invalid_kind(*, rgb: NDArray[np.uint8]) -> None:
     with pytest.raises(ValueError, match="kind must be one of"):
         imgviz.colorblind(rgb, kind="monochromacy")  # type: ignore[arg-type]
 
 
 @pytest.mark.parametrize("shape", [(20, 20), (20, 20, 4)])
-def test_colorblind_rejects_non_rgb(shape: tuple[int, ...]) -> None:
+def test_colorblind_rejects_non_rgb(*, shape: tuple[int, ...]) -> None:
     img = np.zeros(shape, dtype=np.uint8)
     with pytest.raises(ValueError, match="must be RGB"):
         imgviz.colorblind(img)
