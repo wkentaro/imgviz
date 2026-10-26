@@ -7,6 +7,7 @@ from . import data
 from . import draw
 from . import fill
 from . import io
+from ._blend import blend
 from ._blur import blur
 from ._centerize import centerize
 from ._color import asgray
@@ -54,6 +55,7 @@ __all__ = [
     "asgray",
     "asrgb",
     "asrgba",
+    "blend",
     "blur",
     "bool2ubyte",
     "centerize",

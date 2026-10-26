@@ -7,7 +7,7 @@ from numpy.typing import NDArray
 
 def blend(
     under: NDArray[np.uint8], over: ArrayLike, alpha: float | NDArray
-) -> NDArray[np.uint8]:
+) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Alpha-composite ``over`` onto ``under`` and return a new uint8 array.
 
     ``over`` is an image or a color that broadcasts against ``under``; ``alpha``
