@@ -45,4 +45,4 @@ def rotated_rectangle() -> None:
 if __name__ == "__main__":
     from _base import run_example
 
-    run_example(rotated_rectangle)
+    run_example(example_fn=rotated_rectangle)

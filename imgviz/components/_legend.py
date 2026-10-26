@@ -36,7 +36,7 @@ def legend(
     Returns:
         Output image.
     """
-    dst = _utils.numpy_to_pillow(image)
+    dst = _utils.numpy_to_pillow(image=image)
     legend_(
         image=dst,
         items=items,
@@ -44,7 +44,7 @@ def legend(
         font_path=font_path,
         loc=loc,
     )
-    return _utils.pillow_to_numpy(dst)
+    return _utils.pillow_to_numpy(image=dst)
 
 
 def legend_(
@@ -98,7 +98,7 @@ def legend_(
     y2, x2 = yx2.round().astype(int)
     region = np.asarray(image)[y1:y2, x1:x2]
     washed = blend(under=region, over=(255, 255, 255), alpha=0.5)
-    image.paste(_utils.numpy_to_pillow(washed), (int(x1), int(y1)))
+    image.paste(_utils.numpy_to_pillow(image=washed), (int(x1), int(y1)))
 
     box_size = text_height - 2 * pad
     for i, (text, color) in enumerate(items):

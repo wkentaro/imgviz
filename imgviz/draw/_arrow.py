@@ -32,7 +32,7 @@ def arrow(
     Returns:
         Output image.
     """
-    dst = _utils.numpy_to_pillow(image)
+    dst = _utils.numpy_to_pillow(image=image)
     arrow_(
         image=dst,
         yx1=yx1,
@@ -42,7 +42,7 @@ def arrow(
         head_length_ratio=head_length_ratio,
         head_angle=head_angle,
     )
-    return _utils.pillow_to_numpy(dst)
+    return _utils.pillow_to_numpy(image=dst)
 
 
 def arrow_(
@@ -65,7 +65,7 @@ def arrow_(
         head_length_ratio: Arrowhead length as a fraction of the shaft length.
         head_angle: Half-angle of the arrowhead in degrees.
     """
-    draw = get_draw(image)
+    draw = get_draw(image=image)
     tail = np.asarray(yx1, dtype=float)
     tip = np.asarray(yx2, dtype=float)
     if tail.shape != (2,):
@@ -73,7 +73,7 @@ def arrow_(
     if tip.shape != (2,):
         raise ValueError(f"yx2 must have shape (2,), but got {tip.shape}")
 
-    pil_fill = get_pil_ink(fill)
+    pil_fill = get_pil_ink(ink=fill)
 
     y1, x1 = float(tail[0]), float(tail[1])
     y2, x2 = float(tip[0]), float(tip[1])

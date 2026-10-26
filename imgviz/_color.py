@@ -23,9 +23,9 @@ def rgb2gray(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:
     if rgb.dtype != np.uint8:
         raise ValueError(f"rgb dtype must be np.uint8, but got {rgb.dtype}")
 
-    gray = _utils.numpy_to_pillow(rgb)
+    gray = _utils.numpy_to_pillow(image=rgb)
     gray = gray.convert("L")
-    gray = _utils.pillow_to_numpy(gray)
+    gray = _utils.pillow_to_numpy(image=gray)
     return gray
 
 
@@ -84,9 +84,9 @@ def rgb2hsv(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:
     if rgb.dtype != np.uint8:
         raise ValueError(f"rgb dtype must be np.uint8, but got {rgb.dtype}")
 
-    hsv = _utils.numpy_to_pillow(rgb, mode="RGB")
+    hsv = _utils.numpy_to_pillow(image=rgb, mode="RGB")
     hsv = hsv.convert("HSV")
-    hsv = _utils.pillow_to_numpy(hsv)
+    hsv = _utils.pillow_to_numpy(image=hsv)
     return hsv
 
 
@@ -106,9 +106,9 @@ def hsv2rgb(hsv: NDArray[np.uint8]) -> NDArray[np.uint8]:
     if hsv.dtype != np.uint8:
         raise ValueError(f"hsv dtype must be np.uint8, but got {hsv.dtype}")
 
-    rgb = _utils.numpy_to_pillow(hsv, mode="HSV")
+    rgb = _utils.numpy_to_pillow(image=hsv, mode="HSV")
     rgb = rgb.convert("RGB")
-    rgb = _utils.pillow_to_numpy(rgb)
+    rgb = _utils.pillow_to_numpy(image=rgb)
     return rgb
 
 
@@ -125,7 +125,7 @@ def rgba2rgb(rgba: NDArray[np.uint8]) -> NDArray[np.uint8]:
     return rgb
 
 
-def require_uint8_image(image: NDArray, /) -> NDArray[np.uint8]:
+def require_uint8_image(*, image: NDArray) -> NDArray[np.uint8]:
     """Validate a uint8 image and promote 2D grayscale to RGB.
 
     Args:
@@ -225,8 +225,8 @@ def asrgba(image: NDArray) -> NDArray[np.uint8]:
 
 
 def get_fg_color(
+    *,
     color: tuple[int, int, int] | NDArray[np.uint8],
-    /,
 ) -> tuple[int, int, int]:
     """Get foreground color (black or white) for given background color."""
     color_arr: NDArray[np.uint8] = np.asarray(color, dtype=np.uint8)

@@ -86,9 +86,9 @@ def test_get_fg_color() -> None:
     from imgviz._color import get_fg_color
 
     # Dark background -> white foreground
-    assert get_fg_color((0, 0, 0)) == (255, 255, 255)
+    assert get_fg_color(color=(0, 0, 0)) == (255, 255, 255)
     # Light background -> black foreground
-    assert get_fg_color((255, 255, 255)) == (0, 0, 0)
+    assert get_fg_color(color=(255, 255, 255)) == (0, 0, 0)
 
 
 @pytest.mark.parametrize("convert", [imgviz.rgb2gray, imgviz.rgb2rgba, imgviz.rgb2hsv])

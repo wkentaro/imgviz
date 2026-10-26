@@ -37,4 +37,4 @@ def colorize() -> None:
 if __name__ == "__main__":
     from _base import run_example
 
-    run_example(colorize)
+    run_example(example_fn=colorize)

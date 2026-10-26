@@ -50,7 +50,7 @@ def _tile(
     return dst
 
 
-def _get_tile_shape(num: int, /, *, hw_ratio: float) -> tuple[int, int]:
+def _get_tile_shape(*, num: int, hw_ratio: float) -> tuple[int, int]:
     r_num = int(round(math.sqrt(num / hw_ratio)))  # weighted by wh_ratio
     c_num = 0
     while r_num * c_num < num:
@@ -87,7 +87,7 @@ def tile(
     max_h, max_w = np.array([image.shape[:2] for image in images]).max(axis=0)
 
     if row is None and col is None:
-        shape = _get_tile_shape(len(images), hw_ratio=1.0 * max_h / max_w)
+        shape = _get_tile_shape(num=len(images), hw_ratio=1.0 * max_h / max_w)
     elif row is None:
         if not isinstance(col, int):
             raise TypeError(f"col must be int, but got {type(col).__name__}")

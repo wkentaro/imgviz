@@ -132,4 +132,4 @@ def draw() -> None:
 if __name__ == "__main__":
     from _base import run_example
 
-    run_example(draw)
+    run_example(example_fn=draw)

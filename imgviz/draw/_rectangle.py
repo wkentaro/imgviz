@@ -30,7 +30,7 @@ def rectangle(
     Returns:
         Output image.
     """
-    dst = _utils.numpy_to_pillow(image)
+    dst = _utils.numpy_to_pillow(image=image)
     rectangle_(
         image=dst,
         yx1=yx1,
@@ -39,7 +39,7 @@ def rectangle(
         outline=outline,
         width=width,
     )
-    return _utils.pillow_to_numpy(dst)
+    return _utils.pillow_to_numpy(image=dst)
 
 
 def rectangle_(
@@ -60,15 +60,15 @@ def rectangle_(
         outline: RGB color to draw the outline.
         width: Rectangle line width.
     """
-    require_fill_or_outline(fill, outline)
+    require_fill_or_outline(fill=fill, outline=outline)
 
-    draw = get_draw(image)
+    draw = get_draw(image=image)
 
     y1, x1 = map(float, yx1)
     y2, x2 = map(float, yx2)
     draw.rectangle(
         xy=(x1, y1, x2, y2),
-        fill=get_pil_ink(fill),
-        outline=get_pil_ink(outline),
+        fill=get_pil_ink(ink=fill),
+        outline=get_pil_ink(ink=outline),
         width=width,
     )

@@ -39,4 +39,4 @@ def letterbox() -> None:
 if __name__ == "__main__":
     from _base import run_example
 
-    run_example(letterbox)
+    run_example(example_fn=letterbox)

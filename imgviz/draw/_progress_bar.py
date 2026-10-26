@@ -35,7 +35,7 @@ def progress_bar(
     Returns:
         Output image.
     """
-    dst = _utils.numpy_to_pillow(image)
+    dst = _utils.numpy_to_pillow(image=image)
     progress_bar_(
         image=dst,
         yx1=yx1,
@@ -46,7 +46,7 @@ def progress_bar(
         outline=outline,
         width=width,
     )
-    return _utils.pillow_to_numpy(dst)
+    return _utils.pillow_to_numpy(image=dst)
 
 
 def progress_bar_(

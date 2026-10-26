@@ -30,7 +30,7 @@ def box_corners(
     Returns:
         Output image.
     """
-    dst = _utils.numpy_to_pillow(image)
+    dst = _utils.numpy_to_pillow(image=image)
     box_corners_(
         image=dst,
         yx1=yx1,
@@ -39,7 +39,7 @@ def box_corners(
         length=length,
         width=width,
     )
-    return _utils.pillow_to_numpy(dst)
+    return _utils.pillow_to_numpy(image=dst)
 
 
 def box_corners_(
@@ -61,7 +61,7 @@ def box_corners_(
             width/height, so a large value degrades to a full rectangle.
         width: Line width.
     """
-    draw = get_draw(image)
+    draw = get_draw(image=image)
     y1, x1 = map(float, yx1)
     y2, x2 = map(float, yx2)
     if y2 < y1 or x2 < x1:
@@ -69,7 +69,7 @@ def box_corners_(
             f"yx1 must be the min vertex and yx2 the max, but got {yx1=}, {yx2=}"
         )
 
-    pil_fill = get_pil_ink(fill)
+    pil_fill = get_pil_ink(ink=fill)
 
     tick_x = float(min(length, x2 - x1))
     tick_y = float(min(length, y2 - y1))

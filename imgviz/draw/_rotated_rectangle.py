@@ -32,7 +32,7 @@ def rotated_rectangle(
     Returns:
         Output image.
     """
-    dst = _utils.numpy_to_pillow(image)
+    dst = _utils.numpy_to_pillow(image=image)
     rotated_rectangle_(
         image=dst,
         center=center,
@@ -42,7 +42,7 @@ def rotated_rectangle(
         outline=outline,
         width=width,
     )
-    return _utils.pillow_to_numpy(dst)
+    return _utils.pillow_to_numpy(image=dst)
 
 
 def rotated_rectangle_(
@@ -66,7 +66,7 @@ def rotated_rectangle_(
         outline: RGB color to draw the outline.
         width: Outline width.
     """
-    require_fill_or_outline(fill, outline)
+    require_fill_or_outline(fill=fill, outline=outline)
 
     cy, cx = center
     size_h, size_w = size

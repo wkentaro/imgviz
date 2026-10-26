@@ -58,7 +58,7 @@ def flags2rgb(
     """
     OFF_COLOR: Final = (200, 200, 200)
 
-    image = _color.require_uint8_image(image)
+    image = _color.require_uint8_image(image=image)
 
     if not isinstance(flags, np.ndarray):
         raise TypeError(f"flags must be a numpy array, but got {type(flags).__name__}")
@@ -91,7 +91,7 @@ def flags2rgb(
     if wedges not in ("on", "all"):
         raise ValueError(f"unsupported wedges: {wedges}")
 
-    dst = _utils.numpy_to_pillow(image)
+    dst = _utils.numpy_to_pillow(image=image)
     for i in range(n_instances):
         fills: list[draw_module.Ink]
         if wedges == "on":
@@ -118,4 +118,4 @@ def flags2rgb(
     components.legend_(
         image=dst, items=items, font_size=font_size, font_path=font_path, loc=loc
     )
-    return _utils.pillow_to_numpy(dst)
+    return _utils.pillow_to_numpy(image=dst)

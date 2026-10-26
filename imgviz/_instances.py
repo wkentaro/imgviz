@@ -67,7 +67,7 @@ def instances2rgb(
     Returns:
         Visualized image with shape (H, W, 3).
     """
-    image = _color.require_uint8_image(image)
+    image = _color.require_uint8_image(image=image)
 
     negative_labels = [label_i for label_i in labels if label_i < 0]
     if negative_labels:
@@ -122,7 +122,7 @@ def instances2rgb(
             boundary = skimage.morphology.binary_dilation(boundary)
         dst[boundary] = (200, 200, 200)
 
-    dst = _utils.numpy_to_pillow(dst)
+    dst = _utils.numpy_to_pillow(image=dst)
     for instance_id in range(n_instance):
         bbox = bboxes[instance_id]
         label = labels[instance_id]
@@ -169,4 +169,4 @@ def instances2rgb(
             yx2=yx2,
             font_path=font_path,
         )
-    return _utils.pillow_to_numpy(dst)
+    return _utils.pillow_to_numpy(image=dst)

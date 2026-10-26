@@ -12,7 +12,7 @@ from . import draw as draw_module
 from ._color import get_fg_color
 
 
-def _pick_nice_length(target_units: float, /) -> float:
+def _pick_nice_length(*, target_units: float) -> float:
     """Largest of {1, 2, 5} times a power of 10 not exceeding target_units."""
     exponent = math.floor(math.log10(target_units))
     fraction = target_units / 10**exponent
@@ -80,7 +80,7 @@ def scalebar(
     gap = max(2, round(GAP_RATIO * height))
 
     target_units = BAR_BUDGET * width / pixels_per_unit
-    nice_units = _pick_nice_length(target_units)
+    nice_units = _pick_nice_length(target_units=target_units)
     bar_length = round(nice_units * pixels_per_unit)
 
     label = f"{nice_units:g} {unit}"
@@ -97,7 +97,7 @@ def scalebar(
         region = image[max(0, y0) : y0 + block_height, max(0, x0) : x0 + block_width]
         if region.size == 0:
             region = image
-        rgb = get_fg_color(region.mean(axis=(0, 1)).astype(np.uint8))
+        rgb = get_fg_color(color=region.mean(axis=(0, 1)).astype(np.uint8))
     else:
         rgb = tuple(_cmap.Color(color).rgba8[:3])
 

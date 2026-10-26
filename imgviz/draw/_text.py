@@ -14,7 +14,7 @@ _here: pathlib.Path = pathlib.Path(__file__).parent
 
 
 def _get_font(
-    size: int, /, *, font_path: str | pathlib.Path | None
+    *, size: int, font_path: str | pathlib.Path | None
 ) -> PIL.ImageFont.FreeTypeFont:
     if font_path is None:
         font_path = _here / "fonts" / "DejaVuSansMono.ttf"
@@ -37,7 +37,7 @@ def text_size(
     Returns:
         Tuple of (height, width).
     """
-    font = _get_font(size, font_path=font_path)
+    font = _get_font(size=size, font_path=font_path)
 
     text_width = 0
     text_height = 0
@@ -73,9 +73,9 @@ def text(
     Returns:
         Output image.
     """
-    dst = _utils.numpy_to_pillow(image)
+    dst = _utils.numpy_to_pillow(image=image)
     text_(image=dst, yx=yx, text=text, size=size, color=color, font_path=font_path)
-    return _utils.pillow_to_numpy(dst)
+    return _utils.pillow_to_numpy(image=dst)
 
 
 def text_(
@@ -96,8 +96,8 @@ def text_(
         color: Text RGB color in uint8. Default is (0, 0, 0), which is black.
         font_path: Font path. Default font is DejaVuSansMono.
     """
-    draw = get_draw(image)
+    draw = get_draw(image=image)
 
     y1, x1 = yx
-    font = _get_font(size, font_path=font_path)
-    draw.text(xy=(x1, y1), text=text, fill=get_pil_ink(color), font=font)
+    font = _get_font(size=size, font_path=font_path)
+    draw.text(xy=(x1, y1), text=text, fill=get_pil_ink(ink=color), font=font)

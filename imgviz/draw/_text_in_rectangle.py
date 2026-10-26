@@ -132,7 +132,7 @@ def text_in_rectangle(
         if y2 > height:
             dst = _pad.pad(image=dst, bottom=y2 - height, color=background)
 
-    dst = _utils.numpy_to_pillow(dst)
+    dst = _utils.numpy_to_pillow(image=dst)
     # Round before shifting so the in-place variant, which rounds again,
     # lands on the same box even when a coordinate sits on a .5 tie.
     text_in_rectangle_(
@@ -146,7 +146,7 @@ def text_in_rectangle(
         yx2=(round(yx2[0]) + top, yx2[1]),
         font_path=font_path,
     )
-    return _utils.pillow_to_numpy(dst)
+    return _utils.pillow_to_numpy(image=dst)
 
 
 def text_in_rectangle_(
@@ -177,7 +177,7 @@ def text_in_rectangle_(
         font_path: Font path.
     """
     if color is None:
-        color = _color.get_fg_color(background)
+        color = _color.get_fg_color(color=background)
 
     y1, x1, y2, x2 = text_in_rectangle_aabb(
         yx1=(0, 0) if yx1 is None else yx1,

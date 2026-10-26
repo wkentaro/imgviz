@@ -9,7 +9,7 @@ from numpy.typing import NDArray
 from ._colorize import colorize
 
 
-def _to_luminance(image: NDArray, /) -> NDArray[np.float32]:
+def _to_luminance(*, image: NDArray) -> NDArray[np.float32]:
     arr = image.astype(np.float32)
     if arr.ndim == 2:
         return arr
@@ -75,8 +75,8 @@ def diff(
             f"a and b must have the same shape, but got {a.shape} and {b.shape}"
         )
 
-    luminance_a = _to_luminance(a)
-    luminance_b = _to_luminance(b)
+    luminance_a = _to_luminance(image=a)
+    luminance_b = _to_luminance(image=b)
 
     if mode == "signed":
         signed = luminance_a - luminance_b

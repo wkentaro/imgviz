@@ -38,4 +38,4 @@ def progress_bar() -> None:
 if __name__ == "__main__":
     from _base import run_example
 
-    run_example(progress_bar)
+    run_example(example_fn=progress_bar)

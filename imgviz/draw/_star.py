@@ -30,7 +30,7 @@ def star(
     Returns:
         Output image.
     """
-    dst = _utils.numpy_to_pillow(image)
+    dst = _utils.numpy_to_pillow(image=image)
     star_(
         image=dst,
         center=center,
@@ -39,7 +39,7 @@ def star(
         outline=outline,
         width=width,
     )
-    return _utils.pillow_to_numpy(dst)
+    return _utils.pillow_to_numpy(image=dst)
 
 
 def star_(
@@ -60,9 +60,9 @@ def star_(
         outline: RGB color to draw the outline.
         width: Line width.
     """
-    require_fill_or_outline(fill, outline)
+    require_fill_or_outline(fill=fill, outline=outline)
 
-    draw = get_draw(image)
+    draw = get_draw(image=image)
 
     radius = size / 2
     cy, cx = center
@@ -96,4 +96,6 @@ def star_(
         ]
     )
     xy = xy.flatten().tolist()
-    draw.polygon(xy, fill=get_pil_ink(fill), outline=get_pil_ink(outline), width=width)
+    draw.polygon(
+        xy, fill=get_pil_ink(ink=fill), outline=get_pil_ink(ink=outline), width=width
+    )

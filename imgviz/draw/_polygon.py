@@ -30,9 +30,9 @@ def polygon(
     Returns:
         Output image.
     """
-    dst = _utils.numpy_to_pillow(image)
+    dst = _utils.numpy_to_pillow(image=image)
     polygon_(image=dst, yx=yx, fill=fill, outline=outline, width=width)
-    return _utils.pillow_to_numpy(dst)
+    return _utils.pillow_to_numpy(image=dst)
 
 
 def polygon_(
@@ -52,8 +52,8 @@ def polygon_(
         outline: RGB color to draw the outline. None for no outline.
         width: Outline width.
     """
-    draw = get_draw(image)
-    require_fill_or_outline(fill, outline)
+    draw = get_draw(image=image)
+    require_fill_or_outline(fill=fill, outline=outline)
     yx = np.asarray(yx)
     if yx.ndim != 2:
         raise ValueError(f"yx must be 2D array, but got {yx.ndim}D")
@@ -65,7 +65,7 @@ def polygon_(
     xy = yx[:, ::-1].flatten().tolist()
     draw.polygon(
         xy=xy,
-        fill=get_pil_ink(fill),
-        outline=get_pil_ink(outline),
+        fill=get_pil_ink(ink=fill),
+        outline=get_pil_ink(ink=outline),
         width=width,
     )

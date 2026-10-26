@@ -11,7 +11,7 @@ def black_image() -> NDArray[np.uint8]:
     return np.zeros((100, 100, 3), dtype=np.uint8)
 
 
-def _filled_bbox(image: NDArray[np.uint8], /) -> tuple[int, int, int, int]:
+def _filled_bbox(*, image: NDArray[np.uint8]) -> tuple[int, int, int, int]:
     ys, xs = np.where(image[:, :, 0] > 0)
     return int(ys.min()), int(ys.max()), int(xs.min()), int(xs.max())
 
@@ -43,7 +43,7 @@ def test_rotated_rectangle_zero_angle_is_axis_aligned(
         black_image, center=(50, 50), size=(40, 20), angle=0, fill=(255, 255, 255)
     )
 
-    y1, y2, x1, x2 = _filled_bbox(res)
+    y1, y2, x1, x2 = _filled_bbox(image=res)
     # size=(height=40, width=20) centered at (50, 50)
     assert abs(y1 - 30) <= 1 and abs(y2 - 70) <= 1
     assert abs(x1 - 40) <= 1 and abs(x2 - 60) <= 1
@@ -57,7 +57,7 @@ def test_rotated_rectangle_ninety_degrees_swaps_extent(
         black_image, center=(50, 50), size=(40, 20), angle=90, fill=(255, 255, 255)
     )
 
-    y1, y2, x1, x2 = _filled_bbox(res)
+    y1, y2, x1, x2 = _filled_bbox(image=res)
     # a 90-degree turn swaps the height and width extents
     assert abs((y2 - y1) - 20) <= 1
     assert abs((x2 - x1) - 40) <= 1

@@ -18,7 +18,7 @@ def imread(filename: str | pathlib.Path) -> NDArray[np.uint8]:
         Image with shape (H, W) or (H, W, 3) or (H, W, 4).
     """
     with PIL.Image.open(filename) as image:
-        return _utils.pillow_to_numpy(image)
+        return _utils.pillow_to_numpy(image=image)
 
 
 def imsave(filename: str | pathlib.Path, arr: NDArray[np.uint8]) -> None:
@@ -30,7 +30,7 @@ def imsave(filename: str | pathlib.Path, arr: NDArray[np.uint8]) -> None:
     """
     path = pathlib.Path(filename)
     path.parent.mkdir(parents=True, exist_ok=True)
-    _utils.numpy_to_pillow(arr).save(path)
+    _utils.numpy_to_pillow(image=arr).save(path)
 
 
 def lblsave(filename: str | pathlib.Path, lbl: NDArray[np.uint8]) -> None:
@@ -52,4 +52,4 @@ def lblsave(filename: str | pathlib.Path, lbl: NDArray[np.uint8]) -> None:
 
 
 def imshow(image: NDArray[np.uint8]) -> None:
-    _utils.numpy_to_pillow(image).show()
+    _utils.numpy_to_pillow(image=image).show()

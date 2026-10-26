@@ -38,7 +38,7 @@ def test_scalebar(*, rgb: NDArray[np.uint8]) -> None:
     ],
 )
 def test_pick_nice_length(*, target: float, expected: float) -> None:
-    result = _pick_nice_length(target)
+    result = _pick_nice_length(target_units=target)
     assert result == pytest.approx(expected)
     assert result <= target  # never exceeds the budget it is given
 

@@ -32,7 +32,7 @@ def arc2017() -> _Arc2017Data:
     class_label = _utils.compose_class_label(
         shape=data["rgb"].shape[:2], labels=data["labels"], masks=data["masks"]
     )
-    class_names = _utils.read_class_names(_here / "class_names.txt")
+    class_names = _utils.read_class_names(path=_here / "class_names.txt")
 
     res4: NDArray[np.float32] = np.load(_here / "res4.npz")["res4"]
 

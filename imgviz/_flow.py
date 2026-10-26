@@ -49,7 +49,7 @@ def _make_colorwheel() -> NDArray[np.floating]:
     return colorwheel
 
 
-def _flow_compute_color(flow_u: NDArray, flow_v: NDArray, /) -> NDArray[np.uint8]:
+def _flow_compute_color(*, flow_u: NDArray, flow_v: NDArray) -> NDArray[np.uint8]:
     H, W = flow_u.shape[:2]
     flow_image = np.zeros((H, W, 3), np.uint8)
 
@@ -157,7 +157,7 @@ def flow2rgb(
     flow_u: NDArray[np.float32] = flow_uv[:, :, 0] / (max_norm + eps)
     flow_v: NDArray[np.float32] = flow_uv[:, :, 1] / (max_norm + eps)
 
-    flow_rgb: NDArray[np.uint8] = _flow_compute_color(flow_u, flow_v)
+    flow_rgb: NDArray[np.uint8] = _flow_compute_color(flow_u=flow_u, flow_v=flow_v)
     if return_max:
         return flow_rgb, max_norm
     else:

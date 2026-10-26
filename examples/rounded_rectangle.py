@@ -47,4 +47,4 @@ def rounded_rectangle() -> None:
 if __name__ == "__main__":
     from _base import run_example
 
-    run_example(rounded_rectangle)
+    run_example(example_fn=rounded_rectangle)
