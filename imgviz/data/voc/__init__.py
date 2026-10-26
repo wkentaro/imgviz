@@ -6,6 +6,8 @@ from numpy.typing import NDArray
 
 from .. import _utils
 
+__all__ = ["voc"]
+
 _here: pathlib.Path = pathlib.Path(__file__).parent
 
 
