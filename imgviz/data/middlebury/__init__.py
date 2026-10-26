@@ -8,6 +8,8 @@ from numpy.typing import NDArray
 
 from ...io import imread
 
+__all__ = ["middlebury", "read_flow"]
+
 _here: pathlib.Path = pathlib.Path(__file__).parent
 
 

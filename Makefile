@@ -40,6 +40,7 @@ format:  # Format code
 lint:  # Check code
 	$(call exec,$(UV_RUN) ruff format --check)
 	$(call exec,$(UV_RUN) ruff check)
+	$(call exec,$(UV_RUN) gruff check .)
 	$(call exec,$(UV_RUN) ty check --no-progress)
 	$(call exec,git ls-files "*.toml" | xargs $(UV_RUN) taplo fmt --check)
 	$(call exec,git ls-files "*.md" | xargs $(UV_RUN) mdformat --check)

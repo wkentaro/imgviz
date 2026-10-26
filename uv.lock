@@ -567,6 +567,18 @@ wheels = [
 ]
 
 [[package]]
+name = "gruff"
+version = "0.2.0"
+source = { registry = "https://pypi.org/simple" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e7/e2/7962569c5e74e4e7eda5dd165a6333dfa4dca1388162b7cd4c1e88e7eb33/gruff-0.2.0-py3-none-macosx_10_12_x86_64.whl", hash = "sha256:bf9b0a5e19cf0c1fd3f9fbd78e78bb36b93b7fe26fcffc0a7b3a024e8d7de163", size = 2050959, upload-time = "2026-10-26T12:51:12.304Z" },
+    { url = "https://files.pythonhosted.org/packages/f2/63/321669ed971a34b54cf8100e0e3bfd4c3e5ca57efb7af003829c89f89cde/gruff-0.2.0-py3-none-macosx_11_0_arm64.whl", hash = "sha256:5c96a0c7930d550df08a6ad770e7556d75fc7e16f53246a24e1e31ea0c867c33", size = 1981422, upload-time = "2026-10-26T12:51:14.196Z" },
+    { url = "https://files.pythonhosted.org/packages/10/4e/69327cae828b0185f6f84d2ef6539e73c5c2f30e17d5e1e84abcbf5c07cd/gruff-0.2.0-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:ecb2deaf34edb23ee7ddf35d6b9541d1a84b6f5d6fa08e7fc776682c28b96187", size = 1993749, upload-time = "2026-10-26T12:51:16.73Z" },
+    { url = "https://files.pythonhosted.org/packages/0c/24/2611a4f362fb49a1f7bd3d4fd489c04a585041f16c4ad820b64b9aafe570/gruff-0.2.0-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:ace0451bf063ac6fe0c3b2f7a98b187494a453ace7ec79234167744b007370bc", size = 2125596, upload-time = "2026-10-26T12:51:18.341Z" },
+    { url = "https://files.pythonhosted.org/packages/eb/f2/9731d7a90907b807fcc79fc3e48a43204c63fa0c8273a46948f5c4838236/gruff-0.2.0-py3-none-win_amd64.whl", hash = "sha256:b1a0c8793c8924ea8621dd9ed1f7cfb16877fc0f3df1f6ea79f349e45823e476", size = 2036672, upload-time = "2026-10-26T12:51:20.065Z" },
+]
+
+[[package]]
 name = "id"
 version = "1.5.0"
 source = { registry = "https://pypi.org/simple" }
@@ -624,6 +636,7 @@ all = [
 [package.dev-dependencies]
 dev = [
     { name = "build" },
+    { name = "gruff" },
     { name = "ipython", version = "8.37.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "ipython", version = "9.8.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
     { name = "matplotlib" },
@@ -655,6 +668,7 @@ provides-extras = ["all"]
 [package.metadata.requires-dev]
 dev = [
     { name = "build", specifier = ">=1.3.0" },
+    { name = "gruff", specifier = ">=0.2.0" },
     { name = "ipython", specifier = ">=8.37.0" },
     { name = "matplotlib", specifier = ">=3.5.0" },
     { name = "mdformat", specifier = ">=1.0.0" },
