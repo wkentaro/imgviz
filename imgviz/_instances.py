@@ -105,20 +105,22 @@ def instances2rgb(
         # stack of washes.
         dst[mask] = blend(image[mask], color_ins, alpha)
 
-        if boundary_width > 0:
-            try:
-                import skimage.morphology
-                import skimage.segmentation
-            except ImportError:
-                raise ImportError(
-                    "skimage is required for boundary_width > 0. "
-                    "Please install scikit-image or use: pip install imgviz[all]"
-                ) from None
+        if not boundary_width > 0:
+            continue
 
-            boundary = skimage.segmentation.find_boundaries(mask, connectivity=2)
-            for _ in range(boundary_width - 1):
-                boundary = skimage.morphology.binary_dilation(boundary)
-            dst[boundary] = (200, 200, 200)
+        try:
+            import skimage.morphology
+            import skimage.segmentation
+        except ImportError:
+            raise ImportError(
+                "skimage is required for boundary_width > 0. "
+                "Please install scikit-image or use: pip install imgviz[all]"
+            ) from None
+
+        boundary = skimage.segmentation.find_boundaries(mask, connectivity=2)
+        for _ in range(boundary_width - 1):
+            boundary = skimage.morphology.binary_dilation(boundary)
+        dst[boundary] = (200, 200, 200)
 
     dst = _utils.numpy_to_pillow(dst)
     for instance_id in range(n_instance):
@@ -142,27 +144,29 @@ def instances2rgb(
             width=line_width,
         )
 
-        if caption is not None:
-            locs: tuple[Literal["lt+"], Literal["lt"]] = ("lt+", "lt")
-            for loc in locs:
-                y1, x1, y2, x2 = draw_module.text_in_rectangle_aabb(
-                    yx1=yx1,
-                    yx2=yx2,
-                    loc=loc,
-                    text=caption,
-                    size=font_size,
-                    font_path=font_path,
-                )
-                if y1 >= 0 and x1 >= 0 and y2 < dst.height and x2 < dst.width:
-                    break
-            draw_module.text_in_rectangle_(
-                image=dst,
+        if caption is None:
+            continue
+
+        locs: tuple[Literal["lt+"], Literal["lt"]] = ("lt+", "lt")
+        for loc in locs:
+            y1, x1, y2, x2 = draw_module.text_in_rectangle_aabb(
+                yx1=yx1,
+                yx2=yx2,
                 loc=loc,
                 text=caption,
                 size=font_size,
-                background=color_cls,
-                yx1=yx1,
-                yx2=yx2,
                 font_path=font_path,
             )
+            if y1 >= 0 and x1 >= 0 and y2 < dst.height and x2 < dst.width:
+                break
+        draw_module.text_in_rectangle_(
+            image=dst,
+            loc=loc,
+            text=caption,
+            size=font_size,
+            background=color_cls,
+            yx1=yx1,
+            yx2=yx2,
+            font_path=font_path,
+        )
     return _utils.pillow_to_numpy(dst)

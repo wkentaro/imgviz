@@ -87,7 +87,7 @@ replacement = 'src="https://raw.githubusercontent.com/wkentaro/imgviz/main/\1"'
 source = "vcs"
 
 [tool.gruff.lint]
-select = ["GR002", "GR003", "GR004", "GR007", "GR008"]
+select = ["GR002", "GR003", "GR004", "GR007", "GR008", "GR009"]
 
 [tool.ruff]
 line-length = 88
