@@ -96,6 +96,7 @@ select = [
   "GR009",
   "GR010",
   "GR011",
+  "GR012",
 ]
 
 [tool.ruff]
