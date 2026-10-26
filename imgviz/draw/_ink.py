@@ -33,7 +33,6 @@ def require_fill_or_outline(*, fill: Ink | None, outline: Ink | None) -> None:
 
 
 def get_draw(*, image: PIL.Image.Image) -> PIL.ImageDraw.ImageDraw:
-    """Return the drawing context for a PIL image, rejecting anything else."""
     if not isinstance(image, PIL.Image.Image):
         raise TypeError(
             f"image must be PIL.Image.Image, but got {type(image).__name__}"

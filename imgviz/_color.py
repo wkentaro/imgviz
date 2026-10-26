@@ -126,14 +126,6 @@ def rgba2rgb(rgba: NDArray[np.uint8]) -> NDArray[np.uint8]:  # noqa: GR005 -- pr
 
 
 def require_uint8_image(*, image: NDArray) -> NDArray[np.uint8]:
-    """Validate a uint8 image and promote 2D grayscale to RGB.
-
-    Args:
-        image: Input image with shape (H, W) or (H, W, C).
-
-    Returns:
-        The image with a channel axis, grayscale promoted via gray2rgb.
-    """
     if not isinstance(image, np.ndarray):
         raise TypeError(f"image must be a numpy array, but got {type(image).__name__}")
     if image.dtype != np.uint8:
@@ -228,7 +220,6 @@ def get_fg_color(
     *,
     color: tuple[int, int, int] | NDArray[np.uint8],
 ) -> tuple[int, int, int]:
-    """Get foreground color (black or white) for given background color."""
     color_arr: NDArray[np.uint8] = np.asarray(color, dtype=np.uint8)
     intensity: np.uint8 = rgb2gray(color_arr.reshape(1, 1, 3)).sum()
     if intensity > 170:

@@ -12,7 +12,7 @@ def blend(
 
     ``over`` is an image or a color that broadcasts against ``under``; ``alpha``
     is a scalar or an array that broadcasts the same way.
-    """
+    """  # noqa: GR006 -- preserve documentation for the pending public API
     alpha_arr = np.asarray(alpha, dtype=float)
     if not ((0 <= alpha_arr) & (alpha_arr <= 1)).all():
         raise ValueError(f"alpha must be in range [0, 1], got {alpha}")

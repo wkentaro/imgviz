@@ -13,7 +13,6 @@ from ._color import get_fg_color
 
 
 def _pick_nice_length(*, target_units: float) -> float:
-    """Largest of {1, 2, 5} times a power of 10 not exceeding target_units."""
     exponent = math.floor(math.log10(target_units))
     fraction = target_units / 10**exponent
     nice = 5 if fraction >= 5 else 2 if fraction >= 2 else 1
