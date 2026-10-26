@@ -15,7 +15,7 @@ def normalize(
     min_value: float | Sequence[float] | NDArray[np.floating] | None = ...,
     max_value: float | Sequence[float] | NDArray[np.floating] | None = ...,
     return_minmax: Literal[False] = ...,
-) -> NDArray[np.float32]: ...
+) -> NDArray[np.float32]: ...  # noqa: GR005 -- preserve positional and keyword API calls
 
 
 @typing.overload
@@ -24,7 +24,7 @@ def normalize(
     min_value: float | Sequence[float] | NDArray[np.floating] | None = ...,
     max_value: float | Sequence[float] | NDArray[np.floating] | None = ...,
     return_minmax: Literal[True] = ...,
-) -> tuple[NDArray[np.float32], NDArray[np.float32], NDArray[np.float32]]: ...
+) -> tuple[NDArray[np.float32], NDArray[np.float32], NDArray[np.float32]]: ...  # noqa: GR005 -- preserve positional and keyword API calls
 
 
 def normalize(
@@ -35,7 +35,7 @@ def normalize(
 ) -> (
     NDArray[np.float32]
     | tuple[NDArray[np.float32], NDArray[np.float32], NDArray[np.float32]]
-):
+):  # noqa: GR005 -- preserve positional and keyword API calls
     """Normalize image.
 
     Args:

@@ -14,7 +14,7 @@ def mask2rgb(
     fill: Fill | tuple[int, int, int] | NDArray[np.uint8] = (0, 255, 0),
     alpha: float = 0.5,
     cval: tuple[int, int, int] = (0, 0, 0),
-) -> NDArray[np.uint8]:
+) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Fill mask region with color or pattern.
 
     Args:

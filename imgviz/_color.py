@@ -7,7 +7,7 @@ from . import _dtype
 from . import _utils
 
 
-def rgb2gray(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:
+def rgb2gray(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Convert rgb to gray.
 
     Args:
@@ -29,7 +29,7 @@ def rgb2gray(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:
     return gray
 
 
-def gray2rgb(gray: NDArray[np.uint8]) -> NDArray[np.uint8]:
+def gray2rgb(gray: NDArray[np.uint8]) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Convert gray to rgb.
 
     Args:
@@ -47,7 +47,7 @@ def gray2rgb(gray: NDArray[np.uint8]) -> NDArray[np.uint8]:
     return rgb
 
 
-def rgb2rgba(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:
+def rgb2rgba(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Convert rgb to rgba.
 
     Args:
@@ -68,7 +68,7 @@ def rgb2rgba(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:
     return rgba
 
 
-def rgb2hsv(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:
+def rgb2hsv(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Convert rgb to hsv.
 
     Args:
@@ -90,7 +90,7 @@ def rgb2hsv(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:
     return hsv
 
 
-def hsv2rgb(hsv: NDArray[np.uint8]) -> NDArray[np.uint8]:
+def hsv2rgb(hsv: NDArray[np.uint8]) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Convert hsv to rgb.
 
     Args:
@@ -112,7 +112,7 @@ def hsv2rgb(hsv: NDArray[np.uint8]) -> NDArray[np.uint8]:
     return rgb
 
 
-def rgba2rgb(rgba: NDArray[np.uint8]) -> NDArray[np.uint8]:
+def rgba2rgb(rgba: NDArray[np.uint8]) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Convert rgba to rgb.
 
     Args:
@@ -145,7 +145,7 @@ def require_uint8_image(*, image: NDArray) -> NDArray[np.uint8]:
     return image
 
 
-def asgray(image: NDArray) -> NDArray[np.uint8]:
+def asgray(image: NDArray) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Convert any array to gray image.
 
     Args:
@@ -171,7 +171,7 @@ def asgray(image: NDArray) -> NDArray[np.uint8]:
     return gray
 
 
-def asrgb(image: NDArray, copy: bool = False) -> NDArray[np.uint8]:
+def asrgb(image: NDArray, copy: bool = False) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Convert any array to rgb image.
 
     Args:
@@ -198,7 +198,7 @@ def asrgb(image: NDArray, copy: bool = False) -> NDArray[np.uint8]:
     return rgb.copy() if copy else rgb
 
 
-def asrgba(image: NDArray) -> NDArray[np.uint8]:
+def asrgba(image: NDArray) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Convert any array to rgba image.
 
     Args:

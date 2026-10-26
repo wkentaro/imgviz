@@ -33,7 +33,7 @@ def text_in_rectangle_aabb(
     text: str,
     size: int,
     font_path: str | pathlib.Path | None = None,
-) -> _Aabb:
+) -> _Aabb:  # noqa: GR005 -- preserve positional and keyword API calls
     """Calculate bounding box for text in rectangle.
 
     Args:
@@ -91,7 +91,7 @@ def text_in_rectangle(
     yx2: tuple[float, float] | NDArray[np.floating] | None = None,
     font_path: str | pathlib.Path | None = None,
     keep_size: bool = False,
-) -> NDArray[np.uint8]:
+) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Draw text in a rectangle.
 
     Args:
@@ -159,7 +159,7 @@ def text_in_rectangle_(
     yx1: tuple[float, float] | NDArray[np.floating] | None = None,
     yx2: tuple[float, float] | NDArray[np.floating] | None = None,
     font_path: str | pathlib.Path | None = None,
-) -> None:
+) -> None:  # noqa: GR005 -- preserve positional and keyword API calls
     """Draw text in a rectangle on PIL image in-place.
 
     Args:

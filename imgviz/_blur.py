@@ -12,7 +12,7 @@ def blur(
     image: NDArray[np.uint8],
     sigma: float = 8.0,
     mask: NDArray[np.bool_] | None = None,
-) -> NDArray[np.uint8]:
+) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Apply Gaussian blur to an image.
 
     Args:

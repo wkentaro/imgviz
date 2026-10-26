@@ -82,7 +82,7 @@ def _flow_compute_color(*, flow_u: NDArray, flow_v: NDArray) -> NDArray[np.uint8
 
 
 class Flow2Rgb:
-    def __init__(self, max_norm: float | np.floating | None = None) -> None:
+    def __init__(self, max_norm: float | np.floating | None = None) -> None:  # noqa: GR005 -- preserve positional and keyword API calls
         self._max_norm: np.float32 | None = (
             None if max_norm is None else np.float32(max_norm)
         )
@@ -91,7 +91,7 @@ class Flow2Rgb:
     def max_norm(self) -> np.float32 | None:
         return self._max_norm
 
-    def __call__(self, flow_uv: NDArray[np.floating]) -> NDArray[np.uint8]:
+    def __call__(self, flow_uv: NDArray[np.floating]) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
         """Visualize optical flow.
 
         Args:
@@ -111,7 +111,7 @@ def flow2rgb(
     flow_uv: NDArray[np.floating],
     max_norm: float | np.floating | None = ...,
     return_max: typing.Literal[False] = ...,
-) -> NDArray[np.uint8]: ...
+) -> NDArray[np.uint8]: ...  # noqa: GR005 -- preserve positional and keyword API calls
 
 
 @typing.overload
@@ -119,14 +119,14 @@ def flow2rgb(
     flow_uv: NDArray[np.floating],
     max_norm: float | np.floating | None = ...,
     return_max: typing.Literal[True] = ...,
-) -> tuple[NDArray[np.uint8], np.float32]: ...
+) -> tuple[NDArray[np.uint8], np.float32]: ...  # noqa: GR005 -- preserve positional and keyword API calls
 
 
 def flow2rgb(
     flow_uv: NDArray[np.floating],
     max_norm: float | np.floating | None = None,
     return_max: bool = False,
-) -> NDArray[np.uint8] | tuple[NDArray[np.uint8], np.float32]:
+) -> NDArray[np.uint8] | tuple[NDArray[np.uint8], np.float32]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Visualize optical flow.
 
     Args:

@@ -20,7 +20,7 @@ def centerize(
     return_mask: Literal[False] = ...,
     interpolation: Literal["linear", "nearest"] = ...,
     loc: Literal["center", "lt", "rt", "lb", "rb"] = ...,
-) -> NDArray: ...
+) -> NDArray: ...  # noqa: GR005 -- preserve positional and keyword API calls
 
 
 @typing.overload
@@ -32,7 +32,7 @@ def centerize(
     return_mask: Literal[True] = ...,
     interpolation: Literal["linear", "nearest"] = ...,
     loc: Literal["center", "lt", "rt", "lb", "rb"] = ...,
-) -> tuple[NDArray, NDArray[np.bool_]]: ...
+) -> tuple[NDArray, NDArray[np.bool_]]: ...  # noqa: GR005 -- preserve positional and keyword API calls
 
 
 def centerize(
@@ -43,7 +43,7 @@ def centerize(
     return_mask: bool = False,
     interpolation: Literal["linear", "nearest"] = "linear",
     loc: Literal["center", "lt", "rt", "lb", "rb"] = "center",
-) -> NDArray | tuple[NDArray, NDArray[np.bool_]]:
+) -> NDArray | tuple[NDArray, NDArray[np.bool_]]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Deprecated. Use :func:`imgviz.letterbox` instead."""
     warnings.warn(
         "`centerize` is deprecated and will be removed in the next major release; "

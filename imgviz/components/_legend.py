@@ -22,7 +22,7 @@ def legend(
     font_size: int = 25,
     font_path: str | None = None,
     loc: Literal["lt", "rt", "lb", "rb"] = "rb",
-) -> NDArray[np.uint8]:
+) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Draw a corner legend of colored boxes with text labels.
 
     Args:
@@ -53,7 +53,7 @@ def legend_(
     font_size: int = 25,
     font_path: str | None = None,
     loc: Literal["lt", "rt", "lb", "rb"] = "rb",
-) -> None:
+) -> None:  # noqa: GR005 -- preserve positional and keyword API calls
     """Draw a corner legend on a PIL image in-place.
 
     Args:

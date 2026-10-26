@@ -8,7 +8,7 @@ from . import _utils
 from ._label import label_colormap
 
 
-def imread(filename: str | pathlib.Path) -> NDArray[np.uint8]:
+def imread(filename: str | pathlib.Path) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Read image from file.
 
     Args:
@@ -21,7 +21,7 @@ def imread(filename: str | pathlib.Path) -> NDArray[np.uint8]:
         return _utils.pillow_to_numpy(image=image)
 
 
-def imsave(filename: str | pathlib.Path, arr: NDArray[np.uint8]) -> None:
+def imsave(filename: str | pathlib.Path, arr: NDArray[np.uint8]) -> None:  # noqa: GR005 -- preserve positional and keyword API calls
     """Save image to file.
 
     Args:
@@ -33,7 +33,7 @@ def imsave(filename: str | pathlib.Path, arr: NDArray[np.uint8]) -> None:
     _utils.numpy_to_pillow(image=arr).save(path)
 
 
-def lblsave(filename: str | pathlib.Path, lbl: NDArray[np.uint8]) -> None:
+def lblsave(filename: str | pathlib.Path, lbl: NDArray[np.uint8]) -> None:  # noqa: GR005 -- preserve positional and keyword API calls
     """Save label image to PNG file with a colormap.
 
     Args:
@@ -51,5 +51,5 @@ def lblsave(filename: str | pathlib.Path, lbl: NDArray[np.uint8]) -> None:
     lbl_pil.save(filename)
 
 
-def imshow(image: NDArray[np.uint8]) -> None:
+def imshow(image: NDArray[np.uint8]) -> None:  # noqa: GR005 -- preserve positional and keyword API calls
     _utils.numpy_to_pillow(image=image).show()

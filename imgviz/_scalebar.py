@@ -27,7 +27,7 @@ def scalebar(
     loc: Literal["lt", "rt", "lb", "rb"] = "rb",
     color: Literal["auto"] | _cmap.ColorLike = "auto",
     font_path: str | None = None,
-) -> NDArray[np.uint8]:
+) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Draw a scale bar with a "nice" length and unit label into an image.
 
     Given a pixel-to-physical conversion, picks a length of 1, 2, or 5 times a

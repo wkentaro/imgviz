@@ -15,7 +15,7 @@ _here: pathlib.Path = pathlib.Path(__file__).parent
 
 # Code adapted from:
 # http://stackoverflow.com/questions/28013200/reading-middlebury-flow-files-with-python-bytes-array-numpy  # NOQA
-def read_flow(filename: str | pathlib.Path) -> NDArray[np.float32]:
+def read_flow(filename: str | pathlib.Path) -> NDArray[np.float32]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Read .flo file in Middlebury format"""
 
     with open(filename, "rb") as f:

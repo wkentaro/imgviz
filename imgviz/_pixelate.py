@@ -11,7 +11,7 @@ def pixelate(
     image: NDArray,
     block: int = 8,
     mask: NDArray[np.bool_] | None = None,
-) -> NDArray:
+) -> NDArray:  # noqa: GR005 -- preserve positional and keyword API calls
     """Pixelate an image into a mosaic.
 
     Downsamples the image by ``block`` then upscales with nearest-neighbor

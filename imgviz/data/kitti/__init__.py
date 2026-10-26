@@ -10,7 +10,7 @@ __all__ = ["kitti_odometry", "read_pose_file"]
 _here: pathlib.Path = pathlib.Path(__file__).parent
 
 
-def read_pose_file(filename: str | pathlib.Path) -> list[NDArray[np.float64]]:
+def read_pose_file(filename: str | pathlib.Path) -> list[NDArray[np.float64]]:  # noqa: GR005 -- preserve positional and keyword API calls
     with open(filename) as f:
         transforms = []
         for one_line in f:

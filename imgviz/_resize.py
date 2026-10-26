@@ -82,7 +82,7 @@ def resize(
     width: int | float | None = None,
     interpolation: Literal["linear", "nearest"] = "linear",
     backend: Literal["auto", "pillow", "opencv"] = "auto",
-) -> NDArray:
+) -> NDArray:  # noqa: GR005 -- preserve positional and keyword API calls
     """Resize image.
 
     Args:

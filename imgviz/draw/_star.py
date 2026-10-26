@@ -16,7 +16,7 @@ def star(
     fill: Ink | None = None,
     outline: Ink | None = None,
     width: int = 1,
-) -> NDArray[np.uint8]:
+) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Draw star on numpy array with Pillow.
 
     Args:
@@ -49,7 +49,7 @@ def star_(
     fill: Ink | None = None,
     outline: Ink | None = None,
     width: int = 1,
-) -> None:
+) -> None:  # noqa: GR005 -- preserve positional and keyword API calls
     """Draw star on PIL image in-place.
 
     Args:

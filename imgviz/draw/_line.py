@@ -14,7 +14,7 @@ def line(
     yx: ArrayLike,
     fill: Ink,
     width: int = 1,
-) -> NDArray[np.uint8]:
+) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Draw line on numpy array with Pillow.
 
     Args:
@@ -36,7 +36,7 @@ def line_(
     yx: ArrayLike,
     fill: Ink,
     width: int = 1,
-) -> None:
+) -> None:  # noqa: GR005 -- preserve positional and keyword API calls
     """Draw line on PIL image in-place.
 
     Args:

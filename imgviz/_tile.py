@@ -67,7 +67,7 @@ def tile(
     cval: Ink | None = None,
     border: Ink | None = None,
     border_width: int | None = None,
-) -> NDArray[np.uint8]:
+) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Tile images.
 
     Args:

@@ -16,7 +16,7 @@ def polygon(
     fill: Ink | None = None,
     outline: Ink | None = None,
     width: int = 1,
-) -> NDArray[np.uint8]:
+) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Draw polygon on numpy array with Pillow.
 
     Args:
@@ -41,7 +41,7 @@ def polygon_(
     fill: Ink | None = None,
     outline: Ink | None = None,
     width: int = 1,
-) -> None:
+) -> None:  # noqa: GR005 -- preserve positional and keyword API calls
     """Draw polygon on PIL image in-place.
 
     Args:

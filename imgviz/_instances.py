@@ -15,7 +15,7 @@ from ._blend import blend
 
 def masks_to_bboxes(
     masks: NDArray[np.bool_] | Sequence[NDArray[np.bool_]],
-) -> NDArray[np.floating]:
+) -> NDArray[np.floating]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Convert mask to tight bounding box.
 
     Args:
@@ -48,7 +48,7 @@ def instances2rgb(
     alpha: float = 0.5,
     colormap: NDArray[np.uint8] | None = None,
     font_path: str | None = None,
-) -> NDArray[np.uint8]:
+) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Convert instances to rgb.
 
     Args:

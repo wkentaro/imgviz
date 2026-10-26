@@ -48,7 +48,7 @@ def label2rgb(
     colormap: NDArray[np.uint8] | None = None,
     loc: Literal["centroid", "lt", "rt", "lb", "rb"] = "rb",
     font_path: str | None = None,
-) -> NDArray[np.uint8]:
+) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Convert label to rgb.
 
     Args:

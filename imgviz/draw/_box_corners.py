@@ -15,7 +15,7 @@ def box_corners(
     fill: Ink,
     length: int = 12,
     width: int = 2,
-) -> NDArray[np.uint8]:
+) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Draw the four L-shaped corners of a rectangle on numpy array with Pillow.
 
     Args:
@@ -49,7 +49,7 @@ def box_corners_(
     fill: Ink,
     length: int = 12,
     width: int = 2,
-) -> None:
+) -> None:  # noqa: GR005 -- preserve positional and keyword API calls
     """Draw the four L-shaped corners of a rectangle on PIL image in-place.
 
     Args:

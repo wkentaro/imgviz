@@ -17,7 +17,7 @@ def arrow(
     width: int = 1,
     head_length_ratio: float = 0.1,
     head_angle: float = 30.0,
-) -> NDArray[np.uint8]:
+) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Draw arrow on numpy array with Pillow.
 
     Args:
@@ -53,7 +53,7 @@ def arrow_(
     width: int = 1,
     head_length_ratio: float = 0.1,
     head_angle: float = 30.0,
-) -> None:
+) -> None:  # noqa: GR005 -- preserve positional and keyword API calls
     """Draw arrow on PIL image in-place.
 
     Args:

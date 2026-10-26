@@ -26,7 +26,7 @@ def text_size(
     text: str,
     size: int,
     font_path: str | pathlib.Path | None = None,
-) -> tuple[int, int]:
+) -> tuple[int, int]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Get text size (height and width).
 
     Args:
@@ -59,7 +59,7 @@ def text(
     size: int,
     color: Ink = (0, 0, 0),
     font_path: str | pathlib.Path | None = None,
-) -> NDArray[np.uint8]:
+) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Draw text on numpy array with Pillow.
 
     Args:
@@ -85,7 +85,7 @@ def text_(
     size: int,
     color: Ink = (0, 0, 0),
     font_path: str | pathlib.Path | None = None,
-) -> None:
+) -> None:  # noqa: GR005 -- preserve positional and keyword API calls
     """Draw text on PIL image in-place.
 
     Args:

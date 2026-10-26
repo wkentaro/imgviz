@@ -17,7 +17,7 @@ def pie(
     fills: Sequence[Ink],
     outline: Ink | None = None,
     width: int = 0,
-) -> NDArray[np.uint8]:
+) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Draw a disc divided into equal colored wedges on a numpy array.
 
     Args:
@@ -53,7 +53,7 @@ def pie_(
     fills: Sequence[Ink],
     outline: Ink | None = None,
     width: int = 0,
-) -> None:
+) -> None:  # noqa: GR005 -- preserve positional and keyword API calls
     """Draw a disc divided into equal colored wedges on a PIL image in-place.
 
     Args:

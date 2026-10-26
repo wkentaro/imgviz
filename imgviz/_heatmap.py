@@ -10,7 +10,7 @@ def heatmap(
     shape: tuple[int, int],
     sigma: float = 10.0,
     weights: ArrayLike | None = None,
-) -> NDArray[np.float64]:
+) -> NDArray[np.float64]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Render a 2D Gaussian density heatmap from a list of points.
 
     Each point contributes an isotropic Gaussian with peak equal to its weight,

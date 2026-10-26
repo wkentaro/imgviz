@@ -27,7 +27,7 @@ def flags2rgb(
     loc: Literal["lt", "rt", "lb", "rb"] = "rb",
     outline: draw_module.Ink | None = (255, 255, 255),
     outline_width: int = 1,
-) -> NDArray[np.uint8]:
+) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Visualize per-instance boolean flags as pie glyphs with a legend.
 
     Wedge angle encodes flag identity, never quantity. With ``wedges="on"``,

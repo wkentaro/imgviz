@@ -18,7 +18,7 @@ def progress_bar(
     background: Ink,
     outline: Ink | None = None,
     width: int = 1,
-) -> NDArray[np.uint8]:
+) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Draw a horizontal progress bar on numpy array with Pillow.
 
     Args:
@@ -58,7 +58,7 @@ def progress_bar_(
     background: Ink,
     outline: Ink | None = None,
     width: int = 1,
-) -> None:
+) -> None:  # noqa: GR005 -- preserve positional and keyword API calls
     """Draw a horizontal progress bar on PIL image in-place.
 
     Args:

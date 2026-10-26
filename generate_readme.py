@@ -6,7 +6,7 @@ import os.path as osp
 import PIL.Image
 
 
-def tabulate(rows: list[list[str]]) -> str:
+def tabulate(rows: list[list[str]], /) -> str:
     html = "<table>"
     for row in rows:
         html += "\n\t<tr>"

@@ -27,7 +27,7 @@ def diff(
     mode: Literal["signed", "abs", "ssim"] = "signed",
     vmin: float | None = None,
     vmax: float | None = None,
-) -> NDArray[np.uint8]:
+) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Visualize the difference between two images.
 
     Color images are reduced to BT.601 luminance before differencing
