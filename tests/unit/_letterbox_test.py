@@ -1,3 +1,4 @@
+from typing import Final
 from typing import Literal
 from typing import TypeAlias
 
@@ -128,8 +129,8 @@ _Loc: TypeAlias = Literal["center", "lt", "rt", "lb", "rb"]
 
 @pytest.mark.parametrize("loc", _Loc.__args__)
 def test_letterbox_loc_square(loc: _Loc, show: bool) -> None:
-    SHORT_SIZE: int = 10
-    LONG_SIZE: int = 20
+    SHORT_SIZE: Final[int] = 10
+    LONG_SIZE: Final[int] = 20
     shape: tuple[int, int, int] = (SHORT_SIZE, SHORT_SIZE, 3)
 
     image: NDArray[np.uint8] = (
@@ -147,8 +148,8 @@ def test_letterbox_loc_square(loc: _Loc, show: bool) -> None:
 
 @pytest.mark.parametrize("loc", _Loc.__args__)
 def test_letterbox_loc_portrait(loc: _Loc, show: bool) -> None:
-    SHORT_SIZE: int = 10
-    LONG_SIZE: int = 20
+    SHORT_SIZE: Final[int] = 10
+    LONG_SIZE: Final[int] = 20
     shape: tuple[int, int, int] = (LONG_SIZE, SHORT_SIZE, 3)
 
     image: NDArray[np.uint8] = (
@@ -178,8 +179,8 @@ def test_letterbox_loc_portrait(loc: _Loc, show: bool) -> None:
 
 @pytest.mark.parametrize("loc", _Loc.__args__)
 def test_letterbox_loc_landscape(loc: _Loc, show: bool) -> None:
-    SHORT_SIZE: int = 10
-    LONG_SIZE: int = 20
+    SHORT_SIZE: Final[int] = 10
+    LONG_SIZE: Final[int] = 20
     shape: tuple[int, int, int] = (SHORT_SIZE, LONG_SIZE, 3)
 
     image: NDArray[np.uint8] = (

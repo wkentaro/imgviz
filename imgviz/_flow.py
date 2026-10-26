@@ -11,12 +11,12 @@ from numpy.typing import NDArray
 
 
 def _make_colorwheel() -> NDArray[np.floating]:
-    RY = 15
-    YG = 6
-    GC = 4
-    CB = 11
-    BM = 13
-    MR = 6
+    RY: typing.Final = 15
+    YG: typing.Final = 6
+    GC: typing.Final = 4
+    CB: typing.Final = 11
+    BM: typing.Final = 13
+    MR: typing.Final = 6
 
     ncols = RY + YG + GC + CB + BM + MR
     colorwheel = np.zeros((ncols, 3))
