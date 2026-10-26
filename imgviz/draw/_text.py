@@ -11,14 +11,13 @@ from ._ink import get_draw
 from ._ink import get_pil_ink
 
 _here: pathlib.Path = pathlib.Path(__file__).parent
-_default_font_path: pathlib.Path = _here / "fonts" / "DejaVuSansMono.ttf"
 
 
 def _get_font(
     size: int, font_path: str | pathlib.Path | None
 ) -> PIL.ImageFont.FreeTypeFont:
     if font_path is None:
-        font_path = _default_font_path
+        font_path = _here / "fonts" / "DejaVuSansMono.ttf"
     font = PIL.ImageFont.truetype(font=str(font_path), size=size)
     return font
 

@@ -3,18 +3,12 @@ from __future__ import annotations
 import typing
 import warnings
 from typing import Any
-from typing import Final
 from typing import Literal
 
 import numpy as np
 from numpy.typing import NDArray
 
 from ._letterbox import letterbox
-
-_DEPRECATION_MESSAGE: Final[str] = (
-    "`centerize` is deprecated and will be removed in the next major release; "
-    "use `imgviz.letterbox` instead."
-)
 
 
 @typing.overload
@@ -52,7 +46,8 @@ def centerize(
 ) -> NDArray | tuple[NDArray, NDArray[np.bool_]]:
     """Deprecated. Use :func:`imgviz.letterbox` instead."""
     warnings.warn(
-        _DEPRECATION_MESSAGE,
+        "`centerize` is deprecated and will be removed in the next major release; "
+        "use `imgviz.letterbox` instead.",
         DeprecationWarning,
         stacklevel=2,
     )
