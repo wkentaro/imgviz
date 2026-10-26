@@ -49,9 +49,9 @@ def _gaussian_blur(image: NDArray, sigma: float) -> NDArray:
     if image.ndim == 2:
         return _gaussian_blur_2d(arr=image, sigma=sigma)
 
-    C = image.shape[2]
+    channels = image.shape[2]
     dst = np.empty_like(image)
-    for c in range(C):
+    for c in range(channels):
         dst[..., c] = _gaussian_blur_2d(arr=image[..., c], sigma=sigma)
     return dst
 

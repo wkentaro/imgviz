@@ -1,3 +1,5 @@
+from typing import Final
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pytest
@@ -5,11 +7,13 @@ from numpy.typing import NDArray
 
 import imgviz
 
-_COLOR_RED: tuple[int, int, int] = (255, 0, 0)
-_COLOR_WHITE: tuple[int, int, int] = (255, 255, 255)
+_COLOR_RED: Final[tuple[int, int, int]] = (255, 0, 0)
+_COLOR_WHITE: Final[tuple[int, int, int]] = (255, 255, 255)
 
-_WHITE_IMAGE: NDArray[np.uint8] = np.full((100, 100, 3), _COLOR_WHITE, dtype=np.uint8)
-_SIMPLE_MASK: NDArray[np.bool_] = np.zeros((100, 100), dtype=bool)
+_WHITE_IMAGE: Final[NDArray[np.uint8]] = np.full(
+    (100, 100, 3), _COLOR_WHITE, dtype=np.uint8
+)
+_SIMPLE_MASK: Final[NDArray[np.bool_]] = np.zeros((100, 100), dtype=bool)
 _SIMPLE_MASK[20:80, 20:80] = True
 
 

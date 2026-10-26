@@ -48,23 +48,27 @@ def normalize(
         Normalized image in [0, 1], or tuple of (dst, min_value, max_value).
     """
     if image.ndim == 2:
-        D = 1
+        channels = 1
     elif image.ndim == 3:
-        D = image.shape[2]
+        channels = image.shape[2]
     else:
         raise ValueError(f"image ndim must be 2 or 3, but got {image.ndim}")
 
     if min_value is None:
         min_value = np.nanmin(image, axis=(0, 1))
     min_value = np.atleast_1d(min_value).astype(np.float32)
-    if min_value.shape != (D,):
-        raise ValueError(f"min_value.shape must be ({D},), but got {min_value.shape}")
+    if min_value.shape != (channels,):
+        raise ValueError(
+            f"min_value.shape must be ({channels},), but got {min_value.shape}"
+        )
 
     if max_value is None:
         max_value = np.nanmax(image, axis=(0, 1))
     max_value = np.atleast_1d(max_value).astype(np.float32)
-    if max_value.shape != (D,):
-        raise ValueError(f"max_value.shape must be ({D},), but got {max_value.shape}")
+    if max_value.shape != (channels,):
+        raise ValueError(
+            f"max_value.shape must be ({channels},), but got {max_value.shape}"
+        )
 
     if np.isinf(min_value).any() or np.isinf(max_value).any():
         warnings.warn("some of min or max values are inf.")

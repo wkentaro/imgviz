@@ -1,3 +1,5 @@
+from typing import Final
+
 import numpy as np
 import pytest
 from numpy.typing import NDArray
@@ -5,7 +7,7 @@ from numpy.typing import NDArray
 import imgviz
 from imgviz._colorblind import Kind
 
-KINDS: list[Kind] = ["protanopia", "deuteranopia", "tritanopia"]
+KINDS: Final[list[Kind]] = ["protanopia", "deuteranopia", "tritanopia"]
 
 
 @pytest.fixture

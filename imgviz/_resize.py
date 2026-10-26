@@ -18,17 +18,16 @@ except ImportError:
 def _resize_pillow(
     image: NDArray, height: int, width: int, interpolation: Literal["linear", "nearest"]
 ) -> NDArray:
-    resample: Final
     if interpolation == "linear":
-        resample = PIL.Image.BILINEAR
+        RESAMPLE: Final = PIL.Image.BILINEAR
     elif interpolation == "nearest":
-        resample = PIL.Image.NEAREST
+        RESAMPLE: Final = PIL.Image.NEAREST
     else:
         raise ValueError(f"unsupported interpolation: {interpolation}")
 
     if np.issubdtype(image.dtype, np.integer):
         dst = _utils.numpy_to_pillow(image)
-        dst = dst.resize((width, height), resample=resample)
+        dst = dst.resize((width, height), resample=RESAMPLE)
         dst = _utils.pillow_to_numpy(dst)
     else:
         if not np.issubdtype(image.dtype, np.floating):
@@ -39,12 +38,12 @@ def _resize_pillow(
         if ndim == 2:
             image = image[:, :, None]
 
-        C = image.shape[2]
-        dst = np.zeros((height, width, C), dtype=image.dtype)
-        for c in range(C):
+        channels = image.shape[2]
+        dst = np.zeros((height, width, channels), dtype=image.dtype)
+        for c in range(channels):
             image_c = image[:, :, c]
             image_c = _utils.numpy_to_pillow(image_c)
-            dst[:, :, c] = image_c.resize((width, height), resample=resample)
+            dst[:, :, c] = image_c.resize((width, height), resample=RESAMPLE)
 
         if ndim == 2:
             dst = dst[:, :, 0]

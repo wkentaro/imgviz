@@ -3,6 +3,7 @@ from __future__ import annotations
 import typing
 import warnings
 from collections.abc import Callable
+from typing import Final
 
 import numpy as np
 from numpy.typing import NDArray
@@ -10,7 +11,7 @@ from numpy.typing import NDArray
 from ._colorize import Colorize
 from ._colorize import colorize
 
-_DEPRECATION_MESSAGE: typing.Final[str] = (
+_DEPRECATION_MESSAGE: Final[str] = (
     "`{name}` is deprecated and will be removed in the next major release; "
     "use `imgviz.{replacement}` instead."
 )

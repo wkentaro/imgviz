@@ -1,3 +1,5 @@
+from typing import Final
+
 import numpy as np
 import PIL.Image
 import pytest
@@ -5,9 +7,9 @@ from numpy.typing import NDArray
 
 import imgviz
 
-GREEN = (0, 200, 0)
-GRAY = (50, 50, 50)
-RED = (255, 0, 0)
+GREEN: Final = (0, 200, 0)
+GRAY: Final = (50, 50, 50)
+RED: Final = (255, 0, 0)
 
 
 @pytest.fixture
