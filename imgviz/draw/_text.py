@@ -15,7 +15,7 @@ _default_font_path: pathlib.Path = _here / "fonts" / "DejaVuSansMono.ttf"
 
 
 def _get_font(
-    size: int, font_path: str | pathlib.Path | None = None
+    size: int, font_path: str | pathlib.Path | None
 ) -> PIL.ImageFont.FreeTypeFont:
     if font_path is None:
         font_path = _default_font_path
