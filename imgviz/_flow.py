@@ -5,18 +5,19 @@
 from __future__ import annotations
 
 import typing
+from typing import Final
 
 import numpy as np
 from numpy.typing import NDArray
 
 
 def _make_colorwheel() -> NDArray[np.floating]:
-    RY: typing.Final = 15
-    YG: typing.Final = 6
-    GC: typing.Final = 4
-    CB: typing.Final = 11
-    BM: typing.Final = 13
-    MR: typing.Final = 6
+    RY: Final = 15
+    YG: Final = 6
+    GC: Final = 4
+    CB: Final = 11
+    BM: Final = 13
+    MR: Final = 6
 
     ncols = RY + YG + GC + CB + BM + MR
     colorwheel = np.zeros((ncols, 3))
