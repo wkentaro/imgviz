@@ -19,7 +19,7 @@ class Nchannel2Rgb:
         pca: PCA object from sklearn.
     """
 
-    def __init__(self, pca: sklearn.decomposition.PCA | None = None) -> None:
+    def __init__(self, pca: sklearn.decomposition.PCA | None = None) -> None:  # noqa: GR005 -- preserve positional and keyword API calls
         self._pca = pca
         # for uint8
         self._min_max_value: tuple[
@@ -35,7 +35,7 @@ class Nchannel2Rgb:
         self,
         nchannel: NDArray,
         dtype: type[np.uint8] | type[np.floating] = np.uint8,
-    ) -> NDArray[np.uint8] | NDArray[np.floating]:
+    ) -> NDArray[np.uint8] | NDArray[np.floating]:  # noqa: GR005 -- preserve positional and keyword API calls
         """Convert nchannel array to rgb by PCA.
 
         Args:
@@ -91,7 +91,7 @@ def nchannel2rgb(
     nchannel: NDArray,
     pca: sklearn.decomposition.PCA | None = ...,
     dtype: type[np.uint8] = ...,
-) -> NDArray[np.uint8]: ...
+) -> NDArray[np.uint8]: ...  # noqa: GR005 -- preserve positional and keyword API calls
 
 
 @typing.overload
@@ -99,14 +99,14 @@ def nchannel2rgb(
     nchannel: NDArray,
     pca: sklearn.decomposition.PCA | None = ...,
     dtype: type[np.floating] = ...,
-) -> NDArray[np.floating]: ...
+) -> NDArray[np.floating]: ...  # noqa: GR005 -- preserve positional and keyword API calls
 
 
 def nchannel2rgb(
     nchannel: NDArray,
     pca: sklearn.decomposition.PCA | None = None,
     dtype: type[np.uint8] | type[np.floating] = np.uint8,
-) -> NDArray[np.uint8] | NDArray[np.floating]:
+) -> NDArray[np.uint8] | NDArray[np.floating]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Convert nchannel array to rgb by PCA.
 
     Args:

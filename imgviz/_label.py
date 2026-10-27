@@ -13,7 +13,7 @@ from . import draw as draw_module
 from ._blend import blend
 
 
-def _bitget(byte_value: NDArray[np.uint8], idx: int) -> NDArray[np.uint8]:
+def _bitget(*, byte_value: NDArray[np.uint8], idx: int) -> NDArray[np.uint8]:
     shape: tuple[int, ...] = byte_value.shape + (8,)
     return np.unpackbits(byte_value).reshape(shape)[..., -1 - idx]
 
@@ -29,9 +29,9 @@ def label_colormap() -> NDArray[np.uint8]:
     i = np.repeat(i[:, None], 8, axis=1)
     i = np.right_shift(i, np.arange(0, 24, 3)).astype(np.uint8)
     j = np.arange(8)[::-1]
-    r = np.bitwise_or.reduce(np.left_shift(_bitget(i, 0), j), axis=1)
-    g = np.bitwise_or.reduce(np.left_shift(_bitget(i, 1), j), axis=1)
-    b = np.bitwise_or.reduce(np.left_shift(_bitget(i, 2), j), axis=1)
+    r = np.bitwise_or.reduce(np.left_shift(_bitget(byte_value=i, idx=0), j), axis=1)
+    g = np.bitwise_or.reduce(np.left_shift(_bitget(byte_value=i, idx=1), j), axis=1)
+    b = np.bitwise_or.reduce(np.left_shift(_bitget(byte_value=i, idx=2), j), axis=1)
 
     cmap: NDArray[np.uint8] = np.stack((r, g, b), axis=1).astype(np.uint8)
     cmap.setflags(write=False)
@@ -48,7 +48,7 @@ def label2rgb(
     colormap: NDArray[np.uint8] | None = None,
     loc: Literal["centroid", "lt", "rt", "lb", "rb"] = "rb",
     font_path: str | None = None,
-) -> NDArray[np.uint8]:
+) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Convert label to rgb.
 
     Args:
@@ -120,14 +120,14 @@ def label2rgb(
     if loc == "centroid":
         random_state: np.random.RandomState = np.random.RandomState(0)
 
-        res = _utils.numpy_to_pillow(res)
+        res = _utils.numpy_to_pillow(image=res)
         for label_i in unique_labels:
             mask = label == label_i
             if 1.0 * mask.sum() / mask.size < thresh_suppress:
                 continue
             y: int
             x: int
-            y, x = np.array(_center_of_mass(mask)).round().astype(int).tolist()
+            y, x = np.array(_center_of_mass(mask=mask)).round().astype(int).tolist()
 
             if label[y, x] != label_i:
                 Y, X = np.where(mask)
@@ -138,7 +138,7 @@ def label2rgb(
             height, width = draw_module.text_size(
                 text, size=font_size, font_path=font_path
             )
-            color = _color.get_fg_color(res.getpixel((x, y)))
+            color = _color.get_fg_color(color=res.getpixel((x, y)))
             draw_module.text_(
                 res,
                 yx=(y - height // 2, x - width // 2),
@@ -147,7 +147,7 @@ def label2rgb(
                 size=font_size,
                 font_path=font_path,
             )
-        return _utils.pillow_to_numpy(res)
+        return _utils.pillow_to_numpy(image=res)
 
     items = [(label_names[label_id], colormap[label_id]) for label_id in unique_labels]
     return components.legend(
@@ -155,7 +155,7 @@ def label2rgb(
     )
 
 
-def _center_of_mass(mask: NDArray[np.bool_]) -> tuple[float, float]:
+def _center_of_mass(*, mask: NDArray[np.bool_]) -> tuple[float, float]:
     if mask.ndim != 2 or mask.dtype != bool:
         raise ValueError(
             f"mask must be 2D bool array, but got {mask.ndim}D {mask.dtype}"

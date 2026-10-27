@@ -34,4 +34,4 @@ def flow2rgb() -> None:
 if __name__ == "__main__":
     from _base import run_example
 
-    run_example(flow2rgb)
+    run_example(example_fn=flow2rgb)

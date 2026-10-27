@@ -88,9 +88,12 @@ source = "vcs"
 
 [tool.gruff.lint]
 select = [
+  "GR001",
   "GR002",
   "GR003",
   "GR004",
+  "GR005",
+  "GR006",
   "GR007",
   "GR008",
   "GR009",
@@ -104,6 +107,7 @@ line-length = 88
 indent-width = 4
 
 [tool.ruff.lint]
+external = ["GR"]
 select = [
   "E",   # pycodestyle
   "F",   # pyflakes

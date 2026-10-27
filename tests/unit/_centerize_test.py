@@ -43,7 +43,7 @@ _Loc: TypeAlias = Literal["center", "lt", "rt", "lb", "rb"]
 
 
 @pytest.mark.parametrize("loc", _Loc.__args__)
-def test_centerize_loc_square(loc: _Loc, show: bool) -> None:
+def test_centerize_loc_square(*, loc: _Loc, show: bool) -> None:
     SHORT_SIZE: Final[int] = 10
     LONG_SIZE: Final[int] = 20
     shape: tuple[int, int, int] = (SHORT_SIZE, SHORT_SIZE, 3)
@@ -65,7 +65,7 @@ def test_centerize_loc_square(loc: _Loc, show: bool) -> None:
 
 
 @pytest.mark.parametrize("loc", _Loc.__args__)
-def test_centerize_loc_portrait(loc: _Loc, show: bool) -> None:
+def test_centerize_loc_portrait(*, loc: _Loc, show: bool) -> None:
     SHORT_SIZE: Final[int] = 10
     LONG_SIZE: Final[int] = 20
     shape: tuple[int, int, int] = (LONG_SIZE, SHORT_SIZE, 3)
@@ -99,7 +99,7 @@ def test_centerize_loc_portrait(loc: _Loc, show: bool) -> None:
 
 
 @pytest.mark.parametrize("loc", _Loc.__args__)
-def test_centerize_loc_landscape(loc: _Loc, show: bool) -> None:
+def test_centerize_loc_landscape(*, loc: _Loc, show: bool) -> None:
     SHORT_SIZE: Final[int] = 10
     LONG_SIZE: Final[int] = 20
     shape: tuple[int, int, int] = (SHORT_SIZE, LONG_SIZE, 3)

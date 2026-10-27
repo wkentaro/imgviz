@@ -28,7 +28,7 @@ class Colorize:
         vmin: float | NDArray | None = None,
         vmax: float | NDArray | None = None,
         cmap: str | Callable[[NDArray], NDArray] = "viridis",
-    ) -> None:
+    ) -> None:  # noqa: GR005 -- preserve positional and keyword API calls
         self._vmin = vmin
         self._vmax = vmax
         self._cmap_func: Callable[[NDArray], NDArray] = (
@@ -48,32 +48,32 @@ class Colorize:
         self,
         scalar: NDArray,
         dtype: type[np.uint8] = ...,
-    ) -> NDArray[np.uint8]: ...
+    ) -> NDArray[np.uint8]: ...  # noqa: GR005 -- preserve positional and keyword API calls
 
     @typing.overload
     def __call__(
         self,
         scalar: NDArray,
         dtype: type[np.float32],
-    ) -> NDArray[np.float32]: ...
+    ) -> NDArray[np.float32]: ...  # noqa: GR005 -- preserve positional and keyword API calls
 
     @typing.overload
     def __call__(
         self,
         scalar: NDArray,
         dtype: type[np.float64],
-    ) -> NDArray[np.float64]: ...
+    ) -> NDArray[np.float64]: ...  # noqa: GR005 -- preserve positional and keyword API calls
 
     @typing.overload
     def __call__(
         self,
         scalar: NDArray,
         dtype: type[np.floating],
-    ) -> NDArray[np.floating]: ...
+    ) -> NDArray[np.floating]: ...  # noqa: GR005 -- preserve positional and keyword API calls
 
     def __call__(
         self, scalar: NDArray, dtype: type[np.uint8] | type[np.floating] = np.uint8
-    ) -> NDArray[np.uint8] | NDArray[np.floating]:
+    ) -> NDArray[np.uint8] | NDArray[np.floating]:  # noqa: GR005 -- preserve positional and keyword API calls
         if scalar.ndim != 2:
             raise ValueError(f"scalar must be 2 dimensional, but got {scalar.ndim}")
         if not np.issubdtype(scalar.dtype, np.floating):
@@ -115,7 +115,7 @@ def colorize(
     vmax: float | NDArray | None = ...,
     cmap: str | Callable[[NDArray], NDArray] = ...,
     dtype: type[np.uint8] = ...,
-) -> NDArray[np.uint8]: ...
+) -> NDArray[np.uint8]: ...  # noqa: GR005 -- preserve positional and keyword API calls
 
 
 @typing.overload
@@ -125,7 +125,7 @@ def colorize(
     vmax: float | NDArray | None = ...,
     cmap: str | Callable[[NDArray], NDArray] = ...,
     dtype: type[np.float32] = ...,
-) -> NDArray[np.float32]: ...
+) -> NDArray[np.float32]: ...  # noqa: GR005 -- preserve positional and keyword API calls
 
 
 @typing.overload
@@ -135,7 +135,7 @@ def colorize(
     vmax: float | NDArray | None = ...,
     cmap: str | Callable[[NDArray], NDArray] = ...,
     dtype: type[np.float64] = ...,
-) -> NDArray[np.float64]: ...
+) -> NDArray[np.float64]: ...  # noqa: GR005 -- preserve positional and keyword API calls
 
 
 @typing.overload
@@ -145,7 +145,7 @@ def colorize(
     vmax: float | NDArray | None = ...,
     cmap: str | Callable[[NDArray], NDArray] = ...,
     dtype: type[np.floating] = ...,
-) -> NDArray[np.floating]: ...
+) -> NDArray[np.floating]: ...  # noqa: GR005 -- preserve positional and keyword API calls
 
 
 def colorize(
@@ -154,7 +154,7 @@ def colorize(
     vmax: float | NDArray | None = None,
     cmap: str | Callable[[NDArray], NDArray] = "viridis",
     dtype: type[np.uint8] | type[np.floating] = np.uint8,
-) -> NDArray[np.uint8] | NDArray[np.floating]:
+) -> NDArray[np.uint8] | NDArray[np.floating]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Apply a colormap to a 2D scalar field.
 
     Works for any 2D scalar field: depth maps, attention maps, heatmaps,

@@ -14,7 +14,7 @@ def line(
     yx: ArrayLike,
     fill: Ink,
     width: int = 1,
-) -> NDArray[np.uint8]:
+) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Draw line on numpy array with Pillow.
 
     Args:
@@ -26,9 +26,9 @@ def line(
     Returns:
         Output image.
     """
-    dst = _utils.numpy_to_pillow(image)
+    dst = _utils.numpy_to_pillow(image=image)
     line_(image=dst, yx=yx, fill=fill, width=width)
-    return _utils.pillow_to_numpy(dst)
+    return _utils.pillow_to_numpy(image=dst)
 
 
 def line_(
@@ -36,7 +36,7 @@ def line_(
     yx: ArrayLike,
     fill: Ink,
     width: int = 1,
-) -> None:
+) -> None:  # noqa: GR005 -- preserve positional and keyword API calls
     """Draw line on PIL image in-place.
 
     Args:
@@ -45,7 +45,7 @@ def line_(
         fill: RGB color to draw the line.
         width: Line width.
     """
-    draw = get_draw(image)
+    draw = get_draw(image=image)
     yx = np.asarray(yx)
     if yx.ndim != 2:
         raise ValueError(f"yx must be 2D array, but got {yx.ndim}D")
@@ -54,4 +54,4 @@ def line_(
 
     xy = yx[:, ::-1]
     xy = xy.flatten().tolist()
-    draw.line(xy, fill=get_pil_ink(fill), width=width)
+    draw.line(xy, fill=get_pil_ink(ink=fill), width=width)

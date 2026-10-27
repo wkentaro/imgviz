@@ -7,7 +7,7 @@ from . import _dtype
 from . import _utils
 
 
-def rgb2gray(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:
+def rgb2gray(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Convert rgb to gray.
 
     Args:
@@ -23,13 +23,13 @@ def rgb2gray(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:
     if rgb.dtype != np.uint8:
         raise ValueError(f"rgb dtype must be np.uint8, but got {rgb.dtype}")
 
-    gray = _utils.numpy_to_pillow(rgb)
+    gray = _utils.numpy_to_pillow(image=rgb)
     gray = gray.convert("L")
-    gray = _utils.pillow_to_numpy(gray)
+    gray = _utils.pillow_to_numpy(image=gray)
     return gray
 
 
-def gray2rgb(gray: NDArray[np.uint8]) -> NDArray[np.uint8]:
+def gray2rgb(gray: NDArray[np.uint8]) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Convert gray to rgb.
 
     Args:
@@ -47,7 +47,7 @@ def gray2rgb(gray: NDArray[np.uint8]) -> NDArray[np.uint8]:
     return rgb
 
 
-def rgb2rgba(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:
+def rgb2rgba(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Convert rgb to rgba.
 
     Args:
@@ -68,7 +68,7 @@ def rgb2rgba(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:
     return rgba
 
 
-def rgb2hsv(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:
+def rgb2hsv(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Convert rgb to hsv.
 
     Args:
@@ -84,13 +84,13 @@ def rgb2hsv(rgb: NDArray[np.uint8]) -> NDArray[np.uint8]:
     if rgb.dtype != np.uint8:
         raise ValueError(f"rgb dtype must be np.uint8, but got {rgb.dtype}")
 
-    hsv = _utils.numpy_to_pillow(rgb, mode="RGB")
+    hsv = _utils.numpy_to_pillow(image=rgb, mode="RGB")
     hsv = hsv.convert("HSV")
-    hsv = _utils.pillow_to_numpy(hsv)
+    hsv = _utils.pillow_to_numpy(image=hsv)
     return hsv
 
 
-def hsv2rgb(hsv: NDArray[np.uint8]) -> NDArray[np.uint8]:
+def hsv2rgb(hsv: NDArray[np.uint8]) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Convert hsv to rgb.
 
     Args:
@@ -106,13 +106,13 @@ def hsv2rgb(hsv: NDArray[np.uint8]) -> NDArray[np.uint8]:
     if hsv.dtype != np.uint8:
         raise ValueError(f"hsv dtype must be np.uint8, but got {hsv.dtype}")
 
-    rgb = _utils.numpy_to_pillow(hsv, mode="HSV")
+    rgb = _utils.numpy_to_pillow(image=hsv, mode="HSV")
     rgb = rgb.convert("RGB")
-    rgb = _utils.pillow_to_numpy(rgb)
+    rgb = _utils.pillow_to_numpy(image=rgb)
     return rgb
 
 
-def rgba2rgb(rgba: NDArray[np.uint8]) -> NDArray[np.uint8]:
+def rgba2rgb(rgba: NDArray[np.uint8]) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Convert rgba to rgb.
 
     Args:
@@ -125,15 +125,7 @@ def rgba2rgb(rgba: NDArray[np.uint8]) -> NDArray[np.uint8]:
     return rgb
 
 
-def require_uint8_image(image: NDArray) -> NDArray[np.uint8]:
-    """Validate a uint8 image and promote 2D grayscale to RGB.
-
-    Args:
-        image: Input image with shape (H, W) or (H, W, C).
-
-    Returns:
-        The image with a channel axis, grayscale promoted via gray2rgb.
-    """
+def require_uint8_image(*, image: NDArray) -> NDArray[np.uint8]:
     if not isinstance(image, np.ndarray):
         raise TypeError(f"image must be a numpy array, but got {type(image).__name__}")
     if image.dtype != np.uint8:
@@ -145,7 +137,7 @@ def require_uint8_image(image: NDArray) -> NDArray[np.uint8]:
     return image
 
 
-def asgray(image: NDArray) -> NDArray[np.uint8]:
+def asgray(image: NDArray) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Convert any array to gray image.
 
     Args:
@@ -171,7 +163,7 @@ def asgray(image: NDArray) -> NDArray[np.uint8]:
     return gray
 
 
-def asrgb(image: NDArray, copy: bool = False) -> NDArray[np.uint8]:
+def asrgb(image: NDArray, copy: bool = False) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Convert any array to rgb image.
 
     Args:
@@ -198,7 +190,7 @@ def asrgb(image: NDArray, copy: bool = False) -> NDArray[np.uint8]:
     return rgb.copy() if copy else rgb
 
 
-def asrgba(image: NDArray) -> NDArray[np.uint8]:
+def asrgba(image: NDArray) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Convert any array to rgba image.
 
     Args:
@@ -225,9 +217,9 @@ def asrgba(image: NDArray) -> NDArray[np.uint8]:
 
 
 def get_fg_color(
+    *,
     color: tuple[int, int, int] | NDArray[np.uint8],
 ) -> tuple[int, int, int]:
-    """Get foreground color (black or white) for given background color."""
     color_arr: NDArray[np.uint8] = np.asarray(color, dtype=np.uint8)
     intensity: np.uint8 = rgb2gray(color_arr.reshape(1, 1, 3)).sum()
     if intensity > 170:

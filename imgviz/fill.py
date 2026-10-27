@@ -24,7 +24,7 @@ class Fill(abc.ABC):
         image: NDArray[np.uint8],
         alpha: float = 1.0,
         copy: bool = True,
-    ) -> NDArray[np.uint8]:
+    ) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
         """Apply the fill to masked region of an image.
 
         Args:
@@ -59,7 +59,7 @@ class Solid(Fill):
         image: NDArray[np.uint8],
         alpha: float = 1.0,
         copy: bool = True,
-    ) -> NDArray[np.uint8]:
+    ) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
         return _blend(image=image, mask=mask, color=self.color, alpha=alpha, copy=copy)
 
 
@@ -98,7 +98,7 @@ class Stripe(Fill):
         image: NDArray[np.uint8],
         alpha: float = 1.0,
         copy: bool = True,
-    ) -> NDArray[np.uint8]:
+    ) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
         ys, xs = np.nonzero(mask)
         if ys.size == 0:
             return image.copy() if copy else image
@@ -122,6 +122,7 @@ class Stripe(Fill):
 
 
 def _blend(
+    *,
     image: NDArray[np.uint8],
     mask: NDArray[np.bool_],
     color: tuple[int, int, int] | NDArray[np.uint8],

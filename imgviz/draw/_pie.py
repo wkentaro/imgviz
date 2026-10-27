@@ -17,7 +17,7 @@ def pie(
     fills: Sequence[Ink],
     outline: Ink | None = None,
     width: int = 0,
-) -> NDArray[np.uint8]:
+) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Draw a disc divided into equal colored wedges on a numpy array.
 
     Args:
@@ -34,7 +34,7 @@ def pie(
     Returns:
         Output image.
     """
-    dst = _utils.numpy_to_pillow(image)
+    dst = _utils.numpy_to_pillow(image=image)
     pie_(
         image=dst,
         center=center,
@@ -43,7 +43,7 @@ def pie(
         outline=outline,
         width=width,
     )
-    return _utils.pillow_to_numpy(dst)
+    return _utils.pillow_to_numpy(image=dst)
 
 
 def pie_(
@@ -53,7 +53,7 @@ def pie_(
     fills: Sequence[Ink],
     outline: Ink | None = None,
     width: int = 0,
-) -> None:
+) -> None:  # noqa: GR005 -- preserve positional and keyword API calls
     """Draw a disc divided into equal colored wedges on a PIL image in-place.
 
     Args:
@@ -71,12 +71,12 @@ def pie_(
     if n == 0:
         return
 
-    draw = get_draw(image)
+    draw = get_draw(image=image)
 
     cy, cx = center
     radius = diameter / 2.0
     bbox = ((cx - radius, cy - radius), (cx + radius, cy + radius))
-    pil_outline = get_pil_ink(outline)
+    pil_outline = get_pil_ink(ink=outline)
 
     step = 360.0 / n
     for k, fill in enumerate(fills):
@@ -85,7 +85,7 @@ def pie_(
             bbox,
             start=start,
             end=start + step,
-            fill=get_pil_ink(fill),
+            fill=get_pil_ink(ink=fill),
             outline=pil_outline,
             width=width,
         )

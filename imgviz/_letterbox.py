@@ -20,7 +20,7 @@ def letterbox(
     return_mask: Literal[False] = ...,
     interpolation: Literal["linear", "nearest"] = ...,
     loc: Literal["center", "lt", "rt", "lb", "rb"] = ...,
-) -> NDArray: ...
+) -> NDArray: ...  # noqa: GR005 -- preserve positional and keyword API calls
 
 
 @typing.overload
@@ -32,7 +32,7 @@ def letterbox(
     return_mask: Literal[True] = ...,
     interpolation: Literal["linear", "nearest"] = ...,
     loc: Literal["center", "lt", "rt", "lb", "rb"] = ...,
-) -> tuple[NDArray, NDArray[np.bool_]]: ...
+) -> tuple[NDArray, NDArray[np.bool_]]: ...  # noqa: GR005 -- preserve positional and keyword API calls
 
 
 def letterbox(
@@ -43,7 +43,7 @@ def letterbox(
     return_mask: bool = False,
     interpolation: Literal["linear", "nearest"] = "linear",
     loc: Literal["center", "lt", "rt", "lb", "rb"] = "center",
-) -> NDArray | tuple[NDArray, NDArray[np.bool_]]:
+) -> NDArray | tuple[NDArray, NDArray[np.bool_]]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Resize image preserving aspect ratio and pad to target size.
 
     Args:

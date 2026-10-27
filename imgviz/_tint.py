@@ -15,16 +15,16 @@ _FloatT = TypeVar("_FloatT", bound=np.floating)
 @overload
 def tint(
     image: NDArray[np.uint8], color: _cmap.ColorLike, alpha: float = ...
-) -> NDArray[np.uint8]: ...
+) -> NDArray[np.uint8]: ...  # noqa: GR005 -- preserve positional and keyword API calls
 
 
 @overload
 def tint(
     image: NDArray[_FloatT], color: _cmap.ColorLike, alpha: float = ...
-) -> NDArray[_FloatT]: ...
+) -> NDArray[_FloatT]: ...  # noqa: GR005 -- preserve positional and keyword API calls
 
 
-def tint(image: NDArray, color: _cmap.ColorLike, alpha: float = 0.3) -> NDArray:
+def tint(image: NDArray, color: _cmap.ColorLike, alpha: float = 0.3) -> NDArray:  # noqa: GR005 -- preserve positional and keyword API calls
     """Wash a whole image toward a solid color at a given opacity.
 
     A one-liner for flagging thumbnails in tile sheets, e.g. red-tinting a

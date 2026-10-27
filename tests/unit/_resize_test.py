@@ -12,7 +12,7 @@ def rgb() -> NDArray[np.uint8]:
     return np.random.uniform(0, 255, size=(15, 25, 3)).round().astype(np.uint8)
 
 
-def test_resize(rgb: NDArray[np.uint8]) -> None:
+def test_resize(*, rgb: NDArray[np.uint8]) -> None:
     dst = imgviz.resize(rgb, height=12)
     assert dst.shape == (12, 20, 3)
     assert dst.dtype == np.uint8
@@ -30,7 +30,7 @@ def test_resize(rgb: NDArray[np.uint8]) -> None:
     assert dst.dtype == np.uint8
 
 
-def test_resize_backends_agree_on_shape(rgb: NDArray[np.uint8]) -> None:
+def test_resize_backends_agree_on_shape(*, rgb: NDArray[np.uint8]) -> None:
     via_pillow = imgviz.resize(rgb, height=12, backend="pillow")
     via_opencv = imgviz.resize(rgb, height=12, backend="opencv")
 
@@ -41,6 +41,7 @@ def test_resize_backends_agree_on_shape(rgb: NDArray[np.uint8]) -> None:
 @pytest.mark.parametrize("backend", ["pillow", "opencv"])
 @pytest.mark.parametrize("interpolation", ["linear", "nearest"])
 def test_resize_preserves_solid_color(
+    *,
     backend: Literal["pillow", "opencv"],
     interpolation: Literal["linear", "nearest"],
 ) -> None:
@@ -56,7 +57,7 @@ def test_resize_preserves_solid_color(
 
 @pytest.mark.parametrize("backend", ["pillow", "opencv"])
 def test_resize_grayscale(
-    rgb: NDArray[np.uint8], backend: Literal["pillow", "opencv"]
+    *, rgb: NDArray[np.uint8], backend: Literal["pillow", "opencv"]
 ) -> None:
     gray = rgb[:, :, 0]
 
@@ -67,7 +68,7 @@ def test_resize_grayscale(
 
 
 @pytest.mark.parametrize("dtype", [np.float32, np.float64])
-def test_resize_float_per_channel(dtype: type[np.floating]) -> None:
+def test_resize_float_per_channel(*, dtype: type[np.floating]) -> None:
     img = np.random.rand(15, 25, 3).astype(dtype)
 
     dst = imgviz.resize(img, height=12, width=20, backend="pillow")
@@ -87,19 +88,19 @@ def test_resize_float_grayscale() -> None:
     assert dst.min() != dst.max()
 
 
-def test_resize_requires_height_or_width(rgb: NDArray[np.uint8]) -> None:
+def test_resize_requires_height_or_width(*, rgb: NDArray[np.uint8]) -> None:
     with pytest.raises(ValueError, match="either height or width must be given"):
         imgviz.resize(rgb)
 
 
-def test_resize_rejects_unknown_backend(rgb: NDArray[np.uint8]) -> None:
+def test_resize_rejects_unknown_backend(*, rgb: NDArray[np.uint8]) -> None:
     with pytest.raises(ValueError, match="unsupported backend"):
         imgviz.resize(rgb, height=12, backend="bogus")  # type: ignore[arg-type]
 
 
 @pytest.mark.parametrize("backend", ["pillow", "opencv"])
 def test_resize_rejects_unknown_interpolation(
-    rgb: NDArray[np.uint8], backend: Literal["pillow", "opencv"]
+    *, rgb: NDArray[np.uint8], backend: Literal["pillow", "opencv"]
 ) -> None:
     with pytest.raises(ValueError, match="unsupported interpolation"):
         imgviz.resize(

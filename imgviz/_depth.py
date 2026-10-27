@@ -25,7 +25,7 @@ class Depth2Rgb:
         min_value: float | NDArray | None = None,
         max_value: float | NDArray | None = None,
         colormap: str | Callable[[NDArray], NDArray] = "jet",
-    ) -> None:
+    ) -> None:  # noqa: GR005 -- preserve positional and keyword API calls
         warnings.warn(
             _DEPRECATION_MESSAGE.format(name="Depth2Rgb", replacement="Colorize"),
             DeprecationWarning,
@@ -46,32 +46,32 @@ class Depth2Rgb:
         self,
         depth: NDArray,
         dtype: type[np.uint8] = ...,
-    ) -> NDArray[np.uint8]: ...
+    ) -> NDArray[np.uint8]: ...  # noqa: GR005 -- preserve positional and keyword API calls
 
     @typing.overload
     def __call__(
         self,
         depth: NDArray,
         dtype: type[np.float32],
-    ) -> NDArray[np.float32]: ...
+    ) -> NDArray[np.float32]: ...  # noqa: GR005 -- preserve positional and keyword API calls
 
     @typing.overload
     def __call__(
         self,
         depth: NDArray,
         dtype: type[np.float64],
-    ) -> NDArray[np.float64]: ...
+    ) -> NDArray[np.float64]: ...  # noqa: GR005 -- preserve positional and keyword API calls
 
     @typing.overload
     def __call__(
         self,
         depth: NDArray,
         dtype: type[np.floating],
-    ) -> NDArray[np.floating]: ...
+    ) -> NDArray[np.floating]: ...  # noqa: GR005 -- preserve positional and keyword API calls
 
     def __call__(
         self, depth: NDArray, dtype: type[np.uint8] | type[np.floating] = np.uint8
-    ) -> NDArray[np.uint8] | NDArray[np.floating]:
+    ) -> NDArray[np.uint8] | NDArray[np.floating]:  # noqa: GR005 -- preserve positional and keyword API calls
         return self._colorize(depth, dtype=dtype)
 
 
@@ -82,7 +82,7 @@ def depth2rgb(
     max_value: float | NDArray | None = ...,
     colormap: str | Callable[[NDArray], NDArray] = ...,
     dtype: type[np.uint8] = ...,
-) -> NDArray[np.uint8]: ...
+) -> NDArray[np.uint8]: ...  # noqa: GR005 -- preserve positional and keyword API calls
 
 
 @typing.overload
@@ -92,7 +92,7 @@ def depth2rgb(
     max_value: float | NDArray | None = ...,
     colormap: str | Callable[[NDArray], NDArray] = ...,
     dtype: type[np.float32] = ...,
-) -> NDArray[np.float32]: ...
+) -> NDArray[np.float32]: ...  # noqa: GR005 -- preserve positional and keyword API calls
 
 
 @typing.overload
@@ -102,7 +102,7 @@ def depth2rgb(
     max_value: float | NDArray | None = ...,
     colormap: str | Callable[[NDArray], NDArray] = ...,
     dtype: type[np.float64] = ...,
-) -> NDArray[np.float64]: ...
+) -> NDArray[np.float64]: ...  # noqa: GR005 -- preserve positional and keyword API calls
 
 
 @typing.overload
@@ -112,7 +112,7 @@ def depth2rgb(
     max_value: float | NDArray | None = ...,
     colormap: str | Callable[[NDArray], NDArray] = ...,
     dtype: type[np.floating] = ...,
-) -> NDArray[np.floating]: ...
+) -> NDArray[np.floating]: ...  # noqa: GR005 -- preserve positional and keyword API calls
 
 
 def depth2rgb(
@@ -121,7 +121,7 @@ def depth2rgb(
     max_value: float | NDArray | None = None,
     colormap: str | Callable[[NDArray], NDArray] = "jet",
     dtype: type[np.uint8] | type[np.floating] = np.uint8,
-) -> NDArray[np.uint8] | NDArray[np.floating]:
+) -> NDArray[np.uint8] | NDArray[np.floating]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Deprecated. Use :func:`imgviz.colorize` instead."""
     warnings.warn(
         _DEPRECATION_MESSAGE.format(name="depth2rgb", replacement="colorize"),

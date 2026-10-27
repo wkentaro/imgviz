@@ -14,7 +14,7 @@ def rgb() -> NDArray[np.uint8]:
     return imgviz.data.arc2017()["rgb"]
 
 
-def test_scalebar(rgb: NDArray[np.uint8]) -> None:
+def test_scalebar(*, rgb: NDArray[np.uint8]) -> None:
     res = imgviz.scalebar(rgb, pixels_per_unit=200, unit="m")
     assert res.shape == rgb.shape
     assert res.dtype == rgb.dtype
@@ -37,15 +37,15 @@ def test_scalebar(rgb: NDArray[np.uint8]) -> None:
         (8e6, 5e6),
     ],
 )
-def test_pick_nice_length(target: float, expected: float) -> None:
-    result = _pick_nice_length(target)
+def test_pick_nice_length(*, target: float, expected: float) -> None:
+    result = _pick_nice_length(target_units=target)
     assert result == pytest.approx(expected)
     assert result <= target  # never exceeds the budget it is given
 
 
 @pytest.mark.parametrize("pixels_per_unit", [0.5, 5, 50, 500, 5000, 1e6])
 def test_scalebar_runs_across_decades(
-    rgb: NDArray[np.uint8], pixels_per_unit: float
+    *, rgb: NDArray[np.uint8], pixels_per_unit: float
 ) -> None:
     res = imgviz.scalebar(rgb, pixels_per_unit=pixels_per_unit)
     assert res.shape == rgb.shape
@@ -55,7 +55,7 @@ def test_scalebar_runs_across_decades(
 
 @pytest.mark.parametrize("loc", ["lt", "rt", "lb", "rb"])
 def test_scalebar_all_corners(
-    rgb: NDArray[np.uint8], loc: Literal["lt", "rt", "lb", "rb"]
+    *, rgb: NDArray[np.uint8], loc: Literal["lt", "rt", "lb", "rb"]
 ) -> None:
     res = imgviz.scalebar(rgb, pixels_per_unit=200, loc=loc)
     h, w = rgb.shape[:2]
@@ -81,7 +81,9 @@ def test_scalebar_auto_contrast_picks_black_on_light() -> None:
 
 
 @pytest.mark.parametrize("color", ["red", (255, 0, 0), np.array([255, 0, 0])])
-def test_scalebar_explicit_color(rgb: NDArray[np.uint8], color: cmap.ColorLike) -> None:
+def test_scalebar_explicit_color(
+    *, rgb: NDArray[np.uint8], color: cmap.ColorLike
+) -> None:
     res = imgviz.scalebar(rgb, pixels_per_unit=200, color=color)
     assert (res == [255, 0, 0]).all(axis=2).any()  # some pure-red pixels drawn
 
@@ -101,11 +103,11 @@ def test_scalebar_rejects_zero_size_image() -> None:
         imgviz.scalebar(np.zeros((10, 0, 3), dtype=np.uint8), pixels_per_unit=1)
 
 
-def test_scalebar_rejects_nonpositive_ppu(rgb: NDArray[np.uint8]) -> None:
+def test_scalebar_rejects_nonpositive_ppu(*, rgb: NDArray[np.uint8]) -> None:
     with pytest.raises(ValueError, match="pixels_per_unit"):
         imgviz.scalebar(rgb, pixels_per_unit=0)
 
 
-def test_scalebar_rejects_bad_loc(rgb: NDArray[np.uint8]) -> None:
+def test_scalebar_rejects_bad_loc(*, rgb: NDArray[np.uint8]) -> None:
     with pytest.raises(ValueError, match="loc must be"):
         imgviz.scalebar(rgb, pixels_per_unit=200, loc="middle")  # type: ignore[arg-type]

@@ -17,7 +17,7 @@ def rounded_rectangle(
     fill: Ink | None = None,
     outline: Ink | None = None,
     width: int = 0,
-) -> NDArray[np.uint8]:
+) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Draw rounded rectangle on numpy array with Pillow.
 
     Args:
@@ -32,7 +32,7 @@ def rounded_rectangle(
     Returns:
         Output image.
     """
-    dst = _utils.numpy_to_pillow(image)
+    dst = _utils.numpy_to_pillow(image=image)
     rounded_rectangle_(
         image=dst,
         yx1=yx1,
@@ -42,7 +42,7 @@ def rounded_rectangle(
         outline=outline,
         width=width,
     )
-    return _utils.pillow_to_numpy(dst)
+    return _utils.pillow_to_numpy(image=dst)
 
 
 def rounded_rectangle_(
@@ -53,7 +53,7 @@ def rounded_rectangle_(
     fill: Ink | None = None,
     outline: Ink | None = None,
     width: int = 0,
-) -> None:
+) -> None:  # noqa: GR005 -- preserve positional and keyword API calls
     """Draw rounded rectangle on PIL image in-place.
 
     Args:
@@ -65,16 +65,16 @@ def rounded_rectangle_(
         outline: RGB color to draw the outline.
         width: Rectangle line width.
     """
-    require_fill_or_outline(fill, outline)
+    require_fill_or_outline(fill=fill, outline=outline)
 
-    draw = get_draw(image)
+    draw = get_draw(image=image)
 
     y1, x1 = map(float, yx1)
     y2, x2 = map(float, yx2)
     draw.rounded_rectangle(
         xy=(x1, y1, x2, y2),
         radius=radius,
-        fill=get_pil_ink(fill),
-        outline=get_pil_ink(outline),
+        fill=get_pil_ink(ink=fill),
+        outline=get_pil_ink(ink=outline),
         width=width,
     )

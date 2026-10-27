@@ -16,7 +16,11 @@ except ImportError:
 
 
 def _resize_pillow(
-    image: NDArray, height: int, width: int, interpolation: Literal["linear", "nearest"]
+    *,
+    image: NDArray,
+    height: int,
+    width: int,
+    interpolation: Literal["linear", "nearest"],
 ) -> NDArray:
     if interpolation == "linear":
         RESAMPLE: Final = PIL.Image.BILINEAR
@@ -26,9 +30,9 @@ def _resize_pillow(
         raise ValueError(f"unsupported interpolation: {interpolation}")
 
     if np.issubdtype(image.dtype, np.integer):
-        dst = _utils.numpy_to_pillow(image)
+        dst = _utils.numpy_to_pillow(image=image)
         dst = dst.resize((width, height), resample=RESAMPLE)
-        dst = _utils.pillow_to_numpy(dst)
+        dst = _utils.pillow_to_numpy(image=dst)
     else:
         if not np.issubdtype(image.dtype, np.floating):
             raise TypeError(
@@ -42,7 +46,7 @@ def _resize_pillow(
         dst = np.zeros((height, width, channels), dtype=image.dtype)
         for c in range(channels):
             image_c = image[:, :, c]
-            image_c = _utils.numpy_to_pillow(image_c)
+            image_c = _utils.numpy_to_pillow(image=image_c)
             dst[:, :, c] = image_c.resize((width, height), resample=RESAMPLE)
 
         if ndim == 2:
@@ -51,7 +55,11 @@ def _resize_pillow(
 
 
 def _resize_opencv(
-    image: NDArray, height: int, width: int, interpolation: Literal["linear", "nearest"]
+    *,
+    image: NDArray,
+    height: int,
+    width: int,
+    interpolation: Literal["linear", "nearest"],
 ) -> NDArray:
     if cv2 is None:
         raise ImportError("opencv-python is not installed")
@@ -74,7 +82,7 @@ def resize(
     width: int | float | None = None,
     interpolation: Literal["linear", "nearest"] = "linear",
     backend: Literal["auto", "pillow", "opencv"] = "auto",
-) -> NDArray:
+) -> NDArray:  # noqa: GR005 -- preserve positional and keyword API calls
     """Resize image.
 
     Args:
@@ -108,9 +116,13 @@ def resize(
         width = int(round(height / image_height * image_width))
 
     if backend == "pillow":
-        dst = _resize_pillow(image, height, width, interpolation)
+        dst = _resize_pillow(
+            image=image, height=height, width=width, interpolation=interpolation
+        )
     elif backend == "opencv":
-        dst = _resize_opencv(image, height, width, interpolation)
+        dst = _resize_opencv(
+            image=image, height=height, width=width, interpolation=interpolation
+        )
     else:
         raise ValueError(f"unsupported backend: {backend}")
 

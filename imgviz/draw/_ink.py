@@ -12,6 +12,7 @@ Ink: TypeAlias = (
 
 
 def get_pil_ink(
+    *,
     ink: Ink | None,
 ) -> int | tuple[int, int, int] | tuple[int, int, int, int] | None:
     if isinstance(ink, np.ndarray):
@@ -26,13 +27,12 @@ def get_pil_ink(
     return ink
 
 
-def require_fill_or_outline(fill: Ink | None, outline: Ink | None) -> None:
+def require_fill_or_outline(*, fill: Ink | None, outline: Ink | None) -> None:
     if fill is None and outline is None:
         raise ValueError("at least one of `fill` or `outline` must be set")
 
 
-def get_draw(image: PIL.Image.Image) -> PIL.ImageDraw.ImageDraw:
-    """Return the drawing context for a PIL image, rejecting anything else."""
+def get_draw(*, image: PIL.Image.Image) -> PIL.ImageDraw.ImageDraw:
     if not isinstance(image, PIL.Image.Image):
         raise TypeError(
             f"image must be PIL.Image.Image, but got {type(image).__name__}"

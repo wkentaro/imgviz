@@ -32,4 +32,4 @@ def pie() -> None:
 if __name__ == "__main__":
     from _base import run_example
 
-    run_example(pie)
+    run_example(example_fn=pie)

@@ -105,7 +105,7 @@ def test_normalize_rejects_bad_ndim() -> None:
     ],
 )
 def test_normalize_rejects_wrong_value_shape(
-    min_value: list[float] | None, max_value: list[float] | None, match: str
+    *, min_value: list[float] | None, max_value: list[float] | None, match: str
 ) -> None:
     src = np.zeros((2, 2, 3), dtype=np.float32)
     with pytest.raises(ValueError, match=match):

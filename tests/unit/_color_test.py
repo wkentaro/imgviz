@@ -19,14 +19,14 @@ def images() -> dict[str, NDArray[np.uint8] | NDArray[np.bool_]]:
     }
 
 
-def test_asgray(images: dict[str, NDArray[np.uint8]]) -> None:
+def test_asgray(*, images: dict[str, NDArray[np.uint8]]) -> None:
     for img in images.values():
         result = imgviz.asgray(img)
         assert result.ndim == 2
         assert result.dtype == np.uint8
 
 
-def test_asrgb(images: dict[str, NDArray[np.uint8]]) -> None:
+def test_asrgb(*, images: dict[str, NDArray[np.uint8]]) -> None:
     for img in images.values():
         result = imgviz.asrgb(img)
         assert result.dtype == np.uint8
@@ -35,6 +35,7 @@ def test_asrgb(images: dict[str, NDArray[np.uint8]]) -> None:
 
 
 def test_asrgb_copy_does_not_alias_rgba_input(
+    *,
     images: dict[str, NDArray[np.uint8]],
 ) -> None:
     rgba = images["rgba"]
@@ -47,6 +48,7 @@ def test_asrgb_copy_does_not_alias_rgba_input(
 
 
 def test_asrgb_no_copy_returns_view_for_rgba_input(
+    *,
     images: dict[str, NDArray[np.uint8]],
 ) -> None:
     rgba = images["rgba"]
@@ -56,7 +58,7 @@ def test_asrgb_no_copy_returns_view_for_rgba_input(
     assert np.shares_memory(rgb, rgba)
 
 
-def test_asrgba(images: dict[str, NDArray[np.uint8]]) -> None:
+def test_asrgba(*, images: dict[str, NDArray[np.uint8]]) -> None:
     for img in images.values():
         result = imgviz.asrgba(img)
         assert result.dtype == np.uint8
@@ -84,9 +86,9 @@ def test_get_fg_color() -> None:
     from imgviz._color import get_fg_color
 
     # Dark background -> white foreground
-    assert get_fg_color((0, 0, 0)) == (255, 255, 255)
+    assert get_fg_color(color=(0, 0, 0)) == (255, 255, 255)
     # Light background -> black foreground
-    assert get_fg_color((255, 255, 255)) == (0, 0, 0)
+    assert get_fg_color(color=(255, 255, 255)) == (0, 0, 0)
 
 
 @pytest.mark.parametrize("convert", [imgviz.rgb2gray, imgviz.rgb2rgba, imgviz.rgb2hsv])
@@ -100,7 +102,7 @@ def test_get_fg_color() -> None:
     ids=["non-3d", "wrong-channels", "non-uint8"],
 )
 def test_rgb_converter_rejects_invalid(
-    convert: Callable[[NDArray], NDArray[np.uint8]], image: NDArray, match: str
+    *, convert: Callable[[NDArray], NDArray[np.uint8]], image: NDArray, match: str
 ) -> None:
     with pytest.raises(ValueError, match=match):
         convert(image)
@@ -114,7 +116,7 @@ def test_rgb_converter_rejects_invalid(
     ],
     ids=["non-2d", "non-uint8"],
 )
-def test_gray2rgb_rejects_invalid(image: NDArray, match: str) -> None:
+def test_gray2rgb_rejects_invalid(*, image: NDArray, match: str) -> None:
     with pytest.raises(ValueError, match=match):
         imgviz.gray2rgb(image)
 
@@ -128,7 +130,7 @@ def test_gray2rgb_rejects_invalid(image: NDArray, match: str) -> None:
     ],
     ids=["non-3d", "wrong-channels", "non-uint8"],
 )
-def test_hsv2rgb_rejects_invalid(image: NDArray, match: str) -> None:
+def test_hsv2rgb_rejects_invalid(*, image: NDArray, match: str) -> None:
     with pytest.raises(ValueError, match=match):
         imgviz.hsv2rgb(image)
 
@@ -143,7 +145,7 @@ def test_hsv2rgb_rejects_invalid(image: NDArray, match: str) -> None:
     ids=["asgray", "asrgb", "asrgba"],
 )
 def test_as_converter_rejects_unsupported_shape(
-    convert: Callable[[NDArray], NDArray[np.uint8]], match: str
+    *, convert: Callable[[NDArray], NDArray[np.uint8]], match: str
 ) -> None:
     with pytest.raises(ValueError, match=match):
         convert(np.zeros((4, 4, 2), dtype=np.uint8))

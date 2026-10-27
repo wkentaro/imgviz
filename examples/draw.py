@@ -8,7 +8,7 @@ import imgviz
 
 
 def _regular_polygon_yx(
-    center: tuple[float, float], radius: float, n_sides: int
+    *, center: tuple[float, float], radius: float, n_sides: int
 ) -> list[tuple[float, float]]:
     cy, cx = center
     return [
@@ -132,4 +132,4 @@ def draw() -> None:
 if __name__ == "__main__":
     from _base import run_example
 
-    run_example(draw)
+    run_example(example_fn=draw)

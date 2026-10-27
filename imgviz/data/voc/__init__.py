@@ -27,7 +27,7 @@ def voc() -> _VocData:
     class_label = _utils.compose_class_label(
         shape=data["rgb"].shape[:2], labels=data["labels"], masks=data["masks"]
     )
-    class_names = _utils.read_class_names(_here / "class_names.txt")
+    class_names = _utils.read_class_names(path=_here / "class_names.txt")
 
     return _VocData(
         rgb=data["rgb"],

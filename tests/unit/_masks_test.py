@@ -20,6 +20,7 @@ _SIMPLE_MASK[20:80, 20:80] = True
 @pytest.mark.parametrize("fill", [_COLOR_RED, imgviz.fill.Solid(color=_COLOR_RED)])
 @pytest.mark.parametrize("image", [None, _WHITE_IMAGE])
 def test_mask2rgb_solid(
+    *,
     show: bool,
     fill: imgviz.fill.Fill | tuple[int, int, int],
     image: NDArray[np.uint8] | None,
@@ -42,7 +43,7 @@ def test_mask2rgb_solid(
 
 
 @pytest.mark.parametrize("image", [None, _WHITE_IMAGE])
-def test_mask2rgb_stripe(show: bool, image: NDArray[np.uint8] | None) -> None:
+def test_mask2rgb_stripe(*, show: bool, image: NDArray[np.uint8] | None) -> None:
     mask: NDArray[np.bool_] = _SIMPLE_MASK
 
     result = imgviz.mask2rgb(

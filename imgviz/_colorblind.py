@@ -15,14 +15,14 @@ _FloatT = TypeVar("_FloatT", bound=np.floating)
 
 
 @overload
-def colorblind(image: NDArray[np.uint8], kind: Kind = ...) -> NDArray[np.uint8]: ...
+def colorblind(image: NDArray[np.uint8], kind: Kind = ...) -> NDArray[np.uint8]: ...  # noqa: GR005 -- preserve positional and keyword API calls
 
 
 @overload
-def colorblind(image: NDArray[_FloatT], kind: Kind = ...) -> NDArray[_FloatT]: ...
+def colorblind(image: NDArray[_FloatT], kind: Kind = ...) -> NDArray[_FloatT]: ...  # noqa: GR005 -- preserve positional and keyword API calls
 
 
-def colorblind(image: NDArray, kind: Kind = "deuteranopia") -> NDArray:
+def colorblind(image: NDArray, kind: Kind = "deuteranopia") -> NDArray:  # noqa: GR005 -- preserve positional and keyword API calls
     """Simulate how an image looks to a viewer with color-vision deficiency.
 
     Applies a single dichromacy simulation matrix (Vienot et al. 1999, as

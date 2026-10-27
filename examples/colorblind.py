@@ -25,4 +25,4 @@ def colorblind() -> None:
 if __name__ == "__main__":
     from _base import run_example
 
-    run_example(colorblind)
+    run_example(example_fn=colorblind)

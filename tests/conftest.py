@@ -1,7 +1,7 @@
 import pytest
 
 
-def pytest_addoption(parser: pytest.Parser) -> None:
+def pytest_addoption(parser: pytest.Parser, /) -> None:
     parser.addoption(
         "--show",
         action="store_true",
@@ -11,5 +11,5 @@ def pytest_addoption(parser: pytest.Parser) -> None:
 
 
 @pytest.fixture
-def show(request: pytest.FixtureRequest) -> bool:
+def show(*, request: pytest.FixtureRequest) -> bool:
     return request.config.getoption("--show")

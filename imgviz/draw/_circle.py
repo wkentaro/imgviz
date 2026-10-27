@@ -16,7 +16,7 @@ def circle(
     fill: Ink | None = None,
     outline: Ink | None = None,
     width: int = 0,
-) -> NDArray[np.uint8]:
+) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Draw circle on numpy array with Pillow.
 
     Args:
@@ -30,7 +30,7 @@ def circle(
     Returns:
         Output image.
     """
-    dst = _utils.numpy_to_pillow(image)
+    dst = _utils.numpy_to_pillow(image=image)
     circle_(
         image=dst,
         center=center,
@@ -39,7 +39,7 @@ def circle(
         outline=outline,
         width=width,
     )
-    return _utils.pillow_to_numpy(dst)
+    return _utils.pillow_to_numpy(image=dst)
 
 
 def circle_(
@@ -49,7 +49,7 @@ def circle_(
     fill: Ink | None = None,
     outline: Ink | None = None,
     width: int = 0,
-) -> None:
+) -> None:  # noqa: GR005 -- preserve positional and keyword API calls
     """Draw circle on PIL image in-place.
 
     Args:
@@ -60,9 +60,9 @@ def circle_(
         outline: RGB color to draw the outline.
         width: Line width.
     """
-    require_fill_or_outline(fill, outline)
+    require_fill_or_outline(fill=fill, outline=outline)
 
-    draw = get_draw(image)
+    draw = get_draw(image=image)
 
     cy, cx = center
 
@@ -74,7 +74,7 @@ def circle_(
 
     draw.ellipse(
         [x1, y1, x2, y2],
-        fill=get_pil_ink(fill),
-        outline=get_pil_ink(outline),
+        fill=get_pil_ink(ink=fill),
+        outline=get_pil_ink(ink=outline),
         width=width,
     )

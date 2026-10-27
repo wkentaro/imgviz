@@ -25,4 +25,4 @@ def tint() -> None:
 if __name__ == "__main__":
     from _base import run_example
 
-    run_example(tint)
+    run_example(example_fn=tint)

@@ -14,7 +14,7 @@ def flow_3_4() -> NDArray[np.float32]:
 @pytest.mark.parametrize(
     "use_class", [pytest.param(False, id="flow2rgb"), pytest.param(True, id="Flow2Rgb")]
 )
-def test_flow2rgb(use_class: bool, show: bool) -> None:
+def test_flow2rgb(*, use_class: bool, show: bool) -> None:
     data = imgviz.data.middlebury()
 
     flow: NDArray[np.float32] = data["flow"]
@@ -69,7 +69,7 @@ def test_flow2rgb_rejects_non_float_dtype() -> None:
         imgviz.flow2rgb(flow)
 
 
-def test_flow2rgb_return_max_reports_norm(flow_3_4: NDArray[np.float32]) -> None:
+def test_flow2rgb_return_max_reports_norm(*, flow_3_4: NDArray[np.float32]) -> None:
     viz, max_norm = imgviz.flow2rgb(flow_3_4, return_max=True)
 
     assert max_norm == pytest.approx(5.0)
@@ -77,6 +77,7 @@ def test_flow2rgb_return_max_reports_norm(flow_3_4: NDArray[np.float32]) -> None
 
 
 def test_Flow2Rgb_caches_max_norm_after_first_call(
+    *,
     flow_3_4: NDArray[np.float32],
 ) -> None:
     converter = imgviz.Flow2Rgb()
@@ -92,7 +93,7 @@ def test_Flow2Rgb_caches_max_norm_after_first_call(
     np.testing.assert_array_equal(viz_b, imgviz.flow2rgb(flow_b, max_norm=5.0))
 
 
-def test_Flow2Rgb_keeps_explicit_max_norm(flow_3_4: NDArray[np.float32]) -> None:
+def test_Flow2Rgb_keeps_explicit_max_norm(*, flow_3_4: NDArray[np.float32]) -> None:
     converter = imgviz.Flow2Rgb(max_norm=2.0)
     assert converter.max_norm == pytest.approx(2.0)
 

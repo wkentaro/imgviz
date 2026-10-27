@@ -29,6 +29,7 @@ def test_text_in_rectangle() -> None:
 
 @pytest.mark.parametrize("loc", ["lt", "lt+", "lb", "lb-"])
 def test_text_in_rectangle_aabb_left_aligns_to_x1(
+    *,
     loc: Literal["lt", "lt+", "lb", "lb-"],
 ) -> None:
     yx1 = (20, 50)
@@ -43,6 +44,7 @@ def test_text_in_rectangle_aabb_left_aligns_to_x1(
 
 @pytest.mark.parametrize("loc", ["rt", "rt+", "rb", "rb-"])
 def test_text_in_rectangle_aabb_right_aligns_to_x2(
+    *,
     loc: Literal["rt", "rt+", "rb", "rb-"],
 ) -> None:
     yx1 = (20, 50)
@@ -57,7 +59,7 @@ def test_text_in_rectangle_aabb_right_aligns_to_x2(
 
 @pytest.mark.parametrize("loc", ["lt+", "lb-"])
 def test_text_in_rectangle_grows_canvas_for_overflowing_loc(
-    small_image: NDArray[np.uint8], loc: Literal["lt+", "lb-"]
+    *, small_image: NDArray[np.uint8], loc: Literal["lt+", "lb-"]
 ) -> None:
     res = imgviz.draw.text_in_rectangle(
         small_image, loc=loc, text="Hi", size=10, background=(255, 0, 0)
@@ -72,7 +74,7 @@ def test_text_in_rectangle_grows_canvas_for_overflowing_loc(
 
 @pytest.mark.parametrize(("loc", "corner"), [("lt+", 0), ("lb-", -1)])
 def test_text_in_rectangle_pads_with_full_background_color(
-    small_image: NDArray[np.uint8], loc: Literal["lt+", "lb-"], corner: int
+    *, small_image: NDArray[np.uint8], loc: Literal["lt+", "lb-"], corner: int
 ) -> None:
     background = (200, 50, 10)
 
@@ -87,6 +89,7 @@ def test_text_in_rectangle_pads_with_full_background_color(
 
 
 def test_text_in_rectangle_keep_size_preserves_shape(
+    *,
     small_image: NDArray[np.uint8],
 ) -> None:
     kept = imgviz.draw.text_in_rectangle(
@@ -126,6 +129,7 @@ def test_text_in_rectangle_draws_in_place() -> None:
 
 
 def test_text_in_rectangle_rejects_unsupported_loc(
+    *,
     small_image: NDArray[np.uint8],
 ) -> None:
     with pytest.raises(ValueError, match="unsupported loc"):

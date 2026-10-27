@@ -11,7 +11,7 @@ def white_image() -> NDArray[np.uint8]:
     return np.full((100, 100, 3), 255, dtype=np.uint8)
 
 
-def test_rounded_rectangle(white_image: NDArray[np.uint8]) -> None:
+def test_rounded_rectangle(*, white_image: NDArray[np.uint8]) -> None:
     res = imgviz.draw.rounded_rectangle(
         white_image, (10, 10), (90, 90), radius=20, outline=(0, 0, 0), width=2
     )
@@ -21,13 +21,14 @@ def test_rounded_rectangle(white_image: NDArray[np.uint8]) -> None:
 
 
 def test_rounded_rectangle_rejects_missing_fill_and_outline(
+    *,
     white_image: NDArray[np.uint8],
 ) -> None:
     with pytest.raises(ValueError, match="at least one of `fill` or `outline`"):
         imgviz.draw.rounded_rectangle(white_image, (0, 0), (50, 50), radius=10)
 
 
-def test_rounded_rectangle_clips_the_corners(white_image: NDArray[np.uint8]) -> None:
+def test_rounded_rectangle_clips_the_corners(*, white_image: NDArray[np.uint8]) -> None:
     res = imgviz.draw.rounded_rectangle(
         white_image, (10, 10), (90, 90), radius=20, fill=(0, 0, 0)
     )

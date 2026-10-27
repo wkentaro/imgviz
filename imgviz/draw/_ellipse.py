@@ -16,7 +16,7 @@ def ellipse(
     fill: Ink | None = None,
     outline: Ink | None = None,
     width: int = 0,
-) -> NDArray[np.uint8]:
+) -> NDArray[np.uint8]:  # noqa: GR005 -- preserve positional and keyword API calls
     """Draw ellipse on numpy array with Pillow.
 
     Args:
@@ -30,9 +30,9 @@ def ellipse(
     Returns:
         Output image.
     """
-    dst = _utils.numpy_to_pillow(image)
+    dst = _utils.numpy_to_pillow(image=image)
     ellipse_(image=dst, yx1=yx1, yx2=yx2, fill=fill, outline=outline, width=width)
-    return _utils.pillow_to_numpy(dst)
+    return _utils.pillow_to_numpy(image=dst)
 
 
 def ellipse_(
@@ -42,7 +42,7 @@ def ellipse_(
     fill: Ink | None = None,
     outline: Ink | None = None,
     width: int = 0,
-) -> None:
+) -> None:  # noqa: GR005 -- preserve positional and keyword API calls
     """Draw ellipse on PIL image in-place.
 
     Args:
@@ -53,16 +53,16 @@ def ellipse_(
         outline: RGB color to draw the outline.
         width: Line width.
     """
-    require_fill_or_outline(fill, outline)
+    require_fill_or_outline(fill=fill, outline=outline)
 
-    draw = get_draw(image)
+    draw = get_draw(image=image)
 
     y1, x1 = yx1
     y2, x2 = yx2
 
     draw.ellipse(
         [x1, y1, x2, y2],
-        fill=get_pil_ink(fill),
-        outline=get_pil_ink(outline),
+        fill=get_pil_ink(ink=fill),
+        outline=get_pil_ink(ink=outline),
         width=width,
     )

@@ -16,7 +16,7 @@ def pad(
     left: int = 0,
     right: int = 0,
     color: Color = 0,
-) -> NDArray:
+) -> NDArray:  # noqa: GR005 -- preserve positional and keyword API calls
     """Pad an image with a constant color on each side.
 
     Handles ``HW`` and ``HWC`` layouts (including RGBA) and preserves dtype, so
