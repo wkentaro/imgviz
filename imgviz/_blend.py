@@ -6,7 +6,7 @@ from numpy.typing import NDArray
 
 
 def blend(
-    under: NDArray[np.uint8], over: ArrayLike, alpha: float | NDArray
+    *, under: NDArray[np.uint8], over: ArrayLike, alpha: float | NDArray
 ) -> NDArray[np.uint8]:
     """Alpha-composite ``over`` onto ``under`` and return a new uint8 array.
 

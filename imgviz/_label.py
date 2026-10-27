@@ -100,7 +100,7 @@ def label2rgb(
     if image is not None:
         if image.ndim == 2:
             image = _color.gray2rgb(image)
-        res = blend(image, res, alpha_map)
+        res = blend(under=image, over=res, alpha=alpha_map)
 
     if label_names is None:
         return res
