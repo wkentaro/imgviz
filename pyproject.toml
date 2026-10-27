@@ -105,7 +105,6 @@ line-length = 88
 indent-width = 4
 
 [tool.ruff.lint]
-external = ["GR"]
 select = [
   "E",   # pycodestyle
   "F",   # pyflakes
