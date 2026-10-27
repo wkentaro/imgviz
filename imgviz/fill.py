@@ -130,5 +130,5 @@ def _blend(
 ) -> NDArray[np.uint8]:
     if copy:
         image = image.copy()
-    image[mask] = blend(image[mask], color, alpha)
+    image[mask] = blend(under=image[mask], over=color, alpha=alpha)
     return image

@@ -103,7 +103,7 @@ def instances2rgb(
         # Each instance blends against the original image, not the running
         # result, so overlapping masks show the topmost color rather than a
         # stack of washes.
-        dst[mask] = blend(image[mask], color_ins, alpha)
+        dst[mask] = blend(under=image[mask], over=color_ins, alpha=alpha)
 
         if not boundary_width > 0:
             continue
