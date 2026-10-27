@@ -6,7 +6,7 @@ import os.path as osp
 import PIL.Image
 
 
-def tabulate(rows: list[list[str]], /) -> str:
+def tabulate(*, rows: list[list[str]]) -> str:
     html = "<table>"
     for row in rows:
         html += "\n\t<tr>"
@@ -32,7 +32,7 @@ def main() -> None:
                 f'<img src="{img_file}" width="{width}%" />',
             )
         )
-    examples = tabulate(examples)
+    examples = tabulate(rows=examples)
 
     # TODO: read from pyproject.toml
     dependencies = []
