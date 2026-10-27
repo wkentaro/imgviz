@@ -69,16 +69,22 @@ def test_pie_three_wedges_distinct_colors(*, white_image: NDArray[np.uint8]) -> 
 
     r = 25  # sample radius, well inside the disc
 
-    def sample_at(angle_from_12_deg: float) -> tuple[int, ...]:
+    def sample_at(*, angle_from_12_deg: float) -> tuple[int, ...]:
         # Shift from clockwise-from-12 to standard math angle (0 = east), in radians.
         angle_rad = math.radians(angle_from_12_deg - 90)
         sy = int(cy + r * math.sin(angle_rad))
         sx = int(cx + r * math.cos(angle_rad))
         return tuple(res[sy, sx])
 
-    assert sample_at(60) == fills[0], "midpoint of wedge 0 should be red"
-    assert sample_at(180) == fills[1], "midpoint of wedge 1 should be green"
-    assert sample_at(300) == fills[2], "midpoint of wedge 2 should be blue"
+    assert sample_at(angle_from_12_deg=60) == fills[0], (
+        "midpoint of wedge 0 should be red"
+    )
+    assert sample_at(angle_from_12_deg=180) == fills[1], (
+        "midpoint of wedge 1 should be green"
+    )
+    assert sample_at(angle_from_12_deg=300) == fills[2], (
+        "midpoint of wedge 2 should be blue"
+    )
 
 
 def test_pie_outline_is_drawn(*, white_image: NDArray[np.uint8]) -> None:
