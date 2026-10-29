@@ -15,9 +15,12 @@ major version.
 Release a minor version for any ready backward-compatible improvement and a
 patch for backward-compatible fixes; there is no minimum release size.
 
+Development tasks require [just](https://just.systems/) and
+[uv](https://docs.astral.sh/uv/). Run `just` to list the available recipes.
+
 To release version `X.Y.Z`:
 
-1. Run `make release VERSION=X.Y.Z`.
+1. Run `just release X.Y.Z`.
 2. Commit the updated changelog and deleted fragments, then tag that commit.
 3. Create and publish the GitHub release for the tag.
 

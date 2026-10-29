@@ -15,7 +15,8 @@ jobs:
       - uses: astral-sh/setup-uv@v7
         with:
           python-version: ${{ matrix.python-version }}
-      - run: make setup
+      - uses: extractions/setup-just@v4
+      - run: just setup
       - run: |
           uv build
           uv pip install dist/*.tar.gz
@@ -30,8 +31,9 @@ jobs:
       - uses: astral-sh/setup-uv@v7
         with:
           python-version: ${{ matrix.python-version }}
-      - run: make setup
-      - run: make lint
+      - uses: extractions/setup-just@v4
+      - run: just setup
+      - run: just lint
   test:
     runs-on: ubuntu-latest
     strategy:
@@ -42,8 +44,9 @@ jobs:
       - uses: astral-sh/setup-uv@v7
         with:
           python-version: ${{ matrix.python-version }}
-      - run: make setup
-      - run: make test
+      - uses: extractions/setup-just@v4
+      - run: just setup
+      - run: just test
       - run: |
           uv run --extra all python getting_started.py
           for f in examples/*.py; do
