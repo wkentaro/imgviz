@@ -111,3 +111,12 @@ def test_scalebar_rejects_nonpositive_ppu(*, rgb: NDArray[np.uint8]) -> None:
 def test_scalebar_rejects_bad_loc(*, rgb: NDArray[np.uint8]) -> None:
     with pytest.raises(ValueError, match="loc must be"):
         imgviz.scalebar(rgb, pixels_per_unit=200, loc="middle")  # type: ignore[arg-type]
+
+
+@pytest.mark.parametrize("loc", ["lt", "rt", "lb", "rb"])
+def test_scalebar_visible_on_wide_short_image(
+    *, loc: Literal["lt", "rt", "lb", "rb"]
+) -> None:
+    image = np.zeros((50, 2000, 3), dtype=np.uint8)
+    res = imgviz.scalebar(image, pixels_per_unit=50, loc=loc, color="red")
+    assert (res == [255, 0, 0]).all(axis=2).any()  # drawn, not pushed off-canvas

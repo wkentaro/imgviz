@@ -89,11 +89,17 @@ def scalebar(
 
     block_width = max(bar_length, label_width)
     block_height = label_height + gap + bar_thickness
-    x0 = width - margin - block_width if loc in ("rt", "rb") else margin
-    y0 = height - margin - block_height if loc in ("lb", "rb") else margin
+    # shrink each margin so the block stays on-canvas for extreme aspect ratios
+    margin_x = max(0, min(margin, width - block_width))
+    margin_y = max(0, min(margin, height - block_height))
+    x0 = width - margin_x - block_width if loc in ("rt", "rb") else margin_x
+    y0 = height - margin_y - block_height if loc in ("lb", "rb") else margin_y
 
     if isinstance(color, str) and color == "auto":
-        region = image[max(0, y0) : y0 + block_height, max(0, x0) : x0 + block_width]
+        region = image[
+            max(0, y0) : max(0, y0 + block_height),
+            max(0, x0) : max(0, x0 + block_width),
+        ]
         if region.size == 0:
             region = image
         rgb = get_fg_color(color=region.mean(axis=(0, 1)).astype(np.uint8))
